@@ -83,9 +83,9 @@ sf::RectangleShape* GameView::init() {
     }
 
     b[0].move(100,200);
-    b[1].move(500,400);
-    b[2].move(300,400);
-    b[3].move(600,100);
+    b[1].move(200,200);
+    b[2].move(300,200);
+    b[3].move(400,200);
 
     return b;
 
@@ -118,6 +118,7 @@ void GameView::check_mousePosition(sf::RectangleShape *b) {
                         }
                         else{
                             b[be_selected].setOutlineThickness(3.5);
+                            //printf("%f", b[be_selected].getPosition().x);
                             b[be_selected].setOutlineColor(sf::Color::Red);
                         }
                     }
@@ -139,22 +140,22 @@ void GameView::check_keyboard_in(sf::RectangleShape *b) {
     //printf("%d", (int)sizeof(b));
     for(int i=0; i<4; i++) {
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
-            if(block[i].get_selected() && block[i].get_direction() == "up"){
+            if(block[i].get_selected() && block[i].get_direction() == "up" && !collision_detector(b[i], b, block[i].get_direction())){
                 b[i].move(0.0,  -1 * 30);
             }
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
-            if(block[i].get_selected() && block[i].get_direction() == "down"){
+            if(block[i].get_selected() && block[i].get_direction() == "down" && !collision_detector(b[i], b, block[i].get_direction())){
                 b[i].move(0.0,  1 * 30);
             }
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
-            if(block[i].get_selected() && block[i].get_direction() == "left"){
+            if(block[i].get_selected() && block[i].get_direction() == "left" && !collision_detector(b[i], b, block[i].get_direction())){
                 b[i].move(-100,  0.01 * 30);
             }
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
-            if(block[i].get_selected() && block[i].get_direction() == "right"){
+            if(block[i].get_selected() && block[i].get_direction() == "right" && !collision_detector(b[i], b, block[i].get_direction())){
                 b[i].move(100.0,  0.01 * 30);
             }
         }
@@ -165,8 +166,46 @@ void GameView::check_keyboard_in(sf::RectangleShape *b) {
 /**
  * check if has collision.
  * @param b for blocks in gameview mode
+ * @return bool
  */
-void GameView::collision_detector(sf::RectangleShape *b) {
+bool GameView::collision_detector(sf::RectangleShape current_b, sf::RectangleShape *b, std::string direction) {
+    if(direction == "up"){
+        for(int i=0; i < 4; i++){
+            if(b[i].getPosition().x == current_b.getPosition().x){
+                if(b[i].getPosition().y < current_b.getPosition().y){
+                    return true;
+                }
+            }
+        }
+    }
+    if(direction == "down"){
+        for(int i=0; i < 4; i++){
+            if(b[i].getPosition().x == current_b.getPosition().x){
+                if(b[i].getPosition().y > current_b.getPosition().y){
+                    return true;
+                }
+            }
+        }
+    }
+    if(direction == "left"){
+        for(int i=0; i < 4; i++){
+            if(b[i].getPosition().y == current_b.getPosition().y){
+                if(b[i].getPosition().x < current_b.getPosition().x){
+                    return true;
+                }
+            }
+        }
+    }
+    if(direction == "right"){
+        for(int i=0; i < 4; i++){
+            if(b[i].getPosition().y == current_b.getPosition().y){
+                if(b[i].getPosition().x > current_b.getPosition().x){
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
     
 
 }

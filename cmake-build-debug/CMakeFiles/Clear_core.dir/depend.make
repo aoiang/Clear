@@ -3,23 +3,6 @@
 
 CMakeFiles/Clear_core.dir/src/Block.cpp.o: ../include/Block.h
 CMakeFiles/Clear_core.dir/src/Block.cpp.o: ../src/Block.cpp
-CMakeFiles/Clear_core.dir/src/Block.cpp.o: /usr/local/include/SFML/Audio.hpp
-CMakeFiles/Clear_core.dir/src/Block.cpp.o: /usr/local/include/SFML/Audio/AlResource.hpp
-CMakeFiles/Clear_core.dir/src/Block.cpp.o: /usr/local/include/SFML/Audio/Export.hpp
-CMakeFiles/Clear_core.dir/src/Block.cpp.o: /usr/local/include/SFML/Audio/InputSoundFile.hpp
-CMakeFiles/Clear_core.dir/src/Block.cpp.o: /usr/local/include/SFML/Audio/Listener.hpp
-CMakeFiles/Clear_core.dir/src/Block.cpp.o: /usr/local/include/SFML/Audio/Music.hpp
-CMakeFiles/Clear_core.dir/src/Block.cpp.o: /usr/local/include/SFML/Audio/OutputSoundFile.hpp
-CMakeFiles/Clear_core.dir/src/Block.cpp.o: /usr/local/include/SFML/Audio/Sound.hpp
-CMakeFiles/Clear_core.dir/src/Block.cpp.o: /usr/local/include/SFML/Audio/SoundBuffer.hpp
-CMakeFiles/Clear_core.dir/src/Block.cpp.o: /usr/local/include/SFML/Audio/SoundBufferRecorder.hpp
-CMakeFiles/Clear_core.dir/src/Block.cpp.o: /usr/local/include/SFML/Audio/SoundFileFactory.hpp
-CMakeFiles/Clear_core.dir/src/Block.cpp.o: /usr/local/include/SFML/Audio/SoundFileFactory.inl
-CMakeFiles/Clear_core.dir/src/Block.cpp.o: /usr/local/include/SFML/Audio/SoundFileReader.hpp
-CMakeFiles/Clear_core.dir/src/Block.cpp.o: /usr/local/include/SFML/Audio/SoundFileWriter.hpp
-CMakeFiles/Clear_core.dir/src/Block.cpp.o: /usr/local/include/SFML/Audio/SoundRecorder.hpp
-CMakeFiles/Clear_core.dir/src/Block.cpp.o: /usr/local/include/SFML/Audio/SoundSource.hpp
-CMakeFiles/Clear_core.dir/src/Block.cpp.o: /usr/local/include/SFML/Audio/SoundStream.hpp
 CMakeFiles/Clear_core.dir/src/Block.cpp.o: /usr/local/include/SFML/Config.hpp
 CMakeFiles/Clear_core.dir/src/Block.cpp.o: /usr/local/include/SFML/Graphics.hpp
 CMakeFiles/Clear_core.dir/src/Block.cpp.o: /usr/local/include/SFML/Graphics/BlendMode.hpp
