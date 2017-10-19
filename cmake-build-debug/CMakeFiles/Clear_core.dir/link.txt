@@ -1,0 +1,2 @@
+/Library/Developer/CommandLineTools/usr/bin/ar qc libClear_core.a  CMakeFiles/Clear_core.dir/src/Block.cpp.o CMakeFiles/Clear_core.dir/src/GameView.cpp.o CMakeFiles/Clear_core.dir/src/Normal_Block.cpp.o CMakeFiles/Clear_core.dir/src/Rotating_Block.cpp.o
+/Library/Developer/CommandLineTools/usr/bin/ranlib libClear_core.a
