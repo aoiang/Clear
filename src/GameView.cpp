@@ -4,21 +4,46 @@
 
 #include "GameView.h"
 
+/**
+  GameView
+  @param block is for the blocks we generated
+  @param sf::RectectangleShape b is for the blocks in gameview, which is conresponding to @param block.
+*/
 
+
+/**
+ * construction function
+ * create the window
+ */
 
 
 GameView::GameView(int length, int width) :
     App(sf::VideoMode(length, width, 32), "Pong",  sf::Style::Default){}
 
+/**
+ * check it window is open
+ * @return bool
+ */
 bool GameView::isOpen() {
     return App.isOpen();
 }
 
+
+/**
+ * initialize all blocks, set all parameters for blocks
+ */
 void::GameView::block_init() {
     for(int i=0; i<4; i++){
        block[i].init(i);
     }
 }
+
+/**
+ * @param i for id
+ * Generate blocks in the game based on their properties(like direction)
+ *
+ * @return sf::RectangleShape
+ */
 
 
 sf::RectangleShape GameView::block_generator(int i) {
@@ -44,6 +69,10 @@ sf::RectangleShape GameView::block_generator(int i) {
     return c;
 }
 
+/**
+ * initialize the game, set all blocks.
+ * @return sf::RectangleShape
+ */
 sf::RectangleShape* GameView::init() {
     block_init();
     sf::RectangleShape *b;
@@ -62,6 +91,11 @@ sf::RectangleShape* GameView::init() {
 
 }
 
+/**
+ *
+ * @param b for block in gameview mode
+ * check the if mouse is clicked and get the selected block
+ */
 void GameView::check_mousePosition(sf::RectangleShape *b) {
     sf::Clock timer;
     float d = timer.restart().asSeconds();
@@ -95,7 +129,14 @@ void GameView::check_mousePosition(sf::RectangleShape *b) {
 
 }
 
+
+/**
+ * check if keyboard is pressed and which button it is
+ * determine if this keyboard_in works based on the game rule(like direction, collision)
+ * @param b for block in gameview mode
+ */
 void GameView::check_keyboard_in(sf::RectangleShape *b) {
+    //printf("%d", (int)sizeof(b));
     for(int i=0; i<4; i++) {
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
             if(block[i].get_selected() && block[i].get_direction() == "up"){
@@ -119,11 +160,21 @@ void GameView::check_keyboard_in(sf::RectangleShape *b) {
         }
 
     }
+}
 
+/**
+ * check if has collision.
+ * @param b for blocks in gameview mode
+ */
+void GameView::collision_detector(sf::RectangleShape *b) {
+    
 
 }
 
-
+/**
+ * draw all blocks and mechanics
+ * @param b for blocks in gameview mode
+ */
 
 void GameView::draw(sf::RectangleShape b[]) {
     poll_event();
@@ -143,7 +194,9 @@ void GameView::draw(sf::RectangleShape b[]) {
     App.display();
 }
 
-
+/**
+ * Poll event
+ */
 
 void GameView::poll_event(){
     sf::Event Event;

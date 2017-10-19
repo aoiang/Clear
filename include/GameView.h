@@ -31,6 +31,7 @@ public:
     void check_mousePosition(sf::RectangleShape block[]);
     void block_init();
     void check_keyboard_in(sf::RectangleShape *b);
+    void collision_detector(sf::RectangleShape *b);
 
 
 };

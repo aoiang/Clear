@@ -5,7 +5,9 @@
 #ifndef CLEAR_BLOCK_H
 #define CLEAR_BLOCK_H
 #include <SFML/Graphics.hpp>
-
+/**
+ * The parameters of the basic block.
+ */
 
 class Block {
 protected:

@@ -3,9 +3,16 @@
 //
 
 #include "Block.h"
-#include <SFML/Graphics.hpp>
-#include <cmath>
-#include <SFML/Audio.hpp>
+
+/**
+  Sets properties of the Block
+  @param x for x position coordinate
+  @param y for y position coordinate
+  @param speed for block speed when it moves
+  @param is_selected for when the block is clicked
+  @param id for id
+
+*/
 
 
 float Block::get_length() {

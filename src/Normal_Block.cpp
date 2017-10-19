@@ -3,6 +3,18 @@
 //
 
 #include "Normal_Block.h"
+
+/**
+  Sets proprties of the Block
+  @param x for x position coordinate
+  @param y for y position coordinate
+  @param speed for block speed when it moves
+  @param is_selected for when the block is clicked
+  @param id for id
+  @param direction is for remove restricted.
+
+*/
+
 void Normal_Block::set_direction(std::string direction){
     this -> direction = direction;
 }

@@ -7,6 +7,10 @@
 #include <string>
 #include "Block.h"
 
+/**
+ * This class is for normal block which has directions.
+ */
+
 class Normal_Block :public Block{
 private:
     bool has_direction;
