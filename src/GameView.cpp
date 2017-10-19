@@ -83,9 +83,9 @@ sf::RectangleShape* GameView::init() {
     }
 
     b[0].move(100,200);
-    b[1].move(200,200);
-    b[2].move(300,200);
-    b[3].move(400,200);
+    b[1].move(180,200);
+    b[2].move(260,200);
+    b[3].move(340,200);
 
     return b;
 
