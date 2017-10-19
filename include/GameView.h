@@ -13,7 +13,7 @@ class GameView {
 private:
     sf::RenderWindow App;
     sf::Texture texture[15];
-    Normal_Block block[4];
+    Normal_Block block[5];
 
 
 

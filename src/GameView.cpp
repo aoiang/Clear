@@ -33,7 +33,7 @@ bool GameView::isOpen() {
  * initialize all blocks, set all parameters for blocks
  */
 void::GameView::block_init() {
-    for(int i=0; i<4; i++){
+    for(int i=0; i<5; i++){
        block[i].init(i);
     }
 }
@@ -47,26 +47,32 @@ void::GameView::block_init() {
 
 
 sf::RectangleShape GameView::block_generator(int i) {
+    if(block[i].get_has_direction()){
+        if(block[i].get_direction() == "up"){
+            texture[block[i].get_id()].loadFromFile("../resources/up.png");
+        }
+        if(block[i].get_direction() == "down"){
+            texture[block[i].get_id()].loadFromFile("../resources/down.png");
+        }
+        if(block[i].get_direction() == "left"){
+            texture[block[i].get_id()].loadFromFile("../resources/left.png");
+        }
+        if(block[i].get_direction() == "right"){
+            //printf("%s", block[i].get_direction().c_str());
+            texture[block[i].get_id()].loadFromFile("../resources/right.png");
+        }
 
-
-    if(block[i].get_direction() == "up"){
-        texture[block[i].get_id()].loadFromFile("../resources/up.png");
+        sf::RectangleShape c(sf::Vector2f(block[i].get_length(), block[i].get_width()));
+        c.setFillColor(sf::Color::White);
+        c.setTexture(&texture[block[i].get_id()]);
+        return c;
     }
-    if(block[i].get_direction() == "down"){
-        texture[block[i].get_id()].loadFromFile("../resources/down.png");
-    }
-    if(block[i].get_direction() == "left"){
-        texture[block[i].get_id()].loadFromFile("../resources/left.png");
-    }
-    if(block[i].get_direction() == "right"){
-        printf("%s", block[i].get_direction().c_str());
-        texture[block[i].get_id()].loadFromFile("../resources/right.png");
+    else{
+        sf::RectangleShape c(sf::Vector2f(block[i].get_length(), block[i].get_width()));
+        c.setFillColor(sf::Color::White);
+        return c;
     }
 
-    sf::RectangleShape c(sf::Vector2f(block[i].get_length(), block[i].get_width()));
-    c.setFillColor(sf::Color::White);
-    c.setTexture(&texture[block[i].get_id()]);
-    return c;
 }
 
 /**
@@ -76,9 +82,9 @@ sf::RectangleShape GameView::block_generator(int i) {
 sf::RectangleShape* GameView::init() {
     block_init();
     sf::RectangleShape *b;
-    b = new sf::RectangleShape[4];
+    b = new sf::RectangleShape[5];
 
-    for(int i=0; i<4; i++) {
+    for(int i=0; i<5; i++) {
         b[i] = block_generator(i);
     }
 
@@ -86,6 +92,7 @@ sf::RectangleShape* GameView::init() {
     b[1].move(180,200);
     b[2].move(260,200);
     b[3].move(340,200);
+    b[4].move(420,200);
 
     return b;
 
@@ -101,18 +108,18 @@ void GameView::check_mousePosition(sf::RectangleShape *b) {
     float d = timer.restart().asSeconds();
     int current_y = App.getSize().y;
     int current_x = App.getSize().x;
-    for(int i=0; i<4; i++) {
+    for(int i=0; i<5; i++) {
         if (sf::Mouse::getPosition(App).x >= int((b[i].getPosition().x / 800) * current_x) && sf::Mouse::getPosition(App).x <= int(((b[i].getPosition().x+100) / 800) * current_x)){
             if (sf::Mouse::getPosition(App).y >= int((b[i].getPosition().y / 600) * current_y) && sf::Mouse::getPosition(App).y <= int(((b[i].getPosition().y+100) / 600) * current_y)){
                 if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-                    for(int be_selected=0; be_selected<4; be_selected++){
+                    for(int be_selected=0; be_selected<5; be_selected++){
                         if(be_selected==i){
                             continue;
                         }
                         block[be_selected].set_selected(false);
                     }
                     block[i].set_selected(true);
-                    for(int be_selected=0; be_selected<4; be_selected++){
+                    for(int be_selected=0; be_selected<5; be_selected++){
                         if(!block[be_selected].get_selected()){
                             b[be_selected].setOutlineThickness(0);
                         }
@@ -138,14 +145,20 @@ void GameView::check_mousePosition(sf::RectangleShape *b) {
  */
 void GameView::check_keyboard_in(sf::RectangleShape *b) {
     //printf("%d", (int)sizeof(b));
-    for(int i=0; i<4; i++) {
+    for(int i=0; i<5; i++) {
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
-            if(block[i].get_selected() && block[i].get_direction() == "up" && !collision_detector(b[i], b, block[i].get_direction())){
+            if(block[i].get_selected() && block[i].get_direction() == "up" && !collision_detector(b[i], b,  block[i].get_direction())){
+                b[i].move(0.0,  -1 * 30);
+            }
+            if(block[i].get_selected() && !block[i].get_has_direction() && !collision_detector(b[i], b, "up")){
                 b[i].move(0.0,  -1 * 30);
             }
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
-            if(block[i].get_selected() && block[i].get_direction() == "down" && !collision_detector(b[i], b, block[i].get_direction())){
+            if(block[i].get_selected() && block[i].get_direction() == "down" && !collision_detector(b[i], b,  block[i].get_direction())){
+                b[i].move(0.0,  1 * 30);
+            }
+            if(block[i].get_selected() && !block[i].get_has_direction() && !collision_detector(b[i], b, "down")){
                 b[i].move(0.0,  1 * 30);
             }
         }
@@ -153,9 +166,15 @@ void GameView::check_keyboard_in(sf::RectangleShape *b) {
             if(block[i].get_selected() && block[i].get_direction() == "left" && !collision_detector(b[i], b, block[i].get_direction())){
                 b[i].move(-100,  0.01 * 30);
             }
+            if(block[i].get_selected() && !block[i].get_has_direction() && !collision_detector(b[i], b, "left")){
+                b[i].move(-100.0,  0.01 * 30);
+            }
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
             if(block[i].get_selected() && block[i].get_direction() == "right" && !collision_detector(b[i], b, block[i].get_direction())){
+                b[i].move(100.0,  0.01 * 30);
+            }
+            if(block[i].get_selected() && !block[i].get_has_direction() && !collision_detector(b[i], b, "right")){
                 b[i].move(100.0,  0.01 * 30);
             }
         }
@@ -170,7 +189,7 @@ void GameView::check_keyboard_in(sf::RectangleShape *b) {
  */
 bool GameView::collision_detector(sf::RectangleShape current_b, sf::RectangleShape *b, std::string direction) {
     if(direction == "up"){
-        for(int i=0; i < 4; i++){
+        for(int i=0; i < 5; i++){
             if(b[i].getPosition().x == current_b.getPosition().x){
                 if(b[i].getPosition().y < current_b.getPosition().y){
                     return true;
@@ -179,7 +198,7 @@ bool GameView::collision_detector(sf::RectangleShape current_b, sf::RectangleSha
         }
     }
     if(direction == "down"){
-        for(int i=0; i < 4; i++){
+        for(int i=0; i < 5; i++){
             if(b[i].getPosition().x == current_b.getPosition().x){
                 if(b[i].getPosition().y > current_b.getPosition().y){
                     return true;
@@ -188,7 +207,7 @@ bool GameView::collision_detector(sf::RectangleShape current_b, sf::RectangleSha
         }
     }
     if(direction == "left"){
-        for(int i=0; i < 4; i++){
+        for(int i=0; i < 5; i++){
             if(b[i].getPosition().y == current_b.getPosition().y){
                 if(b[i].getPosition().x < current_b.getPosition().x){
                     return true;
@@ -197,7 +216,7 @@ bool GameView::collision_detector(sf::RectangleShape current_b, sf::RectangleSha
         }
     }
     if(direction == "right"){
-        for(int i=0; i < 4; i++){
+        for(int i=0; i < 5; i++){
             if(b[i].getPosition().y == current_b.getPosition().y){
                 if(b[i].getPosition().x > current_b.getPosition().x){
                     return true;
@@ -227,6 +246,7 @@ void GameView::draw(sf::RectangleShape b[]) {
     App.draw(b[1]);
     App.draw(b[2]);
     App.draw(b[3]);
+    App.draw(b[4]);
     //printf("%f,",c.getPosition().x);
 
 
