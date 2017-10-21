@@ -18,7 +18,7 @@
 
 
 GameView::GameView(int length, int width) :
-    App(sf::VideoMode(length, width, 32), "Pong",  sf::Style::Default){}
+    App(sf::VideoMode(length, width, 32), "Clear",  sf::Style::Default){}
 
 /**
  * check it window is open
@@ -134,7 +134,6 @@ void GameView::check_mousePosition(sf::RectangleShape *b) {
             }
         }
     }
-
 }
 
 
