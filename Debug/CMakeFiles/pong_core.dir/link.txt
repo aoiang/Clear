@@ -1,2 +1,0 @@
-/usr/bin/ar qc libpong_core.a  CMakeFiles/pong_core.dir/src/Block.cpp.o CMakeFiles/pong_core.dir/src/GameView.cpp.o CMakeFiles/pong_core.dir/src/Normal_Block.cpp.o CMakeFiles/pong_core.dir/src/Rotating_Block.cpp.o CMakeFiles/pong_core.dir/src/GameState.cpp.o
-/usr/bin/ranlib libpong_core.a

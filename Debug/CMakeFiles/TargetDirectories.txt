@@ -1,4 +1,0 @@
-/home/f85/iechevar/Documents/CSCI-437/pong/Debug/CMakeFiles/edit_cache.dir
-/home/f85/iechevar/Documents/CSCI-437/pong/Debug/CMakeFiles/rebuild_cache.dir
-/home/f85/iechevar/Documents/CSCI-437/pong/Debug/CMakeFiles/Clear.dir
-/home/f85/iechevar/Documents/CSCI-437/pong/Debug/CMakeFiles/pong_core.dir
