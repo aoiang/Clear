@@ -16,7 +16,8 @@ protected:
     float speed=30;
     bool is_selected=false;
     int id;
-
+    float x;
+    float y;
 
 
 
@@ -35,6 +36,12 @@ public:
     void set_id(int id);
     void init(int id);
     void set_selected(bool is_selected);
+    void setX(float x);
+    void setY(float y);
+    void setPosition(float x, float y);
+    float getX();
+    float getY();
+    void move(float x, float y);
 
 
 

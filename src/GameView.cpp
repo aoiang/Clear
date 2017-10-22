@@ -17,7 +17,7 @@
  */
 
 
-GameView::GameView(int length, int width) :
+GameView::GameView(float length, float width) :
     App(sf::VideoMode(length, width, 32), "Clear",  sf::Style::Default){}
 
 /**
@@ -46,29 +46,29 @@ void::GameView::block_init() {
  */
 
 
-sf::RectangleShape GameView::block_generator(int i) {
-    if(block[i].get_has_direction()){
-        if(block[i].get_direction() == "up"){
-            texture[block[i].get_id()].loadFromFile("../resources/up.png");
+sf::RectangleShape GameView::directed_block_generator(Normal_Block *normal_block, int i) {
+    if(normal_block[i].get_has_direction()){
+        if(normal_block[i].get_direction() == "up"){
+            texture[normal_block[i].get_id()].loadFromFile("../resources/up.png");
         }
-        if(block[i].get_direction() == "down"){
-            texture[block[i].get_id()].loadFromFile("../resources/down.png");
+        if(normal_block[i].get_direction() == "down"){
+            texture[normal_block[i].get_id()].loadFromFile("../resources/down.png");
         }
-        if(block[i].get_direction() == "left"){
-            texture[block[i].get_id()].loadFromFile("../resources/left.png");
+        if(normal_block[i].get_direction() == "left"){
+            texture[normal_block[i].get_id()].loadFromFile("../resources/left.png");
         }
-        if(block[i].get_direction() == "right"){
+        if(normal_block[i].get_direction() == "right"){
             //printf("%s", block[i].get_direction().c_str());
-            texture[block[i].get_id()].loadFromFile("../resources/right.png");
+            texture[normal_block[i].get_id()].loadFromFile("../resources/right.png");
         }
 
-        sf::RectangleShape c(sf::Vector2f(block[i].get_length(), block[i].get_width()));
+        sf::RectangleShape c(sf::Vector2f(normal_block[i].get_length(), normal_block[i].get_width()));
         c.setFillColor(sf::Color::White);
-        c.setTexture(&texture[block[i].get_id()]);
+        c.setTexture(&texture[normal_block[i].get_id()]);
         return c;
     }
     else{
-        sf::RectangleShape c(sf::Vector2f(block[i].get_length(), block[i].get_width()));
+        sf::RectangleShape c(sf::Vector2f(normal_block[i].get_length(), normal_block[i].get_width()));
         c.setFillColor(sf::Color::White);
         return c;
     }
@@ -79,61 +79,58 @@ sf::RectangleShape GameView::block_generator(int i) {
  * initialize the game, set all blocks.
  * @return sf::RectangleShape
  */
-sf::RectangleShape* GameView::init() {
+sf::RectangleShape* GameView::init(Normal_Block *normal_block) {
     block_init();
     sf::RectangleShape *b;
     b = new sf::RectangleShape[5];
 
     for(int i=0; i<5; i++) {
-        b[i] = block_generator(i);
+        b[i] = directed_block_generator(normal_block, i);
+        b[i].setPosition(normal_block[i].getX(), normal_block[i].getY());
     }
-
-    b[0].move(100,200);
-    b[1].move(180,200);
-    b[2].move(260,200);
-    b[3].move(340,200);
-    b[4].move(420,200);
 
     return b;
 
 }
 
-/**
- *
- * @param b for block in gameview mode
- * check the if mouse is clicked and get the selected block
- */
-void GameView::check_mousePosition(sf::RectangleShape *b) {
+
+
+
+Normal_Block* GameView::check_mousePosition(Normal_Block *normal_block) {
+
     sf::Clock timer;
     float d = timer.restart().asSeconds();
     int current_y = App.getSize().y;
     int current_x = App.getSize().x;
     for(int i=0; i<5; i++) {
-        if (sf::Mouse::getPosition(App).x >= int((b[i].getPosition().x / 800) * current_x) && sf::Mouse::getPosition(App).x <= int(((b[i].getPosition().x+100) / 800) * current_x)){
-            if (sf::Mouse::getPosition(App).y >= int((b[i].getPosition().y / 600) * current_y) && sf::Mouse::getPosition(App).y <= int(((b[i].getPosition().y+100) / 600) * current_y)){
+        //printf("%f\n", normal_block[i].getX());
+        if (sf::Mouse::getPosition(App).x >= int((normal_block[i].getX() / 800) * current_x) && sf::Mouse::getPosition(App).x <= int(((normal_block[i].getX()+100) / 800) * current_x)){
+            if (sf::Mouse::getPosition(App).y >= int((normal_block[i].getY() / 600) * current_y) && sf::Mouse::getPosition(App).y <= int(((normal_block[i].getY()+100) / 600) * current_y)){
                 if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+
                     for(int be_selected=0; be_selected<5; be_selected++){
                         if(be_selected==i){
                             continue;
                         }
-                        block[be_selected].set_selected(false);
+                        normal_block[be_selected].set_selected(false);
                     }
-                    block[i].set_selected(true);
-                    for(int be_selected=0; be_selected<5; be_selected++){
-                        if(!block[be_selected].get_selected()){
-                            b[be_selected].setOutlineThickness(0);
-                        }
-                        else{
-                            b[be_selected].setOutlineThickness(3.5);
-                            //printf("%f", b[be_selected].getPosition().x);
-                            b[be_selected].setOutlineColor(sf::Color::Red);
-                        }
-                    }
+                    normal_block[i].set_selected(true);
+//                    for(int be_selected=0; be_selected<5; be_selected++){
+//                        if(!block[be_selected].get_selected()){
+//                            b[be_selected].setOutlineThickness(0);
+//                        }
+//                        else{
+//                            b[be_selected].setOutlineThickness(3.5);
+//                            //printf("%f", b[be_selected].getPosition().x);
+//                            b[be_selected].setOutlineColor(sf::Color::Red);
+//                        }
+//                    }
 
                 }
             }
         }
     }
+    return normal_block;
 }
 
 
@@ -163,18 +160,18 @@ void GameView::check_keyboard_in(sf::RectangleShape *b) {
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
             if(block[i].get_selected() && block[i].get_direction() == "left" && !collision_detector(b[i], b, block[i].get_direction())){
-                b[i].move(-100,  0.01 * 30);
+                b[i].move(-30,  0);
             }
             if(block[i].get_selected() && !block[i].get_has_direction() && !collision_detector(b[i], b, "left")){
-                b[i].move(-100.0,  0.01 * 30);
+                b[i].move(-30,  0);
             }
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
             if(block[i].get_selected() && block[i].get_direction() == "right" && !collision_detector(b[i], b, block[i].get_direction())){
-                b[i].move(100.0,  0.01 * 30);
+                b[i].move(30.0,  0);
             }
             if(block[i].get_selected() && !block[i].get_has_direction() && !collision_detector(b[i], b, "right")){
-                b[i].move(100.0,  0.01 * 30);
+                b[i].move(30.0,  0);
             }
         }
 
@@ -191,7 +188,9 @@ bool GameView::collision_detector(sf::RectangleShape current_b, sf::RectangleSha
         for(int i=0; i < 5; i++){
             if(b[i].getPosition().x == current_b.getPosition().x){
                 if(b[i].getPosition().y < current_b.getPosition().y){
-                    return true;
+                    if(b[i].getPosition().x > 0 && b[i].getPosition().x < 800 && b[i].getPosition().y > 0 && b[i].getPosition().y < 600){
+                        return true;
+                    }
                 }
             }
         }
@@ -200,7 +199,9 @@ bool GameView::collision_detector(sf::RectangleShape current_b, sf::RectangleSha
         for(int i=0; i < 5; i++){
             if(b[i].getPosition().x == current_b.getPosition().x){
                 if(b[i].getPosition().y > current_b.getPosition().y){
-                    return true;
+                    if(b[i].getPosition().x > 0 && b[i].getPosition().x < 800 && b[i].getPosition().y > 0 && b[i].getPosition().y < 600){
+                        return true;
+                    }
                 }
             }
         }
@@ -209,7 +210,10 @@ bool GameView::collision_detector(sf::RectangleShape current_b, sf::RectangleSha
         for(int i=0; i < 5; i++){
             if(b[i].getPosition().y == current_b.getPosition().y){
                 if(b[i].getPosition().x < current_b.getPosition().x){
-                    return true;
+                    if(b[i].getPosition().x > 0 && b[i].getPosition().x < 800 && b[i].getPosition().y > 0 && b[i].getPosition().y < 600){
+                        return true;
+                    }
+
                 }
             }
         }
@@ -218,7 +222,9 @@ bool GameView::collision_detector(sf::RectangleShape current_b, sf::RectangleSha
         for(int i=0; i < 5; i++){
             if(b[i].getPosition().y == current_b.getPosition().y){
                 if(b[i].getPosition().x > current_b.getPosition().x){
-                    return true;
+                    if(b[i].getPosition().x > 0 && b[i].getPosition().x < 800 && b[i].getPosition().y > 0 && b[i].getPosition().y < 600){
+                        return true;
+                    }
                 }
             }
         }
@@ -228,19 +234,45 @@ bool GameView::collision_detector(sf::RectangleShape current_b, sf::RectangleSha
 
 }
 
+
+void GameView::draw_selected_block(Normal_Block *normal_block, sf::RectangleShape *b){
+    for(int be_selected=0; be_selected<5; be_selected++){
+        if(!normal_block[be_selected].get_selected()){
+            b[be_selected].setOutlineThickness(0);
+        }
+        else{
+            b[be_selected].setOutlineThickness(3.5);
+            //printf("%f", b[be_selected].getPosition().x);
+            b[be_selected].setOutlineColor(sf::Color::Red);
+        }
+    }
+}
+
+void GameView::draw_movement(Normal_Block *normal_block, sf::RectangleShape *b) {
+    for(int i=0; i < 5; i++){
+        b[i].setPosition(normal_block[i].getX(),normal_block[i].getY());
+    }
+}
+
+
 /**
  * draw all blocks and mechanics
  * @param b for blocks in gameview mode
  */
 
-void GameView::draw(sf::RectangleShape b[]) {
+
+
+void GameView::draw(Normal_Block *normal_block, sf::RectangleShape b[]) {
     poll_event();
     App.clear(sf::Color(66, 150, 246));
 
 
-    check_mousePosition(b);
+    //check_mousePosition(b);
     check_keyboard_in(b);
 
+    draw_selected_block(normal_block, b);
+    draw_movement(normal_block, b);
+    printf("%f\n", b[0].getPosition().x);
     App.draw(b[0]);
     App.draw(b[1]);
     App.draw(b[2]);
@@ -251,6 +283,9 @@ void GameView::draw(sf::RectangleShape b[]) {
 
     App.display();
 }
+
+
+
 
 /**
  * Poll event

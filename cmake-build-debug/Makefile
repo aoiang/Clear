@@ -190,6 +190,33 @@ src/Block.cpp.s:
 	$(MAKE) -f CMakeFiles/Clear_core.dir/build.make CMakeFiles/Clear_core.dir/src/Block.cpp.s
 .PHONY : src/Block.cpp.s
 
+src/GameState.o: src/GameState.cpp.o
+
+.PHONY : src/GameState.o
+
+# target to build an object file
+src/GameState.cpp.o:
+	$(MAKE) -f CMakeFiles/Clear_core.dir/build.make CMakeFiles/Clear_core.dir/src/GameState.cpp.o
+.PHONY : src/GameState.cpp.o
+
+src/GameState.i: src/GameState.cpp.i
+
+.PHONY : src/GameState.i
+
+# target to preprocess a source file
+src/GameState.cpp.i:
+	$(MAKE) -f CMakeFiles/Clear_core.dir/build.make CMakeFiles/Clear_core.dir/src/GameState.cpp.i
+.PHONY : src/GameState.cpp.i
+
+src/GameState.s: src/GameState.cpp.s
+
+.PHONY : src/GameState.s
+
+# target to generate assembly for a file
+src/GameState.cpp.s:
+	$(MAKE) -f CMakeFiles/Clear_core.dir/build.make CMakeFiles/Clear_core.dir/src/GameState.cpp.s
+.PHONY : src/GameState.cpp.s
+
 src/GameView.o: src/GameView.cpp.o
 
 .PHONY : src/GameView.o
@@ -287,6 +314,9 @@ help:
 	@echo "... src/Block.o"
 	@echo "... src/Block.i"
 	@echo "... src/Block.s"
+	@echo "... src/GameState.o"
+	@echo "... src/GameState.i"
+	@echo "... src/GameState.s"
 	@echo "... src/GameView.o"
 	@echo "... src/GameView.i"
 	@echo "... src/GameView.s"

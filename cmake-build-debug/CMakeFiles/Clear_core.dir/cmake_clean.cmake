@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/Clear_core.dir/src/Block.cpp.o"
+  "CMakeFiles/Clear_core.dir/src/GameState.cpp.o"
   "CMakeFiles/Clear_core.dir/src/GameView.cpp.o"
   "CMakeFiles/Clear_core.dir/src/Normal_Block.cpp.o"
   "CMakeFiles/Clear_core.dir/src/Rotating_Block.cpp.o"

@@ -10,6 +10,14 @@
 SFML/Graphics.hpp
 -
 
+../include/GameState.h
+Block.h
+../include/Block.h
+Normal_Block.h
+../include/Normal_Block.h
+SFML/Graphics.hpp
+-
+
 ../include/GameView.h
 SFML/Graphics.hpp
 -
@@ -29,6 +37,10 @@ Block.h
 /Users/aoiang/CS/Clear/src/Block.cpp
 Block.h
 /Users/aoiang/CS/Clear/src/Block.h
+
+/Users/aoiang/CS/Clear/src/GameState.cpp
+GameState.h
+/Users/aoiang/CS/Clear/src/GameState.h
 
 /Users/aoiang/CS/Clear/src/GameView.cpp
 GameView.h

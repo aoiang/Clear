@@ -81,9 +81,33 @@ CMakeFiles/Clear_core.dir/src/Block.cpp.o.provides: CMakeFiles/Clear_core.dir/sr
 CMakeFiles/Clear_core.dir/src/Block.cpp.o.provides.build: CMakeFiles/Clear_core.dir/src/Block.cpp.o
 
 
+CMakeFiles/Clear_core.dir/src/GameState.cpp.o: CMakeFiles/Clear_core.dir/flags.make
+CMakeFiles/Clear_core.dir/src/GameState.cpp.o: ../src/GameState.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/aoiang/CS/Clear/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Clear_core.dir/src/GameState.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Clear_core.dir/src/GameState.cpp.o -c /Users/aoiang/CS/Clear/src/GameState.cpp
+
+CMakeFiles/Clear_core.dir/src/GameState.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Clear_core.dir/src/GameState.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/aoiang/CS/Clear/src/GameState.cpp > CMakeFiles/Clear_core.dir/src/GameState.cpp.i
+
+CMakeFiles/Clear_core.dir/src/GameState.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Clear_core.dir/src/GameState.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/aoiang/CS/Clear/src/GameState.cpp -o CMakeFiles/Clear_core.dir/src/GameState.cpp.s
+
+CMakeFiles/Clear_core.dir/src/GameState.cpp.o.requires:
+
+.PHONY : CMakeFiles/Clear_core.dir/src/GameState.cpp.o.requires
+
+CMakeFiles/Clear_core.dir/src/GameState.cpp.o.provides: CMakeFiles/Clear_core.dir/src/GameState.cpp.o.requires
+	$(MAKE) -f CMakeFiles/Clear_core.dir/build.make CMakeFiles/Clear_core.dir/src/GameState.cpp.o.provides.build
+.PHONY : CMakeFiles/Clear_core.dir/src/GameState.cpp.o.provides
+
+CMakeFiles/Clear_core.dir/src/GameState.cpp.o.provides.build: CMakeFiles/Clear_core.dir/src/GameState.cpp.o
+
+
 CMakeFiles/Clear_core.dir/src/GameView.cpp.o: CMakeFiles/Clear_core.dir/flags.make
 CMakeFiles/Clear_core.dir/src/GameView.cpp.o: ../src/GameView.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/aoiang/CS/Clear/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Clear_core.dir/src/GameView.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/aoiang/CS/Clear/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Clear_core.dir/src/GameView.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Clear_core.dir/src/GameView.cpp.o -c /Users/aoiang/CS/Clear/src/GameView.cpp
 
 CMakeFiles/Clear_core.dir/src/GameView.cpp.i: cmake_force
@@ -107,7 +131,7 @@ CMakeFiles/Clear_core.dir/src/GameView.cpp.o.provides.build: CMakeFiles/Clear_co
 
 CMakeFiles/Clear_core.dir/src/Normal_Block.cpp.o: CMakeFiles/Clear_core.dir/flags.make
 CMakeFiles/Clear_core.dir/src/Normal_Block.cpp.o: ../src/Normal_Block.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/aoiang/CS/Clear/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Clear_core.dir/src/Normal_Block.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/aoiang/CS/Clear/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/Clear_core.dir/src/Normal_Block.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Clear_core.dir/src/Normal_Block.cpp.o -c /Users/aoiang/CS/Clear/src/Normal_Block.cpp
 
 CMakeFiles/Clear_core.dir/src/Normal_Block.cpp.i: cmake_force
@@ -131,7 +155,7 @@ CMakeFiles/Clear_core.dir/src/Normal_Block.cpp.o.provides.build: CMakeFiles/Clea
 
 CMakeFiles/Clear_core.dir/src/Rotating_Block.cpp.o: CMakeFiles/Clear_core.dir/flags.make
 CMakeFiles/Clear_core.dir/src/Rotating_Block.cpp.o: ../src/Rotating_Block.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/aoiang/CS/Clear/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/Clear_core.dir/src/Rotating_Block.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/aoiang/CS/Clear/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/Clear_core.dir/src/Rotating_Block.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Clear_core.dir/src/Rotating_Block.cpp.o -c /Users/aoiang/CS/Clear/src/Rotating_Block.cpp
 
 CMakeFiles/Clear_core.dir/src/Rotating_Block.cpp.i: cmake_force
@@ -156,6 +180,7 @@ CMakeFiles/Clear_core.dir/src/Rotating_Block.cpp.o.provides.build: CMakeFiles/Cl
 # Object files for target Clear_core
 Clear_core_OBJECTS = \
 "CMakeFiles/Clear_core.dir/src/Block.cpp.o" \
+"CMakeFiles/Clear_core.dir/src/GameState.cpp.o" \
 "CMakeFiles/Clear_core.dir/src/GameView.cpp.o" \
 "CMakeFiles/Clear_core.dir/src/Normal_Block.cpp.o" \
 "CMakeFiles/Clear_core.dir/src/Rotating_Block.cpp.o"
@@ -164,12 +189,13 @@ Clear_core_OBJECTS = \
 Clear_core_EXTERNAL_OBJECTS =
 
 libClear_core.a: CMakeFiles/Clear_core.dir/src/Block.cpp.o
+libClear_core.a: CMakeFiles/Clear_core.dir/src/GameState.cpp.o
 libClear_core.a: CMakeFiles/Clear_core.dir/src/GameView.cpp.o
 libClear_core.a: CMakeFiles/Clear_core.dir/src/Normal_Block.cpp.o
 libClear_core.a: CMakeFiles/Clear_core.dir/src/Rotating_Block.cpp.o
 libClear_core.a: CMakeFiles/Clear_core.dir/build.make
 libClear_core.a: CMakeFiles/Clear_core.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/aoiang/CS/Clear/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX static library libClear_core.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/aoiang/CS/Clear/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX static library libClear_core.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/Clear_core.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Clear_core.dir/link.txt --verbose=$(VERBOSE)
 
@@ -179,6 +205,7 @@ CMakeFiles/Clear_core.dir/build: libClear_core.a
 .PHONY : CMakeFiles/Clear_core.dir/build
 
 CMakeFiles/Clear_core.dir/requires: CMakeFiles/Clear_core.dir/src/Block.cpp.o.requires
+CMakeFiles/Clear_core.dir/requires: CMakeFiles/Clear_core.dir/src/GameState.cpp.o.requires
 CMakeFiles/Clear_core.dir/requires: CMakeFiles/Clear_core.dir/src/GameView.cpp.o.requires
 CMakeFiles/Clear_core.dir/requires: CMakeFiles/Clear_core.dir/src/Normal_Block.cpp.o.requires
 CMakeFiles/Clear_core.dir/requires: CMakeFiles/Clear_core.dir/src/Rotating_Block.cpp.o.requires
