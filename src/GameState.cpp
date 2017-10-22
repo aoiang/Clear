@@ -111,7 +111,5 @@ void GameState::check_keyboard_in() {
                 normal_block[i].move(30.0,  0);
             }
         }
-
     }
 }
-

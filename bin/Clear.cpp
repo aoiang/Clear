@@ -4,8 +4,8 @@
 //
 
 #include <SFML/Graphics.hpp>
-#include "GameView.h"
 #include "GameState.h"
+#include "GameView.h"
 
 int main(int argc, char** argv) {
     // create main Window
@@ -14,7 +14,8 @@ int main(int argc, char** argv) {
     GameView view(length, width);
     GameState state;
     state.init();
-    view.init(state.get_Normal_Block());
+    view.set_GameState(state);
+    view.init();
     while(view.isOpen()) {
         view.check_mousePosition(state.get_Normal_Block());
         state.check_keyboard_in();
