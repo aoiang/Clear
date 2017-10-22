@@ -11,25 +11,15 @@
 
 class GameView {
 private:
-
     sf::Texture texture[15];
     Normal_Block block[5];
-
-
-
-
-
-
-
-
-
+    sf::RectangleShape * block_shapes;
 public:
     sf::RenderWindow App;
     GameView(float, float);
-    //~GameView(){};
-    sf::RectangleShape* init(Normal_Block *block);
+    void init(Normal_Block *block);
     bool isOpen();
-    void draw(Normal_Block *normal_block, sf::RectangleShape b[]);
+    void draw(Normal_Block *normal_block);
     void poll_event();
     sf::RectangleShape directed_block_generator(Normal_Block *normal_block, int i);
     Normal_Block* check_mousePosition(Normal_Block *normal_block);

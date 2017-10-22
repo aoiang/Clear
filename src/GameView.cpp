@@ -72,25 +72,21 @@ sf::RectangleShape GameView::directed_block_generator(Normal_Block *normal_block
         c.setFillColor(sf::Color::White);
         return c;
     }
-
 }
 
 /**
  * initialize the game, set all blocks.
  * @return sf::RectangleShape
  */
-sf::RectangleShape* GameView::init(Normal_Block *normal_block) {
+void GameView::init(Normal_Block *normal_block) {
     block_init();
-    sf::RectangleShape *b;
+    sf::RectangleShape * b;
     b = new sf::RectangleShape[5];
-
     for(int i=0; i<5; i++) {
         b[i] = directed_block_generator(normal_block, i);
         b[i].setPosition(normal_block[i].getX(), normal_block[i].getY());
     }
-
-    return b;
-
+    this -> block_shapes = b;
 }
 
 
@@ -230,7 +226,7 @@ bool GameView::collision_detector(sf::RectangleShape current_b, sf::RectangleSha
         }
     }
     return false;
-    
+
 
 }
 
@@ -262,25 +258,18 @@ void GameView::draw_movement(Normal_Block *normal_block, sf::RectangleShape *b) 
 
 
 
-void GameView::draw(Normal_Block *normal_block, sf::RectangleShape b[]) {
+void GameView::draw(Normal_Block *normal_block) {
     poll_event();
     App.clear(sf::Color(66, 150, 246));
+    check_keyboard_in(block_shapes);
 
-
-    //check_mousePosition(b);
-    check_keyboard_in(b);
-
-    draw_selected_block(normal_block, b);
-    draw_movement(normal_block, b);
-    printf("%f\n", b[0].getPosition().x);
-    App.draw(b[0]);
-    App.draw(b[1]);
-    App.draw(b[2]);
-    App.draw(b[3]);
-    App.draw(b[4]);
-    //printf("%f,",c.getPosition().x);
-
-
+    draw_selected_block(normal_block, block_shapes);
+    draw_movement(normal_block, block_shapes);
+    App.draw(block_shapes[0]);
+    App.draw(block_shapes[1]);
+    App.draw(block_shapes[2]);
+    App.draw(block_shapes[3]);
+    App.draw(block_shapes[4]);
     App.display();
 }
 
@@ -313,5 +302,3 @@ void GameView::poll_event(){
     //draw();
 
 }
-
-
