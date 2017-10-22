@@ -1,7 +1,0 @@
-/Applications/CLion.app/Contents/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/aoiang/CS/Clear
--- Found SFML .. in /usr/local/include
--- Using user specified build type: DEBUG
--- Adding executable: Clear
--- Configuring done
--- Generating done
--- Build files have been written to: /Users/aoiang/CS/Clear/cmake-build-debug
