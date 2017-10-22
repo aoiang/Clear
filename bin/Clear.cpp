@@ -4,10 +4,10 @@
 
 
 #include <SFML/Graphics.hpp>
-#include <stdlib.h>
+
 
 #include "GameView.h"
-#include "Block.h"
+#include "GameState.h"
 
 
 
@@ -16,12 +16,16 @@ int main(int argc, char** argv) {
     // create main Window
 
 
-    int length = 800;
-    int width = 600;
+    float length = 800;
+    float width = 600;
     GameView view(length, width);
-    sf::RectangleShape* b = view.init();
+    GameState state;
+    state.init();
+    sf::RectangleShape* b = view.init(state.get_Normal_Block());
     while(view.isOpen()) {
-        view.draw(b);
+        view.check_mousePosition(state.get_Normal_Block());
+        state.check_keyboard_in();
+        view.draw(state.get_Normal_Block(), b);
     }
     return 0;
 

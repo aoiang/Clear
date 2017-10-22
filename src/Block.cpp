@@ -59,3 +59,29 @@ void Block::init(int id) {
 void Block::set_selected(bool is_selected){
     this -> is_selected = is_selected;
 }
+
+void Block::setX(float x) {
+    this -> x = x;
+}
+
+void Block::setY(float y) {
+    this -> y = y;
+}
+
+void Block::setPosition(float x, float y) {
+    this -> x = x;
+    this -> y = y;
+}
+
+float Block::getX() {
+    return x;
+}
+
+float Block::getY() {
+    return y;
+}
+
+void Block::move(float x, float y) {
+    this -> x += x;
+    this -> y += y;
+}

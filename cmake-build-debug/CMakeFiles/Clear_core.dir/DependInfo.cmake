@@ -5,6 +5,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "/Users/aoiang/CS/Clear/src/Block.cpp" "/Users/aoiang/CS/Clear/cmake-build-debug/CMakeFiles/Clear_core.dir/src/Block.cpp.o"
+  "/Users/aoiang/CS/Clear/src/GameState.cpp" "/Users/aoiang/CS/Clear/cmake-build-debug/CMakeFiles/Clear_core.dir/src/GameState.cpp.o"
   "/Users/aoiang/CS/Clear/src/GameView.cpp" "/Users/aoiang/CS/Clear/cmake-build-debug/CMakeFiles/Clear_core.dir/src/GameView.cpp.o"
   "/Users/aoiang/CS/Clear/src/Normal_Block.cpp" "/Users/aoiang/CS/Clear/cmake-build-debug/CMakeFiles/Clear_core.dir/src/Normal_Block.cpp.o"
   "/Users/aoiang/CS/Clear/src/Rotating_Block.cpp" "/Users/aoiang/CS/Clear/cmake-build-debug/CMakeFiles/Clear_core.dir/src/Rotating_Block.cpp.o"

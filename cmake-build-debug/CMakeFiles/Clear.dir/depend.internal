@@ -3,6 +3,7 @@
 
 CMakeFiles/Clear.dir/bin/Clear.cpp.o
  ../include/Block.h
+ ../include/GameState.h
  ../include/GameView.h
  ../include/Normal_Block.h
  /Users/aoiang/CS/Clear/bin/Clear.cpp

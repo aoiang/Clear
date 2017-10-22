@@ -136,6 +136,9 @@
 		<Unit filename="/Users/aoiang/CS/Clear/src/Block.cpp">
 			<Option target="Clear_core"/>
 		</Unit>
+		<Unit filename="/Users/aoiang/CS/Clear/src/GameState.cpp">
+			<Option target="Clear_core"/>
+		</Unit>
 		<Unit filename="/Users/aoiang/CS/Clear/src/GameView.cpp">
 			<Option target="Clear_core"/>
 		</Unit>

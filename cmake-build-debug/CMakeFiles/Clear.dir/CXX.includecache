@@ -10,6 +10,14 @@
 SFML/Graphics.hpp
 -
 
+../include/GameState.h
+Block.h
+../include/Block.h
+Normal_Block.h
+../include/Normal_Block.h
+SFML/Graphics.hpp
+-
+
 ../include/GameView.h
 SFML/Graphics.hpp
 -
@@ -27,12 +35,10 @@ Block.h
 /Users/aoiang/CS/Clear/bin/Clear.cpp
 SFML/Graphics.hpp
 -
-stdlib.h
--
 GameView.h
 /Users/aoiang/CS/Clear/bin/GameView.h
-Block.h
-/Users/aoiang/CS/Clear/bin/Block.h
+GameState.h
+/Users/aoiang/CS/Clear/bin/GameState.h
 
 /usr/local/include/SFML/Config.hpp
 TargetConditionals.h
