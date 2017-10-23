@@ -1,4 +1,4 @@
-#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
 
 #IncludeRegexScan: ^.*$
 
@@ -37,10 +37,10 @@ Block.h
 /Users/aoiang/CS/Clear/bin/Clear.cpp
 SFML/Graphics.hpp
 -
-GameView.h
-/Users/aoiang/CS/Clear/bin/GameView.h
 GameState.h
 /Users/aoiang/CS/Clear/bin/GameState.h
+GameView.h
+/Users/aoiang/CS/Clear/bin/GameView.h
 
 /usr/local/include/SFML/Config.hpp
 TargetConditionals.h

@@ -1,4 +1,4 @@
-#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
 
 #IncludeRegexScan: ^.*$
 
@@ -35,6 +35,10 @@ Block.h
 ../include/Block.h
 
 ../include/Rotating_Block.h
+Block.h
+-
+string
+-
 
 /Users/aoiang/CS/Clear/src/Block.cpp
 Block.h
