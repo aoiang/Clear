@@ -15,6 +15,7 @@ class Normal_Block :public Block{
 private:
     bool has_direction;
     std::string direction;
+    
 
 
 public:
@@ -23,6 +24,8 @@ public:
     void set_has_direction(bool has_direction);
     bool get_has_direction();
     void init(int id);
+    bool get_combine();
+    void set_combine();
 
 
 };
