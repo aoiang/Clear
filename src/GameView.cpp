@@ -111,7 +111,8 @@ void GameView::check_mousePosition(Normal_Block * normal_block) {
 /**
 * draws an outline around a block if it is selected
 */
-void GameView::draw_selected_block(Normal_Block * normal_block) {
+int GameView::draw_selected_block(Normal_Block * normal_block) {
+    int selected_block = 0;
     for(int be_selected=0; be_selected<5; be_selected++){
         if(!normal_block[be_selected].get_selected()){
             block_shapes[be_selected].setOutlineThickness(0);
@@ -119,8 +120,10 @@ void GameView::draw_selected_block(Normal_Block * normal_block) {
         else{
             block_shapes[be_selected].setOutlineThickness(3.5);
             block_shapes[be_selected].setOutlineColor(sf::Color::Red);
+            selected_block = be_selected;
         }
     }
+    return selected_block;
 }
 
 
@@ -143,13 +146,16 @@ void GameView::draw(Normal_Block *normal_block) {
     poll_event();
     App.clear(sf::Color(66, 150, 246));
 
-    draw_selected_block(normal_block);
-    draw_movement(normal_block);
+    //draw_selected_block(normal_block);
+    //draw_movement(normal_block);
     App.draw(block_shapes[0]);
     App.draw(block_shapes[1]);
     App.draw(block_shapes[2]);
     App.draw(block_shapes[3]);
     App.draw(block_shapes[4]);
+    int selected_block = draw_selected_block(normal_block);
+    draw_movement(normal_block);
+    App.draw(block_shapes[selected_block]);
     App.display();
 }
 
