@@ -1,4 +1,4 @@
-﻿###########################
+###########################
 # CMake Build Environment #
 ###########################
 #
@@ -111,7 +111,7 @@ endif()
 # executables (any CPP file in 'bin' dir)
 foreach(EXEC ${EXECLIST})
   get_filename_component(EXECNAME ${EXEC} NAME_WE)
-  add_executable(${EXECNAME} ${EXEC} bin/Clear.cpp)
+  add_executable(${EXECNAME} ${EXEC} bin/clear.cpp)
 
   if(NOT SRC STREQUAL "")
     target_link_libraries(${EXECNAME} LINK_PUBLIC ${LIBNAME})
