@@ -1,5 +1,6 @@
 //
 // Created by Yiyang Zhao on 18/10/2017.
+// Additional work by Ivan & Yosef
 //
 
 #ifndef CLEAR_GAMEVIEW_H
@@ -27,7 +28,10 @@ public:
     void check_mousePosition(Normal_Block *);
     void block_init();
     void check_keyboard_in();
+<<<<<<< HEAD
     bool collision_detector(sf::RectangleShape current_b, sf::RectangleShape * b, std::string direction);
+=======
+>>>>>>> yiyang_build
     sf::RenderWindow get_App();
     void draw_selected_block(Normal_Block * normal_block);
     void draw_movement(Normal_Block *normal_block);

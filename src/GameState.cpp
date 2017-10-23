@@ -25,8 +25,8 @@ void GameState::set_Normal_Block(Normal_Block *normal_block) {
     for(int i =0; i<5; i++){
         this->normal_block[i] = normal_block[i];
     }
-
 }
+
 
 bool GameState::collision_detector(Normal_Block current_block, std::string direction) {
     if(direction == "up"){

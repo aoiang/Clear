@@ -85,3 +85,11 @@ void Block::move(float x, float y) {
     this -> x += x;
     this -> y += y;
 }
+
+bool Block::get_combine() {
+    return can_combine;
+}
+
+void Block::set_combine(bool can_combine) {
+    this -> can_combine = can_combine;
+}

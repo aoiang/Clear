@@ -12,6 +12,7 @@ int main(int argc, char** argv) {
     float length = 800;
     float width = 600;
     GameView view(length, width);
+
     GameState state;
     state.init();
     view.set_GameState(state);
