@@ -28,15 +28,9 @@ public:
     void check_mousePosition(Normal_Block *);
     void block_init();
     void check_keyboard_in();
-<<<<<<< HEAD
-<<<<<<< HEAD
     bool collision_detector(sf::RectangleShape current_b, sf::RectangleShape * b, std::string direction);
-=======
->>>>>>> yiyang_build
-=======
->>>>>>> d672a8b5af2fcfb3ac73180c29fea45c98ebc647
     sf::RenderWindow get_App();
-    void draw_selected_block(Normal_Block * normal_block);
+    int draw_selected_block(Normal_Block * normal_block);
     void draw_movement(Normal_Block *normal_block);
     void set_GameState(GameState &state);
 };
