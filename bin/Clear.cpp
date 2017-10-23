@@ -1,6 +1,6 @@
 //
 // Created by Yiyang Zhao on 16/10/2017.
-// Additional work by Ivan Echevarria
+// Additional work by Ivan & Yosef
 //
 
 #include <SFML/Graphics.hpp>
@@ -18,7 +18,7 @@ int main(int argc, char** argv) {
     view.init();
     while(view.isOpen()) {
         view.check_mousePosition(state.get_Normal_Block());
-        state.check_keyboard_in();
+        view.check_keyboard_in();
         view.draw(state.get_Normal_Block());
     }
     return 0;

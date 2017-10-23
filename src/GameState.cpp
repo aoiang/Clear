@@ -1,5 +1,6 @@
 //
 // Created by Yiyang Zhao on 22/10/2017.
+// Additional work by Ivan & Yosef
 //
 
 #include "GameState.h"
@@ -77,38 +78,41 @@ bool GameState::collision_detector(Normal_Block current_block, std::string direc
 
 }
 
-void GameState::check_keyboard_in() {
-    for(int i=0; i<5; i++) {
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
-            if(normal_block[i].get_selected() && normal_block[i].get_direction() == "up" && !collision_detector(normal_block[i], normal_block[i].get_direction())){
-                normal_block[i].move(0.0,  -1 * 30);
+
+void GameState::try_move(std::string dir) {
+    for(int i = 0; i < 5; i++) {
+        if (normal_block[i].get_selected()) {
+            if(dir == "up") {
+                if(normal_block[i].get_direction() == "up" && !collision_detector(normal_block[i], normal_block[i].get_direction())){
+                    normal_block[i].move(0.0,  -1 * 30);
+                }
+                if(!normal_block[i].get_has_direction() && !collision_detector(normal_block[i], "up")){
+                    normal_block[i].move(0.0,  -1 * 30);
+                }
             }
-            if(normal_block[i].get_selected() && !normal_block[i].get_has_direction() && !collision_detector(normal_block[i], "up")){
-                normal_block[i].move(0.0,  -1 * 30);
+            if(dir == "down"){
+                if(normal_block[i].get_direction() == "down" && !collision_detector(normal_block[i], normal_block[i].get_direction())){
+                    normal_block[i].move(0.0,  1 * 30);
+                }
+                if(!normal_block[i].get_has_direction() && !collision_detector(normal_block[i], "down")){
+                    normal_block[i].move(0.0,  1 * 30);
+                }
             }
-        }
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
-            if(normal_block[i].get_selected() && normal_block[i].get_direction() == "down" && !collision_detector(normal_block[i], normal_block[i].get_direction())){
-                normal_block[i].move(0.0,  1 * 30);
+            if(dir == "left"){
+                if(normal_block[i].get_direction() == "left" && !collision_detector(normal_block[i], normal_block[i].get_direction())){
+                    normal_block[i].move(-30,  0);
+                }
+                if(!normal_block[i].get_has_direction() && !collision_detector(normal_block[i], "left")){
+                    normal_block[i].move(-30,  0);
+                }
             }
-            if(normal_block[i].get_selected() && !normal_block[i].get_has_direction() && !collision_detector(normal_block[i], "down")){
-                normal_block[i].move(0.0,  1 * 30);
-            }
-        }
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
-            if(normal_block[i].get_selected() && normal_block[i].get_direction() == "left" && !collision_detector(normal_block[i], normal_block[i].get_direction())){
-                normal_block[i].move(-30,  0);
-            }
-            if(normal_block[i].get_selected() && !normal_block[i].get_has_direction() && !collision_detector(normal_block[i], "left")){
-                normal_block[i].move(-30,  0);
-            }
-        }
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
-            if(normal_block[i].get_selected() && normal_block[i].get_direction() == "right" && !collision_detector(normal_block[i], normal_block[i].get_direction())){
-                normal_block[i].move(30.0,  0);
-            }
-            if(normal_block[i].get_selected() && !normal_block[i].get_has_direction() && !collision_detector(normal_block[i], "right")){
-                normal_block[i].move(30.0,  0);
+            if(dir == "right"){
+                if(normal_block[i].get_direction() == "right" && !collision_detector(normal_block[i], normal_block[i].get_direction())){
+                    normal_block[i].move(30.0,  0);
+                }
+                if(!normal_block[i].get_has_direction() && !collision_detector(normal_block[i], "right")){
+                    normal_block[i].move(30.0,  0);
+                }
             }
         }
     }

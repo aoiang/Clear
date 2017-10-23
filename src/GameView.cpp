@@ -1,6 +1,6 @@
 //
 // Created by Yiyang Zhao on 18/10/2017.
-// Additional work by Ivan Echevarria
+// Additional work by Ivan & Yosef
 //
 
 #include "GameView.h"
@@ -31,8 +31,8 @@ void::GameView::block_init() {
     }
 }
 
-void GameView::set_GameState(GameState state) {
-    this -> state = state;
+void GameView::set_GameState(GameState &state) {
+    this -> state = &state;
 }
 
 /**
@@ -78,8 +78,8 @@ void GameView::init() {
     sf::RectangleShape * b;
     b = new sf::RectangleShape[5];
     for(int i=0; i<5; i++) {
-        b[i] = directed_block_generator(state.get_Normal_Block(), i);
-        b[i].setPosition(state.get_Normal_Block()[i].getX(), state.get_Normal_Block()[i].getY());
+        b[i] = directed_block_generator(state->get_Normal_Block(), i);
+        b[i].setPosition(state->get_Normal_Block()[i].getX(), state->get_Normal_Block()[i].getY());
     }
     this -> block_shapes = b;
 }
@@ -153,6 +153,20 @@ void GameView::draw(Normal_Block *normal_block) {
     App.display();
 }
 
+void GameView::check_keyboard_in() {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+        this->state->try_move("up");
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+        this->state->try_move("down");
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+        this->state->try_move("left");
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+        this->state->try_move("right");
+    }
+}
 
 /**
  * Poll event
