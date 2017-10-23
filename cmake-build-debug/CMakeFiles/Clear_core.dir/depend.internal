@@ -153,6 +153,7 @@ CMakeFiles/Clear_core.dir/src/GameState.cpp.o
  /usr/local/include/SFML/Window/WindowStyle.hpp
 CMakeFiles/Clear_core.dir/src/GameView.cpp.o
  ../include/Block.h
+ ../include/GameState.h
  ../include/GameView.h
  ../include/Normal_Block.h
  /Users/aoiang/CS/Clear/src/GameView.cpp

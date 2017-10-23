@@ -8,12 +8,14 @@
 #include <SFML/Graphics.hpp>
 #include "Block.h"
 #include "Normal_Block.h"
+#include "GameState.h"
 
 class GameView {
 private:
 
     sf::Texture texture[15];
     Normal_Block block[5];
+    GameState state;
 
 
 

@@ -25,6 +25,8 @@ Block.h
 ../include/Block.h
 Normal_Block.h
 ../include/Normal_Block.h
+GameState.h
+../include/GameState.h
 
 ../include/Normal_Block.h
 string

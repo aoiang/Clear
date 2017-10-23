@@ -242,7 +242,6 @@ void GameView::draw_selected_block(Normal_Block *normal_block, sf::RectangleShap
         }
         else{
             b[be_selected].setOutlineThickness(3.5);
-            //printf("%f", b[be_selected].getPosition().x);
             b[be_selected].setOutlineColor(sf::Color::Red);
         }
     }
@@ -272,7 +271,6 @@ void GameView::draw(Normal_Block *normal_block, sf::RectangleShape b[]) {
 
     draw_selected_block(normal_block, b);
     draw_movement(normal_block, b);
-    printf("%f\n", b[0].getPosition().x);
     App.draw(b[0]);
     App.draw(b[1]);
     App.draw(b[2]);
