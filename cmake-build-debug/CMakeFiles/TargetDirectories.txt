@@ -1,4 +1,0 @@
-/Users/aoiang/CS/Clear/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/Users/aoiang/CS/Clear/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/aoiang/CS/Clear/cmake-build-debug/CMakeFiles/Clear.dir
-/Users/aoiang/CS/Clear/cmake-build-debug/CMakeFiles/Clear_core.dir
