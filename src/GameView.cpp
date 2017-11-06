@@ -41,28 +41,28 @@ void GameView::set_GameState(GameState &state) {
  *
  * @return sf::RectangleShape
  */
-sf::RectangleShape GameView::directed_block_generator(Normal_Block *normal_block, int i) {
-    if(normal_block[i].get_has_direction()){
-        if(normal_block[i].get_direction() == "up"){
-            texture[normal_block[i].get_id()].loadFromFile("../resources/up.png");
+sf::RectangleShape GameView::directed_block_generator(Normal_Block *board_array, int i) {
+    if(board_array[i].get_has_direction()){
+        if(board_array[i].get_direction() == "up"){
+            texture[board_array[i].get_id()].loadFromFile("../resources/up.png");
         }
-        if(normal_block[i].get_direction() == "down"){
-            texture[normal_block[i].get_id()].loadFromFile("../resources/down.png");
+        if(board_array[i].get_direction() == "down"){
+            texture[board_array[i].get_id()].loadFromFile("../resources/down.png");
         }
-        if(normal_block[i].get_direction() == "left"){
-            texture[normal_block[i].get_id()].loadFromFile("../resources/left.png");
+        if(board_array[i].get_direction() == "left"){
+            texture[board_array[i].get_id()].loadFromFile("../resources/left.png");
         }
-        if(normal_block[i].get_direction() == "right"){
-            texture[normal_block[i].get_id()].loadFromFile("../resources/right.png");
+        if(board_array[i].get_direction() == "right"){
+            texture[board_array[i].get_id()].loadFromFile("../resources/right.png");
         }
 
-        sf::RectangleShape c(sf::Vector2f(normal_block[i].get_length(), normal_block[i].get_width()));
+        sf::RectangleShape c(sf::Vector2f(board_array[i].get_length(), board_array[i].get_width()));
         c.setFillColor(sf::Color::White);
-        c.setTexture(&texture[normal_block[i].get_id()]);
+        c.setTexture(&texture[board_array[i].get_id()]);
         return c;
     }
     else{
-        sf::RectangleShape c(sf::Vector2f(normal_block[i].get_length(), normal_block[i].get_width()));
+        sf::RectangleShape c(sf::Vector2f(board_array[i].get_length(), board_array[i].get_width()));
         c.setFillColor(sf::Color::White);
         return c;
     }
@@ -78,29 +78,29 @@ void GameView::init() {
     sf::RectangleShape * b;
     b = new sf::RectangleShape[5];
     for(int i=0; i<5; i++) {
-        b[i] = directed_block_generator(state->get_Normal_Block(), i);
-        b[i].setPosition(state->get_Normal_Block()[i].getX(), state->get_Normal_Block()[i].getY());
+        b[i] = directed_block_generator(state->get_board_array(), i);
+        b[i].setPosition(state->get_board_array()[i].getX(), state->get_board_array()[i].getY());
     }
     this -> block_shapes = b;
 }
 
 
-void GameView::check_mousePosition(Normal_Block * normal_block) {
+void GameView::check_mousePosition(Normal_Block * board_array) {
     sf::Clock timer;
     float d = timer.restart().asSeconds();
     int current_y = App.getSize().y;
     int current_x = App.getSize().x;
     for(int i=0; i<5; i++) {
-        if (sf::Mouse::getPosition(App).x >= int((normal_block[i].getX() / 800) * current_x) && sf::Mouse::getPosition(App).x <= int(((normal_block[i].getX()+100) / 800) * current_x)){
-            if (sf::Mouse::getPosition(App).y >= int((normal_block[i].getY() / 600) * current_y) && sf::Mouse::getPosition(App).y <= int(((normal_block[i].getY()+100) / 600) * current_y)){
+        if (sf::Mouse::getPosition(App).x >= int((board_array[i].getX() / 800) * current_x) && sf::Mouse::getPosition(App).x <= int(((board_array[i].getX()+100) / 800) * current_x)){
+            if (sf::Mouse::getPosition(App).y >= int((board_array[i].getY() / 600) * current_y) && sf::Mouse::getPosition(App).y <= int(((board_array[i].getY()+100) / 600) * current_y)){
                 if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                     for(int be_selected=0; be_selected<5; be_selected++){
                         if(be_selected==i){
                             continue;
                         }
-                        normal_block[be_selected].set_selected(false);
+                        board_array[be_selected].set_selected(false);
                     }
-                    normal_block[i].set_selected(true);
+                    board_array[i].set_selected(true);
                 }
             }
         }
@@ -111,10 +111,10 @@ void GameView::check_mousePosition(Normal_Block * normal_block) {
 /**
 * draws an outline around a block if it is selected
 */
-int GameView::draw_selected_block(Normal_Block * normal_block) {
+int GameView::draw_selected_block(Normal_Block * board_array) {
     int selected_block = 0;
     for(int be_selected=0; be_selected<5; be_selected++){
-        if(!normal_block[be_selected].get_selected()){
+        if(!board_array[be_selected].get_selected()){
             block_shapes[be_selected].setOutlineThickness(0);
         }
         else{
@@ -129,11 +129,11 @@ int GameView::draw_selected_block(Normal_Block * normal_block) {
 
 /**
 * draw animation for blocks leaving screen
-* @param normal_block for blocks
+* @param board_array for blocks
 */
-void GameView::draw_movement(Normal_Block * normal_block) {
+void GameView::draw_movement(Normal_Block * board_array) {
     for(int i=0; i < 5; i++){
-        block_shapes[i].setPosition(normal_block[i].getX(),normal_block[i].getY());
+        block_shapes[i].setPosition(board_array[i].getX(),board_array[i].getY());
     }
 }
 
@@ -142,19 +142,16 @@ void GameView::draw_movement(Normal_Block * normal_block) {
  * draw all blocks and mechanics
  * @param b for blocks in gameview mode
  */
-void GameView::draw(Normal_Block *normal_block) {
+void GameView::draw(Normal_Block *board_array) {
     poll_event();
     App.clear(sf::Color(66, 150, 246));
-
-    //draw_selected_block(normal_block);
-    //draw_movement(normal_block);
     App.draw(block_shapes[0]);
     App.draw(block_shapes[1]);
     App.draw(block_shapes[2]);
     App.draw(block_shapes[3]);
     App.draw(block_shapes[4]);
-    int selected_block = draw_selected_block(normal_block);
-    draw_movement(normal_block);
+    int selected_block = draw_selected_block(board_array);
+    draw_movement(board_array);
     App.draw(block_shapes[selected_block]);
     App.display();
 }

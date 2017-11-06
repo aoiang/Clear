@@ -6,24 +6,20 @@
 #include "GameState.h"
 
 
-void GameState::block_init() {
-    for(int i=0; i<5; i++){
-        normal_block[i].init(i);
-        normal_block[i].setPosition(100+80*i, 200);
-    }
-}
-
 void GameState::init() {
-    block_init();
+  for(int i=0; i<5; i++){
+      board_array[i].init(i);
+      board_array[i].setPosition(100+80*i, 200);
+  }
 }
 
-Normal_Block* GameState::get_Normal_Block() {
-    return normal_block;
+Normal_Block* GameState::get_board_array() {
+    return board_array;
 }
 
-void GameState::set_Normal_Block(Normal_Block *normal_block) {
+void GameState::set_board_array(Normal_Block *board_array) {
     for(int i =0; i<5; i++){
-        this->normal_block[i] = normal_block[i];
+        this->board_array[i] = board_array[i];
     }
 }
 
@@ -31,9 +27,9 @@ void GameState::set_Normal_Block(Normal_Block *normal_block) {
 bool GameState::collision_detector(Normal_Block current_block, std::string direction) {
     if(direction == "up"){
         for(int i=0; i < 5; i++){
-            if(normal_block[i].getX() == current_block.getX()){
-                if(normal_block[i].getY() < current_block.getY()){
-                    if(normal_block[i].getX() > 0 && normal_block[i].getX() < 800 && normal_block[i].getY() > 0 && normal_block[i].getY() < 600){
+            if(board_array[i].getX() == current_block.getX()){
+                if(board_array[i].getY() < current_block.getY()){
+                    if(board_array[i].getX() > 0 && board_array[i].getX() < 800 && board_array[i].getY() > 0 && board_array[i].getY() < 600){
                         return true;
                     }
                 }
@@ -42,9 +38,9 @@ bool GameState::collision_detector(Normal_Block current_block, std::string direc
     }
     if(direction == "down"){
         for(int i=0; i < 5; i++){
-            if(normal_block[i].getX() == current_block.getX()){
-                if(normal_block[i].getY()> current_block.getY()){
-                    if(normal_block[i].getX() > 0 && normal_block[i].getX() < 800 && normal_block[i].getY() > 0 && normal_block[i].getY() < 600){
+            if(board_array[i].getX() == current_block.getX()){
+                if(board_array[i].getY()> current_block.getY()){
+                    if(board_array[i].getX() > 0 && board_array[i].getX() < 800 && board_array[i].getY() > 0 && board_array[i].getY() < 600){
                         return true;
                     }
                 }
@@ -53,9 +49,9 @@ bool GameState::collision_detector(Normal_Block current_block, std::string direc
     }
     if(direction == "left"){
         for(int i=0; i < 5; i++){
-            if(normal_block[i].getY() == current_block.getY()){
-                if(normal_block[i].getX() < current_block.getX()){
-                    if(normal_block[i].getX() > 0 && normal_block[i].getX() < 800 && normal_block[i].getY() > 0 && normal_block[i].getY() < 600){
+            if(board_array[i].getY() == current_block.getY()){
+                if(board_array[i].getX() < current_block.getX()){
+                    if(board_array[i].getX() > 0 && board_array[i].getX() < 800 && board_array[i].getY() > 0 && board_array[i].getY() < 600){
                         return true;
                     }
 
@@ -65,9 +61,9 @@ bool GameState::collision_detector(Normal_Block current_block, std::string direc
     }
     if(direction == "right"){
         for(int i=0; i < 5; i++){
-            if(normal_block[i].getY() == current_block.getY()){
-                if(normal_block[i].getX() > current_block.getX()){
-                    if(normal_block[i].getX() > 0 && normal_block[i].getX() < 800 && normal_block[i].getY() > 0 && normal_block[i].getY() < 600){
+            if(board_array[i].getY() == current_block.getY()){
+                if(board_array[i].getX() > current_block.getX()){
+                    if(board_array[i].getX() > 0 && board_array[i].getX() < 800 && board_array[i].getY() > 0 && board_array[i].getY() < 600){
                         return true;
                     }
                 }
@@ -81,37 +77,37 @@ bool GameState::collision_detector(Normal_Block current_block, std::string direc
 
 void GameState::try_move(std::string dir) {
     for(int i = 0; i < 5; i++) {
-        if (normal_block[i].get_selected()) {
+        if (board_array[i].get_selected()) {
             if(dir == "up") {
-                if(normal_block[i].get_direction() == "up" && !collision_detector(normal_block[i], normal_block[i].get_direction())){
-                    normal_block[i].move(0.0,  -1 * 30);
+                if(board_array[i].get_direction() == "up" && !collision_detector(board_array[i], board_array[i].get_direction())){
+                    board_array[i].move(0.0,  -1 * 30);
                 }
-                if(!normal_block[i].get_has_direction() && !collision_detector(normal_block[i], "up")){
-                    normal_block[i].move(0.0,  -1 * 30);
+                if(!board_array[i].get_has_direction() && !collision_detector(board_array[i], "up")){
+                    board_array[i].move(0.0,  -1 * 30);
                 }
             }
             if(dir == "down"){
-                if(normal_block[i].get_direction() == "down" && !collision_detector(normal_block[i], normal_block[i].get_direction())){
-                    normal_block[i].move(0.0,  1 * 30);
+                if(board_array[i].get_direction() == "down" && !collision_detector(board_array[i], board_array[i].get_direction())){
+                    board_array[i].move(0.0,  1 * 30);
                 }
-                if(!normal_block[i].get_has_direction() && !collision_detector(normal_block[i], "down")){
-                    normal_block[i].move(0.0,  1 * 30);
+                if(!board_array[i].get_has_direction() && !collision_detector(board_array[i], "down")){
+                    board_array[i].move(0.0,  1 * 30);
                 }
             }
             if(dir == "left"){
-                if(normal_block[i].get_direction() == "left" && !collision_detector(normal_block[i], normal_block[i].get_direction())){
-                    normal_block[i].move(-30,  0);
+                if(board_array[i].get_direction() == "left" && !collision_detector(board_array[i], board_array[i].get_direction())){
+                    board_array[i].move(-30,  0);
                 }
-                if(!normal_block[i].get_has_direction() && !collision_detector(normal_block[i], "left")){
-                    normal_block[i].move(-30,  0);
+                if(!board_array[i].get_has_direction() && !collision_detector(board_array[i], "left")){
+                    board_array[i].move(-30,  0);
                 }
             }
             if(dir == "right"){
-                if(normal_block[i].get_direction() == "right" && !collision_detector(normal_block[i], normal_block[i].get_direction())){
-                    normal_block[i].move(30.0,  0);
+                if(board_array[i].get_direction() == "right" && !collision_detector(board_array[i], board_array[i].get_direction())){
+                    board_array[i].move(30.0,  0);
                 }
-                if(!normal_block[i].get_has_direction() && !collision_detector(normal_block[i], "right")){
-                    normal_block[i].move(30.0,  0);
+                if(!board_array[i].get_has_direction() && !collision_detector(board_array[i], "right")){
+                    board_array[i].move(30.0,  0);
                 }
             }
         }

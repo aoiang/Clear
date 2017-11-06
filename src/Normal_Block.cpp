@@ -53,9 +53,11 @@ void Normal_Block::init(int id) {
         set_has_direction(false);
     }
 }
+
+
 bool Normal_Block::get_combine()
 {
-  return this->can_combine;   
+  return this->can_combine;
 }
 void Normal_Block::set_combine()
 {

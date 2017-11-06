@@ -12,15 +12,14 @@ int main(int argc, char** argv) {
     float length = 800;
     float width = 600;
     GameView view(length, width);
-    printf("dafdsafdasf\n");
     GameState state;
     state.init();
     view.set_GameState(state);
     view.init();
     while(view.isOpen()) {
-        view.check_mousePosition(state.get_Normal_Block());
+        view.check_mousePosition(state.get_board_array());
         view.check_keyboard_in();
-        view.draw(state.get_Normal_Block());
+        view.draw(state.get_board_array());
     }
     return 0;
 }
