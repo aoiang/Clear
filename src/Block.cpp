@@ -53,7 +53,6 @@ void Block::set_id(int id) {
 
 void Block::init(int id) {
     this ->id = id;
-
 }
 
 void Block::set_selected(bool is_selected){

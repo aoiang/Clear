@@ -33,6 +33,7 @@ public:
     int draw_selected_block(Normal_Block * normal_block);
     void draw_movement(Normal_Block *normal_block);
     void set_GameState(GameState &state);
+    void update();
 };
 
 

@@ -8,18 +8,15 @@
 #include "GameView.h"
 
 int main(int argc, char** argv) {
-    // create main Window
-    float length = 800;
-    float width = 600;
+    int length = 800;
+    int width = 600;
     GameView view(length, width);
     GameState state;
     state.init();
     view.set_GameState(state);
     view.init();
     while(view.isOpen()) {
-        view.check_mousePosition(state.get_board_array());
-        view.check_keyboard_in();
-        view.draw(state.get_board_array());
+        view.update();
     }
     return 0;
 }
