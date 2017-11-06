@@ -17,17 +17,14 @@ public:
     void block_init();
     Normal_Block * get_Normal_Block();
     bool collision_detector(Normal_Block current_block, std::string direction);
-<<<<<<< HEAD
-<<<<<<< HEAD
     bool try_move(Normal_Block current_block, std::string direction);
-    void try_move(std::string direction);
+
     void check_mousePosition(sf::RenderWindow App);
-=======
+
     void try_move(std::string direction);
->>>>>>> yiyang_build
-=======
-    void try_move(std::string direction);
->>>>>>> d672a8b5af2fcfb3ac73180c29fea45c98ebc647
+
+
+
     void set_Normal_Block(Normal_Block *normal_block);
 };
 

@@ -12,7 +12,7 @@ int main(int argc, char** argv) {
     float length = 800;
     float width = 600;
     GameView view(length, width);
-    printf("dafdsafdasf\n");
+    //printf("dafdsafdasf\n");
     GameState state;
     state.init();
     view.set_GameState(state);
