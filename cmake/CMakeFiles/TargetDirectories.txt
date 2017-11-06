@@ -1,0 +1,4 @@
+/Users/aoiang/CS/pong/cmake/CMakeFiles/rebuild_cache.dir
+/Users/aoiang/CS/pong/cmake/CMakeFiles/edit_cache.dir
+/Users/aoiang/CS/pong/cmake/CMakeFiles/helloworld.dir
+/Users/aoiang/CS/pong/cmake/CMakeFiles/Pong.dir

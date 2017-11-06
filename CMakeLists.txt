@@ -10,7 +10,7 @@
 #########################################
 
 # Project name
-project(Clear)
+project(csci437)
 
 # Minimum Cmake Version
 cmake_minimum_required(VERSION 2.6)
@@ -27,7 +27,7 @@ if((NOT CMAKE_BUILD_TYPE) AND (NOT $ENV{CMAKE_BUILD_TYPE} STREQUAL ""))
 endif()
 
 # Set include directories
-include_directories(${Clear_SOURCE_DIR}/include)
+include_directories(${csci437_SOURCE_DIR}/include)
 
 # Get CPP files
 file(GLOB SRC src/*cpp)
@@ -75,7 +75,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 if(CMAKE_BUILD_TYPE)
   string(TOUPPER "${CMAKE_BUILD_TYPE}" TYPE)
   message("-- Using user specified build type: ${TYPE}")
-elseif(${csci437_SOURCE_DIR} STREQUAL ${Clear_BINARY_DIR})
+elseif(${csci437_SOURCE_DIR} STREQUAL ${csci437_BINARY_DIR})
   set(CMAKE_BUILD_TYPE Debug)
   message("-- In-source building. Build type set to: Debug")
 else()
@@ -103,7 +103,7 @@ endif()
 #######################
 # src library (all CPP files in 'src' dir)
 if(NOT SRC STREQUAL "")
-  get_filename_component(LIBNAME ${Clear_SOURCE_DIR} NAME)
+  get_filename_component(LIBNAME ${csci437_SOURCE_DIR} NAME)
   set(LIBNAME "${LIBNAME}_core")
   add_library(${LIBNAME} ${SRC})
 endif()

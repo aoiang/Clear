@@ -17,9 +17,9 @@ Normal_Block* GameState::get_board_array() {
     return board_array;
 }
 
-void GameState::set_board_array(Normal_Block *board_array) {
+void GameState::set_board_array(Normal_Block * board_array) {
     for(int i =0; i<5; i++){
-        this->board_array[i] = board_array[i];
+        this -> board_array[i] = board_array[i];
     }
 }
 
