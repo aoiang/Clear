@@ -1,22 +1,35 @@
 //
-//created by Yosef Ejigu 10/21/17
+// Created by Yosef Ejigu 10/21/17
+// Additional work by Ivan Echevarria
+//
 
 #include <Clearboard.hpp>
 
 /**
   Sets properties of the board
-  @param width for width of board 
+  @param width for width of board
   @param height for the height of the board
   @param x for x position of a specific block on the board
   @param y for y position of a specific block on the board
 */
 
+
+/**
+  Initializes board
+*/
 void Clearboard::init()
 {
-    for(int i=0; i<this->height; i++)
-        for (int j=0; j<this->width; j++)
+    for(int i = 0; i < this->height; i++)
+        for (int j = 0; j < this->width; j++)
             this->board[i][j] = NULL;
 }
+
+
+/**
+  Sets board dimensions
+  @param h for height
+  @param w for width
+*/
 void Clearboard::init(int h, int w)
 {
     this->height = h;
@@ -24,8 +37,15 @@ void Clearboard::init(int h, int w)
     for(int i=0; i<this->height; i++)
         for (int j=0; j<this->width; j++)
             this->board[i][j] = NULL;
-    
 }
+
+
+/**
+  Removes element from board
+  @param x coordinate to remove
+  @param y coordinate to remove
+  @return bool to indicate successful removal
+*/
 bool Clearboard:: remove(int x, int y)
 {
     if (x> this->width || y > this->height)

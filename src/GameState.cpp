@@ -8,7 +8,7 @@
 
 
 /**
-* Sets the board
+  Sets the board
 */
 void GameState::init() {
   for(int i=0; i<5; i++){
@@ -19,15 +19,15 @@ void GameState::init() {
 
 
 /**
-* @return the board array
+  @return the board array
 */
 Normal_Block* GameState::get_board_array() {
     return board_array;
 }
 
 /**
-* Sets the board array
-* @param board_array
+  Sets the board array
+  @param board_array
 */
 void GameState::set_board_array(Normal_Block * board_array) {
     for(int i =0; i<5; i++){
@@ -36,10 +36,10 @@ void GameState::set_board_array(Normal_Block * board_array) {
 }
 
 /**
-* Checks for collisions
-* @param current block
-* @param direction
-* @return bool indicating whether there was a collision
+  Checks for collisions
+  @param current block
+  @param direction
+  @return bool indicating whether there was a collision
 */
 bool GameState::collision_detector(Normal_Block current_block, std::string direction) {
     if(direction == "up"){
@@ -91,8 +91,8 @@ bool GameState::collision_detector(Normal_Block current_block, std::string direc
 }
 
 /**
-* Attempts to move blocks
-* @param dir for move direction
+  Attempts to move blocks
+  @param dir for move direction
 */
 void GameState::try_move(std::string dir) {
     for(int i = 0; i < 5; i++) {

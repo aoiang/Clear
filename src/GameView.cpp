@@ -7,23 +7,23 @@
 
 
 /**
- * Create the game window
- */
+  Create the game window
+*/
 GameView::GameView(float length, float width) :
     App(sf::VideoMode(length, width, 32), "Clear",  sf::Style::Default){}
 
 
 /**
- * Check if window is open
- * @return bool
- */
+  Check if window is open
+  @return bool
+*/
 bool GameView::isOpen() {
     return App.isOpen();
 }
 
 
 /**
-* Updates the view and state at each frame
+  Updates the view and state at each frame
 */
 void GameView::update() {
   check_mouse_position();
@@ -33,8 +33,8 @@ void GameView::update() {
 
 
 /**
-* Assigns a GameState to this view
-* @param state is the GameState associated with this view
+  Assigns a GameState to this view
+  @param state is the GameState associated with this view
 */
 void GameView::set_GameState(GameState &state) {
     this -> state = &state;
@@ -42,9 +42,9 @@ void GameView::set_GameState(GameState &state) {
 
 
 /**
-* Make block shapes based on their properties
-* @param Normal_Block to draw
-* @return sf::RectangleShape
+  Make block shapes based on their properties
+  @param Normal_Block to draw
+  @return sf::RectangleShape
 */
 sf::RectangleShape GameView::make_block_shape(Normal_Block block) {
     sf::RectangleShape block_shape(sf::Vector2f(block.get_length(), block.get_width()));
@@ -68,8 +68,8 @@ sf::RectangleShape GameView::make_block_shape(Normal_Block block) {
 
 
 /**
- * Initialize all blocks, set all parameters for blocks
- */
+  Initialize all blocks, set all parameters for blocks
+*/
 void GameView::block_init() {
     for(int i=0; i<5; i++){
        block[i].init(i);
@@ -78,9 +78,9 @@ void GameView::block_init() {
 
 
 /**
- * Initialize the game, set all blocks shapes
- * @return sf::RectangleShape
- */
+  Initialize the game, set all blocks shapes
+  @return sf::RectangleShape
+*/
 void GameView::init() {
     block_init();
     sf::RectangleShape * shapes;
@@ -94,7 +94,7 @@ void GameView::init() {
 
 
 /**
-* Checks if mouse has clicked on a block
+  Checks if mouse has clicked on a block
 */
 void GameView::check_mouse_position() {
     int current_y = App.getSize().y;
@@ -118,8 +118,8 @@ void GameView::check_mouse_position() {
 
 
 /**
-* Draws an outline around a block if it is selected
-* @param board_array is the array of blocks
+  Draws an outline around a block if it is selected
+  @param board_array is the array of blocks
 */
 int GameView::draw_selected_block(Normal_Block * board_array) {
     int selected_block = 0;
@@ -138,8 +138,8 @@ int GameView::draw_selected_block(Normal_Block * board_array) {
 
 
 /**
-* Draw animation for blocks leaving screen
-* @param board_array for array of blocks
+  Draw animation for blocks leaving screen
+  @param board_array for array of blocks
 */
 void GameView::draw_movement(Normal_Block * board_array) {
     for(int i=0; i < 5; i++){
@@ -149,9 +149,9 @@ void GameView::draw_movement(Normal_Block * board_array) {
 
 
 /**
- * Draw all blocks, movements, and selections
- * @param board_array for array of blocks
- */
+  Draw all blocks, movements, and selections
+  @param board_array for array of blocks
+*/
 void GameView::draw() {
     poll_event();
     App.clear(sf::Color(66, 150, 246));
@@ -167,7 +167,7 @@ void GameView::draw() {
 
 
 /**
-* Checks keyboard input, sends input to state for handling
+  Checks keyboard input, sends input to state for handling
 */
 void GameView::check_keyboard_in() {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
@@ -186,8 +186,8 @@ void GameView::check_keyboard_in() {
 
 
 /**
- * Check events
- */
+  Check events
+*/
 void GameView::poll_event(){
     sf::Event Event;
     while(App.pollEvent(Event)){
