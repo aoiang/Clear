@@ -165,6 +165,7 @@ void GameView::draw() {
     App.display();
 }
 
+
 /**
 * Checks keyboard input, sends input to state for handling
 */
@@ -182,6 +183,7 @@ void GameView::check_keyboard_in() {
         state -> try_move("right");
     }
 }
+
 
 /**
  * Check events

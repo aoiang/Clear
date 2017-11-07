@@ -5,6 +5,7 @@
 
 #ifndef CLEAR_GAMESTATE_H
 #define CLEAR_GAMESTATE_H
+
 #include "Block.h"
 #include "Normal_Block.h"
 #include <SFML/Graphics.hpp>
