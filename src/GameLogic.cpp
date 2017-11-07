@@ -4,13 +4,13 @@
 //
 
 
-#include "GameState.h"
+#include "GameLogic.h"
 
 
 /**
   Sets the board
 */
-void GameState::init() {
+void GameLogic::init() {
   for(int i=0; i<5; i++){
       board_array[i].init(i);
       board_array[i].setPosition(100+80*i, 200);
@@ -21,7 +21,7 @@ void GameState::init() {
 /**
   @return the board array
 */
-Normal_Block* GameState::get_board_array() {
+Normal_Block* GameLogic::get_board_array() {
     return board_array;
 }
 
@@ -29,7 +29,7 @@ Normal_Block* GameState::get_board_array() {
   Sets the board array
   @param board_array
 */
-void GameState::set_board_array(Normal_Block * board_array) {
+void GameLogic::set_board_array(Normal_Block * board_array) {
     for(int i =0; i<5; i++){
         this -> board_array[i] = board_array[i];
     }
@@ -41,7 +41,7 @@ void GameState::set_board_array(Normal_Block * board_array) {
   @param direction
   @return bool indicating whether there was a collision
 */
-bool GameState::collision_detector(Normal_Block current_block, std::string direction) {
+bool GameLogic::collision_detector(Normal_Block current_block, std::string direction) {
     if(direction == "up"){
         for(int i=0; i < 5; i++){
             if(board_array[i].getX() == current_block.getX()){
@@ -94,7 +94,7 @@ bool GameState::collision_detector(Normal_Block current_block, std::string direc
   Attempts to move blocks
   @param dir for move direction
 */
-void GameState::try_move(std::string dir) {
+void GameLogic::try_move(std::string dir) {
     for(int i = 0; i < 5; i++) {
         if (board_array[i].get_selected()) {
             if(dir == "up") {

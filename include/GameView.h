@@ -9,14 +9,14 @@
 #include <SFML/Graphics.hpp>
 #include "Block.h"
 #include "Normal_Block.h"
-#include "GameState.h"
+#include "GameLogic.h"
 
 class GameView {
 private:
     sf::Texture texture[15];
     Normal_Block block[5];
     sf::RectangleShape * block_shapes;
-    GameState *state;
+    GameLogic *logic;
 public:
     sf::RenderWindow App;
     GameView(float, float);
@@ -32,7 +32,7 @@ public:
     sf::RenderWindow get_App();
     int draw_selected_block(Normal_Block * normal_block);
     void draw_movement(Normal_Block * normal_block);
-    void set_GameState(GameState &state);
+    void set_GameLogic(GameLogic &logic);
     void update();
 };
 

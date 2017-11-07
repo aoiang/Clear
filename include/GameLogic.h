@@ -3,14 +3,14 @@
 // Additional work by Ivan & Yosef
 //
 
-#ifndef CLEAR_GAMESTATE_H
-#define CLEAR_GAMESTATE_H
+#ifndef CLEAR_GAMELOGIC_H
+#define CLEAR_GAMELOGIC_H
 
 #include "Block.h"
 #include "Normal_Block.h"
 #include <SFML/Graphics.hpp>
 
-class GameState {
+class GameLogic {
 private:
     Normal_Block board_array[5];
 public:
@@ -23,4 +23,4 @@ public:
     void set_board_array(Normal_Block *board_array);
 };
 
-#endif //CLEAR_GAMESTATE_H
+#endif

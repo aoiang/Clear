@@ -23,7 +23,7 @@ bool GameView::isOpen() {
 
 
 /**
-  Updates the view and state at each frame
+  Updates the view and logic at each frame
 */
 void GameView::update() {
   check_mouse_position();
@@ -33,11 +33,11 @@ void GameView::update() {
 
 
 /**
-  Assigns a GameState to this view
-  @param state is the GameState associated with this view
+  Assigns a GameLogic to this view
+  @param logic is the GameLogic associated with this view
 */
-void GameView::set_GameState(GameState &state) {
-    this -> state = &state;
+void GameView::set_GameLogic(GameLogic &logic) {
+    this -> logic = &logic;
 }
 
 
@@ -86,8 +86,8 @@ void GameView::init() {
     sf::RectangleShape * shapes;
     shapes = new sf::RectangleShape[5];
     for(int i=0; i<5; i++) {
-        shapes[i] = make_block_shape(state -> get_board_array()[i]);
-        shapes[i].setPosition(state -> get_board_array()[i].getX(), state -> get_board_array()[i].getY());
+        shapes[i] = make_block_shape(logic -> get_board_array()[i]);
+        shapes[i].setPosition(logic -> get_board_array()[i].getX(), logic -> get_board_array()[i].getY());
     }
     this -> block_shapes = shapes;
 }
@@ -100,16 +100,16 @@ void GameView::check_mouse_position() {
     int current_y = App.getSize().y;
     int current_x = App.getSize().x;
     for(int i=0; i<5; i++) {
-        if (sf::Mouse::getPosition(App).x >= int((state -> get_board_array()[i].getX() / 800) * current_x) && sf::Mouse::getPosition(App).x <= int(((state -> get_board_array()[i].getX()+100) / 800) * current_x)){
-            if (sf::Mouse::getPosition(App).y >= int((state -> get_board_array()[i].getY() / 600) * current_y) && sf::Mouse::getPosition(App).y <= int(((state -> get_board_array()[i].getY()+100) / 600) * current_y)){
+        if (sf::Mouse::getPosition(App).x >= int((logic -> get_board_array()[i].getX() / 800) * current_x) && sf::Mouse::getPosition(App).x <= int(((logic -> get_board_array()[i].getX()+100) / 800) * current_x)){
+            if (sf::Mouse::getPosition(App).y >= int((logic -> get_board_array()[i].getY() / 600) * current_y) && sf::Mouse::getPosition(App).y <= int(((logic -> get_board_array()[i].getY()+100) / 600) * current_y)){
                 if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                     for(int is_selected=0; is_selected<5; is_selected++){
                         if(is_selected==i){
                             continue;
                         }
-                        state -> get_board_array()[is_selected].set_selected(false);
+                        logic -> get_board_array()[is_selected].set_selected(false);
                     }
-                    state -> get_board_array()[i].set_selected(true);
+                    logic -> get_board_array()[i].set_selected(true);
                 }
             }
         }
@@ -159,28 +159,28 @@ void GameView::draw() {
       App.draw(block_shapes[i]);
     }
     // Draw outlined selected block on top so the outline is on top
-    int selected_block = draw_selected_block(state -> get_board_array());
-    draw_movement(state -> get_board_array());
+    int selected_block = draw_selected_block(logic -> get_board_array());
+    draw_movement(logic -> get_board_array());
     App.draw(block_shapes[selected_block]);
     App.display();
 }
 
 
 /**
-  Checks keyboard input, sends input to state for handling
+  Checks keyboard input, sends input to logic for handling
 */
 void GameView::check_keyboard_in() {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-        state -> try_move("up");
+        logic -> try_move("up");
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-        state -> try_move("down");
+        logic -> try_move("down");
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-        state -> try_move("left");
+        logic -> try_move("left");
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-        state -> try_move("right");
+        logic -> try_move("right");
     }
 }
 
