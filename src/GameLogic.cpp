@@ -11,9 +11,9 @@
   Sets the board
 */
 void GameLogic::init() {
-    for(int i=0; i<5; i++){
+    for(int i = 0; i < get_board_width(); i++){
         board_array[i].init(i);
-        board_array[i].setPosition(100+80*i, 200);
+        board_array[i].setPosition(150 + 50 * i, 50);
     }
 }
 
@@ -74,11 +74,19 @@ void GameLogic::set_selected_position(int row, int col) {
 
 
 /**
+  @return board width
+*/
+int GameLogic::get_board_width() {
+    return board_width;
+}
+
+
+/**
   Sets the board array
   @param board_array
 */
 void GameLogic::set_board_array(Normal_Block * board_array) {
-    for(int i =0; i<5; i++){
+    for(int i = 0; i < get_board_width(); i++){
         this -> board_array[i] = board_array[i];
     }
 }
@@ -92,7 +100,7 @@ void GameLogic::set_board_array(Normal_Block * board_array) {
 */
 bool GameLogic::collision_detector(Normal_Block current_block, std::string direction) {
     if(direction == "up"){
-        for(int i=0; i < 5; i++){
+        for(int i=0; i < get_board_width(); i++){
             if(board_array[i].getX() == current_block.getX()){
                 if(board_array[i].getY() < current_block.getY()){
                     if(board_array[i].getX() > 0 && board_array[i].getX() < 800 && board_array[i].getY() > 0 && board_array[i].getY() < 600){
@@ -103,7 +111,7 @@ bool GameLogic::collision_detector(Normal_Block current_block, std::string direc
         }
     }
     if(direction == "down"){
-        for(int i=0; i < 5; i++){
+        for(int i=0; i < get_board_width(); i++){
             if(board_array[i].getX() == current_block.getX()){
                 if(board_array[i].getY()> current_block.getY()){
                     if(board_array[i].getX() > 0 && board_array[i].getX() < 800 && board_array[i].getY() > 0 && board_array[i].getY() < 600){
@@ -114,7 +122,7 @@ bool GameLogic::collision_detector(Normal_Block current_block, std::string direc
         }
     }
     if(direction == "left"){
-        for(int i=0; i < 5; i++){
+        for(int i=0; i < get_board_width(); i++){
             if(board_array[i].getY() == current_block.getY()){
                 if(board_array[i].getX() < current_block.getX()){
                     if(board_array[i].getX() > 0 && board_array[i].getX() < 800 && board_array[i].getY() > 0 && board_array[i].getY() < 600){
@@ -126,7 +134,7 @@ bool GameLogic::collision_detector(Normal_Block current_block, std::string direc
         }
     }
     if(direction == "right"){
-        for(int i=0; i < 5; i++){
+        for(int i=0; i < get_board_width(); i++){
             if(board_array[i].getY() == current_block.getY()){
                 if(board_array[i].getX() > current_block.getX()){
                     if(board_array[i].getX() > 0 && board_array[i].getX() < 800 && board_array[i].getY() > 0 && board_array[i].getY() < 600){

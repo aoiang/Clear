@@ -3,6 +3,7 @@
 // Additional work by Ivan & Yosef
 //
 
+
 #include "GameView.h"
 
 
@@ -68,24 +69,13 @@ sf::RectangleShape GameView::make_block_shape(Normal_Block block) {
 
 
 /**
-  Initialize all blocks, set all parameters for blocks
-*/
-void GameView::block_init() {
-    for(int i=0; i<5; i++){
-        block[i].init(i);
-    }
-}
-
-
-/**
   Initialize the game, set all blocks shapes
   @return sf::RectangleShape
 */
 void GameView::init() {
-    block_init();
     sf::RectangleShape * shapes;
-    shapes = new sf::RectangleShape[5];
-    for(int i=0; i<5; i++) {
+    shapes = new sf::RectangleShape[logic->get_board_width()];
+    for (int i = 0; i < logic->get_board_width(); i++) {
         shapes[i] = make_block_shape(logic -> get_board_array()[i]);
         shapes[i].setPosition(logic -> get_board_array()[i].getX(), logic -> get_board_array()[i].getY());
     }
@@ -99,7 +89,7 @@ void GameView::init() {
 void GameView::check_mouse_position() {
     int current_y = App.getSize().y;
     int current_x = App.getSize().x;
-    for(int i=0; i<5; i++) {
+    for (int i = 0; i < logic->get_board_width(); i++) {
         if (sf::Mouse::getPosition(App).x >= int((logic -> get_board_array()[i].getX() / 800) * current_x) && sf::Mouse::getPosition(App).x <= int(((logic -> get_board_array()[i].getX()+100) / 800) * current_x)){
             if (sf::Mouse::getPosition(App).y >= int((logic -> get_board_array()[i].getY() / 600) * current_y) && sf::Mouse::getPosition(App).y <= int(((logic -> get_board_array()[i].getY()+100) / 600) * current_y)){
                 if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
@@ -131,7 +121,7 @@ void GameView::draw_selected_block(Normal_Block * board_array) {
 void GameView::draw() {
     poll_event();
     App.clear(sf::Color(80, 160, 250));
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < logic->get_board_width(); i++) {
         block_shapes[i].setOutlineThickness(0);
         App.draw(block_shapes[i]);
         block_shapes[i].setPosition(logic->get_board_array()[i].getX(), logic->get_board_array()[i].getY());

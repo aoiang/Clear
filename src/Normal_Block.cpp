@@ -33,23 +33,23 @@ void Normal_Block::set_has_direction(bool has_direction){
 
 void Normal_Block::init(int id) {
     this -> id =id;
-    if(id%5 == 0){
+    if (id % 5 == 0) {
         set_has_direction(true);
         this ->direction = "up";
     }
-    if(id%5 == 1){
+    if (id % 5 == 1) {
         set_has_direction(true);
         this ->direction = "down";
     }
-    if(id%5 == 2){
+    if (id % 5 == 2) {
         set_has_direction(true);
         this ->direction = "left";
     }
-    if(id%5 == 3){
+    if (id % 5 == 3) {
         set_has_direction(true);
         this ->direction = "right";
     }
-    if(id%5 == 4){
+    if (id % 5 == 4) {
         set_has_direction(false);
     }
 }

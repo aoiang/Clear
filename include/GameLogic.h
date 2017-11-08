@@ -12,7 +12,8 @@
 
 class GameLogic {
 private:
-    Normal_Block board_array[5];
+    int board_width = 10;
+    Normal_Block board_array[10];
     int selected_col = -1;
     int selected_row = -1;
 public:
@@ -29,6 +30,9 @@ public:
     void set_selected_col(int col);
     void set_selected_row(int row);
     void set_selected_position(int row, int col);
+
+    int get_board_width();
+    int get_board_height();
 };
 
 #endif

@@ -14,7 +14,6 @@
 class GameView {
 private:
     sf::Texture texture[15];
-    Normal_Block block[5];
     sf::RectangleShape * block_shapes;
     GameLogic *logic;
 public:
@@ -26,7 +25,6 @@ public:
     void poll_event();
     sf::RectangleShape make_block_shape(Normal_Block block);
     void check_mouse_position();
-    void block_init();
     void check_keyboard_in();
     bool collision_detector(sf::RectangleShape current_b, sf::RectangleShape * b, std::string direction);
     sf::RenderWindow get_App();
