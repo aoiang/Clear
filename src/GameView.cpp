@@ -110,6 +110,7 @@ void GameView::check_mouse_position() {
                         logic -> get_board_array()[is_selected].set_selected(false);
                     }
                     logic -> get_board_array()[i].set_selected(true);
+                    logic -> set_selected_y(i);
                 }
             }
         }
@@ -121,29 +122,11 @@ void GameView::check_mouse_position() {
   Draws an outline around a block if it is selected
   @param board_array is the array of blocks
 */
-int GameView::draw_selected_block(Normal_Block * board_array) {
-    int selected_block = 0;
-    for(int is_selected=0; is_selected<5; is_selected++){
-        if(!board_array[is_selected].get_selected()){
-            block_shapes[is_selected].setOutlineThickness(0);
-        }
-        else{
-            block_shapes[is_selected].setOutlineThickness(3.5);
-            block_shapes[is_selected].setOutlineColor(sf::Color::Red);
-            selected_block = is_selected;
-        }
-    }
-    return selected_block;
-}
-
-
-/**
-  Draw animation for blocks leaving screen
-  @param board_array for array of blocks
-*/
-void GameView::draw_movement(Normal_Block * board_array) {
-    for(int i=0; i < 5; i++){
-        block_shapes[i].setPosition(board_array[i].getX(),board_array[i].getY());
+void GameView::draw_selected_block(Normal_Block * board_array) {
+    if (logic -> get_selected_y() != -1) {
+      block_shapes[logic -> get_selected_y()].setOutlineThickness(3.5);
+      block_shapes[logic -> get_selected_y()].setOutlineColor(sf::Color::Red);
+      App.draw(block_shapes[logic->get_selected_y()]);
     }
 }
 
@@ -154,14 +137,14 @@ void GameView::draw_movement(Normal_Block * board_array) {
 */
 void GameView::draw() {
     poll_event();
-    App.clear(sf::Color(66, 150, 246));
+    App.clear(sf::Color(80, 160, 250));
     for (int i = 0; i < 5; i++) {
+      block_shapes[i].setOutlineThickness(0);
       App.draw(block_shapes[i]);
+      block_shapes[i].setPosition(logic->get_board_array()[i].getX(), logic->get_board_array()[i].getY());
     }
     // Draw outlined selected block on top so the outline is on top
-    int selected_block = draw_selected_block(logic -> get_board_array());
-    draw_movement(logic -> get_board_array());
-    App.draw(block_shapes[selected_block]);
+    draw_selected_block(logic -> get_board_array());
     App.display();
 }
 
