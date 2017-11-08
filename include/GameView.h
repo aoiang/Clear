@@ -30,8 +30,7 @@ public:
     void check_keyboard_in();
     bool collision_detector(sf::RectangleShape current_b, sf::RectangleShape * b, std::string direction);
     sf::RenderWindow get_App();
-    int draw_selected_block(Normal_Block * normal_block);
-    void draw_movement(Normal_Block * normal_block);
+    void draw_selected_block(Normal_Block * normal_block);
     void set_GameLogic(GameLogic &logic);
     void update();
 };

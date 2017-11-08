@@ -19,12 +19,7 @@ class Block {
         int id;
         bool can_combine;
 
-
-
-
-
     public:
-
         float get_length();
         float get_width();
         float get_speed();

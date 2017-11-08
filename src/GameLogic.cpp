@@ -26,6 +26,24 @@ Normal_Block* GameLogic::get_board_array() {
 }
 
 /**
+  Sets y index of selected block
+  @param y index of selected block
+*/
+void GameLogic::set_selected_y(int y) {
+    selected_y = y;
+}
+
+
+/**
+  Gets y index of selected block
+  @return y index of selected block
+*/
+int GameLogic::get_selected_y() {
+    return selected_y;
+}
+
+
+/**
   Sets the board array
   @param board_array
 */
@@ -34,6 +52,7 @@ void GameLogic::set_board_array(Normal_Block * board_array) {
         this -> board_array[i] = board_array[i];
     }
 }
+
 
 /**
   Checks for collisions
@@ -89,6 +108,7 @@ bool GameLogic::collision_detector(Normal_Block current_block, std::string direc
     }
     return false;
 }
+
 
 /**
   Attempts to move blocks
