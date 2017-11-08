@@ -25,21 +25,51 @@ Normal_Block* GameLogic::get_board_array() {
     return board_array;
 }
 
+
 /**
-  Sets y index of selected block
-  @param y index of selected block
+  Sets column index of selected block
+  @param col index of selected block
 */
-void GameLogic::set_selected_y(int y) {
-    selected_y = y;
+void GameLogic::set_selected_col(int col) {
+    selected_col = col;
 }
 
 
 /**
-  Gets y index of selected block
-  @return y index of selected block
+  Gets column index of selected block
+  @return col index of selected block
 */
-int GameLogic::get_selected_y() {
-    return selected_y;
+int GameLogic::get_selected_col() {
+    return selected_col;
+}
+
+
+/**
+  Sets row index of selected block
+  @param row index of selected block
+*/
+void GameLogic::set_selected_row(int row) {
+    selected_row = row;
+}
+
+
+/**
+  Gets row index of selected block
+  @return row index of selected block
+*/
+int GameLogic::get_selected_row() {
+    return selected_row;
+}
+
+
+/**
+  Sets postion of selected block_shape
+  @param col index of selected block
+  @param row index of selected block
+*/
+void GameLogic::set_selected_position(int row, int col) {
+    selected_row = row;
+    selected_col = col;
 }
 
 
@@ -115,7 +145,7 @@ bool GameLogic::collision_detector(Normal_Block current_block, std::string direc
   @param dir for move direction
 */
 void GameLogic::try_move(std::string dir) {
-    int i = selected_y;
+    int i = selected_col;
     if (i != -1) {
         if (dir == "up") {
             if (board_array[i].get_direction() == "up" && !collision_detector(board_array[i], board_array[i].get_direction())) {

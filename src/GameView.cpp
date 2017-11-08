@@ -103,7 +103,7 @@ void GameView::check_mouse_position() {
         if (sf::Mouse::getPosition(App).x >= int((logic -> get_board_array()[i].getX() / 800) * current_x) && sf::Mouse::getPosition(App).x <= int(((logic -> get_board_array()[i].getX()+100) / 800) * current_x)){
             if (sf::Mouse::getPosition(App).y >= int((logic -> get_board_array()[i].getY() / 600) * current_y) && sf::Mouse::getPosition(App).y <= int(((logic -> get_board_array()[i].getY()+100) / 600) * current_y)){
                 if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-                    logic -> set_selected_y(i);
+                    logic -> set_selected_col(i);
                 }
             }
         }
@@ -116,10 +116,10 @@ void GameView::check_mouse_position() {
   @param board_array is the array of blocks
 */
 void GameView::draw_selected_block(Normal_Block * board_array) {
-    if (logic -> get_selected_y() != -1) {
-        block_shapes[logic -> get_selected_y()].setOutlineThickness(3.5);
-        block_shapes[logic -> get_selected_y()].setOutlineColor(sf::Color::Red);
-        App.draw(block_shapes[logic->get_selected_y()]);
+    if (logic -> get_selected_col() != -1) {
+        block_shapes[logic -> get_selected_col()].setOutlineThickness(3.5);
+        block_shapes[logic -> get_selected_col()].setOutlineColor(sf::Color::Red);
+        App.draw(block_shapes[logic->get_selected_col()]);
     }
 }
 

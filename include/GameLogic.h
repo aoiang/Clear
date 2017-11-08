@@ -13,7 +13,8 @@
 class GameLogic {
 private:
     Normal_Block board_array[5];
-    int selected_y = -1;
+    int selected_col = -1;
+    int selected_row = -1;
 public:
     void init();
     void block_init();
@@ -22,8 +23,12 @@ public:
     void try_move(std::string direction);
     void check_mousePosition(sf::RenderWindow App);
     void set_board_array(Normal_Block *board_array);
-    int get_selected_y();
-    void set_selected_y(int id);
+
+    int get_selected_col();
+    int get_selected_row();
+    void set_selected_col(int col);
+    void set_selected_row(int row);
+    void set_selected_position(int row, int col);
 };
 
 #endif
