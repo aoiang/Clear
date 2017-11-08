@@ -3,7 +3,7 @@
 // Additional work by Ivan Echevarria
 //
 
-#include <Clearboard.hpp>
+#include "Clearboard.hpp"
 
 /**
   Sets properties of the board
@@ -19,9 +19,11 @@
 */
 void Clearboard::init()
 {
-    for(int i = 0; i < this->height; i++)
-        for (int j = 0; j < this->width; j++)
-            this->board[i][j] = NULL;
+    this->height = 10;
+    this->width = 10;
+    for(int i = 0; i < 10; i++)
+        for (int j = 0; j < 10; j++)
+            this->board[i][j] = 0;
 }
 
 
@@ -36,7 +38,7 @@ void Clearboard::init(int h, int w)
     this->width = w;
     for(int i=0; i<this->height; i++)
         for (int j=0; j<this->width; j++)
-            this->board[i][j] = NULL;
+            this->board[i][j] = 0;
 }
 
 
@@ -54,29 +56,46 @@ bool Clearboard::remove(int x, int y)
     }
     else
     {
-        this->board[x][y] = NULL;
+        this->board[x][y] = 0;
         return true;
     }
 }
 
-
-bool Clearboard::add_block(int x, int y, Block *block)
+/**
+  Adds element to board
+  @param x coordinate to add to
+  @param y coordinate to add to
+  @return bool to indicate successful addition
+*/
+bool Clearboard::add_block(int x, int y, Block block)
 {
-    if(board[x][y] != NULL)
+    if(board[x][y] != 0)
     {
       return false;
-    } else {
-      board[x][y] = block;
+    } 
+    else 
+    {
+      board[x][y] = &block;
       return true;
     }
 }
 
-
-Block Clearboard::get_block(int x, int y)
+/**
+  gets block on the board
+  @param x coordinate to look at
+  @param y coordinate to look at
+  @return block desired 
+*/
+ Block * Clearboard::get_block(int x, int y)
 {
-    if(board[x][y] != NULL)
+    if(board[x][y] != 0)
     {
-      Block to_return = *board[x][y];
+      Block *to_return = board[x][y];
       return to_return;
     }
+}
+
+Block * Clearboard::get_board()
+{
+ return this->board[0][0];   
 }

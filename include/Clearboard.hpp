@@ -9,16 +9,17 @@
 
 class Clearboard{
     private:
-        static int height;
-        static int width;
-        Block *board [][10];
+        int height;
+        int width;
+        Block *board [10][10];
 
     public:
         void init();
         void init(int x, int y);
         bool remove(int x, int y);
-        Block get_block(int x, int y);
-        bool add_block(int x, int y, Block *block);
+        Block *get_block(int x, int y);
+        bool add_block(int x, int y, Block block);
+        Block * get_board();
 };
 
 #endif

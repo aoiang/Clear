@@ -52,6 +52,9 @@ void Block::set_id(int id) {
 }
 
 void Block::init(int id) {
+    this->length = 80;
+    this->width = 80;
+    this->speed = 30;
     this ->id = id;
 }
 

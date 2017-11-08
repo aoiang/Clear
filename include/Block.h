@@ -4,7 +4,6 @@
 
 #ifndef CLEAR_BLOCK_H
 #define CLEAR_BLOCK_H
-#include <SFML/Graphics.hpp>
 /**
  * The parameters of the basic block.
  */
@@ -16,7 +15,7 @@ class Block {
         float length=80;
         float width=80;
         float speed=30;
-        bool is_selected=false;
+        bool is_selected;
         int id;
         bool can_combine;
 
