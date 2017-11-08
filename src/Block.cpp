@@ -1,18 +1,9 @@
 //
-// Created by Yiyang Zhao on 16/10/2017.
+// Created by Yiyang Zhao on 16/10/2017
+// Additional work by Ivan Echevarria
 //
 
 #include "Block.h"
-
-/**
-  Sets properties of the Block
-  @param x for x position coordinate
-  @param y for y position coordinate
-  @param speed for block speed when it moves
-  @param is_selected for when the block is clicked
-  @param id for id
-
-*/
 
 
 float Block::get_length() {
@@ -25,10 +16,6 @@ float Block::get_speed() {
 
 float Block::get_width() {
     return width;
-}
-
-bool Block::get_selected() {
-    return is_selected;
 }
 
 void Block::set_length(float length) {
@@ -56,10 +43,6 @@ void Block::init(int id) {
     this->width = 80;
     this->speed = 30;
     this ->id = id;
-}
-
-void Block::set_selected(bool is_selected){
-    this -> is_selected = is_selected;
 }
 
 void Block::setX(float x) {

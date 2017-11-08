@@ -1,5 +1,6 @@
 //
-// Created by Yiyang Zhao on 16/10/2017.
+// Created by Yiyang Zhao on 16/10/2017
+// Additional work by Ivan Echevarria
 //
 
 #ifndef CLEAR_BLOCK_H
@@ -15,7 +16,6 @@ class Block {
         float length=80;
         float width=80;
         float speed=30;
-        bool is_selected;
         int id;
         bool can_combine;
 
@@ -26,7 +26,6 @@ class Block {
         float getX();
         float getY();
         int get_id();
-        bool get_selected();
 
         void setX(float x);
         void setY(float y);
@@ -36,13 +35,9 @@ class Block {
         void set_speed(float speed);
         void set_id(int id);
         void init(int id);
-        void set_selected(bool is_selected);
         void move(float x, float y);
         virtual bool get_combine();
         virtual void set_combine(bool can_combine);
-
-
 };
-
 
 #endif //CLEAR_BLOCK_H

@@ -9,7 +9,7 @@
 /**
   Create the game window
 */
-GameView::GameView(float length, float width) :
+GameView::GameView(float length, float width):
     App(sf::VideoMode(length, width, 32), "Clear",  sf::Style::Default){}
 
 
@@ -26,9 +26,9 @@ bool GameView::isOpen() {
   Updates the view and logic at each frame
 */
 void GameView::update() {
-  check_mouse_position();
-  check_keyboard_in();
-  draw();
+    check_mouse_position();
+    check_keyboard_in();
+    draw();
 }
 
 
@@ -72,7 +72,7 @@ sf::RectangleShape GameView::make_block_shape(Normal_Block block) {
 */
 void GameView::block_init() {
     for(int i=0; i<5; i++){
-       block[i].init(i);
+        block[i].init(i);
     }
 }
 
@@ -103,13 +103,6 @@ void GameView::check_mouse_position() {
         if (sf::Mouse::getPosition(App).x >= int((logic -> get_board_array()[i].getX() / 800) * current_x) && sf::Mouse::getPosition(App).x <= int(((logic -> get_board_array()[i].getX()+100) / 800) * current_x)){
             if (sf::Mouse::getPosition(App).y >= int((logic -> get_board_array()[i].getY() / 600) * current_y) && sf::Mouse::getPosition(App).y <= int(((logic -> get_board_array()[i].getY()+100) / 600) * current_y)){
                 if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-                    for(int is_selected=0; is_selected<5; is_selected++){
-                        if(is_selected==i){
-                            continue;
-                        }
-                        logic -> get_board_array()[is_selected].set_selected(false);
-                    }
-                    logic -> get_board_array()[i].set_selected(true);
                     logic -> set_selected_y(i);
                 }
             }
@@ -124,9 +117,9 @@ void GameView::check_mouse_position() {
 */
 void GameView::draw_selected_block(Normal_Block * board_array) {
     if (logic -> get_selected_y() != -1) {
-      block_shapes[logic -> get_selected_y()].setOutlineThickness(3.5);
-      block_shapes[logic -> get_selected_y()].setOutlineColor(sf::Color::Red);
-      App.draw(block_shapes[logic->get_selected_y()]);
+        block_shapes[logic -> get_selected_y()].setOutlineThickness(3.5);
+        block_shapes[logic -> get_selected_y()].setOutlineColor(sf::Color::Red);
+        App.draw(block_shapes[logic->get_selected_y()]);
     }
 }
 
@@ -139,11 +132,10 @@ void GameView::draw() {
     poll_event();
     App.clear(sf::Color(80, 160, 250));
     for (int i = 0; i < 5; i++) {
-      block_shapes[i].setOutlineThickness(0);
-      App.draw(block_shapes[i]);
-      block_shapes[i].setPosition(logic->get_board_array()[i].getX(), logic->get_board_array()[i].getY());
+        block_shapes[i].setOutlineThickness(0);
+        App.draw(block_shapes[i]);
+        block_shapes[i].setPosition(logic->get_board_array()[i].getX(), logic->get_board_array()[i].getY());
     }
-    // Draw outlined selected block on top so the outline is on top
     draw_selected_block(logic -> get_board_array());
     App.display();
 }

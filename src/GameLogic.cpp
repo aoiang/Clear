@@ -11,10 +11,10 @@
   Sets the board
 */
 void GameLogic::init() {
-  for(int i=0; i<5; i++){
-      board_array[i].init(i);
-      board_array[i].setPosition(100+80*i, 200);
-  }
+    for(int i=0; i<5; i++){
+        board_array[i].init(i);
+        board_array[i].setPosition(100+80*i, 200);
+    }
 }
 
 
@@ -115,39 +115,38 @@ bool GameLogic::collision_detector(Normal_Block current_block, std::string direc
   @param dir for move direction
 */
 void GameLogic::try_move(std::string dir) {
-    for(int i = 0; i < 5; i++) {
-        if (board_array[i].get_selected()) {
-            if(dir == "up") {
-                if(board_array[i].get_direction() == "up" && !collision_detector(board_array[i], board_array[i].get_direction())){
-                    board_array[i].move(0.0,  -10);
-                }
-                if(!board_array[i].get_has_direction() && !collision_detector(board_array[i], "up")){
-                    board_array[i].move(0.0,  -10);
-                }
+    int i = selected_y;
+    if (i != -1) {
+        if (dir == "up") {
+            if (board_array[i].get_direction() == "up" && !collision_detector(board_array[i], board_array[i].get_direction())) {
+                board_array[i].move(0.0,  -10);
             }
-            if(dir == "down"){
-                if(board_array[i].get_direction() == "down" && !collision_detector(board_array[i], board_array[i].get_direction())){
-                    board_array[i].move(0.0,  10);
-                }
-                if(!board_array[i].get_has_direction() && !collision_detector(board_array[i], "down")){
-                    board_array[i].move(0.0,  10);
-                }
+            if(!board_array[i].get_has_direction() && !collision_detector(board_array[i], "up")){
+                board_array[i].move(0.0,  -10);
             }
-            if(dir == "left"){
-                if(board_array[i].get_direction() == "left" && !collision_detector(board_array[i], board_array[i].get_direction())){
-                    board_array[i].move(-10,  0);
-                }
-                if(!board_array[i].get_has_direction() && !collision_detector(board_array[i], "left")){
-                    board_array[i].move(-10,  0);
-                }
+        }
+        else if (dir == "down") {
+            if (board_array[i].get_direction() == "down" && !collision_detector(board_array[i], board_array[i].get_direction())) {
+                board_array[i].move(0.0,  10);
             }
-            if(dir == "right"){
-                if(board_array[i].get_direction() == "right" && !collision_detector(board_array[i], board_array[i].get_direction())){
-                    board_array[i].move(10,  0);
-                }
-                if(!board_array[i].get_has_direction() && !collision_detector(board_array[i], "right")){
-                    board_array[i].move(10,  0);
-                }
+            if (!board_array[i].get_has_direction() && !collision_detector(board_array[i], "down")) {
+                board_array[i].move(0.0,  10);
+            }
+        }
+        if (dir == "left") {
+            if (board_array[i].get_direction() == "left" && !collision_detector(board_array[i], board_array[i].get_direction())) {
+                board_array[i].move(-10,  0);
+            }
+            if (!board_array[i].get_has_direction() && !collision_detector(board_array[i], "left")) {
+                board_array[i].move(-10,  0);
+            }
+        }
+        if (dir == "right") {
+            if (board_array[i].get_direction() == "right" && !collision_detector(board_array[i], board_array[i].get_direction())) {
+                board_array[i].move(10,  0);
+            }
+            if (!board_array[i].get_has_direction() && !collision_detector(board_array[i], "right")) {
+                board_array[i].move(10,  0);
             }
         }
     }
