@@ -46,7 +46,7 @@ void Clearboard::init(int h, int w)
   @param y coordinate to remove
   @return bool to indicate successful removal
 */
-bool Clearboard:: remove(int x, int y)
+bool Clearboard::remove(int x, int y)
 {
     if (x> this->width || y > this->height)
     {
@@ -56,5 +56,27 @@ bool Clearboard:: remove(int x, int y)
     {
         this->board[x][y] = NULL;
         return true;
+    }
+}
+
+
+bool Clearboard::add_block(int x, int y, Block *block)
+{
+    if(board[x][y] != NULL)
+    {
+      return false;
+    } else {
+      board[x][y] = block;
+      return true;
+    }
+}
+
+
+Block Clearboard::get_block(int x, int y)
+{
+    if(board[x][y] != NULL)
+    {
+      Block to_return = *board[x][y];
+      return to_return;
     }
 }
