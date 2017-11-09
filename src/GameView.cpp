@@ -48,7 +48,7 @@ void GameView::set_GameLogic(GameLogic &logic) {
   @return sf::RectangleShape
 */
 sf::RectangleShape GameView::make_block_shape(Normal_Block block) {
-    sf::RectangleShape block_shape(sf::Vector2f(block.get_length(), block.get_width()));
+    sf::RectangleShape block_shape(sf::Vector2f(block_size, block_size));
     block_shape.setFillColor(sf::Color::White);
 
     if (block.get_has_direction()) {
@@ -90,7 +90,8 @@ void GameView::check_mouse_position() {
     int current_y = App.getSize().y;
     int current_x = App.getSize().x;
     for (int i = 0; i < logic->get_board_width(); i++) {
-        if (sf::Mouse::getPosition(App).x >= int((logic -> get_board_array()[i].getX() / 800) * current_x) && sf::Mouse::getPosition(App).x <= int(((logic -> get_board_array()[i].getX()+100) / 800) * current_x)){
+        if (sf::Mouse::getPosition(App).x >= int((logic->get_board_array()[i].getX() * block_size / 800) * current_x)
+            && sf::Mouse::getPosition(App).x <= int(((logic -> get_board_array()[i].getX() * block_size + block_size) / 800) * current_x)) {
             if (sf::Mouse::getPosition(App).y >= int((logic -> get_board_array()[i].getY() / 600) * current_y) && sf::Mouse::getPosition(App).y <= int(((logic -> get_board_array()[i].getY()+100) / 600) * current_y)){
                 if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                     logic -> set_selected_col(i);
@@ -124,7 +125,7 @@ void GameView::draw() {
     for (int i = 0; i < logic->get_board_width(); i++) {
         block_shapes[i].setOutlineThickness(0);
         App.draw(block_shapes[i]);
-        block_shapes[i].setPosition(logic->get_board_array()[i].getX(), logic->get_board_array()[i].getY());
+        block_shapes[i].setPosition(logic->get_board_array()[i].getX() * block_size, logic->get_board_array()[i].getY());
     }
     draw_selected_block(logic -> get_board_array());
     App.display();

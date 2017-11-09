@@ -13,8 +13,6 @@ class Block {
     protected:
         float x;
         float y;
-        float length = 50;
-        float width = 50;
         int id;
         bool can_combine;
 
@@ -28,8 +26,6 @@ class Block {
         void setX(float x);
         void setY(float y);
         void setPosition(float x, float y);
-        void set_length(float length);
-        void set_width(float width);
         void set_id(int id);
         void init(int id);
         void move(float x, float y);

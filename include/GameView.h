@@ -16,6 +16,7 @@ private:
     sf::Texture texture[15];
     sf::RectangleShape * block_shapes;
     GameLogic *logic;
+    int block_size = 50;
 public:
     sf::RenderWindow App;
     GameView(float, float);

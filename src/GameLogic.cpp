@@ -13,7 +13,7 @@
 void GameLogic::init() {
     for(int i = 0; i < get_board_width(); i++){
         board_array[i].init(i);
-        board_array[i].setPosition(150 + 50 * i, 50);
+        board_array[i].setPosition(i, 50);
     }
 }
 
