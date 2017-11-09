@@ -77,7 +77,7 @@ void GameView::init() {
     shapes = new sf::RectangleShape[logic->get_board_width()];
     for (int i = 0; i < logic->get_board_width(); i++) {
         shapes[i] = make_block_shape(logic -> get_block(0, i));
-        shapes[i].setPosition(logic -> get_block(0, i).getX(), logic -> get_block(0, i).getY());
+        shapes[i].setPosition(logic -> get_block(0, i).get_row(), logic -> get_block(0, i).get_col());
     }
     this -> block_shapes = shapes;
 }
@@ -90,10 +90,10 @@ void GameView::check_mouse_position() {
     int current_y = App.getSize().y;
     int current_x = App.getSize().x;
     for (int i = 0; i < logic->get_board_width(); i++) {
-        if (sf::Mouse::getPosition(App).x >= int (((logic -> get_block(0, i).getX() * block_size + left_spacing) / 800) * current_x)
-            && sf::Mouse::getPosition(App).x <= int (((logic -> get_block(0, i).getX() * block_size + block_size + left_spacing) / 800) * current_x)) {
-            if (sf::Mouse::getPosition(App).y >= int (((logic -> get_block(0, i).getY() + top_spacing) / 600) * current_y)
-            && sf::Mouse::getPosition(App).y <= int ((((logic -> get_block(0, i).getY() + block_size) + top_spacing) / 600) * current_y)){
+        if (sf::Mouse::getPosition(App).x >= int (((logic -> get_block(0, i).get_row() * block_size + left_spacing) / 800) * current_x)
+            && sf::Mouse::getPosition(App).x <= int (((logic -> get_block(0, i).get_row() * block_size + block_size + left_spacing) / 800) * current_x)) {
+            if (sf::Mouse::getPosition(App).y >= int (((logic -> get_block(0, i).get_col() + top_spacing) / 600) * current_y)
+            && sf::Mouse::getPosition(App).y <= int ((((logic -> get_block(0, i).get_col() + block_size) + top_spacing) / 600) * current_y)){
                 if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                     logic -> set_selected_col(i);
                 }
@@ -126,7 +126,7 @@ void GameView::draw() {
     for (int i = 0; i < logic->get_board_width(); i++) {
         block_shapes[i].setOutlineThickness(0);
         App.draw(block_shapes[i]);
-        block_shapes[i].setPosition(logic->get_block(0, i).getX() * block_size + left_spacing, logic->get_block(0, i).getY() + top_spacing);
+        block_shapes[i].setPosition(logic->get_block(0, i).get_row() * block_size + left_spacing, logic->get_block(0, i).get_col() + top_spacing);
     }
     draw_selected_block();
     App.display();
