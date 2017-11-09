@@ -95,7 +95,7 @@ bool GameLogic::collision_detector(Normal_Block current_block, std::string direc
         for(int i=0; i < get_board_width(); i++){
             if(get_block(0, i).get_row() == current_block.get_row()){
                 if(get_block(0, i).get_col() < current_block.get_col()){
-                    if(get_block(0, i).get_row() > 0 && get_block(0, i).get_row() < 800 && get_block(0, i).get_col() > 0 && get_block(0, i).get_col() < 600){
+                    if(get_block(0, i).get_row() > 0 && get_block(0, i).get_row() < 600 && get_block(0, i).get_col() > 0 && get_block(0, i).get_col() < 800){
                         return true;
                     }
                 }
@@ -106,7 +106,7 @@ bool GameLogic::collision_detector(Normal_Block current_block, std::string direc
         for(int i=0; i < get_board_width(); i++){
             if(get_block(0, i).get_row() == current_block.get_row()){
                 if(get_block(0, i).get_col()> current_block.get_col()){
-                    if(get_block(0, i).get_row() > 0 && get_block(0, i).get_row() < 800 && get_block(0, i).get_col() > 0 && get_block(0, i).get_col() < 600){
+                    if(get_block(0, i).get_row() > 0 && get_block(0, i).get_row() < 600 && get_block(0, i).get_col() > 0 && get_block(0, i).get_col() < 800){
                         return true;
                     }
                 }
@@ -117,7 +117,7 @@ bool GameLogic::collision_detector(Normal_Block current_block, std::string direc
         for(int i=0; i < get_board_width(); i++){
             if(get_block(0, i).get_col() == current_block.get_col()){
                 if(get_block(0, i).get_row() < current_block.get_row()){
-                    if(get_block(0, i).get_row() > 0 && get_block(0, i).get_row() < 800 && get_block(0, i).get_col() > 0 && get_block(0, i).get_col() < 600){
+                    if(get_block(0, i).get_row() > 0 && get_block(0, i).get_row() < 600 && get_block(0, i).get_col() > 0 && get_block(0, i).get_col() < 800){
                         return true;
                     }
 
@@ -129,7 +129,7 @@ bool GameLogic::collision_detector(Normal_Block current_block, std::string direc
         for(int i=0; i < get_board_width(); i++){
             if(get_block(0, i).get_col() == current_block.get_col()){
                 if(get_block(0, i).get_row() > current_block.get_row()){
-                    if(get_block(0, i).get_row() > 0 && get_block(0, i).get_row() < 800 && get_block(0, i).get_col() > 0 && get_block(0, i).get_col() < 600){
+                    if(get_block(0, i).get_row() > 0 && get_block(0, i).get_row() < 600 && get_block(0, i).get_col() > 0 && get_block(0, i).get_col() < 800){
                         return true;
                     }
                 }
