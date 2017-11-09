@@ -33,6 +33,9 @@ public:
 
     int get_board_width();
     int get_board_height();
+
+    Normal_Block get_block(int y);
+    Normal_Block get_block(int x, int y);
 };
 
 #endif

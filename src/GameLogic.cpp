@@ -13,7 +13,7 @@
 void GameLogic::init() {
     for(int i = 0; i < get_board_width(); i++){
         board_array[i].init(i);
-        board_array[i].setPosition(i, 50);
+        board_array[i].setPosition(i, 0);
     }
 }
 
@@ -78,6 +78,11 @@ void GameLogic::set_selected_position(int row, int col) {
 */
 int GameLogic::get_board_width() {
     return board_width;
+}
+
+
+Normal_Block GameLogic::get_block(int y) {
+    return board_array[y];
 }
 
 

@@ -32,7 +32,7 @@ void Normal_Block::set_has_direction(bool has_direction){
 }
 
 void Normal_Block::init(int id) {
-    this -> id =id;
+    this -> id = id;
     if (id % 5 == 0) {
         set_has_direction(true);
         this ->direction = "up";
