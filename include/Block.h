@@ -23,12 +23,10 @@ class Block {
         float get_col();
         int get_id();
 
-        void set_row(float row);
-        void set_col(float col);
         void setPosition(float row, float col);
         void set_id(int id);
         void init(int id);
-        void move(float row, float col);
+        void move(int row, int col);
         virtual bool get_combine();
         virtual void set_combine(bool can_combine);
 };

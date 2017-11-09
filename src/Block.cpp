@@ -34,24 +34,6 @@ void Block::init(int id) {
 
 
 /**
-  Sets block x index on the board
-  @param x
-*/
-void Block::set_row(float row) {
-    this -> row = row;
-}
-
-
-/**
-  Sets block y index on the board
-  @param y
-*/
-void Block::set_col(float col) {
-    this -> col = col;
-}
-
-
-/**
   Sets block x and y indices on the board
   @param x
   @param y
@@ -83,7 +65,7 @@ float Block::get_col() {
   @param x units to move
   @param y units to move
 */
-void Block::move(float row, float y) {
+void Block::move(int row, int y) {
     this -> row += row;
     this -> col += col;
 }

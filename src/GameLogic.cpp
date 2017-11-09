@@ -149,18 +149,18 @@ void GameLogic::try_move(std::string dir) {
     if (i != -1) {
         if (dir == "up") {
             if (get_block(0, i).get_direction() == "up" && !collision_detector(get_block(0, i), get_block(0, i).get_direction())) {
-                board_array[0][i].move(0.0,  -10);
+                board_array[0][i].move(0,  -10);
             }
             if(!get_block(0, i).get_has_direction() && !collision_detector(get_block(0, i), "up")){
-                board_array[0][i].move(0.0,  -10);
+                board_array[0][i].move(0,  -10);
             }
         }
         else if (dir == "down") {
             if (get_block(0, i).get_direction() == "down" && !collision_detector(get_block(0, i), get_block(0, i).get_direction())) {
-                board_array[0][i].move(0.0,  10);
+                board_array[0][i].move(0,  10);
             }
             if (!get_block(0, i).get_has_direction() && !collision_detector(get_block(0, i), "down")) {
-                board_array[0][i].move(0.0,  10);
+                board_array[0][i].move(0,  10);
             }
         }
         if (dir == "left") {
