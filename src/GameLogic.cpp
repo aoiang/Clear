@@ -11,9 +11,11 @@
   Sets the board
 */
 void GameLogic::init() {
-    for(int i = 0; i < get_board_width(); i++){
-        board_array[0][i].init(i);
-        board_array[0][i].setPosition(i, 0);
+    for (int i = 0; i < get_board_width(); i++) {
+        for (int j = 0; j < get_board_height(); j++) {
+            board_array[0][i].init(i);
+            board_array[0][i].setPosition(i, j);
+        }
     }
 }
 
@@ -70,6 +72,10 @@ void GameLogic::set_selected_position(int row, int col) {
 */
 int GameLogic::get_board_width() {
     return board_width;
+}
+
+int GameLogic::get_board_height() {
+    return board_height;
 }
 
 

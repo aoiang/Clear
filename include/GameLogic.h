@@ -13,7 +13,8 @@
 class GameLogic {
 private:
     int board_width = 10;
-    Normal_Block board_array[2][10];
+    int board_height = 10;
+    Normal_Block board_array[10][10];
     int selected_col = -1;
     int selected_row = -1;
 public:
