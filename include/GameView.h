@@ -17,6 +17,8 @@ private:
     sf::RectangleShape * block_shapes;
     GameLogic *logic;
     int block_size = 50;
+    int top_spacing = 50;
+    int left_spacing = 150;
 public:
     sf::RenderWindow App;
     GameView(float, float);

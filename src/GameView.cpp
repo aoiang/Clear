@@ -69,7 +69,7 @@ sf::RectangleShape GameView::make_block_shape(Normal_Block block) {
 
 
 /**
-  Initialize the game, set all blocks shapes
+  Initialize the GameView set all blocks shapes
   @return sf::RectangleShape
 */
 void GameView::init() {
