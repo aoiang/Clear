@@ -15,6 +15,7 @@ class GameView {
 private:
     sf::Texture texture[15];
     sf::RectangleShape * block_shapes;
+    sf::RectangleShape * shadow_shapes;
     GameLogic * logic;
     int block_size = 50;
     int top_spacing = 50;
@@ -27,6 +28,7 @@ public:
     void draw();
     void poll_event();
     sf::RectangleShape make_block_shape(int block);
+    sf::RectangleShape make_shadow_shape();
     void check_mouse_position();
     void check_keyboard_in();
     sf::RenderWindow get_App();

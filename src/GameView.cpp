@@ -52,6 +52,8 @@ sf::RectangleShape GameView::make_block_shape(int block) {
     sf::RectangleShape block_shape(sf::Vector2f(block_size, block_size));
     block_shape.setFillColor(sf::Color::White);
 
+    // TODO: fix this kludgey implementation
+
     if (block >= 20) {
         if (block == 20) {
             texture[0].loadFromFile("../resources/up.png");
@@ -70,18 +72,37 @@ sf::RectangleShape GameView::make_block_shape(int block) {
 
 
 /**
-  Initialize the GameView set all blocks shapes
-  @return sf::RectangleShape
+  Make shadow shapes
+  @return sf::RectangleShape shadow_shape
+*/
+sf::RectangleShape GameView::make_shadow_shape() {
+    sf::RectangleShape shadow_shape(sf::Vector2f(block_size, block_size));
+    shadow_shape.setFillColor(sf::Color(0, 0, 0, 60));
+    return shadow_shape;
+}
+
+
+/**
+  Create all of the shapes
 */
 void GameView::init() {
+    int board_height = logic -> get_board_height();
+    int board_width = logic -> get_board_width();
+
     sf::RectangleShape * shapes;
-    shapes = new sf::RectangleShape[logic->get_board_width() * logic->get_board_height()];
-    for (int i = 0; i < logic->get_board_width() * logic->get_board_height(); i++) {
-        if (logic -> get_block(i/10, i%10) != 0) {
-            shapes[i] = make_block_shape(logic -> get_block(i/10, i%10));
+    sf::RectangleShape * shadows;
+
+    shapes = new sf::RectangleShape[board_width * board_height];
+    shadows = new sf::RectangleShape[board_width * board_height];
+
+    for (int i = 0; i < board_width * board_height; i++) {
+        if (logic -> get_block(i / board_height, i % board_width) != 0) {
+            shapes[i] = make_block_shape(logic -> get_block(i / board_height, i % board_width));
+            shadows[i] = make_shadow_shape();
         }
     }
     this -> block_shapes = shapes;
+    this -> shadow_shapes = shadows;
 }
 
 
@@ -104,7 +125,6 @@ void GameView::check_mouse_position() {
 
 /**
   Draws an outline around a block if it is selected
-  @param board_array is the array of blocks
 */
 void GameView::draw_selected_block() {
     if (logic->get_selected_block() != 0) {
@@ -117,16 +137,25 @@ void GameView::draw_selected_block() {
 
 
 /**
-  Draw all blocks, movements, and selections
-  @param board_array for array of blocks
+  Draw all blocks, shadows, movements, and selections
 */
 void GameView::draw() {
     poll_event();
     App.clear(sf::Color(120, 180, 255));
+    int height = logic->get_board_height();
+    int width = logic->get_board_width();
+    // shadow drawing pass
+    for (int i = 0; i < height * width; i++) {
+        if (logic -> get_block(i / height, i % width) != 0) {
+            shadow_shapes[i].setPosition((i % width) * block_size + left_spacing + (block_size / 5), (i / height) * block_size + top_spacing + (block_size / 5));
+            App.draw(shadow_shapes[i]);
+        }
+    }
+    // block drawing pass
     for (int i = 0; i < logic->get_board_width() * logic->get_board_height(); i++) {
-        if (logic -> get_block(i/10, i%10) != 0) {
+        if (logic -> get_block(i / height, i % width) != 0) {
             block_shapes[i].setOutlineThickness(0);
-            block_shapes[i].setPosition((i%10) * block_size + left_spacing, (i/10) * block_size + top_spacing);
+            block_shapes[i].setPosition((i % width) * block_size + left_spacing, (i / height) * block_size + top_spacing);
             App.draw(block_shapes[i]);
         }
     }
