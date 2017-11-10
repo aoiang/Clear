@@ -26,6 +26,7 @@ public:
 
     int get_selected_col();
     int get_selected_row();
+    int get_selected_block();
     void set_selected_col(int col);
     void set_selected_row(int row);
     void set_selected_position(int row, int col);

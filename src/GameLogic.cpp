@@ -96,6 +96,20 @@ int GameLogic::get_block(int x, int y) {
 
 
 /**
+  @return selected block
+*/
+int GameLogic::get_selected_block() {
+    if (   get_selected_col() >= 0
+        && get_selected_col() < get_board_width()
+        && get_selected_row() >= 0
+        && get_selected_row() < get_board_height()) {
+        return get_block(selected_row, selected_col);
+    } else {
+        return 0;
+    }
+}
+
+/**
   Checks for collisions
   @param current block
   @param direction
@@ -150,10 +164,7 @@ void GameLogic::remove_block(int row, int col) {
 void GameLogic::try_move(std::string dir) {
     int row = selected_row;
     int col = selected_col;
-    if (   get_selected_col() >= 0
-        && get_selected_col() < get_board_width()
-        && get_selected_row() >= 0
-        && get_selected_row() < get_board_height()) {
+    if (get_selected_block() != 0) {
         if (dir == "up") {
             if ((get_block(row, col) == 10 || get_block(row, col) == 20) && !detect_collision(row, col, "up")) {
                 remove_block(row, col);

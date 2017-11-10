@@ -98,6 +98,7 @@ void GameView::check_mouse_position() {
         logic->set_selected_position(((mouse_y - top_spacing) * 600 / block_size) / current_y,
                                      ((mouse_x - left_spacing) * 800 / block_size) / current_x);
     }
+
 }
 
 
@@ -106,12 +107,7 @@ void GameView::check_mouse_position() {
   @param board_array is the array of blocks
 */
 void GameView::draw_selected_block() {
-    if (   logic->get_selected_col() >= 0
-        && logic->get_selected_col() < logic->get_board_width()
-        && logic->get_selected_row() >= 0
-        && logic->get_selected_row() < logic->get_board_height()
-        && logic -> get_block(logic->get_selected_row(), logic->get_selected_col()) != 0) {
-
+    if (logic->get_selected_block() != 0) {
         int index = (logic->get_selected_row() * logic->get_board_width()) + logic->get_selected_col();
         block_shapes[index].setOutlineThickness(3.5);
         block_shapes[index].setOutlineColor(sf::Color::Red);
