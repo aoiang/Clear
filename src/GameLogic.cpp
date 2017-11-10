@@ -103,7 +103,7 @@ int GameLogic::get_block(int x, int y) {
 */
 bool GameLogic::detect_collision (int row, int col, std::string direction) {
     if (direction == "up") {
-        for (int i = row - 1; i > 0; i--) {
+        for (int i = row - 1; i >= 0; i--) {
             if (get_block(i, col) != 0) {
                 return true;
             }
@@ -115,7 +115,7 @@ bool GameLogic::detect_collision (int row, int col, std::string direction) {
             }
         }
     } else if (direction == "left") {
-        for (int j = col - 1; j > 0; j--) {
+        for (int j = col - 1; j >= 0; j--) {
             if (get_block(row, j) != 0) {
                 return true;
             }
@@ -150,7 +150,10 @@ void GameLogic::remove_block(int row, int col) {
 void GameLogic::try_move(std::string dir) {
     int row = selected_row;
     int col = selected_col;
-    if (row != -1 && col != -1) {
+    if (   get_selected_col() >= 0
+        && get_selected_col() < get_board_width()
+        && get_selected_row() >= 0
+        && get_selected_row() < get_board_height()) {
         if (dir == "up") {
             if ((get_block(row, col) == 10 || get_block(row, col) == 20) && !detect_collision(row, col, "up")) {
                 remove_block(row, col);

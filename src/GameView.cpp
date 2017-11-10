@@ -6,6 +6,7 @@
 
 #include "GameView.h"
 
+#include <iostream>
 
 /**
   Create the game window
@@ -93,16 +94,9 @@ void GameView::check_mouse_position() {
     int mouse_x = sf::Mouse::getPosition(App).x;
     int mouse_y = sf::Mouse::getPosition(App).y;
 
-    for (int row = 0; row < logic->get_board_height(); row++) {
-        for (int col = 0; col < logic->get_board_width(); col++) {
-            if ( (mouse_x >= col * block_size + left_spacing)
-              && (mouse_x <= col * block_size + block_size + left_spacing)
-              && (mouse_y >= row * block_size + top_spacing)
-              && (mouse_y <= row * block_size + block_size + top_spacing)
-              && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-                logic -> set_selected_position(row, col);
-            }
-        }
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+        logic->set_selected_position(((mouse_y - top_spacing) * 600 / block_size) / current_y,
+                                     ((mouse_x - left_spacing) * 800 / block_size) / current_x);
     }
 }
 
@@ -112,8 +106,13 @@ void GameView::check_mouse_position() {
   @param board_array is the array of blocks
 */
 void GameView::draw_selected_block() {
-    if (logic -> get_selected_col() != -1 && logic -> get_block(logic->get_selected_row(), logic->get_selected_col()) != 0) {
-        int index = logic->get_selected_row() * logic->get_board_width() + logic->get_selected_col();
+    if (   logic->get_selected_col() >= 0
+        && logic->get_selected_col() < logic->get_board_width()
+        && logic->get_selected_row() >= 0
+        && logic->get_selected_row() < logic->get_board_height()
+        && logic -> get_block(logic->get_selected_row(), logic->get_selected_col()) != 0) {
+
+        int index = (logic->get_selected_row() * logic->get_board_width()) + logic->get_selected_col();
         block_shapes[index].setOutlineThickness(3.5);
         block_shapes[index].setOutlineColor(sf::Color::Red);
         App.draw(block_shapes[index]);
@@ -127,7 +126,7 @@ void GameView::draw_selected_block() {
 */
 void GameView::draw() {
     poll_event();
-    App.clear(sf::Color(80, 160, 250));
+    App.clear(sf::Color(120, 180, 255));
     for (int i = 0; i < logic->get_board_width() * logic->get_board_height(); i++) {
         if (logic -> get_block(i/10, i%10) != 0) {
             block_shapes[i].setOutlineThickness(0);
