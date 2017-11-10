@@ -14,7 +14,11 @@
 void GameLogic::init() {
     for (int i = 0; i < get_board_width(); i++) {
         for (int j = 0; j < get_board_height(); j++) {
-            board_array[0][j] = 20 + (j % 4);
+            if (j % 5 == 0) {
+              board_array[i][j] = 10;
+            } else {
+              board_array[i][j] = 20 + (j % 4);
+            }
         }
     }
 }
