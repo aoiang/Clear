@@ -100,7 +100,6 @@ void GameView::check_mouse_position() {
                 && (mouse_y <= 0 + block_size + top_spacing)) {
                 if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                     logic -> set_selected_position(0, i);
-                    std::cout << logic -> get_selected_col();
                 }
             }
         }

@@ -5,7 +5,7 @@
 
 
 #include "GameLogic.h"
-
+#include <iostream>
 
 /**
   Sets the board
@@ -89,7 +89,7 @@ int GameLogic::get_block(int x, int y) {
   @param direction
   @return bool indicating whether there was a collision
 */
-bool GameLogic::collision_detector(int current_block_row, int current_block_col, std::string direction) {
+bool GameLogic::collision_detector (int current_block_row, int current_block_col, std::string direction) {
     // if(direction == "up"){
     //     for(int i=0; i < get_board_width(); i++){
     //         if(get_block(0, i).get_row() == current_block.get_row()){
@@ -144,17 +144,17 @@ bool GameLogic::collision_detector(int current_block_row, int current_block_col,
   @param dir for move direction
 */
 void GameLogic::try_move(std::string dir) {
-    board_array[0][selected_col] = 0;
-    // int i = selected_col;
-    // if (i != -1) {
-    //     if (dir == "up") {
-    //         if (get_block(0, i).get_direction() == "up" && !collision_detector(get_block(0, i), get_block(0, i).get_direction())) {
-    //             board_array[0][j] = 0;
-    //         }
-    //         if(!get_block(0, i).get_has_direction() && !collision_detector(get_block(0, i), "up")){
-    //             board_array[0][j] = 0;
-    //         }
-    //     }
+    int i = selected_row;
+    int j = selected_col;
+    if (i != -1) {
+        if (dir == "up") {
+            if ((get_block(i, j) == 10 || get_block(i, j) == 20) && !collision_detector(i, j, "up")) {
+                std::cout << "Removed block at " << i << ", " << j << "\n";
+                board_array[i][j] = 0;
+                set_selected_position(-1, -1);
+            }
+        }
+    }
     //     else if (dir == "down") {
     //         if (get_block(0, i).get_direction() == "down" && !collision_detector(get_block(0, i), get_block(0, i).get_direction())) {
     //             board_array[0][j] = 0;
