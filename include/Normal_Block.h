@@ -16,8 +16,6 @@ private:
     bool has_direction;
     std::string direction;
     
-
-
 public:
     void set_direction(std::string direction);
     std::string get_direction();
@@ -26,8 +24,6 @@ public:
     void init(int id);
     bool get_combine();
     void set_combine();
-
-
 };
 
 

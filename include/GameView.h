@@ -15,7 +15,7 @@ class GameView {
 private:
     sf::Texture texture[15];
     sf::RectangleShape * block_shapes;
-    GameLogic *logic;
+    GameLogic * logic;
     int block_size = 50;
     int top_spacing = 50;
     int left_spacing = 150;
@@ -26,10 +26,9 @@ public:
     bool isOpen();
     void draw();
     void poll_event();
-    sf::RectangleShape make_block_shape(Normal_Block block);
+    sf::RectangleShape make_block_shape(int block);
     void check_mouse_position();
     void check_keyboard_in();
-    bool collision_detector(sf::RectangleShape current_b, sf::RectangleShape * b, std::string direction);
     sf::RenderWindow get_App();
     void draw_selected_block();
     void set_GameLogic(GameLogic &logic);
