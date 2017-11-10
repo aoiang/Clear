@@ -20,7 +20,7 @@ private:
 public:
     void init();
     void block_init();
-    bool collision_detector(int current_block_row, int current_block_col, std::string direction);
+    bool detect_collision(int row, int col, std::string direction);
     void try_move(std::string direction);
     void check_mousePosition(sf::RenderWindow App);
 
@@ -33,7 +33,8 @@ public:
     int get_board_width();
     int get_board_height();
 
-    int get_block(int x, int y);
+    int get_block(int row, int col);
+    void remove_block(int row, int col);
 };
 
 #endif

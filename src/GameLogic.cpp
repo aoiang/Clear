@@ -7,6 +7,7 @@
 #include "GameLogic.h"
 #include <iostream>
 
+
 /**
   Sets the board
 */
@@ -73,11 +74,18 @@ int GameLogic::get_board_width() {
     return board_width;
 }
 
+
+/**
+  @return board_height
+*/
 int GameLogic::get_board_height() {
     return board_height;
 }
 
 
+/**
+  @return block type integer
+*/
 int GameLogic::get_block(int x, int y) {
     return board_array[x][y];
 }
@@ -89,53 +97,45 @@ int GameLogic::get_block(int x, int y) {
   @param direction
   @return bool indicating whether there was a collision
 */
-bool GameLogic::collision_detector (int current_block_row, int current_block_col, std::string direction) {
-    // if(direction == "up"){
-    //     for(int i=0; i < get_board_width(); i++){
-    //         if(get_block(0, i).get_row() == current_block.get_row()){
-    //             if(get_block(0, i).get_col() < current_block.get_col()){
-    //                 if(get_block(0, i).get_row() > 0 && get_block(0, i).get_row() < 600 && get_block(0, i).get_col() > 0 && get_block(0, i).get_col() < 800){
-    //                     return true;
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
-    // if(direction == "down"){
-    //     for(int i=0; i < get_board_width(); i++){
-    //         if(get_block(0, i).get_row() == current_block.get_row()){
-    //             if(get_block(0, i).get_col()> current_block.get_col()){
-    //                 if(get_block(0, i).get_row() > 0 && get_block(0, i).get_row() < 600 && get_block(0, i).get_col() > 0 && get_block(0, i).get_col() < 800){
-    //                     return true;
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
-    // if(direction == "left"){
-    //     for(int i=0; i < get_board_width(); i++){
-    //         if(get_block(0, i).get_col() == current_block.get_col()){
-    //             if(get_block(0, i).get_row() < current_block.get_row()){
-    //                 if(get_block(0, i).get_row() > 0 && get_block(0, i).get_row() < 600 && get_block(0, i).get_col() > 0 && get_block(0, i).get_col() < 800){
-    //                     return true;
-    //                 }
-    //
-    //             }
-    //         }
-    //     }
-    // }
-    // if(direction == "right"){
-    //     for(int i=0; i < get_board_width(); i++){
-    //         if(get_block(0, i).get_col() == current_block.get_col()){
-    //             if(get_block(0, i).get_row() > current_block.get_row()){
-    //                 if(get_block(0, i).get_row() > 0 && get_block(0, i).get_row() < 600 && get_block(0, i).get_col() > 0 && get_block(0, i).get_col() < 800){
-    //                     return true;
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
+bool GameLogic::detect_collision (int row, int col, std::string direction) {
+    if (direction == "up") {
+        for (int i = row - 1; i > 0; i--) {
+            if (get_block(i, col) != 0) {
+                return true;
+            }
+        }
+    } else if (direction == "down") {
+        for (int i = row + 1; i < board_height; i++) {
+            if (get_block(i, col) != 0) {
+                return true;
+            }
+        }
+    } else if (direction == "left") {
+        for (int j = col - 1; j > 0; j--) {
+            if (get_block(row, j) != 0) {
+                return true;
+            }
+        }
+    } else if (direction == "right") {
+        for (int j = col + 1; j < board_width; j++) {
+            if (get_block(row, j) != 0) {
+                return true;
+            }
+        }
+    }
     return false;
+}
+
+
+/**
+  Removes block
+  @param row
+  @param col
+*/
+void GameLogic::remove_block(int row, int col) {
+    std::cout << "Removed block at " << row << ", " << col << "\n";
+    board_array[row][col] = 0;
+    set_selected_position(-1, -1);
 }
 
 
@@ -144,40 +144,25 @@ bool GameLogic::collision_detector (int current_block_row, int current_block_col
   @param dir for move direction
 */
 void GameLogic::try_move(std::string dir) {
-    int i = selected_row;
-    int j = selected_col;
-    if (i != -1) {
+    int row = selected_row;
+    int col = selected_col;
+    if (row != -1 && col != -1) {
         if (dir == "up") {
-            if ((get_block(i, j) == 10 || get_block(i, j) == 20) && !collision_detector(i, j, "up")) {
-                std::cout << "Removed block at " << i << ", " << j << "\n";
-                board_array[i][j] = 0;
-                set_selected_position(-1, -1);
+            if ((get_block(row, col) == 10 || get_block(row, col) == 20) && !detect_collision(row, col, "up")) {
+                remove_block(row, col);
+            }
+        } else if (dir == "right") {
+            if ((get_block(row, col) == 10 || get_block(row, col) == 21) && !detect_collision(row, col, "right")) {
+                remove_block(row, col);
+            }
+        } else if (dir == "down") {
+            if ((get_block(row, col) == 10 || get_block(row, col) == 22) && !detect_collision(row, col, "down")) {
+                remove_block(row, col);
+            }
+        } else if (dir == "left") {
+            if ((get_block(row, col) == 10 || get_block(row, col) == 23) && !detect_collision(row, col, "left")) {
+                remove_block(row, col);
             }
         }
     }
-    //     else if (dir == "down") {
-    //         if (get_block(0, i).get_direction() == "down" && !collision_detector(get_block(0, i), get_block(0, i).get_direction())) {
-    //             board_array[0][j] = 0;
-    //         }
-    //         if (!get_block(0, i).get_has_direction() && !collision_detector(get_block(0, i), "down")) {
-    //             board_array[0][j] = 0;
-    //         }
-    //     }
-    //     if (dir == "left") {
-    //         if (get_block(0, i).get_direction() == "left" && !collision_detector(get_block(0, i), get_block(0, i).get_direction())) {
-    //             board_array[0][j] = 0;
-    //         }
-    //         if (!get_block(0, i).get_has_direction() && !collision_detector(get_block(0, i), "left")) {
-    //             board_array[0][j] = 0;
-    //         }
-    //     }
-    //     if (dir == "right") {
-    //         if (get_block(0, i).get_direction() == "right" && !collision_detector(get_block(0, i), get_block(0, i).get_direction())) {
-    //             board_array[0][j] = 0;
-    //         }
-    //         if (!get_block(0, i).get_has_direction() && !collision_detector(get_block(0, i), "right")) {
-    //             board_array[0][j] = 0;
-    //         }
-    //     }
-    // }
 }
