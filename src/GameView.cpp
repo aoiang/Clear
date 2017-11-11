@@ -56,13 +56,21 @@ sf::RectangleShape GameView::make_block_shape(int block) {
 
     if (block >= 20) {
         if (block == 20) {
-            texture[0].loadFromFile("../resources/up.png");
+            if (!texture[0].loadFromFile("../resources/up.png")) {
+                texture[0].loadFromFile("./resources/up.png");
+            }
         } else if (block == 21) {
-            texture[1].loadFromFile("../resources/right.png");
+            if (!texture[1].loadFromFile("../resources/right.png")) {
+                texture[1].loadFromFile("./resources/right.png");
+            }
         } else if (block == 22) {
-            texture[2].loadFromFile("../resources/down.png");
+            if (!texture[2].loadFromFile("../resources/down.png")) {
+                texture[2].loadFromFile("./resources/down.png");
+            }
         } else if (block == 23) {
-            texture[3].loadFromFile("../resources/left.png");
+            if (!texture[3].loadFromFile("../resources/left.png")) {
+                texture[3].loadFromFile("./resources/left.png");
+            }
         }
         block_shape.setTexture(&texture[block % 20]);
     }
