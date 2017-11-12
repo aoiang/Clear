@@ -87,6 +87,11 @@ bool GameLogic::detect_collision (int x, int y, std::string direction) {
     return false;
 }
 
+bool GameLogic::path_blocked(int x, int y, std::string direction) {
+    //TODO rename the main function later.
+    return detect_collision(x, y, direction);
+}
+
 
 /**
   Removes block
@@ -100,30 +105,25 @@ void GameLogic::remove_block(int x, int y) {
 }
 
 
+bool GameLogic::can_move(int block_x, int block_y, std::string direction) {
+    Block block = get_block(block_x, block_y);//assumes one is there
+    return block.type_allows_movement(dir) && !path_blocked(block_x, block_y, direction);
+}
+
 /**
   Attempts to move blocks
   @param dir for move direction
 */
-void GameLogic::try_move(std::string dir) {
-    int x = selected_x;
-    int y = selected_y;
-    if (get_selected_block() != 0) {//TODO refactor all of this
-        if (dir == "up") {
-            if ((get_block(x, y) == 10 || get_block(x, y) == 20) && !detect_collision(x, y, "up")) {
-                remove_block(x, y);
-            }
-        } else if (dir == "right") {
-            if ((get_block(x, y) == 10 || get_block(x, y) == 21) && !detect_collision(x, y, "right")) {
-                remove_block(x, y);
-            }
-        } else if (dir == "down") {
-            if ((get_block(x, y) == 10 || get_block(x, y) == 22) && !detect_collision(x, y, "down")) {
-                remove_block(x, y);
-            }
-        } else if (dir == "left") {
-            if ((get_block(x, y) == 10 || get_block(x, y) == 23) && !detect_collision(x, y, "left")) {
-                remove_block(x, y);
-            }
+void GameLogic::try_move_any(int x, int y, std::string direction) {
+    if (get_selected_block() != 0) {
+        if (can_move(x, y, direction)) {
+            remove_block(x, y);
         }
     }
 }
+
+void GameLogic::try_move_selected(std::string direction) {try_move_any(selected_x, selected_y, direction);}
+
+//TODO remove after renaming usages
+void GameLogic::try_move(std::string direction) {try_move_selected(direction);}
+
