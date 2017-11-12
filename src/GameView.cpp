@@ -9,8 +9,8 @@
 #include <iostream>
 
 /**Create the game window*/
-GameView::GameView(float length, float width):
-    App(sf::VideoMode(length, width, 32), "Clear",  sf::Style::Default){}
+GameView::GameView():
+    App(sf::VideoMode(default_window_height, default_window_width, 32), "Clear",  sf::Style::Default){}
 
 
 /**
@@ -96,19 +96,37 @@ void GameView::init() {
 }
 
 
-//TODO FIX THIS
+int GameView::BoardXToXPixel(int x) {return left_spacing + (x*block_size);}
+
+
+int GameView::BoardYToYPixel(int y) {
+    int current_window_height = App.getSize().y;
+    return current_window_height - (bottom_spacing + (y*block_size)) - block_size;
+}
+
+
+int GameView::XPixelToBoardX(int x_pixel) {
+    if (x_pixel<left_spacing) {return -1;}
+    else {return (x_pixel-left_spacing)/block_size;}
+}
+
+
+int GameView::YPixelToBoardY(int y_pixel) {
+    int current_window_height = App.getSize().y;
+    int flipped_y_pixel = current_window_height - y_pixel;
+    if (flipped_y_pixel<bottom_spacing) {return -1;}
+    else {return (flipped_y_pixel-bottom_spacing)/block_size;}
+}
+
+
+
 /**Checks if mouse has clicked on a block*/
 void GameView::check_mouse_position() {
-    int current_y = App.getSize().y;
-    int current_x = App.getSize().x;
-    int mouse_x = sf::Mouse::getPosition(App).x;
-    int mouse_y = sf::Mouse::getPosition(App).y;
-
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-        logic->set_selected_position(((mouse_y - top_spacing) * 600 / block_size) / current_y,
-                                     ((mouse_x - left_spacing) * 800 / block_size) / current_x);
+        int mouse_x_in_window = sf::Mouse::getPosition(App).x;
+        int mouse_y_in_window = sf::Mouse::getPosition(App).y;
+        logic->set_selected_position(XPixelToBoardX(mouse_x_in_window), YPixelToBoardY(mouse_y_in_window));
     }
-
 }
 
 
@@ -122,30 +140,45 @@ void GameView::draw_selected_block() {
     }
 }
 
+void GameView::draw_shadows() {
+    int width = logic->get_board_width();
+    int height = logic->get_board_height();
+    int i;
+    for (int x=0; x<width; x++) {
+        for (int y=0; y<height; y++) {
+            if (logic->get_block(x, y) != 0) {
+                i = (y*width)+x;
+                shadow_shapes[i].setPosition(BoardXToXPixel(x) + 10, BoardYToYPixel(y) + 10);
+                App.draw(shadow_shapes[i]);
+            }
+        }
+    }
+}
+
+void GameView::draw_blocks() {
+    int width = logic->get_board_width();
+    int height = logic->get_board_height();
+    int i;
+    for (int x=0; x<width; x++) {
+        for (int y=0; y<height; y++) {
+            if (logic->get_block(x, y) != 0) {
+            block_shapes[i].setOutlineThickness(0);
+                i = (y*width)+x;
+                block_shapes[i].setOutlineThickness(0);
+                block_shapes[i].setPosition(BoardXToXPixel(x), BoardYToYPixel(y));
+                App.draw(block_shapes[i]);
+            }
+        }
+    }
+}
+
 
 /**Draw all blocks, shadows, movements, and selections*/
 void GameView::draw() {//TODO split this into functions for drawing each thing.
     poll_event();
     App.clear(sf::Color(120, 180, 255));
-    int width = logic->get_board_width();
-    int height = logic->get_board_height();
-    // shadow drawing pass
-    for (int i=0; i<height*width; i++) {
-        if (logic->get_block(i/height, i%width) != 0) {
-            shadow_shapes[i].setPosition((i%width)*block_size + left_spacing + (block_size/5),
-                                         (i/height)*block_size + top_spacing + (block_size/5));
-            App.draw(shadow_shapes[i]);
-        }
-    }
-    // block drawing pass
-    for (int i=0; i < logic->get_board_width()*logic->get_board_height(); i++) {
-        if (logic->get_block(i/height, i%width) != 0) {
-            block_shapes[i].setOutlineThickness(0);
-            block_shapes[i].setPosition((i%width)*block_size + left_spacing,
-                                        (i/height)*block_size + top_spacing);
-            App.draw(block_shapes[i]);
-        }
-    }
+    draw_shadows();
+    draw_blocks();
     draw_selected_block();
     App.display();
 }
