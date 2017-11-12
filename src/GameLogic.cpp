@@ -6,8 +6,6 @@
 
 #include "GameLogic.h"
 #include "GameBoard.hpp"
-#include <iostream>
-#include <string.h>
 
 
 void GameLogic::set_GameBoard(GameBoard &board) {this->board = &board;}
@@ -106,8 +104,22 @@ void GameLogic::remove_block(int x, int y) {
 
 
 bool GameLogic::can_move(int block_x, int block_y, std::string direction) {
-    Block block = get_block(block_x, block_y);//assumes one is there
-    return block.type_allows_movement(dir) && !path_blocked(block_x, block_y, direction);
+    //Block block = get_block(block_x, block_y);//assumes one is there
+    //return block.type_allows_movement(direction) && !path_blocked(block_x, block_y, direction);
+    int block = get_block(block_x, block_y);
+    if (block == 0) {return true;}//TODO figure out what to do with this case
+    if (path_blocked(block_x, block_y, direction)) {return false;}
+    if (block == 10) {return true;}
+    if (direction == "up") {
+        if (block == 20) {return true;}
+    } else if (direction == "right") {
+        if (block == 21) {return true;}
+    } else if (direction == "down") {
+        if (block == 22) {return true;}
+    } else if (direction == "left") {
+        if (block == 23) {return true;}
+    }
+    return false;
 }
 
 /**
