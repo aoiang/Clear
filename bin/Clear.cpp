@@ -8,9 +8,7 @@
 #include "GameView.h"
 
 int main(int argc, char** argv) {
-    int length = 800;//TODO make this a global var or input
-    int width = 600;//TODO make this a global var or input
-    GameView view(length, width);
+    GameView view;
     GameLogic logic;
     logic.init();
     view.set_GameLogic(logic);
