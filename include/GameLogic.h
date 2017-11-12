@@ -33,6 +33,10 @@ public:
 
     int get_board_width();
     int get_board_height();
+    int is_valid_row(int row);
+    int is_valid_col(int col);
+    int is_valid_location(int x, int y);
+    int is_selected_location_valid();
 
     int get_block(int row, int col);
     void remove_block(int row, int col);
