@@ -11,8 +11,8 @@
 
 class Block {
     protected:
-        float row;
-        float col;
+        float x;
+        float y;
         int id;
         bool can_combine;
 
@@ -20,12 +20,12 @@ class Block {
         int get_id();
         void set_id(int id);
         void init(int id);
-        void setPosition(float row, float col);
-        float get_row();
-        float get_col();
+        void setPosition(float x, float y);
+        float get_x();
+        float get_y();
 //        float get_length();
 //        float get_width();
-        void move(int row, int col);
+        void move(int x, int y);
         virtual bool get_combine();
         virtual void set_combine(bool can_combine);
 };

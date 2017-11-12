@@ -72,8 +72,8 @@ sf::RectangleShape GameView::make_shadow_shape() {
 
 /**Create all of the shapes*/
 void GameView::init() {
-    int board_height = logic->get_board_height();
     int board_width = logic->get_board_width();
+    int board_height = logic->get_board_height();
     
     load_textures();
 
@@ -83,10 +83,12 @@ void GameView::init() {
     shapes = new sf::RectangleShape[board_width*board_height];
     shadows = new sf::RectangleShape[board_width*board_height];
 
-    for (int i=0; i < board_width*board_height; i++) {
-        if (logic->get_block(i/board_height, i%board_width) != 0) {
-            shapes[i] = make_block_shape(logic->get_block(i/board_height, i%board_width));
-            shadows[i] = make_shadow_shape();
+    for (int x=0; x<board_width; x++) {
+        for (int y=0; y<board_height; y++) {
+            if (logic->get_block(x, y) != 0) {
+                shapes[(y*board_width)+x] = make_block_shape(logic->get_block(x, y));
+                shadows[(y*board_width)+x] = make_shadow_shape();
+            }
         }
     }
     this->block_shapes = shapes;
@@ -94,6 +96,7 @@ void GameView::init() {
 }
 
 
+//TODO FIX THIS
 /**Checks if mouse has clicked on a block*/
 void GameView::check_mouse_position() {
     int current_y = App.getSize().y;
@@ -112,7 +115,7 @@ void GameView::check_mouse_position() {
 /**Draws an outline around a block if it is selected*/
 void GameView::draw_selected_block() {
     if (logic->get_selected_block()!=0) {
-        int index = (logic->get_selected_row() * logic->get_board_width()) + logic->get_selected_col();
+        int index = (logic->get_selected_y() * logic->get_board_width()) + logic->get_selected_x();
         block_shapes[index].setOutlineThickness(3.5);
         block_shapes[index].setOutlineColor(sf::Color::Red);
         App.draw(block_shapes[index]);
@@ -124,8 +127,8 @@ void GameView::draw_selected_block() {
 void GameView::draw() {//TODO split this into functions for drawing each thing.
     poll_event();
     App.clear(sf::Color(120, 180, 255));
-    int height = logic->get_board_height();
     int width = logic->get_board_width();
+    int height = logic->get_board_height();
     // shadow drawing pass
     for (int i=0; i<height*width; i++) {
         if (logic->get_block(i/height, i%width) != 0) {

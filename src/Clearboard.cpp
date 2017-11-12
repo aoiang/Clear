@@ -16,14 +16,14 @@
 
 /**
   Sets board dimensions
-  @param h for height
   @param w for width
+  @param h for height
 */
-void Clearboard::init(int h, int w) {
-    this->height = h;
+void Clearboard::init(int w, int h) {
     this->width = w;
-    for(int i=0; i<h; i++) {
-        for (int j=0; j<w; j++) {this->board[i][j] = 0;}
+    this->height = h;
+    for(int x=0; x<w; x++) {
+        for (int y=0; y<h; y++) {this->board[x][y] = 0;}
     }
 }
 

@@ -2,28 +2,17 @@
 #include "Block.cpp"
 #include <iostream>
 
-void print_board(Clearboard gameboard)
-{
-    for(int i=0; i<10; i++)
-    {
-        for(int j=0; j<10; j++)
-        {
-            if(gameboard.get_block(i,j)==0)
-            {
-                std::cout<< true << " ";
-            }
-            else 
-            {
-                std::cout<<gameboard.get_block(i,j)->get_id()<<' ';
-            
-            }
+void print_board(Clearboard gameboard) {
+    for(int y=0; y<10; y++) {
+        for(int x=0; x<10; x++) {
+            if(gameboard.get_block(x,y)==0) {std::cout<< true << " ";}
+            else {std::cout<<gameboard.get_block(x,y)->get_id()<<' ';}
         }
         std::cout<<"\n";
     }
 }
 
-int main ()
-{
+int main () {
     Clearboard gameboard;
     gameboard.init(10,10);
     Block one;
@@ -34,7 +23,5 @@ int main ()
     std::cout<<"\n";
     print_board(gameboard);
     
-    
-   
     return 1;
 }

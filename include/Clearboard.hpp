@@ -9,8 +9,8 @@
 
 class Clearboard{
     private:
-        int height;
         int width;
+        int height;
         Block *board [10][10];
 
     public:

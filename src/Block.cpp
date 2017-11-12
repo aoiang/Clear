@@ -22,17 +22,17 @@ void Block::init(int id) {set_id(id);}
 
 
 /**Sets block x and y indices on the board*/
-void Block::setPosition(float row, float col) {
-    this -> row = row;
-    this -> col = col;
+void Block::setPosition(float x, float y) {
+    this->x = x;
+    this->y = y;
 }
 
 
 /**@return x index of block on board*/
-float Block::get_row() {return row;}
+float Block::get_x() {return x;}
 
 /**@return y index of block on board*/
-float Block::get_col() {return col;}
+float Block::get_y() {return y;}
 
 
 /**
@@ -41,8 +41,8 @@ float Block::get_col() {return col;}
   @param y units to move
 */
 void Block::move(int x, int y) {
-    this->row += x;
-    this->col += y;
+    this->x += x;
+    this->y += y;
 }
 
 

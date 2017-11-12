@@ -15,31 +15,31 @@ private:
     int board_width = 10;
     int board_height = 10;
     int board_array[10][10] = {{0}};
-    int selected_col = -1;
-    int selected_row = -1;
+    int selected_x = -1;
+    int selected_y = -1;
 public:
     void init();
     void block_init();
-    bool detect_collision(int row, int col, std::string direction);
+    bool detect_collision(int x, int y, std::string direction);
     void try_move(std::string direction);
     void check_mousePosition(sf::RenderWindow App);
 
-    int get_selected_col();
-    int get_selected_row();
+    int get_selected_x();
+    int get_selected_y();
     int get_selected_block();
-    void set_selected_col(int col);
-    void set_selected_row(int row);
-    void set_selected_position(int row, int col);
+    void set_selected_x(int x);
+    void set_selected_y(int y);
+    void set_selected_position(int x, int y);
 
     int get_board_width();
     int get_board_height();
-    int is_valid_row(int row);
-    int is_valid_col(int col);
+    int is_valid_x(int x);
+    int is_valid_y(int y);
     int is_valid_location(int x, int y);
     int is_selected_location_valid();
 
-    int get_block(int row, int col);
-    void remove_block(int row, int col);
+    int get_block(int x, int y);
+    void remove_block(int x, int y);
 };
 
 #endif
