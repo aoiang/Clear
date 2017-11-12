@@ -17,15 +17,14 @@ class Block {
         bool can_combine;
 
     public:
-        float get_length();
-        float get_width();
-        float get_row();
-        float get_col();
         int get_id();
-
-        void setPosition(float row, float col);
         void set_id(int id);
         void init(int id);
+        void setPosition(float row, float col);
+        float get_row();
+        float get_col();
+//        float get_length();
+//        float get_width();
         void move(int row, int col);
         virtual bool get_combine();
         virtual void set_combine(bool can_combine);
