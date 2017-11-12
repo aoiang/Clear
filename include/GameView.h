@@ -11,11 +11,10 @@
 #include "Normal_Block.h"
 #include "GameLogic.h"
 
-const char * texture_filepaths[] = {"../resources/up.png",
-                                    "../resources/right.png",
-                                    "../resources/down.png",
-                                    "../resources/left.png",
-                                    };
+static char texture_filepaths[4][40] = {"../resources/up.png",
+                                        "../resources/right.png",
+                                        "../resources/down.png",
+                                        "../resources/left.png"};
 
 class GameView {
 private:
@@ -34,6 +33,8 @@ public:
     void draw();
     void poll_event();
     sf::RectangleShape make_block_shape(int block);
+    void load_texture(int);
+    void load_textures();
     sf::RectangleShape make_shadow_shape();
     void check_mouse_position();
     void check_keyboard_in();
