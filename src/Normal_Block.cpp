@@ -15,51 +15,24 @@
 
 */
 
-void Normal_Block::set_direction(std::string direction){
-    this -> direction = direction;
-}
+void Normal_Block::set_direction(std::string direction) {this->direction = direction;}
 
-std::string Normal_Block::get_direction() {
-    return direction;
-}
+std::string Normal_Block::get_direction() {return direction;}
 
-bool Normal_Block::get_has_direction() {
-    return has_direction;
-}
+bool Normal_Block::get_has_direction() {return has_direction;}
 
-void Normal_Block::set_has_direction(bool has_direction){
-    this ->has_direction = has_direction;
-}
+void Normal_Block::set_has_direction(bool has_direction) {this->has_direction = has_direction;}
 
 void Normal_Block::init(int id) {
-    this -> id = id;
-    if (id % 5 == 0) {
+    this->id = id;
+    //TODO really should just set it with set_has_direction(id%5==4); and add an entry in directions for having none.
+    if (id%5==4) {set_has_direction(false);}
+    else {
         set_has_direction(true);
-        this ->direction = "up";
-    }
-    if (id % 5 == 1) {
-        set_has_direction(true);
-        this ->direction = "down";
-    }
-    if (id % 5 == 2) {
-        set_has_direction(true);
-        this ->direction = "left";
-    }
-    if (id % 5 == 3) {
-        set_has_direction(true);
-        this ->direction = "right";
-    }
-    if (id % 5 == 4) {
-        set_has_direction(false);
+        this->direction = directions[id%5];
     }
 }
 
+bool Normal_Block::get_combine() {return this->can_combine;}
 
-bool Normal_Block::get_combine()
-{
-  return this->can_combine;
-}
-void Normal_Block::set_combine()
-{
-  this->can_combine = true;
-}
+void Normal_Block::set_combine() {this->can_combine = true;}
