@@ -96,6 +96,7 @@ void GameView::init() {
 }
 
 
+//TODO patrick: fix these conversions for resizing etc.
 int GameView::BoardXToXPixel(int x) {return left_spacing + (x*block_size);}
 
 
