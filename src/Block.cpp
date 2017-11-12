@@ -52,3 +52,6 @@ bool Block::get_combine() {return can_combine;}
 
 /**Sets if Block can combine*/
 void Block::set_combine(bool can_combine) {this->can_combine = can_combine;}
+
+/**Base block can move in all directions.*/
+bool Block::type_allows_movement(std::string direction) {return true;}

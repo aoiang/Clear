@@ -28,6 +28,7 @@ class Block {
         void move(int x, int y);
         virtual bool get_combine();
         virtual void set_combine(bool can_combine);
+        virtual bool type_allows_movement(string);
 };
 
 #endif //CLEAR_BLOCK_H

@@ -26,6 +26,7 @@ public:
     void init(int id);
     bool get_combine();
     void set_combine();
+    virtual bool type_allows_movement(string);
 };
 
 
