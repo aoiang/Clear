@@ -8,7 +8,7 @@
 #include "Block.h"
 
 
-const char * directions[] = {"up","down","left","right",};
+static char directions[4][10] = {"up","down","left","right"};//TODO need to be null terminated?
 
 /**
  * This class is for normal block which has directions.
