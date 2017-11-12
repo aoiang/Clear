@@ -37,14 +37,15 @@ bool Normal_Block::get_combine() {return this->can_combine;}
 
 void Normal_Block::set_combine() {this->can_combine = true;}
 
-bool Block::type_allows_movement(std::string direction) {
-    if (dir == "up") {
+bool Normal_Block::type_allows_movement(std::string direction) {
+    if (!has_direction) {return true;}
+    if (direction == "up") {
         return this->direction == directions[0];
-    } else if (dir == "right") {
+    } else if (direction == "right") {
         return this->direction == directions[3];
-    } else if (dir == "down") {
+    } else if (direction == "down") {
         return this->direction == directions[1];
-    } else if (dir == "left") {
+    } else if (direction == "left") {
         return this->direction == directions[2];
     }
 }
