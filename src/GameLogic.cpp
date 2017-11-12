@@ -5,33 +5,12 @@
 
 
 #include "GameLogic.h"
+#include "GameBoard.hpp"
 #include <iostream>
 #include <string.h>
 
-/**
-  Sets the board
-  Temporary implementation; sets a very specific board.
-*/
-void GameLogic::init() {
-    for (int x=0; x<get_board_width(); x++) {
-        for (int y=0; y<get_board_height(); y++) {
-            if (y%5 == 0) {board_array[x][y] = 10;}
-            else {board_array[x][y] = 20+(y%4);}
-        }
-    }
-}
 
-/**
-  Sets x index of selected block
-  @param x index of selected block
-*/
-void GameLogic::set_selected_x(int x) {selected_x = x;}
-
-/**
-  Sets y index of selected block
-  @param y index of selected block
-*/
-void GameLogic::set_selected_y(int y) {selected_y = y;}
+void GameLogic::set_GameBoard(GameBoard &board) {this->board = &board;}
 
 /**@return x index of selected block*/
 int GameLogic::get_selected_x() {return selected_x;}
@@ -45,15 +24,15 @@ int GameLogic::get_selected_y() {return selected_y;}
   @param y index of selected block
 */
 void GameLogic::set_selected_position(int x, int y) {
-    set_selected_x(x);
-    set_selected_y(y);
+    selected_x = x;
+    selected_y = y;
 }
 
 /**@return board width*/
-int GameLogic::get_board_width() {return board_width;}
+int GameLogic::get_board_width() {return board->get_width();}
 
-/**@return board_height*/
-int GameLogic::get_board_height() {return board_height;}
+/**@return board height*/
+int GameLogic::get_board_height() {return board->get_height();}
 
 int GameLogic::is_valid_x(int x) {return x>=0 && x<get_board_width();}
 
@@ -65,7 +44,7 @@ int GameLogic::is_valid_location(int x, int y) {return is_valid_x(x) && is_valid
 int GameLogic::is_selected_location_valid() {return is_valid_location(selected_x, selected_y);}
 
 /**@return block type integer*/
-int GameLogic::get_block(int x, int y) {return board_array[x][y];}
+int GameLogic::get_block(int x, int y) {return board->get_block(x, y);}
 
 /**@return selected block*/
 int GameLogic::get_selected_block() {
@@ -81,7 +60,7 @@ int GameLogic::get_selected_block() {
 */
 bool GameLogic::detect_collision (int x, int y, std::string direction) {
     if (direction == "up") {
-        for (int y2 = y+1; y2<board_height; y2++) {
+        for (int y2 = y+1; y2<get_board_height(); y2++) {
             if (get_block(x, y2) != 0) {
                 return true;
             }
@@ -99,7 +78,7 @@ bool GameLogic::detect_collision (int x, int y, std::string direction) {
             }
         }
     } else if (direction == "right") {
-        for (int x2 = x+1; x2<board_width; x2++) {
+        for (int x2 = x+1; x2<get_board_width(); x2++) {
             if (get_block(x2, y) != 0) {
                 return true;
             }
@@ -116,7 +95,7 @@ bool GameLogic::detect_collision (int x, int y, std::string direction) {
 */
 void GameLogic::remove_block(int x, int y) {
     std::cout << "Removed block at " << x << ", " << y << "\n";
-    board_array[x][y] = 0;
+    board->remove_block(x, y);
     set_selected_position(-1, -1);
 }
 

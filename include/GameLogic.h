@@ -13,24 +13,18 @@
 
 class GameLogic {
 private:
-    GameBoard board;
-    int board_width = 10;
-    int board_height = 10;
-    int board_array[10][10] = {{0}};
+    GameBoard * board;
     int selected_x = -1;
     int selected_y = -1;
 public:
-    void init();
-    void block_init();
     bool detect_collision(int x, int y, std::string direction);
     void try_move(std::string direction);
     void check_mousePosition(sf::RenderWindow App);
+    void set_GameBoard(GameBoard &board);
 
     int get_selected_x();
     int get_selected_y();
     int get_selected_block();
-    void set_selected_x(int x);
-    void set_selected_y(int y);
     void set_selected_position(int x, int y);
 
     int get_board_width();
