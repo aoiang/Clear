@@ -6,5 +6,5 @@ Clear-debug
 Clear-release
 
 /cmake-build-debug/
-.DS_Store
+**/.DS_Store
 /.idea/
