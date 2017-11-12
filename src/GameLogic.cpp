@@ -21,7 +21,6 @@ void GameLogic::init() {
     }
 }
 
-
 /**
   Sets x index of selected block
   @param x index of selected block
@@ -40,7 +39,6 @@ int GameLogic::get_selected_x() {return selected_x;}
 /**@return y index of selected block*/
 int GameLogic::get_selected_y() {return selected_y;}
 
-
 /**
   Sets postion of selected block_shape
   @param x index of selected block
@@ -50,7 +48,6 @@ void GameLogic::set_selected_position(int x, int y) {
     set_selected_x(x);
     set_selected_y(y);
 }
-
 
 /**@return board width*/
 int GameLogic::get_board_width() {return board_width;}
@@ -69,7 +66,6 @@ int GameLogic::is_selected_location_valid() {return is_valid_location(selected_x
 
 /**@return block type integer*/
 int GameLogic::get_block(int x, int y) {return board_array[x][y];}
-
 
 /**@return selected block*/
 int GameLogic::get_selected_block() {

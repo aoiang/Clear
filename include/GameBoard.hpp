@@ -7,19 +7,20 @@
 #ifndef CLEAR_BOARD_HPP
 #define CLEAR_BOARD_HPP
 
-class Clearboard{
+class GameBoard {
     private:
-        int width;
-        int height;
-        Block *board [10][10];
+      int board[10][10] = {{0}};
+      int width = 10;
+      int height = 10;
+      int selected_x = -1;
+      int selected_y = -1;
 
     public:
         void init();
         void init(int x, int y);
         bool remove(int x, int y);
-        Block *get_block(int x, int y);
-        bool add_block(int x, int y, Block block);
-        Block * get_board();
+        int get_block(int x, int y);
+        bool add_block(int x, int y, int block);
 };
 
 #endif

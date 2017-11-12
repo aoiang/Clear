@@ -8,10 +8,12 @@
 
 #include "Block.h"
 #include "Normal_Block.h"
+#include "GameBoard.hpp"
 #include <SFML/Graphics.hpp>
 
 class GameLogic {
 private:
+    GameBoard board;
     int board_width = 10;
     int board_height = 10;
     int board_array[10][10] = {{0}};
