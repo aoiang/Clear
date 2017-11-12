@@ -11,6 +11,12 @@
 #include "Normal_Block.h"
 #include "GameLogic.h"
 
+const char * texture_filepaths[] = {"../resources/up.png",
+                                    "../resources/right.png",
+                                    "../resources/down.png",
+                                    "../resources/left.png",
+                                    };
+
 class GameView {
 private:
     sf::Texture texture[15];
