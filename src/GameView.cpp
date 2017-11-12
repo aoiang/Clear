@@ -8,9 +8,7 @@
 
 #include <iostream>
 
-/**
-  Create the game window
-*/
+/**Create the game window*/
 GameView::GameView(float length, float width):
     App(sf::VideoMode(length, width, 32), "Clear",  sf::Style::Default){}
 
@@ -19,14 +17,10 @@ GameView::GameView(float length, float width):
   Check if window is open
   @return bool
 */
-bool GameView::isOpen() {
-    return App.isOpen();
-}
+bool GameView::isOpen() {return App.isOpen();}
 
 
-/**
-  Updates the view and logic at each frame
-*/
+/**Updates the view and logic at each frame*/
 void GameView::update() {
     check_mouse_position();
     check_keyboard_in();
@@ -38,9 +32,7 @@ void GameView::update() {
   Assigns a GameLogic to this view
   @param logic is the GameLogic associated with this view
 */
-void GameView::set_GameLogic(GameLogic &logic) {
-    this -> logic = &logic;
-}
+void GameView::set_GameLogic(GameLogic &logic) {this->logic = &logic;}
 
 
 /**
@@ -51,31 +43,19 @@ void GameView::set_GameLogic(GameLogic &logic) {
 sf::RectangleShape GameView::make_block_shape(int block) {
     sf::RectangleShape block_shape(sf::Vector2f(block_size, block_size));
     block_shape.setFillColor(sf::Color::White);
-
-    // TODO: fix this kludgey implementation
-
-    if (block >= 20) {
-        if (block == 20) {
-            if (!texture[0].loadFromFile("../resources/up.png")) {
-                texture[0].loadFromFile("./resources/up.png");
-            }
-        } else if (block == 21) {
-            if (!texture[1].loadFromFile("../resources/right.png")) {
-                texture[1].loadFromFile("./resources/right.png");
-            }
-        } else if (block == 22) {
-            if (!texture[2].loadFromFile("../resources/down.png")) {
-                texture[2].loadFromFile("./resources/down.png");
-            }
-        } else if (block == 23) {
-            if (!texture[3].loadFromFile("../resources/left.png")) {
-                texture[3].loadFromFile("./resources/left.png");
-            }
-        }
-        block_shape.setTexture(&texture[block % 20]);
-    }
-
+    if (block>=20) {block_shape.setTexture(&texture[block%20]);}//TODO probably a bug here; didn't seem intended to do anything with block>23
     return block_shape;
+}
+
+void GameView::load_texture(int texture_index) {
+    if (!texture[texture_index].loadFromFile(texture_filepaths[texture_index])) {
+        texture[texture_index].loadFromFile(texture_filepaths[texture_index]+1);
+        //Converts ../* to ./*
+    }
+}
+
+void GameView::load_textures() {
+    for (int i=0; i<4; i++) {load_texture(i);}
 }
 
 
@@ -90,33 +70,31 @@ sf::RectangleShape GameView::make_shadow_shape() {
 }
 
 
-/**
-  Create all of the shapes
-*/
+/**Create all of the shapes*/
 void GameView::init() {
-    int board_height = logic -> get_board_height();
-    int board_width = logic -> get_board_width();
+    int board_height = logic->get_board_height();
+    int board_width = logic->get_board_width();
+    
+    load_textures();
 
     sf::RectangleShape * shapes;
     sf::RectangleShape * shadows;
 
-    shapes = new sf::RectangleShape[board_width * board_height];
-    shadows = new sf::RectangleShape[board_width * board_height];
+    shapes = new sf::RectangleShape[board_width*board_height];
+    shadows = new sf::RectangleShape[board_width*board_height];
 
-    for (int i = 0; i < board_width * board_height; i++) {
-        if (logic -> get_block(i / board_height, i % board_width) != 0) {
-            shapes[i] = make_block_shape(logic -> get_block(i / board_height, i % board_width));
+    for (int i=0; i < board_width*board_height; i++) {
+        if (logic->get_block(i/board_height, i%board_width) != 0) {
+            shapes[i] = make_block_shape(logic->get_block(i/board_height, i%board_width));
             shadows[i] = make_shadow_shape();
         }
     }
-    this -> block_shapes = shapes;
-    this -> shadow_shapes = shadows;
+    this->block_shapes = shapes;
+    this->shadow_shapes = shadows;
 }
 
 
-/**
-  Checks if mouse has clicked on a block
-*/
+/**Checks if mouse has clicked on a block*/
 void GameView::check_mouse_position() {
     int current_y = App.getSize().y;
     int current_x = App.getSize().x;
@@ -131,11 +109,9 @@ void GameView::check_mouse_position() {
 }
 
 
-/**
-  Draws an outline around a block if it is selected
-*/
+/**Draws an outline around a block if it is selected*/
 void GameView::draw_selected_block() {
-    if (logic->get_selected_block() != 0) {
+    if (logic->get_selected_block()!=0) {
         int index = (logic->get_selected_row() * logic->get_board_width()) + logic->get_selected_col();
         block_shapes[index].setOutlineThickness(3.5);
         block_shapes[index].setOutlineColor(sf::Color::Red);
@@ -144,26 +120,26 @@ void GameView::draw_selected_block() {
 }
 
 
-/**
-  Draw all blocks, shadows, movements, and selections
-*/
-void GameView::draw() {
+/**Draw all blocks, shadows, movements, and selections*/
+void GameView::draw() {//TODO split this into functions for drawing each thing.
     poll_event();
     App.clear(sf::Color(120, 180, 255));
     int height = logic->get_board_height();
     int width = logic->get_board_width();
     // shadow drawing pass
-    for (int i = 0; i < height * width; i++) {
-        if (logic -> get_block(i / height, i % width) != 0) {
-            shadow_shapes[i].setPosition((i % width) * block_size + left_spacing + (block_size / 5), (i / height) * block_size + top_spacing + (block_size / 5));
+    for (int i=0; i<height*width; i++) {
+        if (logic->get_block(i/height, i%width) != 0) {
+            shadow_shapes[i].setPosition((i%width)*block_size + left_spacing + (block_size/5),
+                                         (i/height)*block_size + top_spacing + (block_size/5));
             App.draw(shadow_shapes[i]);
         }
     }
     // block drawing pass
-    for (int i = 0; i < logic->get_board_width() * logic->get_board_height(); i++) {
-        if (logic -> get_block(i / height, i % width) != 0) {
+    for (int i=0; i < logic->get_board_width()*logic->get_board_height(); i++) {
+        if (logic->get_block(i/height, i%width) != 0) {
             block_shapes[i].setOutlineThickness(0);
-            block_shapes[i].setPosition((i % width) * block_size + left_spacing, (i / height) * block_size + top_spacing);
+            block_shapes[i].setPosition((i%width)*block_size + left_spacing,
+                                        (i/height)*block_size + top_spacing);
             App.draw(block_shapes[i]);
         }
     }
@@ -172,45 +148,27 @@ void GameView::draw() {
 }
 
 
-/**
-  Checks keyboard input, sends input to logic for handling
-*/
+/**Checks keyboard input, sends input to logic for handling*/
 void GameView::check_keyboard_in() {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-        logic -> try_move("up");
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-        logic -> try_move("down");
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-        logic -> try_move("left");
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-        logic -> try_move("right");
-    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {logic->try_move("up");}
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {logic->try_move("down");}
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {logic->try_move("left");}
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {logic->try_move("right");}
 }
 
 
-/**
-  Check events
-*/
+/**Check events*/
 void GameView::poll_event(){
     sf::Event Event;
     while(App.pollEvent(Event)){
-        switch (Event.type)
-        {
+        switch (Event.type) {
+            case sf::Event::KeyPressed:
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){App.close();}
+                break;
             case sf::Event::Closed:
                 App.close();
                 break;
-            case sf::Event::KeyPressed:
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
-                    App.close();
-                    break;
-                }
             default: break;
         }
-        // Exit
-        if(Event.type == sf::Event::Closed)
-            App.close();
     }
 }
