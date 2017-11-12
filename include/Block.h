@@ -5,10 +5,9 @@
 
 #ifndef CLEAR_BLOCK_H
 #define CLEAR_BLOCK_H
-/**
- * The parameters of the basic block.
- */
+#include <string>
 
+/**The parameters of the basic block.*/
 class Block {
     protected:
         float x;
@@ -28,7 +27,7 @@ class Block {
         void move(int x, int y);
         virtual bool get_combine();
         virtual void set_combine(bool can_combine);
-        virtual bool type_allows_movement(string);
+        virtual bool type_allows_movement(std::string direction);
 };
 
 #endif //CLEAR_BLOCK_H
