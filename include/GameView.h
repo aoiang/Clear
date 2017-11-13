@@ -11,6 +11,7 @@
 #include "Normal_Block.h"
 #include "GameLogic.h"
 
+
 static char texture_filepaths[4][40] = {"../resources/up.png",
                                         "../resources/right.png",
                                         "../resources/down.png",
