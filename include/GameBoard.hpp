@@ -1,26 +1,30 @@
-//
-// Created by Yosef Ejigu 10/21/17
-// Additional work by Ivan Echevarria
-//
-
 #include "Block.h"
 #ifndef CLEAR_BOARD_HPP
 #define CLEAR_BOARD_HPP
+#include <iostream>
 
 class GameBoard {
     private:
-        int board[10][10] = {{0}};
-        int width = 10;
-        int height = 10;
+        const static int default_width = 10;
+        const static int default_height = 10;
+        Block * board[default_width][default_height] = {{0}};
+        int selected_x = -1;
+        int selected_y = -1;
+        int width;
+        int height;
 
     public:
         void init();
         void init(int x, int y);
-        void remove_block(int x, int y);
-        int get_block(int x, int y);
-        int get_width();
-        int get_height();
-        int get_block();
+        int get_board_width();
+        int get_board_height();
+        int is_valid_x(int x);
+        int is_valid_y(int y);
+        int is_valid_location(int x, int y);
+        bool remove_block(int x, int y);
+        Block * get_block(int x, int y);
+        bool block_exists(int x, int y);
+        bool add_block(Block * block);
 };
 
 #endif

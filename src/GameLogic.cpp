@@ -5,7 +5,6 @@
 
 
 #include "GameLogic.h"
-#include "GameBoard.hpp"
 
 
 void GameLogic::set_GameBoard(GameBoard &board) {this->board = &board;}
@@ -26,53 +25,46 @@ void GameLogic::set_selected_position(int x, int y) {
     selected_y = y;
 }
 
-/**@return board width*/
-int GameLogic::get_board_width() {return board->get_width();}
-
-/**@return board height*/
-int GameLogic::get_board_height() {return board->get_height();}
-
-int GameLogic::is_valid_x(int x) {return x>=0 && x<get_board_width();}
-
-int GameLogic::is_valid_y(int y) {return y>=0 && y<get_board_height();}
-
-int GameLogic::is_valid_location(int x, int y) {return is_valid_x(x) && is_valid_y(y);}
-
 //TODO why should the selected block ever be invalid? should just check validity when setting.
-int GameLogic::is_selected_location_valid() {return is_valid_location(selected_x, selected_y);}
+bool GameLogic::is_selected_location_valid() {return board->is_valid_location(selected_x, selected_y);}
+
+bool GameLogic::block_exists(int x, int y) {return board->block_exists(x,y);}
+
+bool GameLogic::selected_block_exists() {return block_exists(selected_x, selected_y);}
 
 /**@return block type integer*/
-int GameLogic::get_block(int x, int y) {return board->get_block(x, y);}
+Block * GameLogic::get_block(int x, int y) {return board->get_block(x, y);}
 
 /**@return selected block*/
-int GameLogic::get_selected_block() {
-    if (is_selected_location_valid()) {return get_block(selected_x, selected_y);}
-    else {return 0;}
-}
+Block * GameLogic::get_selected_block() {return get_block(selected_x, selected_y);}
+
+int GameLogic::get_board_width() {return board->get_board_width();}
+
+int GameLogic::get_board_height() {return board->get_board_height();}
 
 /**Checks if a direction relative to a block is clear or blocked.*/
-bool GameLogic::path_blocked(int x, int y, std::string direction) {
-    if (direction == "up") {
+bool GameLogic::path_blocked(int x, int y, char direction) {
+    if (direction == 'u') {
         for (int y2 = y+1; y2<get_board_height(); y2++) {
-            if (get_block(x, y2) != 0) {
+            if (block_exists(x, y2)) {
                 return true;
             }
         }
-    } else if (direction == "down") {
+    } else if (direction == 'd') {
         for (int y2 = y-1; y2>=0; y2--) {
-            if (get_block(x, y2) != 0) {
+            if (block_exists(x, y2)) {
                 return true;
             }
         }
-    } else if (direction == "left") {
+    } else if (direction == 'l') {
         for (int x2 = x-1; x2>=0; x2--) {
-            if (get_block(x2, y) != 0) {
+            if (block_exists(x2, y)) {
                 return true;
             }
         }
-    } else if (direction == "right") {
+    } else if (direction == 'r') {
         for (int x2 = x+1; x2<get_board_width(); x2++) {
-            if (get_block(x2, y) != 0) {
+            if (block_exists(x2, y)) {
                 return true;
             }
         }
@@ -89,33 +81,28 @@ void GameLogic::remove_block(int x, int y) {
 }
 
 
-bool GameLogic::can_move(int block_x, int block_y, std::string direction) {
-    //Block block = get_block(block_x, block_y);//assumes one is there
-    //return block.type_allows_movement(direction) && !path_blocked(block_x, block_y, direction);
-    int block = get_block(block_x, block_y);
-    if (block == 0) {return true;}//TODO figure out what to do with this case
-    if (path_blocked(block_x, block_y, direction)) {return false;}
-    if (block == 10) {return true;}
-    if (direction == "up") {
-        if (block == 20) {return true;}
-    } else if (direction == "right") {
-        if (block == 21) {return true;}
-    } else if (direction == "down") {
-        if (block == 22) {return true;}
-    } else if (direction == "left") {
-        if (block == 23) {return true;}
+bool GameLogic::can_move(int block_x, int block_y, char direction) {
+    if (!block_exists(block_x, block_y)) {return true;}//TODO figure out what to do with this case
+    Block * block = get_block(block_x, block_y);
+    switch (block->get_id()) {
+        case 10:
+            return static_cast<Normal_Block*>(block)->type_allows_movement(direction) && !path_blocked(block_x, block_y, direction);
+        case 20:
+        case 21:
+        case 22:
+        case 23:
+            return static_cast<Directional_Block*>(block)->type_allows_movement(direction) && !path_blocked(block_x, block_y, direction);
     }
-    return false;
 }
 
 /**Attempts to move a block*/
-void GameLogic::try_move(int x, int y, std::string direction) {
-    if (get_block(x, y) != 0) {
+void GameLogic::try_move(int x, int y, char direction) {
+    if (block_exists(x, y)) {
         if (can_move(x, y, direction)) {
             remove_block(x, y);
         }
     }
 }
 
-void GameLogic::try_move_selected(std::string direction) {try_move(selected_x, selected_y, direction);}
+void GameLogic::try_move_selected(char direction) {try_move(selected_x, selected_y, direction);}
 

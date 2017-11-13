@@ -40,10 +40,10 @@ void GameView::set_GameLogic(GameLogic &logic) {this->logic = &logic;}
   @param Normal_Block to draw
   @return sf::RectangleShape
 */
-sf::RectangleShape GameView::make_block_shape(int block) {
+sf::RectangleShape GameView::make_block_shape(int block_id) {
     sf::RectangleShape block_shape(sf::Vector2f(block_size, block_size));
     block_shape.setFillColor(sf::Color::White);
-    if (block>=20) {block_shape.setTexture(&texture[block%20]);}//TODO probably a bug here; didn't seem intended to do anything with block>23
+    if (block_id>=20) {block_shape.setTexture(&texture[block_id%20]);}//TODO probably a bug here; didn't seem intended to do anything with block>23
     return block_shape;
 }
 
@@ -80,13 +80,13 @@ void GameView::init() {
     sf::RectangleShape * shapes;
     sf::RectangleShape * shadows;
 
-    shapes = new sf::RectangleShape[board_width*board_height];
-    shadows = new sf::RectangleShape[board_width*board_height];
+    shapes = new sf::RectangleShape[board_width*board_height]();
+    shadows = new sf::RectangleShape[board_width*board_height]();
 
     for (int x=0; x<board_width; x++) {
         for (int y=0; y<board_height; y++) {
-            if (logic->get_block(x, y) != 0) {
-                shapes[(y*board_width)+x] = make_block_shape(logic->get_block(x, y));
+            if (logic->block_exists(x, y)) {
+                shapes[(y*board_width)+x] = make_block_shape(logic->get_block(x, y)->get_id());
                 shadows[(y*board_width)+x] = make_shadow_shape();
             }
         }
@@ -138,13 +138,13 @@ void GameView::check_mouse_position() {
             int dx = mouse_x_start - sf::Mouse::getPosition(App).x;
             int dy = mouse_y_start - sf::Mouse::getPosition(App).y;
             if (dx < -deadzone && abs(dx) > abs(dy)) {
-                logic->try_move_selected("right");
+                logic->try_move_selected('r');
             } else if (dx > deadzone && abs(dx) > abs(dy)) {
-                logic->try_move_selected("left");
+                logic->try_move_selected('l');
             } else if (dy < -deadzone && abs(dy) > abs(dx)) {
-                logic->try_move_selected("down");
+                logic->try_move_selected('d');
             } else if (dy > deadzone && abs(dy) > abs(dx)) {
-                logic->try_move_selected("up");
+                logic->try_move_selected('u');
             }
         }
     }
@@ -153,7 +153,7 @@ void GameView::check_mouse_position() {
 
 /**Draws an outline around a block if it is selected*/
 void GameView::draw_selected_block() {
-    if (logic->get_selected_block()!=0) {
+    if (logic->selected_block_exists()) {
         int index = (logic->get_selected_y() * logic->get_board_width()) + logic->get_selected_x();
         block_shapes[index].setOutlineThickness(3.5);
         block_shapes[index].setOutlineColor(sf::Color::Red);
@@ -167,7 +167,7 @@ void GameView::draw_shadows() {
     int i;
     for (int x=0; x<width; x++) {
         for (int y=0; y<height; y++) {
-            if (logic->get_block(x, y) != 0) {
+            if (logic->block_exists(x, y)) {
                 i = (y*width)+x;
                 shadow_shapes[i].setPosition(BoardXToXPixel(x) + 10, BoardYToYPixel(y) + 10);
                 App.draw(shadow_shapes[i]);
@@ -182,8 +182,7 @@ void GameView::draw_blocks() {
     int i;
     for (int x=0; x<width; x++) {
         for (int y=0; y<height; y++) {
-            if (logic->get_block(x, y) != 0) {
-            block_shapes[i].setOutlineThickness(0);
+            if (logic->block_exists(x, y)) {
                 i = (y*width)+x;
                 block_shapes[i].setOutlineThickness(0);
                 block_shapes[i].setPosition(BoardXToXPixel(x), BoardYToYPixel(y));
@@ -207,10 +206,10 @@ void GameView::draw() {//TODO split this into functions for drawing each thing.
 
 /**Checks keyboard input, sends input to logic for handling*/
 void GameView::check_keyboard_in() {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {logic->try_move_selected("up");}
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {logic->try_move_selected("down");}
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {logic->try_move_selected("left");}
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {logic->try_move_selected("right");}
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {logic->try_move_selected('u');}
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {logic->try_move_selected('d');}
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {logic->try_move_selected('l');}
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {logic->try_move_selected('r');}
 }
 
 
