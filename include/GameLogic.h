@@ -19,12 +19,10 @@ private:
     int selected_x = -1;
     int selected_y = -1;
 public:
-    bool detect_collision(int x, int y, std::string direction);
     bool path_blocked(int x, int y, std::string direction);
     bool can_move(int block_x, int block_y, std::string direction);
-    void try_move_any(int x, int y, std::string direction);
+    void try_move(int x, int y, std::string direction);
     void try_move_selected(std::string direction);
-    void try_move(std::string direction);
     void check_mousePosition(sf::RenderWindow App);
     void set_GameBoard(GameBoard &board);
 

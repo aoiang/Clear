@@ -50,13 +50,8 @@ int GameLogic::get_selected_block() {
     else {return 0;}
 }
 
-/**
-  Checks for collisions
-  @param current block
-  @param direction
-  @return bool indicating whether there was a collision
-*/
-bool GameLogic::detect_collision (int x, int y, std::string direction) {
+/**Checks if a direction relative to a block is clear or blocked.*/
+bool GameLogic::path_blocked(int x, int y, std::string direction) {
     if (direction == "up") {
         for (int y2 = y+1; y2<get_board_height(); y2++) {
             if (get_block(x, y2) != 0) {
@@ -85,17 +80,8 @@ bool GameLogic::detect_collision (int x, int y, std::string direction) {
     return false;
 }
 
-bool GameLogic::path_blocked(int x, int y, std::string direction) {
-    //TODO rename the main function later.
-    return detect_collision(x, y, direction);
-}
 
-
-/**
-  Removes block
-  @param x
-  @param y
-*/
+/**Removes block*/
 void GameLogic::remove_block(int x, int y) {
     std::cout << "Removed block at " << x << ", " << y << "\n";
     board->remove_block(x, y);
@@ -122,20 +108,14 @@ bool GameLogic::can_move(int block_x, int block_y, std::string direction) {
     return false;
 }
 
-/**
-  Attempts to move blocks
-  @param dir for move direction
-*/
-void GameLogic::try_move_any(int x, int y, std::string direction) {
-    if (get_selected_block() != 0) {
+/**Attempts to move a block*/
+void GameLogic::try_move(int x, int y, std::string direction) {
+    if (get_block(x, y) != 0) {
         if (can_move(x, y, direction)) {
             remove_block(x, y);
         }
     }
 }
 
-void GameLogic::try_move_selected(std::string direction) {try_move_any(selected_x, selected_y, direction);}
-
-//TODO remove after renaming usages
-void GameLogic::try_move(std::string direction) {try_move_selected(direction);}
+void GameLogic::try_move_selected(std::string direction) {try_move(selected_x, selected_y, direction);}
 

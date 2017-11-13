@@ -120,7 +120,7 @@ int GameView::YPixelToBoardY(int y_pixel) {
 }
 
 
-
+//TODO make it care if the mouse leaves the original block when dragging.
 /**Checks if mouse has clicked on a block*/
 void GameView::check_mouse_position() {
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
@@ -138,13 +138,13 @@ void GameView::check_mouse_position() {
             int dx = mouse_x_start - sf::Mouse::getPosition(App).x;
             int dy = mouse_y_start - sf::Mouse::getPosition(App).y;
             if (dx < -deadzone && abs(dx) > abs(dy)) {
-                logic->try_move("right");
+                logic->try_move_selected("right");
             } else if (dx > deadzone && abs(dx) > abs(dy)) {
-                logic->try_move("left");
+                logic->try_move_selected("left");
             } else if (dy < -deadzone && abs(dy) > abs(dx)) {
-                logic->try_move("down");
+                logic->try_move_selected("down");
             } else if (dy > deadzone && abs(dy) > abs(dx)) {
-                logic->try_move("up");
+                logic->try_move_selected("up");
             }
         }
     }
@@ -207,10 +207,10 @@ void GameView::draw() {//TODO split this into functions for drawing each thing.
 
 /**Checks keyboard input, sends input to logic for handling*/
 void GameView::check_keyboard_in() {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {logic->try_move("up");}
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {logic->try_move("down");}
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {logic->try_move("left");}
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {logic->try_move("right");}
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {logic->try_move_selected("up");}
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {logic->try_move_selected("down");}
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {logic->try_move_selected("left");}
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {logic->try_move_selected("right");}
 }
 
 
