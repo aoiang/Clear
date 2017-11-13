@@ -231,7 +231,7 @@ void GameView::draw_blocks() {
 /**Draw all blocks, shadows, movements, and selections*/
 void GameView::draw() {
     poll_event();
-    App.clear(sf::Color(90, 160, 255));
+    App.clear(sf::Color(40,140,240));
     draw_shadows();
     draw_blocks();
     draw_selected_block();
