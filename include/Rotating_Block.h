@@ -8,7 +8,7 @@
 #include <Block.h>
 #include <string>
 
-class Rotating_Block :public Block{
+class Rotating_Block :public Block {
     private:
         std::string direction;
     public:
