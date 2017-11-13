@@ -31,7 +31,7 @@ void GameView::set_GameLogic(GameLogic &logic) {this->logic = &logic;}
 */
 sf::RectangleShape GameView::make_block_shape(int block_id) {
     sf::RectangleShape block_shape(sf::Vector2f(block_size, block_size));
-    block_shape.setFillColor(sf::Color::White);
+    block_shape.setFillColor(sf::Color(235, 235, 235));
     if (block_id>=20) {block_shape.setTexture(&texture[block_id%20]);}//TODO probably a bug here; didn't seem intended to do anything with block>23
     return block_shape;
 }
@@ -190,6 +190,7 @@ void GameView::draw_selected_block() {
 
         int index = (logic->get_selected_y() * logic->get_board_width()) + logic->get_selected_x();
         block_shapes[index].setSize(sf::Vector2f(block_size*1.1, block_size*1.1));
+        block_shapes[index].setFillColor(sf::Color::White);
         block_shapes[index].move(-0.05*block_size, -0.05*block_size);
         App.draw(block_shapes[index]);
     }
@@ -221,6 +222,7 @@ void GameView::draw_blocks() {
             if (logic->block_exists(x, y)) {
                 i = (y*width)+x;
                 block_shapes[i].setSize(sf::Vector2f(block_size*0.98, block_size*0.98));
+                block_shapes[i].setFillColor(sf::Color(235, 235, 235));
                 block_shapes[i].setPosition(BoardXToXPixel(x), BoardYToYPixel(y));
                 App.draw(block_shapes[i]);
             }
