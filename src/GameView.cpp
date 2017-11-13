@@ -5,8 +5,8 @@
 
 
 #include "GameView.h"
-
 #include <iostream>
+#include <stdlib.h>
 
 /**Create the game window*/
 GameView::GameView():
@@ -74,7 +74,7 @@ sf::RectangleShape GameView::make_shadow_shape() {
 void GameView::init() {
     int board_width = logic->get_board_width();
     int board_height = logic->get_board_height();
-    
+
     load_textures();
 
     sf::RectangleShape * shapes;
@@ -124,9 +124,29 @@ int GameView::YPixelToBoardY(int y_pixel) {
 /**Checks if mouse has clicked on a block*/
 void GameView::check_mouse_position() {
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-        int mouse_x_in_window = sf::Mouse::getPosition(App).x;
-        int mouse_y_in_window = sf::Mouse::getPosition(App).y;
-        logic->set_selected_position(XPixelToBoardX(mouse_x_in_window), YPixelToBoardY(mouse_y_in_window));
+        if (!clicked) {
+            int mouse_x_in_window = sf::Mouse::getPosition(App).x;
+            int mouse_y_in_window = sf::Mouse::getPosition(App).y;
+            logic->set_selected_position(XPixelToBoardX(mouse_x_in_window), YPixelToBoardY(mouse_y_in_window));
+            mouse_x_start = sf::Mouse::getPosition(App).x;
+            mouse_y_start = sf::Mouse::getPosition(App).y;
+            clicked = true;
+        }
+    } else {
+        if (clicked) {
+            clicked = false;
+            int dx = mouse_x_start - sf::Mouse::getPosition(App).x;
+            int dy = mouse_y_start - sf::Mouse::getPosition(App).y;
+            if (dx < -deadzone && abs(dx) > abs(dy)) {
+                logic->try_move("right");
+            } else if (dx > deadzone && abs(dx) > abs(dy)) {
+                logic->try_move("left");
+            } else if (dy < -deadzone && abs(dy) > abs(dx)) {
+                logic->try_move("down");
+            } else if (dy > deadzone && abs(dy) > abs(dx)) {
+                logic->try_move("up");
+            }
+        }
     }
 }
 

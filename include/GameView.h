@@ -26,6 +26,11 @@ private:
     int default_window_height = 600;
     int bottom_spacing = 50;
     int left_spacing = 50;
+    
+    bool clicked = false;
+    int mouse_x_start;
+    int mouse_y_start;
+    int deadzone = 10;
 public:
     int block_size = 50;
     sf::RenderWindow App;
