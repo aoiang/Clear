@@ -21,6 +21,7 @@ class GameView {
         sf::Texture texture[15];
         sf::RectangleShape * block_shapes;
         sf::RectangleShape * shadow_shapes;
+        sf::RectangleShape * path_shapes;
         sf::Shader selected_shader;
         sf::CircleShape selected_shadow;
         GameLogic * logic;
@@ -28,6 +29,7 @@ class GameView {
         int default_window_height = 600;
         int bottom_spacing = 50;
         int left_spacing = 50;
+        char dir = 'n';
         bool clicked = false;
         int mouse_x_start;
         int mouse_y_start;
@@ -42,11 +44,13 @@ class GameView {
         bool isOpen();
         sf::RectangleShape make_block_shape(int block_id);
         sf::RectangleShape make_shadow_shape();
+        sf::RectangleShape make_path_shape(int w, int h);
         void make_selected_shadow();
         void load_texture(int);
         void load_textures();
         void draw();
         void draw_shadows();
+        void draw_path_highlighting();
         void draw_blocks();
         void draw_selected_block();
         int BoardXToXPixel(int x);

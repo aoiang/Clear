@@ -36,6 +36,13 @@ sf::RectangleShape GameView::make_block_shape(int block_id) {
     return block_shape;
 }
 
+/**Makes shapes for paths*/
+sf::RectangleShape GameView::make_path_shape(int w, int h) {
+  sf::RectangleShape path_shape(sf::Vector2f(w, h));
+  path_shape.setFillColor(sf::Color(255, 255, 255, 120));
+  return path_shape;
+}
+
 /**Load textures from files*/
 void GameView::load_texture(int texture_index) {
     if (!texture[texture_index].loadFromFile(texture_filepaths[texture_index])) {
@@ -106,9 +113,11 @@ void GameView::init() {
 
     sf::RectangleShape * shapes;
     sf::RectangleShape * shadows;
+    sf::RectangleShape * paths;
 
     shapes = new sf::RectangleShape[board_width*board_height]();
     shadows = new sf::RectangleShape[board_width*board_height]();
+    paths = new sf::RectangleShape[2]();
 
     for (int x=0; x<board_width; x++) {
         for (int y=0; y<board_height; y++) {
@@ -119,8 +128,12 @@ void GameView::init() {
         }
     }
 
+    paths[0] = make_path_shape(block_size, App.getSize().y);
+    paths[1] = make_path_shape(App.getSize().x, block_size);
+
     this->block_shapes = shapes;
     this->shadow_shapes = shadows;
+    this->path_shapes = paths;
 
     make_selected_shadow();
 }
@@ -154,45 +167,70 @@ int GameView::YPixelToBoardY(int y_pixel) {
 void GameView::check_mouse_position() {
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
         if (!clicked) {
-            int mouse_x_in_window = sf::Mouse::getPosition(App).x;
-            int mouse_y_in_window = sf::Mouse::getPosition(App).y;
-            logic->set_selected_position(XPixelToBoardX(mouse_x_in_window), YPixelToBoardY(mouse_y_in_window));
             mouse_x_start = sf::Mouse::getPosition(App).x;
             mouse_y_start = sf::Mouse::getPosition(App).y;
+            logic->set_selected_position(XPixelToBoardX(mouse_x_start), YPixelToBoardY(mouse_y_start));
             clicked = true;
+        } else {
+            int dx = mouse_x_start - sf::Mouse::getPosition(App).x;
+            int dy = mouse_y_start - sf::Mouse::getPosition(App).y;
+
+            if (dx < -deadzone && abs(dx) > abs(dy)) {dir = 'r';}
+            else if (dx > deadzone && abs(dx) > abs(dy)) {dir = 'l';}
+            else if (dy < -deadzone && abs(dy) > abs(dx)) {dir = 'd';}
+            else if (dy > deadzone && abs(dy) > abs(dx)) {dir = 'u';}
+            else {dir = 'n';}
         }
     } else {
         if (clicked) {
             clicked = false;
-            int dx = mouse_x_start - sf::Mouse::getPosition(App).x;
-            int dy = mouse_y_start - sf::Mouse::getPosition(App).y;
-            if (dx < -deadzone && abs(dx) > abs(dy)) {
-                logic->try_move_selected('r');
-            } else if (dx > deadzone && abs(dx) > abs(dy)) {
-                logic->try_move_selected('l');
-            } else if (dy < -deadzone && abs(dy) > abs(dx)) {
-                logic->try_move_selected('d');
-            } else if (dy > deadzone && abs(dy) > abs(dx)) {
-                logic->try_move_selected('u');
+            if (dir != 'n') {
+                logic->try_move_selected(dir);
             }
+            dir = 'n';
             logic->set_selected_position(-1,-1);
         }
     }
 }
 
-/**Draws an outline around a block if it is selected*/
+/**Draws selected block and shadow under it*/
 void GameView::draw_selected_block() {
     if (logic->selected_block_exists()) {
+        // selection shadow
         selected_shadow.setPosition(sf::Vector2f(BoardXToXPixel(logic->get_selected_x()) + (block_size / 2),
                                                  BoardYToYPixel(logic->get_selected_y()) + (block_size / 2)));
         selected_shader.setParameter("center", selected_shadow.getPosition());
         App.draw(selected_shadow, &selected_shader);
 
+        // selected block
         int index = (logic->get_selected_y() * logic->get_board_width()) + logic->get_selected_x();
         block_shapes[index].setSize(sf::Vector2f(block_size*1.1, block_size*1.1));
         block_shapes[index].setFillColor(sf::Color::White);
         block_shapes[index].move(-0.05*block_size, -0.05*block_size);
         App.draw(block_shapes[index]);
+    }
+}
+
+/**Highlights path that the block will take*/
+void GameView::draw_path_highlighting() {
+    if (logic->selected_block_exists()) {
+        if (dir == 'u') {
+            path_shapes[0].setPosition(sf::Vector2f(BoardXToXPixel(logic->get_selected_x()),
+                                                    BoardYToYPixel(logic->get_selected_y()) - default_window_height));
+            App.draw(path_shapes[0]);
+        } else if (dir == 'd') {
+            path_shapes[0].setPosition(sf::Vector2f(BoardXToXPixel(logic->get_selected_x()),
+                                                    BoardYToYPixel(logic->get_selected_y())));
+            App.draw(path_shapes[0]);
+        } else if (dir == 'l') {
+            path_shapes[1].setPosition(sf::Vector2f(BoardXToXPixel(logic->get_selected_x()) - default_window_width,
+                                                    BoardYToYPixel(logic->get_selected_y())));
+            App.draw(path_shapes[1]);
+        } else if (dir == 'r') {
+            path_shapes[1].setPosition(sf::Vector2f(BoardXToXPixel(logic->get_selected_x()),
+                                                    BoardYToYPixel(logic->get_selected_y())));
+            App.draw(path_shapes[1]);
+        }
     }
 }
 
@@ -236,6 +274,7 @@ void GameView::draw() {
     App.clear(sf::Color(40,140,240));
     draw_shadows();
     draw_blocks();
+    draw_path_highlighting();
     draw_selected_block();
     App.display();
 }
