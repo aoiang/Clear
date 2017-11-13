@@ -3,7 +3,6 @@
 // Additional work by Ivan & Yosef
 //
 
-
 #include "GameView.h"
 #include <iostream>
 #include <stdlib.h>
@@ -12,13 +11,8 @@
 GameView::GameView():
     App(sf::VideoMode(default_window_height, default_window_width, 32), "Clear",  sf::Style::Default){}
 
-
-/**
-  Check if window is open
-  @return bool
-*/
+/**Check if window is open*/
 bool GameView::isOpen() {return App.isOpen();}
-
 
 /**Updates the view and logic at each frame*/
 void GameView::update() {
@@ -27,13 +21,8 @@ void GameView::update() {
     draw();
 }
 
-
-/**
-  Assigns a GameLogic to this view
-  @param logic is the GameLogic associated with this view
-*/
+/**Assigns a GameLogic to this view*/
 void GameView::set_GameLogic(GameLogic &logic) {this->logic = &logic;}
-
 
 /**
   Make block shapes based on their properties
@@ -47,6 +36,7 @@ sf::RectangleShape GameView::make_block_shape(int block_id) {
     return block_shape;
 }
 
+/**Load textures from files*/
 void GameView::load_texture(int texture_index) {
     if (!texture[texture_index].loadFromFile(texture_filepaths[texture_index])) {
         texture[texture_index].loadFromFile(texture_filepaths[texture_index]+1);
@@ -54,10 +44,10 @@ void GameView::load_texture(int texture_index) {
     }
 }
 
+/**Loads all textures*/
 void GameView::load_textures() {
     for (int i=0; i<4; i++) {load_texture(i);}
 }
-
 
 /**
   Make shadow shapes
@@ -68,7 +58,6 @@ sf::RectangleShape GameView::make_shadow_shape() {
     shadow_shape.setFillColor(sf::Color(0, 0, 0, 60));
     return shadow_shape;
 }
-
 
 /**Create all of the shapes*/
 void GameView::init() {
@@ -91,34 +80,34 @@ void GameView::init() {
             }
         }
     }
+
     this->block_shapes = shapes;
     this->shadow_shapes = shadows;
 }
 
-
 //TODO patrick: fix these conversions for resizing etc.
+/**Convert board x coordinate to drawing x coordinate*/
 int GameView::BoardXToXPixel(int x) {return left_spacing + (x*block_size);}
 
-
+/**Convert board y coordinate to drawing y coordinate*/
 int GameView::BoardYToYPixel(int y) {
     int current_window_height = App.getSize().y;
     return current_window_height - (bottom_spacing + (y*block_size)) - block_size;
 }
 
-
+/**Convert pixel x coordinate to board x coordinate*/
 int GameView::XPixelToBoardX(int x_pixel) {
     if (x_pixel<left_spacing) {return -1;}
     else {return (x_pixel-left_spacing)/block_size;}
 }
 
-
+/**Convert pixel y coordinate to board y coordinate*/
 int GameView::YPixelToBoardY(int y_pixel) {
     int current_window_height = App.getSize().y;
     int flipped_y_pixel = current_window_height - y_pixel;
     if (flipped_y_pixel<bottom_spacing) {return -1;}
     else {return (flipped_y_pixel-bottom_spacing)/block_size;}
 }
-
 
 //TODO make it care if the mouse leaves the original block when dragging.
 /**Checks if mouse has clicked on a block*/
@@ -146,21 +135,24 @@ void GameView::check_mouse_position() {
             } else if (dy > deadzone && abs(dy) > abs(dx)) {
                 logic->try_move_selected('u');
             }
+            logic->set_selected_position(-1,-1);
         }
     }
 }
-
 
 /**Draws an outline around a block if it is selected*/
 void GameView::draw_selected_block() {
     if (logic->selected_block_exists()) {
         int index = (logic->get_selected_y() * logic->get_board_width()) + logic->get_selected_x();
-        block_shapes[index].setOutlineThickness(3.5);
-        block_shapes[index].setOutlineColor(sf::Color::Red);
+        block_shapes[index].setSize(sf::Vector2f(block_size*1.1, block_size*1.1));
+        block_shapes[index].move(-0.05*block_size, -0.05*block_size);
+        block_shapes[index].setOutlineThickness(2);
+        block_shapes[index].setOutlineColor(sf::Color::Blue);
         App.draw(block_shapes[index]);
     }
 }
 
+/**Draws shadows under blocks*/
 void GameView::draw_shadows() {
     int width = logic->get_board_width();
     int height = logic->get_board_height();
@@ -176,6 +168,7 @@ void GameView::draw_shadows() {
     }
 }
 
+/**Draws blocks*/
 void GameView::draw_blocks() {
     int width = logic->get_board_width();
     int height = logic->get_board_height();
@@ -184,6 +177,7 @@ void GameView::draw_blocks() {
         for (int y=0; y<height; y++) {
             if (logic->block_exists(x, y)) {
                 i = (y*width)+x;
+                block_shapes[i].setSize(sf::Vector2f(block_size, block_size));
                 block_shapes[i].setOutlineThickness(0);
                 block_shapes[i].setPosition(BoardXToXPixel(x), BoardYToYPixel(y));
                 App.draw(block_shapes[i]);
@@ -191,7 +185,6 @@ void GameView::draw_blocks() {
         }
     }
 }
-
 
 /**Draw all blocks, shadows, movements, and selections*/
 void GameView::draw() {//TODO split this into functions for drawing each thing.
@@ -203,7 +196,6 @@ void GameView::draw() {//TODO split this into functions for drawing each thing.
     App.display();
 }
 
-
 /**Checks keyboard input, sends input to logic for handling*/
 void GameView::check_keyboard_in() {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {logic->try_move_selected('u');}
@@ -211,7 +203,6 @@ void GameView::check_keyboard_in() {
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {logic->try_move_selected('l');}
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {logic->try_move_selected('r');}
 }
-
 
 /**Check events*/
 void GameView::poll_event(){
