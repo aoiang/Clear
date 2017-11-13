@@ -6,7 +6,7 @@
 
 #include "GameLogic.h"
 
-
+/**Sets GameBoard*/
 void GameLogic::set_GameBoard(GameBoard &board) {this->board = &board;}
 
 /**@return x index of selected block*/
@@ -15,21 +15,20 @@ int GameLogic::get_selected_x() {return selected_x;}
 /**@return y index of selected block*/
 int GameLogic::get_selected_y() {return selected_y;}
 
-/**
-  Sets postion of selected block_shape
-  @param x index of selected block
-  @param y index of selected block
-*/
+/**Sets postion of selected block_shape*/
 void GameLogic::set_selected_position(int x, int y) {
     selected_x = x;
     selected_y = y;
 }
 
 //TODO why should the selected block ever be invalid? should just check validity when setting.
+/**Checks if selected location is valid*/
 bool GameLogic::is_selected_location_valid() {return board->is_valid_location(selected_x, selected_y);}
 
+/**Checks if block exists at index*/
 bool GameLogic::block_exists(int x, int y) {return board->block_exists(x,y);}
 
+/**Checks if the selected block exists*/
 bool GameLogic::selected_block_exists() {return block_exists(selected_x, selected_y);}
 
 /**@return block type integer*/
@@ -38,8 +37,10 @@ Block * GameLogic::get_block(int x, int y) {return board->get_block(x, y);}
 /**@return selected block*/
 Block * GameLogic::get_selected_block() {return get_block(selected_x, selected_y);}
 
+/**@return board width*/
 int GameLogic::get_board_width() {return board->get_board_width();}
 
+/**@return board height*/
 int GameLogic::get_board_height() {return board->get_board_height();}
 
 /**Checks if a direction relative to a block is clear or blocked.*/
@@ -80,7 +81,7 @@ void GameLogic::remove_block(int x, int y) {
     set_selected_position(-1, -1);
 }
 
-
+/**Determines if block can be moved*/
 bool GameLogic::can_move(int block_x, int block_y, char direction) {
     if (!block_exists(block_x, block_y)) {return true;}//TODO figure out what to do with this case
     Block * block = get_block(block_x, block_y);
@@ -104,5 +105,5 @@ void GameLogic::try_move(int x, int y, char direction) {
     }
 }
 
+/**Attempts to move the selected block*/
 void GameLogic::try_move_selected(char direction) {try_move(selected_x, selected_y, direction);}
-

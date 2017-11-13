@@ -17,8 +17,10 @@ int main(int argc, char** argv) {
     logic.set_GameBoard(board);
     view.set_GameLogic(logic);
     view.init();
+
     while(view.isOpen()) {
         view.update();
     }
+
     return 0;
 }

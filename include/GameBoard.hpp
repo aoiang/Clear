@@ -8,8 +8,6 @@ class GameBoard {
         const static int default_width = 10;
         const static int default_height = 10;
         Block * board[default_width][default_height] = {{0}};
-        int selected_x = -1;
-        int selected_y = -1;
         int width;
         int height;
 
@@ -27,4 +25,4 @@ class GameBoard {
         bool add_block(Block * block);
 };
 
-#endif
+#endif //GAMEBOARD_HPP

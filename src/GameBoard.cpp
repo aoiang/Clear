@@ -1,6 +1,6 @@
 //
 // Created by Yosef Ejigu 10/21/17
-// Additional work by Ivan Echevarria
+// Additional work by Ivan & Patrick
 //
 
 #include "GameBoard.hpp"
@@ -9,7 +9,7 @@
 #include "Directional_Block.h"
 
 /**
-  Sets board dimensions
+  Sets board dimensions, adds Blocks
   @param w for width
   @param h for height
 */
@@ -34,19 +34,20 @@ void GameBoard::init(int w, int h) {
 /**Initializes board*/
 void GameBoard::init() {init(default_width, default_height);}
 
-
 /**@return board width*/
 int GameBoard::get_board_width() {return width;}
 
 /**@return board height*/
 int GameBoard::get_board_height() {return height;}
 
+/**Checks if x coordinate exists on the board*/
 int GameBoard::is_valid_x(int x) {return x>=0 && x<get_board_width();}
 
+/**Checks if y coordinate exists on the board*/
 int GameBoard::is_valid_y(int y) {return y>=0 && y<get_board_height();}
 
+/**Checks if x, y position exists on the board*/
 int GameBoard::is_valid_location(int x, int y) {return is_valid_x(x) && is_valid_y(y);}
-
 
 /**
   Removes element from board
@@ -61,7 +62,7 @@ bool GameBoard::remove_block(int x, int y) {
 }
 
 /**
-  Adds element to board
+  Adds Block to board
   @param x coordinate to add to
   @param y coordinate to add to
   @return bool to indicate successful addition
@@ -76,15 +77,16 @@ bool GameBoard::add_block(Block * block) {
 }
 
 /**
-  gets block on the board
-  @param x coordinate to look at
-  @param y coordinate to look at
-  @return block desired
+  Gets Block on the board
+  @param x coordinate
+  @param y coordinate
+  @return Block desired
 */
 Block * GameBoard::get_block(int x, int y) {
     return board[x][y];
 }
 
+/**Checks if block exists at index*/
 bool GameBoard::block_exists(int x, int y) {
     return is_valid_location(x,y) && board[x][y]!=nullptr;
 }

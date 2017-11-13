@@ -33,26 +33,26 @@ class GameView {
     public:
         int block_size = 50;
         sf::RenderWindow App;
+        sf::RenderWindow get_App();
+        void set_GameLogic(GameLogic &logic);
         GameView();
         void init();
         bool isOpen();
-        void draw_shadows();
-        void draw_blocks();
-        void draw();
-        void poll_event();
         sf::RectangleShape make_block_shape(int block_id);
+        sf::RectangleShape make_shadow_shape();
         void load_texture(int);
         void load_textures();
-        sf::RectangleShape make_shadow_shape();
+        void draw();
+        void draw_shadows();
+        void draw_blocks();
+        void draw_selected_block();
         int BoardXToXPixel(int x);
         int BoardYToYPixel(int y);
         int XPixelToBoardX(int x);
         int YPixelToBoardY(int y);
+        void poll_event();
         void check_mouse_position();
         void check_keyboard_in();
-        sf::RenderWindow get_App();
-        void draw_selected_block();
-        void set_GameLogic(GameLogic &logic);
         void update();
 };
 
