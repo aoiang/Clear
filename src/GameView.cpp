@@ -54,13 +54,51 @@ void GameView::load_textures() {
   @return sf::RectangleShape shadow_shape
 */
 sf::RectangleShape GameView::make_shadow_shape() {
-    sf::RectangleShape shadow_shape(sf::Vector2f(block_size, block_size));
+    sf::RectangleShape shadow_shape(sf::Vector2f(block_size*0.98, block_size*0.98));
     shadow_shape.setFillColor(sf::Color(0, 0, 0, 60));
     return shadow_shape;
 }
 
+/**
+  Make the circular shadow that's under selected block
+  From https://github.com/SFML/SFML/wiki/Source:-Radial-Gradient-Shader
+*/
+void GameView::make_selected_shadow() {
+    selected_shadow.setRadius(60.f);
+    selected_shadow.setOrigin(selected_shadow.getRadius(), selected_shadow.getRadius());
+    selected_shadow.setPosition(sf::Vector2f(300, 300));
+    selected_shadow.setFillColor(sf::Color::Transparent);
+
+    selected_shader.loadFromMemory("void main(){"
+                                  	   "gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;"
+                                  	   "gl_TexCoord[0] = gl_TextureMatrix[0] * gl_MultiTexCoord0;"
+                                  	   "gl_FrontColor = gl_Color;"
+                                   "}",
+                                   "uniform vec4 color;"
+                                   "uniform vec2 center;"
+                                   "uniform float radius;"
+                                   "uniform float expand;"
+                                   "uniform float windowHeight;"
+                                   "void main(void) {"
+                                       "vec2 centerFromSfml = vec2(center.x, windowHeight - center.y);"
+                                       "vec2 p = (gl_FragCoord.xy - centerFromSfml) / radius;"
+                                       "float r = sqrt(dot(p, p));"
+                                  	"if (r < 1.0) {"
+                                  		 "gl_FragColor = mix(color, gl_Color, (r - expand) / (1 - expand));"
+                                  	"} else {"
+                                  		 "gl_FragColor = gl_Color;"
+                                  	"}"
+                                  "}");
+    selected_shader.setParameter("windowHeight", static_cast<float>(App.getSize().y));
+    selected_shader.setParameter("color", sf::Color::Black);
+    selected_shader.setParameter("radius", selected_shadow.getRadius());
+    selected_shader.setParameter("expand", 0.f);
+}
+
 /**Create all of the shapes*/
 void GameView::init() {
+    App.setFramerateLimit(60);
+
     int board_width = logic->get_board_width();
     int board_height = logic->get_board_height();
 
@@ -83,6 +121,8 @@ void GameView::init() {
 
     this->block_shapes = shapes;
     this->shadow_shapes = shadows;
+
+    make_selected_shadow();
 }
 
 //TODO patrick: fix these conversions for resizing etc.
@@ -143,11 +183,14 @@ void GameView::check_mouse_position() {
 /**Draws an outline around a block if it is selected*/
 void GameView::draw_selected_block() {
     if (logic->selected_block_exists()) {
+        selected_shadow.setPosition(sf::Vector2f(BoardXToXPixel(logic->get_selected_x()) + (block_size / 2),
+                                                 BoardYToYPixel(logic->get_selected_y()) + (block_size / 2)));
+        selected_shader.setParameter("center", selected_shadow.getPosition());
+        App.draw(selected_shadow, &selected_shader);
+
         int index = (logic->get_selected_y() * logic->get_board_width()) + logic->get_selected_x();
         block_shapes[index].setSize(sf::Vector2f(block_size*1.1, block_size*1.1));
         block_shapes[index].move(-0.05*block_size, -0.05*block_size);
-        block_shapes[index].setOutlineThickness(2);
-        block_shapes[index].setOutlineColor(sf::Color::Blue);
         App.draw(block_shapes[index]);
     }
 }
@@ -177,8 +220,7 @@ void GameView::draw_blocks() {
         for (int y=0; y<height; y++) {
             if (logic->block_exists(x, y)) {
                 i = (y*width)+x;
-                block_shapes[i].setSize(sf::Vector2f(block_size, block_size));
-                block_shapes[i].setOutlineThickness(0);
+                block_shapes[i].setSize(sf::Vector2f(block_size*0.98, block_size*0.98));
                 block_shapes[i].setPosition(BoardXToXPixel(x), BoardYToYPixel(y));
                 App.draw(block_shapes[i]);
             }
@@ -187,9 +229,9 @@ void GameView::draw_blocks() {
 }
 
 /**Draw all blocks, shadows, movements, and selections*/
-void GameView::draw() {//TODO split this into functions for drawing each thing.
+void GameView::draw() {
     poll_event();
-    App.clear(sf::Color(120, 180, 255));
+    App.clear(sf::Color(90, 160, 255));
     draw_shadows();
     draw_blocks();
     draw_selected_block();

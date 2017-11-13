@@ -9,6 +9,12 @@
 #include "GameView.h"
 
 int main(int argc, char** argv) {
+  
+    if (!sf::Shader::isAvailable()) {
+        std::cerr << "Shaders are not available." << std::endl;
+        return EXIT_FAILURE;
+    }
+
     GameView view;
     GameLogic logic;
     GameBoard board;

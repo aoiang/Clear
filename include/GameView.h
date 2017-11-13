@@ -21,6 +21,8 @@ class GameView {
         sf::Texture texture[15];
         sf::RectangleShape * block_shapes;
         sf::RectangleShape * shadow_shapes;
+        sf::Shader selected_shader;
+        sf::CircleShape selected_shadow;
         GameLogic * logic;
         int default_window_width = 600;
         int default_window_height = 600;
@@ -40,6 +42,7 @@ class GameView {
         bool isOpen();
         sf::RectangleShape make_block_shape(int block_id);
         sf::RectangleShape make_shadow_shape();
+        void make_selected_shadow();
         void load_texture(int);
         void load_textures();
         void draw();
