@@ -56,14 +56,18 @@ void GameView::load_textures() {
     for (int i=0; i<4; i++) {load_texture(i);}
 }
 
-/**
-  Make shadow shapes
-  @return sf::RectangleShape shadow_shape
-*/
+/**Make shadow shapes*/
 sf::RectangleShape GameView::make_shadow_shape() {
-    sf::RectangleShape shadow_shape(sf::Vector2f(block_size*0.98, block_size*0.98));
+    sf::RectangleShape shadow_shape(sf::Vector2f(block_size * 0.98, block_size * 0.98));
     shadow_shape.setFillColor(sf::Color(0, 0, 0, 60));
     return shadow_shape;
+}
+
+sf::RectangleShape GameView::make_tab_shape(char dir) {
+    sf::RectangleShape tab_shape(sf::Vector2f(block_size / 5, block_size / 5));
+    //TODO: make color more appealing
+    tab_shape.setFillColor(sf::Color(235, 0, 235));
+    return tab_shape;
 }
 
 /**
@@ -128,8 +132,8 @@ void GameView::init() {
         }
     }
 
-    paths[0] = make_path_shape(block_size, App.getSize().y);
-    paths[1] = make_path_shape(App.getSize().x, block_size);
+    paths[0] = make_path_shape(block_size*0.98, App.getSize().y);
+    paths[1] = make_path_shape(App.getSize().x, block_size*0.98);
 
     this->block_shapes = shapes;
     this->shadow_shapes = shadows;

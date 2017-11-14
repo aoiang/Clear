@@ -22,6 +22,7 @@ void GameBoard::init(int w, int h) {
             Block * block;
             if (y%5 == 0) {
                 block = new Normal_Block(x,y);
+                block->set_tab('l', true);
             } else {
                 block = new Directional_Block(x,y,y%4);
             }

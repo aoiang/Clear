@@ -22,6 +22,7 @@ class GameView {
         sf::RectangleShape * block_shapes;
         sf::RectangleShape * shadow_shapes;
         sf::RectangleShape * path_shapes;
+        sf::RectangleShape * tab_shapes;
         sf::Shader selected_shader;
         sf::CircleShape selected_shadow;
         GameLogic * logic;
@@ -45,6 +46,7 @@ class GameView {
         sf::RectangleShape make_block_shape(int block_id);
         sf::RectangleShape make_shadow_shape();
         sf::RectangleShape make_path_shape(int w, int h);
+        sf::RectangleShape make_tab_shape(char dir);
         void make_selected_shadow();
         void load_texture(int);
         void load_textures();
