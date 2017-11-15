@@ -29,7 +29,10 @@ class GameLogic {
         bool selected_block_exists();
         Block * get_block(int x, int y);
         Block * get_selected_block();
+        bool path_blocked(Block * block, char direction);
         bool path_blocked(int x, int y, char direction);
+        bool can_be_removed(Block * block);
+        bool can_move_block(Block * block, char direction);
         bool tabs_impede(int x, int y, char direction);
         bool can_move(int block_x, int block_y, char direction);
         void try_move(int x, int y, char direction);
