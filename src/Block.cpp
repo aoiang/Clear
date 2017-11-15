@@ -43,6 +43,14 @@ bool Block::get_tab(char dir) {
     return tabs[dir_to_index(dir)];
 }
 
+/**Sets tabs to 0*/
+void Block::init_tabs() {
+    set_tab('l', 0);
+    set_tab('r', 0);
+    set_tab('u', 0);
+    set_tab('d', 0);
+}
+
 /**@return can_combine*/
 bool Block::get_combine() {return can_combine;}
 

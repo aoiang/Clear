@@ -6,6 +6,7 @@ Directional_Block::Directional_Block(int x, int y, int initial_rotation) {
     reset_rotation();
     while (initial_rotation) {rotate_clockwise(); initial_rotation--;}
     set_id(20 + get_rotation());
+    init_tabs();
 }
 
 void Directional_Block::rotate() {

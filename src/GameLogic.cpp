@@ -43,6 +43,20 @@ int GameLogic::get_board_width() {return board->get_board_width();}
 /**@return board height*/
 int GameLogic::get_board_height() {return board->get_board_height();}
 
+/**Checks if tabs restrict a block's movement*/
+bool GameLogic::tabs_impede(int x, int y, char direction) {
+    if (direction == 'u' || direction == 'd') {
+        if (   (get_block(x, y)->get_tab('l') && block_exists(x-1, y))
+            || (get_block(x, y)->get_tab('r') && block_exists(x+1, y))
+            || (block_exists(x-1, y) && get_block(x-1, y)->get_tab('r'))
+            || (block_exists(x+1, y) && get_block(x+1, y)->get_tab('l'))) {
+            return true;
+        }
+    } else if (direction == 'l' || direction == 'r') {
+    }
+    return false;
+}
+
 /**Checks if a direction relative to a block is clear or blocked.*/
 bool GameLogic::path_blocked(int x, int y, char direction) {
     if (direction == 'u') {
@@ -87,12 +101,16 @@ bool GameLogic::can_move(int block_x, int block_y, char direction) {
     Block * block = get_block(block_x, block_y);
     switch (block->get_id()) {
         case 10:
-            return static_cast<Normal_Block*>(block)->type_allows_movement(direction) && !path_blocked(block_x, block_y, direction);
+            return static_cast<Normal_Block*>(block)->type_allows_movement(direction)
+                   && !path_blocked(block_x, block_y, direction)
+                   && !tabs_impede(block_x, block_y, direction);
         case 20:
         case 21:
         case 22:
         case 23:
-            return static_cast<Directional_Block*>(block)->type_allows_movement(direction) && !path_blocked(block_x, block_y, direction);
+            return static_cast<Directional_Block*>(block)->type_allows_movement(direction)
+                   && !path_blocked(block_x, block_y, direction)
+                   && !tabs_impede(block_x, block_y, direction);
     }
 }
 

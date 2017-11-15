@@ -19,7 +19,7 @@ class Block {
         int dir_to_index(char dir);
         void set_tab(char dir, bool tab);
         bool get_tab(char dir);
-        bool get_tab(int dir);
+        void init_tabs();
         bool get_combine();
         virtual bool type_allows_movement(char direction);
 };

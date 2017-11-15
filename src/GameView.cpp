@@ -118,9 +118,11 @@ void GameView::init() {
     sf::RectangleShape * shapes;
     sf::RectangleShape * shadows;
     sf::RectangleShape * paths;
+    sf::RectangleShape * tabs;
 
     shapes = new sf::RectangleShape[board_width*board_height]();
     shadows = new sf::RectangleShape[board_width*board_height]();
+    tabs = new sf::RectangleShape[board_width*board_height]();
     paths = new sf::RectangleShape[2]();
 
     for (int x=0; x<board_width; x++) {
@@ -128,6 +130,7 @@ void GameView::init() {
             if (logic->block_exists(x, y)) {
                 shapes[(y*board_width)+x] = make_block_shape(logic->get_block(x, y)->get_id());
                 shadows[(y*board_width)+x] = make_shadow_shape();
+                tabs[(y*board_width)+x] = make_tab_shape('l');
             }
         }
     }
@@ -138,6 +141,7 @@ void GameView::init() {
     this->block_shapes = shapes;
     this->shadow_shapes = shadows;
     this->path_shapes = paths;
+    this->tab_shapes = tabs;
 
     make_selected_shadow();
 }
@@ -272,12 +276,29 @@ void GameView::draw_blocks() {
     }
 }
 
+/**Draws tabs off of blocks*/
+void GameView::draw_tabs() {
+    int width = logic->get_board_width();
+    int height = logic->get_board_height();
+    int i;
+    for (int x=0; x<width; x++) {
+        for (int y=0; y<height; y++) {
+            if (logic->block_exists(x, y) && logic->get_block(x, y)->get_tab('l')) {
+                i = (y*width)+x;
+                tab_shapes[i].setPosition(BoardXToXPixel(x)-block_size/5, BoardYToYPixel(y)+block_size/2.5);
+                App.draw(tab_shapes[i]);
+            }
+        }
+    }
+}
+
 /**Draw all blocks, shadows, movements, and selections*/
 void GameView::draw() {
     poll_event();
     App.clear(sf::Color(40,140,240));
     draw_shadows();
     draw_blocks();
+    draw_tabs();
     draw_path_highlighting();
     draw_selected_block();
     App.display();

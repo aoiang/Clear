@@ -54,6 +54,7 @@ class GameView {
         void draw_shadows();
         void draw_path_highlighting();
         void draw_blocks();
+        void draw_tabs();
         void draw_selected_block();
         int BoardXToXPixel(int x);
         int BoardYToYPixel(int y);
