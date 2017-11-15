@@ -9,5 +9,4 @@ class Normal_Block :public Block {
         bool type_allows_movement(char direction);
 };
 
-
 #endif //CLEAR_NORMAL_BLOCK_HPP

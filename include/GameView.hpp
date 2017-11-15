@@ -1,8 +1,3 @@
-//
-// Created by Yiyang Zhao on 18/10/2017
-// Additional work by Ivan & Yosef
-//
-
 #ifndef CLEAR_GAMEVIEW_HPP
 #define CLEAR_GAMEVIEW_HPP
 
@@ -66,6 +61,5 @@ class GameView {
         void check_keyboard_in();
         void update();
 };
-
 
 #endif //CLEAR_GAMEVIEW_HPP

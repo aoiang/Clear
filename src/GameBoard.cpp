@@ -17,7 +17,7 @@ void GameBoard::init(int w, int h) {
             Block * block;
             if (y%5 == 0) {
                 block = new Normal_Block(x,y);
-                
+
                 // tabs set here
                 // block->set_tab('u', true);
                 block->set_tab('r', true);
