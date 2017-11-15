@@ -1,5 +1,6 @@
-#ifndef CLEAR_NORMAL_BLOCK_H
-#define CLEAR_NORMAL_BLOCK_H
+#ifndef CLEAR_NORMAL_BLOCK_HPP
+#define CLEAR_NORMAL_BLOCK_HPP
+
 #include "Block.hpp"
 
 class Normal_Block :public Block {
@@ -9,4 +10,4 @@ class Normal_Block :public Block {
 };
 
 
-#endif //CLEAR_NORMAL_BLOCK_H
+#endif //CLEAR_NORMAL_BLOCK_HPP

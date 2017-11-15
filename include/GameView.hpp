@@ -8,7 +8,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "Block.hpp"
-#include "Normal_Block.h"
+#include "Normal_Block.hpp"
 #include "GameLogic.hpp"
 
 static char texture_filepaths[4][40] = {"../resources/up.png",

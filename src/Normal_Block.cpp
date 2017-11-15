@@ -1,4 +1,4 @@
-#include "Normal_Block.h"
+#include "Normal_Block.hpp"
 
 Normal_Block::Normal_Block(int x, int y) {
     set_id(10);

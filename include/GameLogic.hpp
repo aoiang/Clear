@@ -2,7 +2,7 @@
 #define CLEAR_GAMELOGIC_HPP
 
 #include "Block.hpp"
-#include "Normal_Block.h"
+#include "Normal_Block.hpp"
 #include "Directional_Block.hpp"
 #include "GameBoard.hpp"
 #include <SFML/Graphics.hpp>

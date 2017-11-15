@@ -1,9 +1,3 @@
-//
-// Created by Yiyang Zhao on 22/10/2017.
-// Additional work by Ivan & Yosef
-//
-
-
 #include "GameLogic.hpp"
 
 /**Sets GameBoard*/

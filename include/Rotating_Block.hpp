@@ -1,7 +1,7 @@
-#ifndef CLEAR_ROTATING_BLOCK_H
-#define CLEAR_ROTATING_BLOCK_H
+#ifndef CLEAR_ROTATING_BLOCK_HPP
+#define CLEAR_ROTATING_BLOCK_HPP
 
-#include <Block.hpp>
+#include "Block.hpp"
 #include <string>
 
 class Rotating_Block :public Block {
@@ -16,4 +16,4 @@ class Rotating_Block :public Block {
 
 };
 
-#endif //CLEAR_ROTATING_BLOCK_H
+#endif //CLEAR_ROTATING_BLOCK_HPP

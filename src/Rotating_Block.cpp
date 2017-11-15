@@ -1,4 +1,4 @@
-#include "Rotating_Block.h"
+#include "Rotating_Block.hpp"
 
 void Rotating_Block::set_combine(bool can_combine)
 {

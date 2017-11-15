@@ -1,6 +1,7 @@
 #ifndef CLEAR_DIRECTIONAL_BLOCK_HPP
 #define CLEAR_DIRECTIONAL_BLOCK_HPP
-#include "Rotation_Aware_Block.h"
+
+#include "Rotation_Aware_Block.hpp"
 
 class Directional_Block :public Rotation_Aware_Block {
     public:
@@ -8,6 +9,5 @@ class Directional_Block :public Rotation_Aware_Block {
         void rotate();
         bool type_allows_movement(char direction);
 };
-
 
 #endif //CLEAR_DIRECTIONAL_BLOCK_HPP
