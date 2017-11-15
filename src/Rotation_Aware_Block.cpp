@@ -1,6 +1,5 @@
 #include "Rotation_Aware_Block.h"
 
-
 int rotation = 0;
 
 int Rotation_Aware_Block::get_rotation() {return rotation%4;}

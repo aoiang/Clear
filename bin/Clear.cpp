@@ -4,12 +4,12 @@
 //
 
 #include <SFML/Graphics.hpp>
-#include "GameLogic.h"
+#include "GameLogic.hpp"
 #include "GameBoard.hpp"
-#include "GameView.h"
+#include "GameView.hpp"
 
 int main(int argc, char** argv) {
-  
+
     if (!sf::Shader::isAvailable()) {
         std::cerr << "Shaders are not available." << std::endl;
         return EXIT_FAILURE;

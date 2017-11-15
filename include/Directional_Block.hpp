@@ -1,5 +1,5 @@
-#ifndef CLEAR_DIRECTIONAL_BLOCK_H
-#define CLEAR_DIRECTIONAL_BLOCK_H
+#ifndef CLEAR_DIRECTIONAL_BLOCK_HPP
+#define CLEAR_DIRECTIONAL_BLOCK_HPP
 #include "Rotation_Aware_Block.h"
 
 class Directional_Block :public Rotation_Aware_Block {
@@ -10,4 +10,4 @@ class Directional_Block :public Rotation_Aware_Block {
 };
 
 
-#endif //CLEAR_DIRECTIONAL_BLOCK_H
+#endif //CLEAR_DIRECTIONAL_BLOCK_HPP

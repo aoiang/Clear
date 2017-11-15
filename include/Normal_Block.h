@@ -1,6 +1,6 @@
 #ifndef CLEAR_NORMAL_BLOCK_H
 #define CLEAR_NORMAL_BLOCK_H
-#include "Block.h"
+#include "Block.hpp"
 
 class Normal_Block :public Block {
     public:

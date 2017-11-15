@@ -4,9 +4,9 @@
 //
 
 #include "GameBoard.hpp"
-#include "Block.h"
+#include "Block.hpp"
 #include "Normal_Block.h"
-#include "Directional_Block.h"
+#include "Directional_Block.hpp"
 
 /**
   Sets board dimensions, adds Blocks

@@ -3,13 +3,13 @@
 // Additional work by Ivan & Yosef
 //
 
-#ifndef CLEAR_GAMEVIEW_H
-#define CLEAR_GAMEVIEW_H
+#ifndef CLEAR_GAMEVIEW_HPP
+#define CLEAR_GAMEVIEW_HPP
 
 #include <SFML/Graphics.hpp>
-#include "Block.h"
+#include "Block.hpp"
 #include "Normal_Block.h"
-#include "GameLogic.h"
+#include "GameLogic.hpp"
 
 static char texture_filepaths[4][40] = {"../resources/up.png",
                                         "../resources/right.png",
@@ -68,4 +68,4 @@ class GameView {
 };
 
 
-#endif //CLEAR_GAMEVIEW_H
+#endif //CLEAR_GAMEVIEW_HPP

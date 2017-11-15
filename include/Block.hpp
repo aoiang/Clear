@@ -1,7 +1,6 @@
-#ifndef CLEAR_BLOCK_H
-#define CLEAR_BLOCK_H
+#ifndef CLEAR_BLOCK_HPP
+#define CLEAR_BLOCK_HPP
 
-/**The parameters of the basic block.*/
 class Block {
     protected:
         int x;
@@ -24,4 +23,4 @@ class Block {
         virtual bool type_allows_movement(char direction);
 };
 
-#endif //CLEAR_BLOCK_H
+#endif //CLEAR_BLOCK_HPP

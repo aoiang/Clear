@@ -1,4 +1,4 @@
-#include "Directional_Block.h"
+#include "Directional_Block.hpp"
 
 Directional_Block::Directional_Block(int x, int y, int initial_rotation) {
     set_position(x, y);

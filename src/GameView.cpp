@@ -3,7 +3,7 @@
 // Additional work by Ivan & Yosef
 //
 
-#include "GameView.h"
+#include "GameView.hpp"
 #include <iostream>
 #include <stdlib.h>
 
@@ -24,11 +24,7 @@ void GameView::update() {
 /**Assigns a GameLogic to this view*/
 void GameView::set_GameLogic(GameLogic &logic) {this->logic = &logic;}
 
-/**
-  Make block shapes based on their properties
-  @param Normal_Block to draw
-  @return sf::RectangleShape
-*/
+/**Make block shapes based on their properties*/
 sf::RectangleShape GameView::make_block_shape(int block_id) {
     sf::RectangleShape block_shape(sf::Vector2f(block_size, block_size));
     block_shape.setFillColor(sf::Color(235, 235, 235));
@@ -152,7 +148,6 @@ int GameView::YPixelToBoardY(int y_pixel) {
     else {return (flipped_y_pixel-bottom_spacing)/block_size;}
 }
 
-//TODO make it care if the mouse leaves the original block when dragging.
 /**Checks if mouse has clicked on a block*/
 void GameView::check_mouse_position() {
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
@@ -186,7 +181,6 @@ void GameView::check_mouse_position() {
 /**Draws selected block and shadow under it*/
 void GameView::draw_selected_block() {
     if (logic->selected_block_exists()) {
-        // selected block
         int index = (logic->get_selected_y() * logic->get_board_width()) + logic->get_selected_x();
         block_shapes[index].setSize(sf::Vector2f(block_size*1.1, block_size*1.1));
         block_shapes[index].setFillColor(sf::Color::White);
@@ -252,21 +246,21 @@ void GameView::draw_blocks() {
     }
 }
 
-/**Draws single tabs*/
+/**Draws an individual single tab*/
 void GameView::draw_tab(int i, int x, int y) {
     tab_shapes[i].setFillColor(sf::Color(235, 235, 235));
     tab_shapes[i].setPosition(x, y);
     App.draw(tab_shapes[i]);
 }
 
-/**Draws double tabs*/
+/**Draws an individual double tab*/
 void GameView::draw_double_tab(int i, int x, int y) {
     double_tab_shapes[i].setFillColor(sf::Color(235, 235, 235));
     double_tab_shapes[i].setPosition(x, y);
     App.draw(double_tab_shapes[i]);
 }
 
-/**Draws tabs off of blocks*/
+/**Draws all tabs*/
 void GameView::draw_tabs() {
     int width = logic->get_board_width();
     int height = logic->get_board_height();

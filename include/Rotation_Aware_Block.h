@@ -1,7 +1,7 @@
 #ifndef CLEAR_ROTATION_AWARE_BLOCK_H
 #define CLEAR_ROTATION_AWARE_BLOCK_H
-#include "Block.h"
 
+#include "Block.hpp"
 
 static char directions[5] = "urdl";
 

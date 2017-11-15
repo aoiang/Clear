@@ -1,4 +1,4 @@
-#include "Block.h"
+#include "Block.hpp"
 
 int x, y, id;
 bool can_combine;
