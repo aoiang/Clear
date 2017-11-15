@@ -72,41 +72,6 @@ sf::RectangleShape GameView::make_tab_shape(char dir) {
     return tab_shape;
 }
 
-/**
-  Make the circular shadow that's under selected block
-  From https://github.com/SFML/SFML/wiki/Source:-Radial-Gradient-Shader
-*/
-void GameView::make_selected_shadow() {
-    selected_shadow.setRadius(60.f);
-    selected_shadow.setOrigin(selected_shadow.getRadius(), selected_shadow.getRadius());
-    selected_shadow.setPosition(sf::Vector2f(300, 300));
-    selected_shadow.setFillColor(sf::Color::Transparent);
-
-    selected_shader.loadFromMemory("void main(){"
-                                  	   "gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;"
-                                  	   "gl_TexCoord[0] = gl_TextureMatrix[0] * gl_MultiTexCoord0;"
-                                  	   "gl_FrontColor = gl_Color;"
-                                   "}",
-                                   "uniform vec4 color;"
-                                   "uniform vec2 center;"
-                                   "uniform float radius;"
-                                   "uniform float expand;"
-                                   "uniform float windowHeight;"
-                                   "void main(void) {"
-                                       "vec2 centerFromSfml = vec2(center.x, windowHeight - center.y);"
-                                       "vec2 p = (gl_FragCoord.xy - centerFromSfml) / radius;"
-                                       "float r = sqrt(dot(p, p));"
-                                  	"if (r < 1.0) {"
-                                  		 "gl_FragColor = mix(color, gl_Color, (r - expand) / (1 - expand));"
-                                  	"} else {"
-                                  		 "gl_FragColor = gl_Color;"
-                                  	"}"
-                                  "}");
-    selected_shader.setParameter("windowHeight", static_cast<float>(App.getSize().y));
-    selected_shader.setParameter("color", sf::Color::Black);
-    selected_shader.setParameter("radius", selected_shadow.getRadius());
-    selected_shader.setParameter("expand", 0.f);
-}
 
 /**Create all of the shapes*/
 void GameView::init() {
@@ -147,8 +112,6 @@ void GameView::init() {
     this->shadow_shapes = shadows;
     this->path_shapes = paths;
     this->tab_shapes = tabs;
-
-    make_selected_shadow();
 }
 
 //TODO patrick: fix these conversions for resizing etc.
@@ -209,12 +172,6 @@ void GameView::check_mouse_position() {
 /**Draws selected block and shadow under it*/
 void GameView::draw_selected_block() {
     if (logic->selected_block_exists()) {
-        // selection shadow
-        selected_shadow.setPosition(sf::Vector2f(BoardXToXPixel(logic->get_selected_x()) + (block_size / 2),
-                                                 BoardYToYPixel(logic->get_selected_y()) + (block_size / 2)));
-        selected_shader.setParameter("center", selected_shadow.getPosition());
-        App.draw(selected_shadow, &selected_shader);
-
         // selected block
         int index = (logic->get_selected_y() * logic->get_board_width()) + logic->get_selected_x();
         block_shapes[index].setSize(sf::Vector2f(block_size*1.1, block_size*1.1));
@@ -281,6 +238,12 @@ void GameView::draw_blocks() {
     }
 }
 
+void GameView::draw_tab(int i, int x, int y) {
+    tab_shapes[i].setFillColor(sf::Color(235, 235, 235));
+    tab_shapes[i].setPosition(x, y);
+    App.draw(tab_shapes[i]);
+}
+
 /**Draws tabs off of blocks*/
 void GameView::draw_tabs() {
     int width = logic->get_board_width();
@@ -290,22 +253,10 @@ void GameView::draw_tabs() {
         for (int y=0; y<height; y++) {
             if (logic->block_exists(x, y)) {
                 i = 4*((y*width)+x);
-                if (logic->get_block(x, y)->get_tab('u')) {
-                    tab_shapes[i].setPosition(BoardXToXPixel(x)+block_size/2.5, BoardYToYPixel(y)-block_size/5);
-                    App.draw(tab_shapes[i]);
-                }
-                if (logic->get_block(x, y)->get_tab('r')) {
-                    tab_shapes[i+1].setPosition(BoardXToXPixel(x) + block_size*0.98, BoardYToYPixel(y)+block_size/2.5);
-                    App.draw(tab_shapes[i+1]);
-                }
-                if (logic->get_block(x, y)->get_tab('d')) {
-                    tab_shapes[i+2].setPosition(BoardXToXPixel(x)+block_size/2.5, BoardYToYPixel(y) + block_size*0.98);
-                    App.draw(tab_shapes[i+2]);
-                }
-                if (logic->get_block(x, y)->get_tab('l')) {
-                    tab_shapes[i+3].setPosition(BoardXToXPixel(x)-block_size/5, BoardYToYPixel(y)+block_size/2.5);
-                    App.draw(tab_shapes[i+3]);
-                }
+                if (logic->get_block(x, y)->get_tab('u')) {draw_tab(i, BoardXToXPixel(x) + block_size / 2.5, BoardYToYPixel(y) - block_size / 5);}
+                if (logic->get_block(x, y)->get_tab('r')) {draw_tab(i+1, BoardXToXPixel(x) + block_size * 0.98, BoardYToYPixel(y) + block_size / 2.5);}
+                if (logic->get_block(x, y)->get_tab('d')) {draw_tab(i+2, BoardXToXPixel(x) + block_size / 2.5, BoardYToYPixel(y) + block_size * 0.98);}
+                if (logic->get_block(x, y)->get_tab('l')) {draw_tab(i+3, BoardXToXPixel(x) - block_size / 5, BoardYToYPixel(y) + block_size / 2.5);}
             }
         }
     }

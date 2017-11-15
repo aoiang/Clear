@@ -23,8 +23,6 @@ class GameView {
         sf::RectangleShape * shadow_shapes;
         sf::RectangleShape * path_shapes;
         sf::RectangleShape * tab_shapes;
-        sf::Shader selected_shader;
-        sf::CircleShape selected_shadow;
         GameLogic * logic;
         int default_window_width = 600;
         int default_window_height = 600;
@@ -47,13 +45,13 @@ class GameView {
         sf::RectangleShape make_shadow_shape();
         sf::RectangleShape make_path_shape(int w, int h);
         sf::RectangleShape make_tab_shape(char dir);
-        void make_selected_shadow();
         void load_texture(int);
         void load_textures();
         void draw();
         void draw_shadows();
         void draw_path_highlighting();
         void draw_blocks();
+        void draw_tab(int, int, int);
         void draw_tabs();
         void draw_selected_block();
         int BoardXToXPixel(int x);
