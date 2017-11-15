@@ -53,6 +53,12 @@ bool GameLogic::tabs_impede(int x, int y, char direction) {
             return true;
         }
     } else if (direction == 'l' || direction == 'r') {
+        if (   (get_block(x, y)->get_tab('u') && block_exists(x, y+1))
+            || (get_block(x, y)->get_tab('d') && block_exists(x, y-1))
+            || (block_exists(x, y+1) && get_block(x, y+1)->get_tab('d'))
+            || (block_exists(x, y-1) && get_block(x, y-1)->get_tab('u'))) {
+            return true;
+        }
     }
     return false;
 }

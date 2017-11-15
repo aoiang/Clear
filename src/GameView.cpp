@@ -66,7 +66,9 @@ sf::RectangleShape GameView::make_shadow_shape() {
 sf::RectangleShape GameView::make_tab_shape(char dir) {
     sf::RectangleShape tab_shape(sf::Vector2f(block_size / 5, block_size / 5));
     //TODO: make color more appealing
-    tab_shape.setFillColor(sf::Color(235, 0, 235));
+    tab_shape.setFillColor(sf::Color(235, 235, 235));
+    tab_shape.setOutlineThickness(2);
+    tab_shape.setOutlineColor(sf::Color::Black);
     return tab_shape;
 }
 
@@ -120,9 +122,9 @@ void GameView::init() {
     sf::RectangleShape * paths;
     sf::RectangleShape * tabs;
 
-    shapes = new sf::RectangleShape[board_width*board_height]();
-    shadows = new sf::RectangleShape[board_width*board_height]();
-    tabs = new sf::RectangleShape[board_width*board_height]();
+    shapes = new sf::RectangleShape[board_width * board_height]();
+    shadows = new sf::RectangleShape[board_width * board_height]();
+    tabs = new sf::RectangleShape[4 * board_width * board_height]();
     paths = new sf::RectangleShape[2]();
 
     for (int x=0; x<board_width; x++) {
@@ -130,7 +132,10 @@ void GameView::init() {
             if (logic->block_exists(x, y)) {
                 shapes[(y*board_width)+x] = make_block_shape(logic->get_block(x, y)->get_id());
                 shadows[(y*board_width)+x] = make_shadow_shape();
-                tabs[(y*board_width)+x] = make_tab_shape('l');
+                tabs[4 * ((y * board_width) + x) + 0] = make_tab_shape('u');
+                tabs[4 * ((y * board_width) + x) + 1] = make_tab_shape('r');
+                tabs[4 * ((y * board_width) + x) + 2] = make_tab_shape('d');
+                tabs[4 * ((y * board_width) + x) + 3] = make_tab_shape('l');
             }
         }
     }
@@ -283,10 +288,24 @@ void GameView::draw_tabs() {
     int i;
     for (int x=0; x<width; x++) {
         for (int y=0; y<height; y++) {
-            if (logic->block_exists(x, y) && logic->get_block(x, y)->get_tab('l')) {
-                i = (y*width)+x;
-                tab_shapes[i].setPosition(BoardXToXPixel(x)-block_size/5, BoardYToYPixel(y)+block_size/2.5);
-                App.draw(tab_shapes[i]);
+            if (logic->block_exists(x, y)) {
+                i = 4*((y*width)+x);
+                if (logic->get_block(x, y)->get_tab('u')) {
+                    tab_shapes[i].setPosition(BoardXToXPixel(x)+block_size/2.5, BoardYToYPixel(y)-block_size/5);
+                    App.draw(tab_shapes[i]);
+                }
+                if (logic->get_block(x, y)->get_tab('r')) {
+                    tab_shapes[i+1].setPosition(BoardXToXPixel(x) + block_size*0.98, BoardYToYPixel(y)+block_size/2.5);
+                    App.draw(tab_shapes[i+1]);
+                }
+                if (logic->get_block(x, y)->get_tab('d')) {
+                    tab_shapes[i+2].setPosition(BoardXToXPixel(x)+block_size/2.5, BoardYToYPixel(y) + block_size*0.98);
+                    App.draw(tab_shapes[i+2]);
+                }
+                if (logic->get_block(x, y)->get_tab('l')) {
+                    tab_shapes[i+3].setPosition(BoardXToXPixel(x)-block_size/5, BoardYToYPixel(y)+block_size/2.5);
+                    App.draw(tab_shapes[i+3]);
+                }
             }
         }
     }
