@@ -67,8 +67,8 @@ sf::RectangleShape GameView::make_shadow_shape() {
 sf::RectangleShape GameView::make_tab_shape(char dir) {
     sf::RectangleShape tab_shape(sf::Vector2f(block_size / 5, block_size / 5));
     tab_shape.setFillColor(sf::Color(235, 235, 235));
-    tab_shape.setOutlineThickness(2);
-    tab_shape.setOutlineColor(sf::Color::Black);
+    tab_shape.setOutlineThickness(1);
+    tab_shape.setOutlineColor(sf::Color(100, 100, 100));
     return tab_shape;
 }
 
@@ -76,8 +76,8 @@ sf::RectangleShape GameView::make_tab_shape(char dir) {
 sf::RectangleShape GameView::make_double_tab_shape(char dir) {
     sf::RectangleShape double_tab_shape(sf::Vector2f(block_size/2.5, block_size/5));
     double_tab_shape.setFillColor(sf::Color(235, 235, 235));
-    double_tab_shape.setOutlineThickness(2);
-    double_tab_shape.setOutlineColor(sf::Color::Black);
+    double_tab_shape.setOutlineThickness(1);
+    double_tab_shape.setOutlineColor(sf::Color(100, 100, 100));
     return double_tab_shape;
 }
 
@@ -112,7 +112,7 @@ void GameView::init() {
                 tabs[4 * ((y * board_width) + x) + 2] = make_tab_shape('d');
                 tabs[4 * ((y * board_width) + x) + 3] = make_tab_shape('l');
                 double_tabs[2 * ((y * board_width) + x)] = make_double_tab_shape('u');
-                double_tabs[2 * ((y * board_width) + x)] = make_double_tab_shape('l');
+                double_tabs[2 * ((y * board_width) + x) + 1] = make_double_tab_shape('l');
             }
         }
     }
@@ -260,7 +260,9 @@ void GameView::draw_tab(int i, int x, int y) {
 
 /**Draws double tabs*/
 void GameView::draw_double_tab(int i, int x, int y) {
-
+    double_tab_shapes[i].setFillColor(sf::Color(235, 235, 235));
+    double_tab_shapes[i].setPosition(x, y);
+    App.draw(double_tab_shapes[i]);
 }
 
 /**Draws tabs off of blocks*/
@@ -268,18 +270,24 @@ void GameView::draw_tabs() {
     int width = logic->get_board_width();
     int height = logic->get_board_height();
     int i;
+    int j;
     for (int x=0; x<width; x++) {
         for (int y=0; y<height; y++) {
             if (logic->block_exists(x, y)) {
                 i = 4*((y*width)+x);
+                j = 2*((y*width)+x);
                 if (logic->get_block(x, y)->get_tab('u')) {draw_tab(i, BoardXToXPixel(x) + block_size / 2.5, BoardYToYPixel(y) - block_size / 5);}
-                if (logic->get_block(x, y)->get_tab('r')) {draw_tab(i+1, BoardXToXPixel(x) + block_size * 0.98, BoardYToYPixel(y) + block_size / 2.5);}
-                    // if (!(logic->block_exists(x-1, y) && logic->get_block(x-1, y)->get_tab(l))) {
-                    //     draw_tab(i+1, BoardXToXPixel(x) + block_size * 0.98, BoardYToYPixel(y) + block_size / 2.5);
-                    // } else {
-                    // }
+                if (logic->get_block(x, y)->get_tab('r') && !(logic->block_exists(x+1, y) && logic->get_block(x+1, y)->get_tab('l'))) {
+                      draw_tab(i+1, BoardXToXPixel(x) + block_size * 0.98, BoardYToYPixel(y) + block_size / 2.5);
+                }
                 if (logic->get_block(x, y)->get_tab('d')) {draw_tab(i+2, BoardXToXPixel(x) + block_size / 2.5, BoardYToYPixel(y) + block_size * 0.98);}
-                if (logic->get_block(x, y)->get_tab('l')) {draw_tab(i+3, BoardXToXPixel(x) - block_size / 5, BoardYToYPixel(y) + block_size / 2.5);}
+                if (logic->get_block(x, y)->get_tab('l')) {
+                    if (!(logic->block_exists(x-1, y) && logic->get_block(x-1, y)->get_tab('r'))) {
+                        draw_tab(i+3, BoardXToXPixel(x) - block_size / 5, BoardYToYPixel(y) + block_size / 2.5);
+                    } else {
+                        draw_double_tab(j+1, BoardXToXPixel(x) - block_size / 5, BoardYToYPixel(y) + block_size / 2.5);
+                    }
+                }
             }
         }
     }
