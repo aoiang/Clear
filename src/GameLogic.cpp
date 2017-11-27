@@ -129,13 +129,15 @@ bool GameLogic::can_move(int block_x, int block_y, char direction) {
 }
 
 /**Attempts to move a block*/
-void GameLogic::try_move(int x, int y, char direction) {
+bool GameLogic::try_move(int x, int y, char direction) {
     if (block_exists(x, y)) {
         if (can_move(x, y, direction)) {
             remove_block(x, y);
+            return true;
         }
+        return false;
     }
 }
 
 /**Attempts to move the selected block*/
-void GameLogic::try_move_selected(char direction) {try_move(selected_x, selected_y, direction);}
+bool GameLogic::try_move_selected(char direction) {return try_move(selected_x, selected_y, direction);}

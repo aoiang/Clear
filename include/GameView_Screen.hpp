@@ -22,6 +22,8 @@ class GameView_Screen : public Screen_Abstract {
         sf::RectangleShape * tab_shapes;
         sf::RectangleShape * double_tab_shapes;
         GameLogic * logic;
+        int ** animation_frames;
+        char ** animation_dir;
         int default_window_width = 600;
         int default_window_height = 600;
         int bottom_spacing = 50;

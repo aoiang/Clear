@@ -90,9 +90,16 @@ void GameView_Screen::init() {
     double_tabs = new sf::RectangleShape[2 * board_width * board_height]();
     paths = new sf::RectangleShape[2]();
 
+    animation_frames = new int * [board_width];
+    animation_dir = new char * [board_width];
+
     for (int x=0; x<board_width; x++) {
+        animation_frames[x] = new int[board_height];
+        animation_dir[x] = new char[board_height];
         for (int y=0; y<board_height; y++) {
             if (logic->block_exists(x, y)) {
+                animation_frames[x][y] = 0;
+                animation_dir[x][y] = DEFAULT_DIR;
                 shapes[(y*board_width)+x] = make_block_shape(logic->get_block(x, y)->get_id());
                 shadows[(y*board_width)+x] = make_shadow_shape();
                 tabs[4 * ((y * board_width) + x)] = make_tab_shape(U_DIR);
@@ -101,6 +108,8 @@ void GameView_Screen::init() {
                 tabs[4 * ((y * board_width) + x) + 3] = make_tab_shape(L_DIR);
                 double_tabs[2 * ((y * board_width) + x)] = make_double_tab_shape(D_DIR);
                 double_tabs[2 * ((y * board_width) + x) + 1] = make_double_tab_shape(L_DIR);
+            } else {
+                animation_frames[x][y] = -1;
             }
         }
     }
@@ -163,7 +172,10 @@ void GameView_Screen::check_mouse_position() {
         if (clicked) {
             clicked = false;
             if (dir != DEFAULT_DIR) {
-                logic->try_move_selected(dir);
+                bool success = logic->try_move_selected(dir);
+                if (success) {
+                    //animation_frames[logic->get_selected_x()][logic->get_selected_y()]++;
+                }
             }
             dir = DEFAULT_DIR;
             logic->set_selected_position(-1,-1);
@@ -228,11 +240,22 @@ void GameView_Screen::draw_blocks() {
     int i;
     for (int x=0; x<width; x++) {
         for (int y=0; y<height; y++) {
-            if (logic->block_exists(x, y)) {
-                i = (y*width)+x;
+            i = (y*width)+x;
+            if (logic->block_exists(x, y) && (animation_frames[x][y] == 0)) {
                 block_shapes[i].setSize(sf::Vector2f(block_size*0.98, block_size*0.98));
                 block_shapes[i].setFillColor(sf::Color(235, 235, 235));
                 block_shapes[i].setPosition(BoardXToXPixel(x), BoardYToYPixel(y));
+                App->draw(block_shapes[i]);
+            } else if ((animation_frames[x][y] < 1000) && (animation_frames > 0)) {
+                animation_frames[x][y] ++;
+                block_shapes[i].move(0, 0.1);
+                block_shapes[i].rotate(0.1);
+                App->draw(block_shapes[i]);
+            } else if (animation_frames[x][y] == 1) {
+                block_shapes[i].setOrigin(block_size / 2, block_size / 2);
+                block_shapes[i].setSize(sf::Vector2f(block_size*0.98, block_size*0.98));
+                block_shapes[i].setFillColor(sf::Color(235, 235, 235));
+                animation_frames[x][y] ++;
                 App->draw(block_shapes[i]);
             }
         }
@@ -313,16 +336,14 @@ int GameView_Screen:: run(sf::RenderWindow &window)
     sf:: Event Event;
     while(running)
     {
-    //if(poll_event()!=-1)
-      //  draw();
         while (window.pollEvent(Event))
         {
             if(Event.type == sf::Event::Closed)
             {
-                    running = false;
-                    return -1;
+                running = false;
+                return -1;
             }
-            
+
         }
         check_mouse_position();
         check_keyboard_in();
