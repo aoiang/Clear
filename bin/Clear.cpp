@@ -7,20 +7,19 @@
 #include "GameLogic.hpp"
 #include "GameBoard.hpp"
 #include "GameView.hpp"
+#include "Screens.hpp"
 
 int main(int argc, char** argv) {
+    
     GameView view;
     GameLogic logic;
     GameBoard board;
 
     board.init(10, 10);
     logic.set_GameBoard(board);
-    view.set_GameLogic(logic);
-    view.init();
-
-    while(view.isOpen()) {
-        view.update();
-    }
+    
+    view.run(logic);
+    
 
     return 0;
 }
