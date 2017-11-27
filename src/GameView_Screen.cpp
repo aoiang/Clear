@@ -97,9 +97,11 @@ void GameView_Screen::init() {
         animation_frames[x] = new int[board_height];
         animation_dir[x] = new char[board_height];
         for (int y=0; y<board_height; y++) {
+            animation_frames[x][y] = -1;
             if (logic->block_exists(x, y)) {
                 animation_frames[x][y] = 0;
                 animation_dir[x][y] = DEFAULT_DIR;
+
                 shapes[(y*board_width)+x] = make_block_shape(logic->get_block(x, y)->get_id());
                 shadows[(y*board_width)+x] = make_shadow_shape();
                 tabs[4 * ((y * board_width) + x)] = make_tab_shape(U_DIR);
@@ -108,8 +110,6 @@ void GameView_Screen::init() {
                 tabs[4 * ((y * board_width) + x) + 3] = make_tab_shape(L_DIR);
                 double_tabs[2 * ((y * board_width) + x)] = make_double_tab_shape(D_DIR);
                 double_tabs[2 * ((y * board_width) + x) + 1] = make_double_tab_shape(L_DIR);
-            } else {
-                animation_frames[x][y] = -1;
             }
         }
     }
@@ -172,13 +172,15 @@ void GameView_Screen::check_mouse_position() {
         if (clicked) {
             clicked = false;
             if (dir != DEFAULT_DIR) {
-                bool success = logic->try_move_selected(dir);
-                if (success) {
-                    //animation_frames[logic->get_selected_x()][logic->get_selected_y()]++;
+                int sel_x = logic->get_selected_x();
+                int sel_y = logic->get_selected_y();
+                if (logic->try_move_selected(dir)) {
+                    animation_frames[sel_x][sel_y] = 1;
+                    animation_dir[sel_x][sel_y] = dir;
                 }
             }
             dir = DEFAULT_DIR;
-            logic->set_selected_position(-1,-1);
+            logic->set_selected_position(-1, -1);
         }
     }
 }
@@ -246,16 +248,20 @@ void GameView_Screen::draw_blocks() {
                 block_shapes[i].setFillColor(sf::Color(235, 235, 235));
                 block_shapes[i].setPosition(BoardXToXPixel(x), BoardYToYPixel(y));
                 App->draw(block_shapes[i]);
-            } else if ((animation_frames[x][y] < 1000) && (animation_frames > 0)) {
-                animation_frames[x][y] ++;
-                block_shapes[i].move(0, 0.1);
-                block_shapes[i].rotate(0.1);
-                App->draw(block_shapes[i]);
             } else if (animation_frames[x][y] == 1) {
                 block_shapes[i].setOrigin(block_size / 2, block_size / 2);
+                block_shapes[i].move(block_size / 2, block_size / 2);
                 block_shapes[i].setSize(sf::Vector2f(block_size*0.98, block_size*0.98));
                 block_shapes[i].setFillColor(sf::Color(235, 235, 235));
                 animation_frames[x][y] ++;
+                App->draw(block_shapes[i]);
+            } else if ((animation_frames[x][y] < 2000) && (animation_frames[x][y] > 1)) {
+                animation_frames[x][y] ++;
+                if (animation_dir[x][y] == D_DIR) { block_shapes[i].move(0, 0.25); }
+                else if (animation_dir[x][y] == U_DIR) { block_shapes[i].move(0, -0.25); }
+                else if (animation_dir[x][y] == L_DIR) { block_shapes[i].move(-0.25, 0); }
+                else if (animation_dir[x][y] == R_DIR) { block_shapes[i].move(0.25, 0); }
+                block_shapes[i].rotate(0.1);
                 App->draw(block_shapes[i]);
             }
         }

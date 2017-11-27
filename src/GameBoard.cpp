@@ -23,10 +23,12 @@ void GameBoard::init(int w, int h) {
                 block->set_tab('r', true);
                 // block->set_tab('d', true);
                 block->set_tab('l', true);
-            } else {
-                block = new Directional_Block(x,y,y%4);
+                add_block(block);
+
+            } else if ((x+y)%3) {
+              block = new Directional_Block(x,y,y%4);
+              add_block(block);
             }
-            add_block(block);
         }
         std::cout << "\n";
     }
