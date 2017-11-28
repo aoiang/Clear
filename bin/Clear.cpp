@@ -10,16 +10,14 @@
 #include "Screens.hpp"
 
 int main(int argc, char** argv) {
-    
     GameView view;
     GameLogic logic;
     GameBoard board;
 
     board.init(10, 10);
     logic.set_GameBoard(board);
-    
+
     view.run(logic);
-    
 
     return 0;
 }

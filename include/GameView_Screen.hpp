@@ -22,7 +22,7 @@ class GameView_Screen : public Screen_Abstract {
         sf::RectangleShape * tab_shapes;
         sf::RectangleShape * double_tab_shapes;
         GameLogic * logic;
-        int ** animation_frames;
+        float ** animation_ms;
         char ** animation_dir;
         int default_window_width = 600;
         int default_window_height = 600;
@@ -48,10 +48,10 @@ class GameView_Screen : public Screen_Abstract {
         sf::RectangleShape make_double_tab_shape(char dir);
         void load_texture(int);
         void load_textures();
-        void draw();
+        void draw(int);
         void draw_shadows();
         void draw_path_highlighting();
-        void draw_blocks();
+        void draw_blocks(int);
         void draw_tab(int, int, int);
         void draw_double_tab(int, int, int);
         void draw_tabs();
