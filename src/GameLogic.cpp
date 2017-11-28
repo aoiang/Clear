@@ -109,24 +109,31 @@ void GameLogic::remove_block(int x, int y) {
 bool GameLogic::can_move_block(Block * block, char direction) {
     switch (block->get_id()) {
         case 10:
-            return static_cast<Normal_Block*>(block)->type_allows_movement(direction) && !path_blocked(block, direction) && !tabs_impede(block, direction);
+            return static_cast<Normal_Block*>(block)->type_allows_movement(direction)
+                && !path_blocked(block, direction)
+                && !tabs_impede(block, direction);
         case 20:
         case 21:
         case 22:
         case 23:
-            return static_cast<Directional_Block*>(block)->type_allows_movement(direction) && !path_blocked(block, direction) && !tabs_impede(block, direction);
+            return static_cast<Directional_Block*>(block)->type_allows_movement(direction)
+                && !path_blocked(block, direction)
+                && !tabs_impede(block, direction);
     }
 }
+
 
 bool GameLogic::can_be_removed(Block * block) {
     return can_move_block(block, 'u') || can_move_block(block, 'd') || can_move_block(block, 'l') || can_move_block(block, 'r');
 }
+
 
 /**Determines if block can be moved*/
 bool GameLogic::can_move(int block_x, int block_y, char direction) {
     if (!block_exists(block_x, block_y)) {return true;}//TODO figure out what to do with this case
     can_move_block(get_block(block_x, block_y), direction);
 }
+
 
 /**Attempts to move a block*/
 bool GameLogic::try_move(int x, int y, char direction) {
@@ -138,6 +145,21 @@ bool GameLogic::try_move(int x, int y, char direction) {
         return false;
     }
 }
+
+
+void GameLogic::tap_selected() {
+    if (block_exists(selected_x, selected_y)) {
+        Block *block = get_block(selected_x, selected_y);
+        switch (block->get_id()) {
+            case 30:
+            case 31:
+            case 32:
+            case 33:
+                static_cast<Rotating_Block*>(block)->rotate();
+        }
+    }
+}
+
 
 /**Attempts to move the selected block*/
 bool GameLogic::try_move_selected(char direction) {return try_move(selected_x, selected_y, direction);}

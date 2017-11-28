@@ -179,7 +179,8 @@ void GameView_Screen::check_mouse_position() {
                     animation_ms[sel_x][sel_y] = 1;
                     animation_dir[sel_x][sel_y] = dir;
                 }
-            }
+            } else {logic->tap_selected();}
+
             dir = DEFAULT_DIR;
             logic->set_selected_position(-1, -1);
         }
