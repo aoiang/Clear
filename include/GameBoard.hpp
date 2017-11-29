@@ -6,15 +6,15 @@
 
 class GameBoard {
     private:
-        const static int default_width = 10;
-        const static int default_height = 10;
+        const static int default_width = 9;
+        const static int default_height = 9;
         Block * board[default_width][default_height] = {{0}};
         int width;
         int height;
+        void init(int x, int y);
 
     public:
         void init();
-        void init(int x, int y);
         int get_board_width();
         int get_board_height();
         int is_valid_x(int x);
