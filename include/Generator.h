@@ -34,7 +34,7 @@ public:
     block_type board[10][10];
     void board_generator(int centers);
     block_type init_block_type();
-    bool solver(block_type boa[][]);
+    bool solver(block_type boa[100][100]);
 
 };
 
