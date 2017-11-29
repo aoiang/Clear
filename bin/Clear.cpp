@@ -11,13 +11,11 @@
 #include "GameBoardLoader.hpp"
 
 int main(int argc, char** argv) {
+    GameBoard * board = GameBoardLoader::loadGameBoard("oh");
     GameView view;
     GameLogic logic;
-    GameBoard board;
 
-    board.init();
-    logic.set_GameBoard(board);
-
+    logic.set_GameBoard(*board);
     view.run(logic);
 
     return 0;
