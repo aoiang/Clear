@@ -35,6 +35,7 @@
 #define ID_ROTATE_2 32
 #define ID_ROTATE_3 33
 
+#define LEVEL_TEST "../resources/levels/testlevel.txt"
 #define LEVEL_01 "../resources/levels/level01.txt"
 #define LEVEL_02 "../resources/levels/level02.txt"
 

@@ -2,36 +2,46 @@
 #include "Normal_Block.hpp"
 #include "Directional_Block.hpp"
 #include "Rotating_Block.hpp"
+#include <fstream>
+using namespace std;
 
 GameBoard * GameBoardLoader::loadGameBoard(std::string filepath) {
-    std::cout << "Loading level from " << filepath << std::endl << std::endl;
-
     GameBoard * board = new GameBoard();
     board->init();
 
-    int width = board->get_board_width();
-    int height = board->get_board_height();
+    ifstream inFile;
+    inFile.open(filepath);
 
-    for(int x=0; x<width; x++) {
-        for (int y=0; y<height; y++) {
-            //TODO need way to delete these objects. put that in the remove?
+    int ct = 0;
+    string entry;
+
+    while(inFile >> entry) {
+        if (entry == "0") {}
+        else {
             Block * block;
-            if (y%5 == 0) {
-                block = new Rotating_Block(x, y);
-                // block = new Normal_Block(x, y);
-                // tabs set here
-                block->set_tab('u', true);
-                block->set_tab('r', true);
-                // block->set_tab('d', true);
-                // block->set_tab('l', true);
-                board->add_block(block);
 
-            } else if ((x+y)%3) {
-              block = new Directional_Block(x, y, y%4);
-              board->add_block(block);
+            if (entry.substr(0, 2) == "10") {block = new Normal_Block(ct % 9, 8 - (ct / 9));}
+            else if (entry.substr(0, 2) == to_string(ID_U_DIR)) {block = new Directional_Block(ct % 9, 8 - (ct / 9), 0);}
+            else if (entry.substr(0, 2) == to_string(ID_R_DIR)) {block = new Directional_Block(ct % 9, 8 - (ct / 9), 1);}
+            else if (entry.substr(0, 2) == to_string(ID_D_DIR)) {block = new Directional_Block(ct % 9, 8 - (ct / 9), 2);}
+            else if (entry.substr(0, 2) == to_string(ID_L_DIR)) {block = new Directional_Block(ct % 9, 8 - (ct / 9), 3);}
+            else if (entry.substr(0, 2) == to_string(ID_ROTATE_0)) {block= new Rotating_Block(ct % 9, 8 - (ct / 9));}
+            else {
+                cout << "Invalid block at " << ct%9 << ", " << ct/9 << endl;
+                break;
             }
+
+            if (entry.substr(2, 1) == "1") {block->set_tab('u', true);}
+            if (entry.substr(3, 1) == "1") {block->set_tab('r', true);}
+            if (entry.substr(4, 1) == "1") {block->set_tab('d', true);}
+            if (entry.substr(5, 1) == "1") {block->set_tab('l', true);}
+
+            board->add_block(block);
         }
+        ct ++;
     }
 
+    cout << "Level loaded from " << filepath << endl << endl;
+    inFile.close();
     return board;
 }

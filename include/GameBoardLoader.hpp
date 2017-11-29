@@ -1,6 +1,5 @@
 #ifndef CLEAR_GAMEBOARDLOADER_HPP
 #define CLEAR_GAMEBOARDLOADER_HPP
-#include "Definitions.hpp"
 #include "GameBoard.hpp"
 
 class GameBoardLoader {
