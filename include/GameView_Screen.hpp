@@ -9,10 +9,7 @@
 
 
 
-static char texture_filepaths[4][40] = {"../resources/up.png",
-                                        "../resources/right.png",
-                                        "../resources/down.png",
-                                        "../resources/left.png"};
+
 
 static char texture_filepaths[4][40] = {UP_TEXTURE,
                                         RIGHT_TEXTURE,

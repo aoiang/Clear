@@ -1,4 +1,4 @@
-
+#ifndef CLEAR_GAMELOGIC_HPP
 #define CLEAR_GAMELOGIC_HPP
 
 #include "Block.hpp"
