@@ -12,6 +12,7 @@ class Block {
         void set_combine(bool can_combine);
         void set_position(int x, int y);
         void move(int x, int y);
+        bool has_tab;
     public:
         int get_id();
         int get_x();

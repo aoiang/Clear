@@ -276,7 +276,13 @@ void GameView::draw() {
     draw_blocks();
     draw_path_highlighting();
     draw_selected_block();
+    sf::Texture t;
+    t.loadFromFile("../resources/tab.png");
+    tab.setScale(0.5,0.5);
+    tab.setTexture(t);
+    App.draw(tab);
     App.display();
+
 }
 
 /**Checks keyboard input, sends input to logic for handling*/

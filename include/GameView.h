@@ -26,6 +26,7 @@ class GameView {
         sf::Shader selected_shader;
         sf::CircleShape selected_shadow;
         GameLogic * logic;
+        sf::Sprite tab;
         int default_window_width = 600;
         int default_window_height = 600;
         int bottom_spacing = 50;
