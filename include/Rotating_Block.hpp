@@ -6,7 +6,7 @@
 
 class Rotating_Block :public Rotation_Aware_Block {
     public:
-        Rotating_Block(int, int, int);
+        Rotating_Block(int, int);
         void init();
         void rotate();
         bool get_combine();

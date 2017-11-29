@@ -1,9 +1,8 @@
 #include "Rotating_Block.hpp"
 
-Rotating_Block::Rotating_Block(int x, int y, int initial_rotation) {
+Rotating_Block::Rotating_Block(int x, int y) {
     set_position(x, y);
     reset_rotation();
-    while (initial_rotation) {rotate_clockwise(); initial_rotation--;}
     set_id(30 + get_rotation());
     init_tabs();
 }

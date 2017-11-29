@@ -12,8 +12,8 @@ char Rotation_Aware_Block::get_direction() {
 
 void Rotation_Aware_Block::rotate_clockwise() {
     rotation = (rotation + 1) % 4;
-    int tmp = tabs[4];
-    for (int i = 1; i < 3; i++) {
+    int tmp = tabs[3];
+    for (int i = 3; i > 0; i--) {
         tabs[i] = tabs[i-1];
     }
     tabs[0] = tmp;

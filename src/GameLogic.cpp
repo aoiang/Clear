@@ -119,6 +119,13 @@ bool GameLogic::can_move_block(Block * block, char direction) {
             return static_cast<Directional_Block*>(block)->type_allows_movement(direction)
                 && !path_blocked(block, direction)
                 && !tabs_impede(block, direction);
+        case 30:
+        case 31:
+        case 32:
+        case 33:
+            return static_cast<Rotating_Block*>(block)->type_allows_movement(direction)
+                && !path_blocked(block, direction)
+                && !tabs_impede(block, direction);
     }
 }
 
@@ -156,6 +163,7 @@ void GameLogic::tap_selected() {
             case 32:
             case 33:
                 static_cast<Rotating_Block*>(block)->rotate();
+                std::cout << "Rotated Block at " << selected_x << ", " << selected_y << "\n";
         }
     }
 }

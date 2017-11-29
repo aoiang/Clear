@@ -29,7 +29,7 @@ int Block::dir_to_index(char dir) {
     if (dir == 'u') {return 0;}
     else if (dir == 'r') {return 1;}
     else if (dir == 'd') {return 2;}
-    else if (dir == 'u') {return 3;}
+    else if (dir == 'l') {return 3;}
     else {return -1;}
 }
 
