@@ -68,16 +68,16 @@ bool GameBoard::add_block(Block * block) {
   @param y coordinate
   @return Block desired
 */
-Block * GameBoard::get_block(int x, int y) {
-    return board[x][y];
-}
+Block * GameBoard::get_block(int x, int y) {return board[x][y];}
 
 /**Checks if block exists at index*/
-bool GameBoard::block_exists(int x, int y) {
-    return is_valid_location(x,y) && board[x][y]!=nullptr;
-}
+bool GameBoard::block_exists(int x, int y) {return is_valid_location(x,y) && board[x][y]!=nullptr;}
 
 /**Checks if the board is empty*/
-bool GameBoard::get_is_clear() {
-    return is_clear;
+bool GameBoard::get_is_clear() {return is_clear;}
+
+/**Adds a wrong move to the board*/
+void GameBoard::add_wrong_move() {
+    wrong_moves++;
+    std::cout << "Wrong move; " << wrong_moves << " total" << std::endl;
 }
