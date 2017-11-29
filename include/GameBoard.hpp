@@ -28,6 +28,7 @@ class GameBoard {
         Block * get_block(int x, int y);
         bool block_exists(int x, int y);
         bool add_block(Block * block);
+        bool get_is_clear();
 };
 
 #endif //GAMEBOARD_HPP

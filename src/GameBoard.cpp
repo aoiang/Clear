@@ -40,7 +40,7 @@ bool GameBoard::remove_block(int x, int y) {
     else {board[x][y] = nullptr;}
     block_removed_ct ++;
     if (block_removed_ct == block_ct) {
-        std::cout << std::endl << "Board is clear" << std::endl;
+        std::cout << std::endl << "Board is clear" << std::endl << std::endl;
         is_clear = true;
     }
     return true;
@@ -75,4 +75,9 @@ Block * GameBoard::get_block(int x, int y) {
 /**Checks if block exists at index*/
 bool GameBoard::block_exists(int x, int y) {
     return is_valid_location(x,y) && board[x][y]!=nullptr;
+}
+
+/**Checks if the board is empty*/
+bool GameBoard::get_is_clear() {
+    return is_clear;
 }

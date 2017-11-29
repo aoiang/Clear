@@ -1,4 +1,5 @@
 #include "GameView_Screen.hpp"
+#include "GameBoardLoader.hpp"
 #include <iostream>
 
 /**Create the game window*/
@@ -341,9 +342,12 @@ void GameView_Screen::check_keyboard_in() {
 
 int GameView_Screen::run(sf::RenderWindow &window)
 {
-    sf::Clock clock;
+    sf::Clock draw_clock;
     this->App = &window;
     init();
+
+    int time_since_completion = 0;
+
     sf:: Event Event;
     while(running)
     {
@@ -355,8 +359,20 @@ int GameView_Screen::run(sf::RenderWindow &window)
                 return -1;
             }
         }
+
+        //TODO: move this into GameView
+        if (logic->get_is_clear()) {
+            time_since_completion += draw_clock.getElapsedTime().asMicroseconds();
+            if (time_since_completion > 750000) {
+                GameBoard * board = GameBoardLoader::loadGameBoard(LEVEL_TEST);
+                logic->set_GameBoard(*board);
+                init();
+                time_since_completion = 0;
+            }
+        }
+
         check_mouse_position();
         check_keyboard_in();
-        draw(clock.restart().asMicroseconds());
+        draw(draw_clock.restart().asMicroseconds());
     }
 }

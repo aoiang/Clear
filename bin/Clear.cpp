@@ -11,7 +11,7 @@
 #include "GameBoardLoader.hpp"
 
 int main(int argc, char** argv) {
-    GameBoard * board = GameBoardLoader::loadGameBoard(LEVEL_TEST);
+    GameBoard * board = GameBoardLoader::loadGameBoard(LEVEL_01);
     GameView view;
     GameLogic logic;
 

@@ -36,6 +36,7 @@ class GameLogic {
         bool is_selected_location_valid();
         void remove_block(int x, int y);
         bool tap_selected();
+        bool get_is_clear();
 };
 
 #endif //CLEAR_GAMELOGIC_HPP

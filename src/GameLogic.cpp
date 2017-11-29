@@ -163,7 +163,7 @@ bool GameLogic::tap_selected() {
             case ID_ROTATE_2:
             case ID_ROTATE_3:
                 static_cast<Rotating_Block*>(block)->rotate();
-                std::cout << "Rotated Block at " << selected_x << ", " << selected_y << "\n";
+                std::cout << "Rotated block at " << selected_x << ", " << selected_y << "\n";
                 return true;
         }
     }
@@ -173,3 +173,5 @@ bool GameLogic::tap_selected() {
 
 /**Attempts to move the selected block*/
 bool GameLogic::try_move_selected(char direction) {return try_move(selected_x, selected_y, direction);}
+
+bool GameLogic::get_is_clear() {return board->get_is_clear();}
