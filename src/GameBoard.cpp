@@ -38,6 +38,11 @@ int GameBoard::is_valid_location(int x, int y) {return is_valid_x(x) && is_valid
 bool GameBoard::remove_block(int x, int y) {
     if (x>width || y>height) {return false;}//doesn't handle if they're negative though.
     else {board[x][y] = nullptr;}
+    block_removed_ct ++;
+    if (block_removed_ct == block_ct) {
+        std::cout << std::endl << "Board is clear" << std::endl;
+        is_clear = true;
+    }
     return true;
 }
 
@@ -53,6 +58,7 @@ bool GameBoard::add_block(Block * block) {
     int y = block->get_y();
     if (board[x][y] != nullptr) {return false;}
     else {board[x][y] = block;}
+    block_ct ++;
     return true;
 }
 

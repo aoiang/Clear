@@ -12,7 +12,8 @@ GameBoard * GameBoardLoader::loadGameBoard(std::string filepath) {
     ifstream inFile;
     inFile.open(filepath);
 
-    int ct = 0;
+    int entry_ct = 0;
+    int block_ct = 0;
     string entry;
 
     while(inFile >> entry) {
@@ -20,14 +21,14 @@ GameBoard * GameBoardLoader::loadGameBoard(std::string filepath) {
         else {
             Block * block;
 
-            if (entry.substr(0, 2) == "10") {block = new Normal_Block(ct % 9, 8 - (ct / 9));}
-            else if (entry.substr(0, 2) == to_string(ID_U_DIR)) {block = new Directional_Block(ct % 9, 8 - (ct / 9), 0);}
-            else if (entry.substr(0, 2) == to_string(ID_R_DIR)) {block = new Directional_Block(ct % 9, 8 - (ct / 9), 1);}
-            else if (entry.substr(0, 2) == to_string(ID_D_DIR)) {block = new Directional_Block(ct % 9, 8 - (ct / 9), 2);}
-            else if (entry.substr(0, 2) == to_string(ID_L_DIR)) {block = new Directional_Block(ct % 9, 8 - (ct / 9), 3);}
-            else if (entry.substr(0, 2) == to_string(ID_ROTATE_0)) {block= new Rotating_Block(ct % 9, 8 - (ct / 9));}
+            if (entry.substr(0, 2) == "10") {block = new Normal_Block(entry_ct % 9, 8 - (entry_ct / 9));}
+            else if (entry.substr(0, 2) == to_string(ID_U_DIR)) {block = new Directional_Block(entry_ct % 9, 8 - (entry_ct / 9), 0);}
+            else if (entry.substr(0, 2) == to_string(ID_R_DIR)) {block = new Directional_Block(entry_ct % 9, 8 - (entry_ct / 9), 1);}
+            else if (entry.substr(0, 2) == to_string(ID_D_DIR)) {block = new Directional_Block(entry_ct % 9, 8 - (entry_ct / 9), 2);}
+            else if (entry.substr(0, 2) == to_string(ID_L_DIR)) {block = new Directional_Block(entry_ct % 9, 8 - (entry_ct / 9), 3);}
+            else if (entry.substr(0, 2) == to_string(ID_ROTATE_0)) {block= new Rotating_Block(entry_ct % 9, 8 - (entry_ct / 9));}
             else {
-                cout << "Invalid block at " << ct%9 << ", " << ct/9 << endl;
+                cout << "Invalid block at " << entry_ct%9 << ", " << entry_ct/9 << endl;
                 break;
             }
 
@@ -38,7 +39,7 @@ GameBoard * GameBoardLoader::loadGameBoard(std::string filepath) {
 
             board->add_block(block);
         }
-        ct ++;
+        entry_ct ++;
     }
 
     cout << "Level loaded from " << filepath << endl << endl;

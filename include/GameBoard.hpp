@@ -6,6 +6,10 @@
 
 class GameBoard {
     private:
+        int block_ct = 0;
+        int block_removed_ct = 0;
+        int wrong_moves = 0;
+        bool is_clear = false;
         const static int default_width = 9;
         const static int default_height = 9;
         Block * board[default_width][default_height] = {{0}};

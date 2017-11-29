@@ -3,14 +3,14 @@
 
 #define TITLEFONT_FILEPATH "../resources/PuzzleFont.ttf"
 #define REGULARFONT_FILEPATH "../resources/regularFont.ttf"
-#define UP_TEXTURE "../resources/up.png"
-#define RIGHT_TEXTURE "../resources/right.png"
-#define DOWN_TEXTURE "../resources/down.png"
-#define LEFT_TEXTURE "../resources/left.png"
-#define ROTATING_0_TEXTURE "../resources/rotate0.png"
-#define ROTATING_1_TEXTURE "../resources/rotate1.png"
-#define ROTATING_2_TEXTURE "../resources/rotate2.png"
-#define ROTATING_3_TEXTURE "../resources/rotate3.png"
+#define UP_TEXTURE "../resources/textures/dir_u.png"
+#define RIGHT_TEXTURE "../resources/textures/dir_r.png"
+#define DOWN_TEXTURE "../resources/textures/dir_d.png"
+#define LEFT_TEXTURE "../resources/textures/dir_l.png"
+#define ROTATING_0_TEXTURE "../resources/textures/rotate0.png"
+#define ROTATING_1_TEXTURE "../resources/textures/rotate1.png"
+#define ROTATING_2_TEXTURE "../resources/textures/rotate2.png"
+#define ROTATING_3_TEXTURE "../resources/textures/rotate3.png"
 #define TITLE_TEXTUREMAP "../resources/clear_spritesheet.png"
 
 #define DEFAULT_DIR 'n'
