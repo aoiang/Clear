@@ -3,6 +3,8 @@
 #include "Normal_Block.hpp"
 #include "Directional_Block.hpp"
 #include "Rotating_Block.hpp"
+#include "Generator.h"
+
 
 /**
   Sets board dimensions, adds Blocks
@@ -10,26 +12,75 @@
   @param h for height
 */
 void GameBoard::init(int w, int h) {
+    Generator generated_board;
+    generated_board.board_generator(1);
     this->width = w;
     this->height = h;
     for(int x=0; x<w; x++) {
         for (int y=0; y<h; y++) {
             //TODO need way to delete these objects. put that in the remove?
+            printf("%d,%d\n", generated_board.board[x][y].direction, generated_board.board[x][y].block_rotation);
             Block * block;
-            if (y%5 == 0) {
-                block = new Rotating_Block(x, y);
-                // block = new Normal_Block(x, y);
-                // tabs set here
-                // block->set_tab('u', true);
-                block->set_tab('r', true);
-                // block->set_tab('d', true);
-                block->set_tab('l', true);
-                add_block(block);
+            if (generated_board.board[x][y].exist == 1){
+                if (generated_board.board[x][y].direction != 0){
+                    switch (generated_board.board[x][y].direction){
+                        case 1:{
+                            block = new Directional_Block(x, y, 0);
+                            add_block(block);
+                        }
+                        case 2:{
+                            block = new Directional_Block(x, y, 1);
+                            add_block(block);
+                        }
+                        case 3:{
+                            block = new Directional_Block(x, y, 2);
+                            add_block(block);
+                        }
+                        case 4:{
+                            block = new Directional_Block(x, y, 3);
+                            add_block(block);
+                        }
+                        default: break;
+                    }
+                }
+                if (generated_board.board[x][y].block_rotation == 1){
+                    block = new Rotating_Block(x, y);
+                    for (int i = 0; i <=3; i++){
+                        if (generated_board.board[x][y].tab[i] == 1){
+                            switch(i){
+                                case 0: block->set_tab('u', true);
+                                case 1: block->set_tab('d', true);
+                                case 2: block->set_tab('l', true);
+                                case 3: block->set_tab('r', true);
+                                default:break;
+                            }
+                        }
+                    }
+                    add_block(block);
+                }
 
-            } else if ((x+y)%3) {
-              block = new Directional_Block(x, y, y%4);
-              add_block(block);
+                if (generated_board.board[x][y].block_rotation != 1 && generated_board.board[x][y].direction != 1){
+                    block = new Directional_Block(x, y, 4);
+                    add_block(block);
+
+                }
+
             }
+
+//            if (y%5 == 0) {
+//                block = new Rotating_Block(x, y);
+//                // block = new Normal_Block(x, y);
+//                // tabs set here
+//                block->set_tab('u', true);
+//                block->set_tab('r', true);
+//                // block->set_tab('d', true);
+//                // block->set_tab('l', true);
+//                add_block(block);
+//
+//            } else if ((x+y)%3) {
+//              block = new Directional_Block(x, y, y%4);
+//              add_block(block);
+//            }
         }
         std::cout << "\n";
     }

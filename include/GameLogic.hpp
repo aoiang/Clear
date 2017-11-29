@@ -35,9 +35,9 @@ class GameLogic {
         bool try_move_selected(char direction);
         bool is_selected_location_valid();
         void remove_block(int x, int y);
-        void tap_selected();
+        bool tap_selected();
 };
 
-
+#endif
 
 

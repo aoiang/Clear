@@ -7,6 +7,10 @@
 #define RIGHT_TEXTURE "../resources/right.png"
 #define DOWN_TEXTURE "../resources/down.png"
 #define LEFT_TEXTURE "../resources/left.png"
+#define ROTATING_0_TEXTURE "../resources/rotate0.png"
+#define ROTATING_1_TEXTURE "../resources/rotate1.png"
+#define ROTATING_2_TEXTURE "../resources/rotate2.png"
+#define ROTATING_3_TEXTURE "../resources/rotate3.png"
 #define TITLE_TEXTUREMAP "../resources/clear_spritesheet.png"
 
 #define DEFAULT_DIR 'n'
@@ -21,5 +25,14 @@
 #define MAINMENUITEM_1 "Levels"
 #define MAINMENUITEM_2 "Settings"
 
+#define ID_NORMAL 10
+#define ID_U_DIR 20
+#define ID_R_DIR 21
+#define ID_D_DIR 22
+#define ID_L_DIR 23
+#define ID_ROTATE_0 30
+#define ID_ROTATE_1 31
+#define ID_ROTATE_2 32
+#define ID_ROTATE_3 33
 
 #endif

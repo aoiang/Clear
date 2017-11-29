@@ -19,8 +19,8 @@ int GameView::run(GameLogic logic)
     int curr_screen = 0;
 
     screen2.set_GameLogic(logic);
-    screens.push_back(&screen0);
-    screens.push_back(&screen1);
+    //screens.push_back(&screen0);
+    //screens.push_back(&screen1);
     screens.push_back(&screen2);
 
     while(curr_screen >=0)

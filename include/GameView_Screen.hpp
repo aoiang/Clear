@@ -11,10 +11,17 @@
 
 
 
-static char texture_filepaths[4][40] = {UP_TEXTURE,
+
+
+
+static char texture_filepaths[8][40] = {UP_TEXTURE,
                                         RIGHT_TEXTURE,
                                         DOWN_TEXTURE,
-                                        LEFT_TEXTURE};
+                                        LEFT_TEXTURE,
+                                        ROTATING_0_TEXTURE,
+                                        ROTATING_1_TEXTURE,
+                                        ROTATING_2_TEXTURE,
+                                        ROTATING_3_TEXTURE};
 
 
 class GameView_Screen : public Screen_Abstract {
