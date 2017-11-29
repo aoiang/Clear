@@ -12,8 +12,10 @@ using namespace std;
 
 class Generator {
     private:
+        int block_num;
         int w;
         int h;
+        int random_list[100];
         struct block_type{
             int exist;
             int direction;
@@ -23,7 +25,7 @@ class Generator {
         };
 
     public:
-        int block_num;
+        void init_random_list();
         block_type block_type_generator();
         block_type board[10][10];
         void board_generator(int centers);

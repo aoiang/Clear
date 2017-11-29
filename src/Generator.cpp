@@ -25,21 +25,25 @@ Generator::block_type Generator::block_type_generator() {
     for (int i = 0; i <= 3; i++ ){
         block.tab[i] = 0;
     }
-    int magic_num_type = rand()%10;
+    //printf("%d, %d\n",random_list[block_num], block_num);
+    int magic_num_type = random_list[block_num]%9;
     if (magic_num_type <= 0){
         block.local_rotation = 1;
     }
     else if (magic_num_type <= 2){
         block.block_rotation = 1;
         int magic_num_tab = rand()%7;
+
         if (magic_num_tab <= 2) {
             block.tab[rand()%4] = 1;
         }
         magic_num_tab = rand()%7;
+
         if (magic_num_tab <= 2) {
             block.tab[rand()%4] = 1;
         }
         magic_num_tab = rand()%7;
+
         if (magic_num_tab <= 2) {
             block.tab[rand()%4] = 1;
         }
@@ -50,6 +54,7 @@ Generator::block_type Generator::block_type_generator() {
         if (block.tab[0] + block.tab[1] + block.tab[2] + block.tab[3] == 0){
             block.tab[rand()%4] = 1;
         }
+        printf("%d,%d,%d,%d\n", block.tab[0], block.tab[1],block.tab[2],  block.tab[3]);
         if (block.tab[0] + block.tab[1] + block.tab[2] + block.tab[3] == 4){
             block.tab[rand()%4] = 0;
         }
@@ -79,8 +84,7 @@ void Generator::board_generator(int centers) {
     }
     int adj_point[100];
     for (int j =0; j < centers; j++){
-        srand((unsigned)time(NULL));
-        block_num = rand() % 47 + 4;
+        block_num = rand() % 47 + 10;
         int num = rand() % 99;
         for (int i = 0; i < 100; i++){
             adj_point[i] = 0;
@@ -103,10 +107,16 @@ void Generator::board_generator(int centers) {
                     }
                 }
             }
+            //printf("%d\n",num);
             w = num / 10;
             h = num % 10;
-            board[w][h] = block_type_generator();
-            printf("%d,%d\n", board[w][h].direction, board[w][h].block_rotation);
+            if (board[w][h].exist == 0){
+                board[w][h] = block_type_generator();
+            }
+            //board[w][h] = block_type_generator();
+
+
+
             for (int i = 0; i < 100; i++){
                 if (num - 10 == adj_point[i]){
                     in_list_flag = true;
@@ -169,5 +179,19 @@ void Generator::board_generator(int centers) {
         }
 
     }
+}
 
+void Generator::init_random_list() {
+    srand((unsigned)time(NULL));
+    int index;
+    int temp;
+    for (int i = 0; i < 100; i++){
+        random_list[i] = i;
+    }
+    for (int i = 0; i < 100; i++){
+        index = rand()%100;
+        temp = random_list[i];
+        random_list[i] = random_list[index];
+        random_list[index] = temp;
+    }
 }

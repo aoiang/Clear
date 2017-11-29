@@ -13,13 +13,16 @@
 */
 void GameBoard::init(int w, int h) {
     Generator generated_board;
+    generated_board.init_random_list();
+    generated_board.init_block_type();
     generated_board.board_generator(1);
+
     this->width = w;
     this->height = h;
     for(int x=0; x<w; x++) {
         for (int y=0; y<h; y++) {
             //TODO need way to delete these objects. put that in the remove?
-            printf("%d,%d\n", generated_board.board[x][y].direction, generated_board.board[x][y].block_rotation);
+            //printf("%d,%d\n", generated_board.board[x][y].direction, generated_board.board[x][y].block_rotation);
             Block * block;
             if (generated_board.board[x][y].exist == 1){
                 if (generated_board.board[x][y].direction != 0){
@@ -45,17 +48,24 @@ void GameBoard::init(int w, int h) {
                 }
                 if (generated_board.board[x][y].block_rotation == 1){
                     block = new Rotating_Block(x, y);
-                    for (int i = 0; i <=3; i++){
+                    for (int i = 0; i <= 3; i++){
                         if (generated_board.board[x][y].tab[i] == 1){
-                            switch(i){
-                                case 0: block->set_tab('u', true);
-                                case 1: block->set_tab('d', true);
-                                case 2: block->set_tab('l', true);
-                                case 3: block->set_tab('r', true);
-                                default:break;
+                            printf("%d",i);
+                            if (i == 0){
+                                block->set_tab('u', true);
+                            }
+                            if (i == 1){
+                                block->set_tab('d', true);
+                            }
+                            if (i == 2){
+                                block->set_tab('l', true);
+                            }
+                            if (i == 3){
+                                block->set_tab('r', true);
                             }
                         }
                     }
+                    printf("\n");
                     add_block(block);
                 }
 
