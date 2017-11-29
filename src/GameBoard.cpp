@@ -2,6 +2,7 @@
 #include "Block.hpp"
 #include "Normal_Block.hpp"
 #include "Directional_Block.hpp"
+#include "Rotating_Block.hpp"
 
 /**
   Sets board dimensions, adds Blocks
@@ -16,8 +17,8 @@ void GameBoard::init(int w, int h) {
             //TODO need way to delete these objects. put that in the remove?
             Block * block;
             if (y%5 == 0) {
-                block = new Normal_Block(x,y);
-
+                block = new Rotating_Block(x, y);
+                // block = new Normal_Block(x, y);
                 // tabs set here
                 // block->set_tab('u', true);
                 block->set_tab('r', true);
@@ -26,7 +27,7 @@ void GameBoard::init(int w, int h) {
                 add_block(block);
 
             } else if ((x+y)%3) {
-              block = new Directional_Block(x,y,y%4);
+              block = new Directional_Block(x, y, y%4);
               add_block(block);
             }
         }

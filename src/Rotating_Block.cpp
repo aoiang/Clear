@@ -1,25 +1,13 @@
 #include "Rotating_Block.hpp"
 
-void Rotating_Block::set_combine(bool can_combine)
-{
-    this->can_combine = can_combine;
-}
-void Rotating_Block::init()
-{
-    this->direction = "clockwise";
-    set_combine(true);
+Rotating_Block::Rotating_Block(int x, int y) {
+    set_position(x, y);
+    reset_rotation();
+    set_id(30 + get_rotation());
+    init_tabs();
 }
 
-/*bool Rotating_Block::get_combine()
-{
-    return this->can_combine;
+void Rotating_Block::rotate() {
+    rotate_clockwise();
+    set_id(30 + get_rotation());
 }
-void Rotating_Block::combine(Block other)
-{
-
-}
-void Rotating_Block::rotate()
-{
-
-
-}*/

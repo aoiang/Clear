@@ -14,7 +14,7 @@ int main(int argc, char** argv) {
     GameLogic logic;
     GameBoard board;
 
-    board.init(10, 10);
+    board.init();
     logic.set_GameBoard(board);
 
     view.run(logic);

@@ -20,7 +20,8 @@ void GameView_Screen::set_GameLogic(GameLogic &logic) {
 sf::RectangleShape GameView_Screen::make_block_shape(int block_id) {
     sf::RectangleShape block_shape(sf::Vector2f(block_size, block_size));
     block_shape.setFillColor(sf::Color(235, 235, 235));
-    if (block_id>=20) {block_shape.setTexture(&texture[block_id%20]);}//TODO probably a bug here; didn't seem intended to do anything with block>23
+    if (block_id>=20 && block_id < 30) {block_shape.setTexture(&texture[block_id%20]);}//TODO probably a bug here; didn't seem intended to do anything with block>23
+    else if (block_id>=30 && block_id < 40) {block_shape.setFillColor(sf::Color(255, 200, 200));}
     return block_shape;
 }
 
@@ -179,7 +180,8 @@ void GameView_Screen::check_mouse_position() {
                     animation_ms[sel_x][sel_y] = 1;
                     animation_dir[sel_x][sel_y] = dir;
                 }
-            }
+            } else {logic->tap_selected();}
+
             dir = DEFAULT_DIR;
             logic->set_selected_position(-1, -1);
         }

@@ -37,8 +37,8 @@ class GameView_Screen : public Screen_Abstract {
 
         int default_window_width = 600;
         int default_window_height = 600;
-        int bottom_spacing = 50;
-        int left_spacing = 50;
+        int bottom_spacing = 75;
+        int left_spacing = 75;
         char dir = DEFAULT_DIR;
         bool clicked = false;
         bool running = true;

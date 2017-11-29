@@ -4,6 +4,7 @@
 #include "Block.hpp"
 #include "Normal_Block.hpp"
 #include "Directional_Block.hpp"
+#include "Rotating_Block.hpp"
 #include "GameBoard.hpp"
 #include <SFML/Graphics.hpp>
 #include <iostream>
@@ -34,6 +35,7 @@ class GameLogic {
         bool try_move_selected(char direction);
         bool is_selected_location_valid();
         void remove_block(int x, int y);
+        void tap_selected();
 };
 
 
