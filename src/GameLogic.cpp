@@ -138,7 +138,7 @@ bool GameLogic::can_be_removed(Block * block) {
 /**Determines if block can be moved*/
 bool GameLogic::can_move(int block_x, int block_y, char direction) {
     if (!block_exists(block_x, block_y)) {return true;}//TODO figure out what to do with this case
-    can_move_block(get_block(block_x, block_y), direction);
+    return can_move_block(get_block(block_x, block_y), direction);
 }
 
 
