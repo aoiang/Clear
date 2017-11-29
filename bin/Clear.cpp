@@ -8,6 +8,7 @@
 #include "GameBoard.hpp"
 #include "GameView.hpp"
 #include "Screens.hpp"
+#include "GameBoardLoader.hpp"
 
 int main(int argc, char** argv) {
     GameView view;
