@@ -1,6 +1,7 @@
-#include "Block.h"
 #ifndef CLEAR_BOARD_HPP
 #define CLEAR_BOARD_HPP
+
+#include "Block.hpp"
 #include <iostream>
 
 class GameBoard {

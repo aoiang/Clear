@@ -1,12 +1,7 @@
-//
-// Created by Yosef Ejigu 10/21/17
-// Additional work by Ivan & Patrick
-//
-
 #include "GameBoard.hpp"
-#include "Block.h"
-#include "Normal_Block.h"
-#include "Directional_Block.h"
+#include "Block.hpp"
+#include "Normal_Block.hpp"
+#include "Directional_Block.hpp"
 
 /**
   Sets board dimensions, adds Blocks
@@ -22,10 +17,18 @@ void GameBoard::init(int w, int h) {
             Block * block;
             if (y%5 == 0) {
                 block = new Normal_Block(x,y);
-            } else {
-                block = new Directional_Block(x,y,y%4);
+
+                // tabs set here
+                // block->set_tab('u', true);
+                block->set_tab('r', true);
+                // block->set_tab('d', true);
+                block->set_tab('l', true);
+                add_block(block);
+
+            } else if ((x+y)%3) {
+              block = new Directional_Block(x,y,y%4);
+              add_block(block);
             }
-            add_block(block);
         }
         std::cout << "\n";
     }

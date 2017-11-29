@@ -1,6 +1,7 @@
-#ifndef CLEAR_NORMAL_BLOCK_H
-#define CLEAR_NORMAL_BLOCK_H
-#include "Block.h"
+#ifndef CLEAR_NORMAL_BLOCK_HPP
+#define CLEAR_NORMAL_BLOCK_HPP
+
+#include "Block.hpp"
 
 class Normal_Block :public Block {
     public:
@@ -8,5 +9,4 @@ class Normal_Block :public Block {
         bool type_allows_movement(char direction);
 };
 
-
-#endif //CLEAR_NORMAL_BLOCK_H
+#endif //CLEAR_NORMAL_BLOCK_HPP

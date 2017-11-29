@@ -4,29 +4,20 @@
 //
 
 #include <SFML/Graphics.hpp>
-#include "GameLogic.h"
+#include "GameLogic.hpp"
 #include "GameBoard.hpp"
-#include "GameView.h"
+#include "GameView.hpp"
+#include "Screens.hpp"
 
 int main(int argc, char** argv) {
-  
-    if (!sf::Shader::isAvailable()) {
-        std::cerr << "Shaders are not available." << std::endl;
-        return EXIT_FAILURE;
-    }
-
     GameView view;
     GameLogic logic;
     GameBoard board;
 
     board.init(10, 10);
     logic.set_GameBoard(board);
-    view.set_GameLogic(logic);
-    view.init();
 
-    while(view.isOpen()) {
-        view.update();
-    }
+    view.run(logic);
 
     return 0;
 }

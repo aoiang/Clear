@@ -1,13 +1,8 @@
-//
-// Created by Yiyang Zhao on 18/10/2017.
-//
-
-#include "Rotating_Block.h"
-
+#include "Rotating_Block.hpp"
 
 void Rotating_Block::set_combine(bool can_combine)
 {
-    this->can_combine = can_combine; 
+    this->can_combine = can_combine;
 }
 void Rotating_Block::init()
 {
@@ -17,14 +12,14 @@ void Rotating_Block::init()
 
 /*bool Rotating_Block::get_combine()
 {
-    return this->can_combine;   
+    return this->can_combine;
 }
 void Rotating_Block::combine(Block other)
 {
-    
+
 }
 void Rotating_Block::rotate()
 {
-    
-    
+
+
 }*/

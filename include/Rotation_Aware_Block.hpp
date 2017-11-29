@@ -1,7 +1,7 @@
-#ifndef CLEAR_ROTATION_AWARE_BLOCK_H
-#define CLEAR_ROTATION_AWARE_BLOCK_H
-#include "Block.h"
+#ifndef CLEAR_ROTATION_AWARE_BLOCK_HPP
+#define CLEAR_ROTATION_AWARE_BLOCK_HPP
 
+#include "Block.hpp"
 
 static char directions[5] = "urdl";
 
@@ -16,5 +16,4 @@ class Rotation_Aware_Block :public Block {
         char get_direction();
 };
 
-
-#endif //CLEAR_ROTATION_AWARE_BLOCK_H
+#endif //CLEAR_ROTATION_AWARE_BLOCK_HPP
