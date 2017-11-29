@@ -108,21 +108,21 @@ void GameLogic::remove_block(int x, int y) {
 
 bool GameLogic::can_move_block(Block * block, char direction) {
     switch (block->get_id()) {
-        case 10:
+        case ID_NORMAL:
             return static_cast<Normal_Block*>(block)->type_allows_movement(direction)
                 && !path_blocked(block, direction)
                 && !tabs_impede(block, direction);
-        case 20:
-        case 21:
-        case 22:
-        case 23:
+        case ID_U_DIR:
+        case ID_R_DIR:
+        case ID_D_DIR:
+        case ID_L_DIR:
             return static_cast<Directional_Block*>(block)->type_allows_movement(direction)
                 && !path_blocked(block, direction)
                 && !tabs_impede(block, direction);
-        case 30:
-        case 31:
-        case 32:
-        case 33:
+        case ID_ROTATE_0:
+        case ID_ROTATE_1:
+        case ID_ROTATE_2:
+        case ID_ROTATE_3:
             return static_cast<Rotating_Block*>(block)->type_allows_movement(direction)
                 && !path_blocked(block, direction)
                 && !tabs_impede(block, direction);
@@ -158,10 +158,10 @@ bool GameLogic::tap_selected() {
     if (block_exists(selected_x, selected_y)) {
         Block *block = get_block(selected_x, selected_y);
         switch (block->get_id()) {
-            case 30:
-            case 31:
-            case 32:
-            case 33:
+            case ID_ROTATE_0:
+            case ID_ROTATE_1:
+            case ID_ROTATE_2:
+            case ID_ROTATE_3:
                 static_cast<Rotating_Block*>(block)->rotate();
                 std::cout << "Rotated Block at " << selected_x << ", " << selected_y << "\n";
                 return true;

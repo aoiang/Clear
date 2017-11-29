@@ -25,14 +25,14 @@
 #define MAINMENUITEM_1 "Levels"
 #define MAINMENUITEM_2 "Settings"
 
-#define NORMAL 10
-#define LEFT_DIRECTIONAL 20
-#define RIGHT_DIRECTIONAL 20
-#define UP_DIRECTIONAL 20
-#define DOWN_DIRECTIONAL 20
-#define ROTATING_0 30
-#define ROTATING_1 30
-#define ROTATING_2 30
-#define ROTATING_3 30
+#define ID_NORMAL 10
+#define ID_U_DIR 20
+#define ID_R_DIR 21
+#define ID_D_DIR 22
+#define ID_L_DIR 23
+#define ID_ROTATE_0 30
+#define ID_ROTATE_1 31
+#define ID_ROTATE_2 32
+#define ID_ROTATE_3 33
 
 #endif

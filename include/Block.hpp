@@ -1,5 +1,6 @@
 #ifndef CLEAR_BLOCK_HPP
 #define CLEAR_BLOCK_HPP
+#include "Definitions.hpp"
 
 class Block {
     protected:
