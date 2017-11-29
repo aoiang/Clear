@@ -20,10 +20,10 @@ void GameBoard::init(int w, int h) {
                 block = new Rotating_Block(x, y);
                 // block = new Normal_Block(x, y);
                 // tabs set here
-                // block->set_tab('u', true);
+                block->set_tab('u', true);
                 block->set_tab('r', true);
                 // block->set_tab('d', true);
-                block->set_tab('l', true);
+                // block->set_tab('l', true);
                 add_block(block);
 
             } else if ((x+y)%3) {

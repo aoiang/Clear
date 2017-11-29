@@ -1,7 +1,5 @@
 #include "GameView_Screen.hpp"
 #include <iostream>
-#include <stdlib.h>
-
 
 /**Create the game window*/
 GameView_Screen::GameView_Screen() {}
@@ -21,7 +19,7 @@ sf::RectangleShape GameView_Screen::make_block_shape(int block_id) {
     sf::RectangleShape block_shape(sf::Vector2f(block_size, block_size));
     block_shape.setFillColor(sf::Color(235, 235, 235));
     if (block_id>=20 && block_id < 30) {block_shape.setTexture(&texture[block_id%20]);}//TODO probably a bug here; didn't seem intended to do anything with block>23
-    else if (block_id>=30 && block_id < 40) {block_shape.setFillColor(sf::Color(255, 200, 200));}
+    else if (block_id>=30 && block_id < 40) {block_shape.setTexture(&texture[(block_id%30)+4]);}
     return block_shape;
 }
 
@@ -42,7 +40,7 @@ void GameView_Screen::load_texture(int texture_index) {
 
 /**Loads all textures*/
 void GameView_Screen::load_textures() {
-    for (int i=0; i<4; i++) {load_texture(i);}
+    for (int i=0; i<8; i++) {load_texture(i);}
 }
 
 /**Make shadow shapes*/
@@ -79,13 +77,13 @@ void GameView_Screen::init() {
 
     load_textures();
 
-    sf::RectangleShape * shapes;
+    sf::RectangleShape * blocks;
     sf::RectangleShape * shadows;
     sf::RectangleShape * paths;
     sf::RectangleShape * tabs;
     sf::RectangleShape * double_tabs;
 
-    shapes = new sf::RectangleShape[board_width * board_height]();
+    blocks = new sf::RectangleShape[board_width * board_height]();
     shadows = new sf::RectangleShape[board_width * board_height]();
     tabs = new sf::RectangleShape[4 * board_width * board_height]();
     double_tabs = new sf::RectangleShape[2 * board_width * board_height]();
@@ -104,7 +102,7 @@ void GameView_Screen::init() {
                 animation_ms[x][y] = 0;
                 animation_dir[x][y] = DEFAULT_DIR;
 
-                shapes[(y*board_width)+x] = make_block_shape(logic->get_block(x, y)->get_id());
+                blocks[(y*board_width)+x] = make_block_shape(logic->get_block(x, y)->get_id());
                 shadows[(y*board_width)+x] = make_shadow_shape();
                 tabs[4 * ((y * board_width) + x)] = make_tab_shape(U_DIR);
                 tabs[4 * ((y * board_width) + x) + 1] = make_tab_shape(R_DIR);
@@ -119,7 +117,7 @@ void GameView_Screen::init() {
     paths[0] = make_path_shape(block_size*0.98, App->getSize().y);
     paths[1] = make_path_shape(App->getSize().x, block_size*0.98);
 
-    this->block_shapes = shapes;
+    this->block_shapes = blocks;
     this->shadow_shapes = shadows;
     this->path_shapes = paths;
     this->tab_shapes = tabs;
@@ -173,15 +171,18 @@ void GameView_Screen::check_mouse_position() {
     } else {
         if (clicked) {
             clicked = false;
+            int sel_x = logic->get_selected_x();
+            int sel_y = logic->get_selected_y();
             if (dir != DEFAULT_DIR) {
-                int sel_x = logic->get_selected_x();
-                int sel_y = logic->get_selected_y();
                 if (logic->try_move_selected(dir)) {
                     animation_ms[sel_x][sel_y] = 1;
                     animation_dir[sel_x][sel_y] = dir;
                 }
-            } else {logic->tap_selected();}
-
+            } else if (logic->tap_selected()) {
+                // Changes Rotating_Block texture on tap
+                int i = sel_y * logic->get_board_width() + sel_x;
+                block_shapes[i].setTexture(&texture[(logic->get_block(sel_x, sel_y)->get_id() % 30) + 4]);
+            }
             dir = DEFAULT_DIR;
             logic->set_selected_position(-1, -1);
         }

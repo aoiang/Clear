@@ -154,7 +154,7 @@ bool GameLogic::try_move(int x, int y, char direction) {
 }
 
 
-void GameLogic::tap_selected() {
+bool GameLogic::tap_selected() {
     if (block_exists(selected_x, selected_y)) {
         Block *block = get_block(selected_x, selected_y);
         switch (block->get_id()) {
@@ -164,8 +164,10 @@ void GameLogic::tap_selected() {
             case 33:
                 static_cast<Rotating_Block*>(block)->rotate();
                 std::cout << "Rotated Block at " << selected_x << ", " << selected_y << "\n";
+                return true;
         }
     }
+    return false;
 }
 
 
