@@ -33,4 +33,4 @@ class GameBoard {
         int get_blocks_removed_ct();
 };
 
-#endif //GAMEBOARD_HPP
+#endif //CLEAR_GAMEBOARD_HPP

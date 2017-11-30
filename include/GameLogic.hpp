@@ -2,9 +2,9 @@
 #define CLEAR_GAMELOGIC_HPP
 
 #include "Block.hpp"
-#include "Normal_Block.hpp"
-#include "Directional_Block.hpp"
-#include "Rotating_Block.hpp"
+#include "BlockNormal.hpp"
+#include "BlockDirectional.hpp"
+#include "BlockRotating.hpp"
 #include "GameBoard.hpp"
 #include <SFML/Graphics.hpp>
 #include <iostream>

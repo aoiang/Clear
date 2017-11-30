@@ -180,7 +180,7 @@ void GameView_Screen::check_mouse_position() {
                     animation_dir[sel_x][sel_y] = dir;
                 }
             } else if (logic->tap_selected()) {
-                // Changes Rotating_Block texture on tap
+                // Changes BlockRotating texture on tap
                 int i = sel_y * logic->get_board_width() + sel_x;
                 block_shapes[i].setTexture(&texture[(logic->get_block(sel_x, sel_y)->get_id() % 30) + 4]);
             }
