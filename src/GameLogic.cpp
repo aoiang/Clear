@@ -185,3 +185,9 @@ void GameLogic::add_wrong_move() {board->add_wrong_move();}
 
 /**@return number of blocks removed from the board*/
 int GameLogic::get_blocks_removed_ct() {return board->get_blocks_removed_ct();}
+
+/**@return if a given block is move restricted*/
+bool GameLogic::block_is_move_restricted(int x, int y) {return get_block(x, y)->is_move_restricted(get_blocks_removed_ct());}
+
+/**@return if selected block is move restricted*/
+bool GameLogic::selected_block_is_move_restricted() {return block_is_move_restricted(selected_x, selected_y);}

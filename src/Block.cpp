@@ -79,3 +79,6 @@ void Block::rotate_clockwise() {
 
 /**Resets rotation to 0*/
 void Block::reset_rotation() {rotation = 0;}
+
+/**@return number of moves before this can be removed*/
+int Block::get_move_restriction() {return move_restriction;}
