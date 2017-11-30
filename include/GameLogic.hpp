@@ -38,6 +38,7 @@ class GameLogic {
         bool tap_selected();
         bool get_is_clear();
         void add_wrong_move();
+        int get_blocks_removed_ct();
 };
 
 #endif //CLEAR_GAMELOGIC_HPP

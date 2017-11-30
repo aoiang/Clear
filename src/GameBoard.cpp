@@ -81,3 +81,6 @@ void GameBoard::add_wrong_move() {
     wrong_moves++;
     std::cout << "Wrong move; " << wrong_moves << " total" << std::endl;
 }
+
+/**@return number of blocks removed*/
+int GameBoard::get_blocks_removed_ct() {return block_removed_ct;}

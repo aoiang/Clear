@@ -6,15 +6,14 @@
 static char directions[5] = "urdl";
 
 class Block {
-    private:
+    protected:
         int rotation = 0;
         int x;
         int y;
         int id;
-        int move_restriction = 0;
         bool can_combine;
         bool tabs[4];
-    protected:
+        int move_restriction = 0;
         void set_id(int id);
         void set_combine(bool can_combine);
         void set_position(int x, int y);

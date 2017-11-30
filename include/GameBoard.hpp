@@ -30,6 +30,7 @@ class GameBoard {
         bool add_block(Block * block);
         bool get_is_clear();
         void add_wrong_move();
+        int get_blocks_removed_ct();
 };
 
 #endif //GAMEBOARD_HPP

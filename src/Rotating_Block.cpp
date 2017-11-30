@@ -11,3 +11,5 @@ void Rotating_Block::rotate() {
     rotate_clockwise();
     set_id(ID_ROTATE_0 + get_rotation());
 }
+
+bool Rotating_Block::can_rotate(int removed) {return removed>=move_restriction;}

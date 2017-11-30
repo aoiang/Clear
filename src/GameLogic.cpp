@@ -163,9 +163,11 @@ bool GameLogic::tap_selected() {
             case ID_ROTATE_1:
             case ID_ROTATE_2:
             case ID_ROTATE_3:
-                static_cast<Rotating_Block*>(block)->rotate();
-                std::cout << "Rotated block at " << selected_x << ", " << selected_y << "\n";
-                return true;
+                if (static_cast<Rotating_Block*>(block)->can_rotate(get_blocks_removed_ct())) {
+                    static_cast<Rotating_Block*>(block)->rotate();
+                    std::cout << "Rotated block at " << selected_x << ", " << selected_y << "\n";
+                    return true;
+                };
         }
     }
     return false;
@@ -178,3 +180,5 @@ bool GameLogic::try_move_selected(char direction) {return try_move(selected_x, s
 bool GameLogic::get_is_clear() {return board->get_is_clear();}
 
 void GameLogic::add_wrong_move() {board->add_wrong_move();}
+
+int GameLogic::get_blocks_removed_ct() {return board->get_blocks_removed_ct();}
