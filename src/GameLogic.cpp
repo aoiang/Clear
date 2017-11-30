@@ -149,6 +149,7 @@ bool GameLogic::try_move(int x, int y, char direction) {
             remove_block(x, y);
             return true;
         }
+        add_wrong_move();
         return false;
     }
 }
@@ -175,3 +176,5 @@ bool GameLogic::tap_selected() {
 bool GameLogic::try_move_selected(char direction) {return try_move(selected_x, selected_y, direction);}
 
 bool GameLogic::get_is_clear() {return board->get_is_clear();}
+
+void GameLogic::add_wrong_move() {board->add_wrong_move();}
