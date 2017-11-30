@@ -39,6 +39,8 @@ class GameLogic {
         bool get_is_clear();
         void add_wrong_move();
         int get_blocks_removed_ct();
+        bool block_is_move_restricted(int, int);
+        bool selected_block_is_move_restricted();
 };
 
 #endif //CLEAR_GAMELOGIC_HPP

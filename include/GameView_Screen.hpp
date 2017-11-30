@@ -23,6 +23,7 @@ class GameView_Screen : public Screen_Abstract {
         sf::RectangleShape * path_shapes;
         sf::RectangleShape * tab_shapes;
         sf::RectangleShape * double_tab_shapes;
+        sf::RectangleShape * restriction_shapes;
         GameLogic * logic;
         float ** animation_ms;
         char ** animation_dir;
@@ -48,6 +49,7 @@ class GameView_Screen : public Screen_Abstract {
         sf::RectangleShape make_path_shape(int w, int h);
         sf::RectangleShape make_tab_shape(char dir);
         sf::RectangleShape make_double_tab_shape(char dir);
+        sf::RectangleShape make_restriction_shape();
         void load_texture(int);
         void load_textures();
         void draw(int);
