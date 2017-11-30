@@ -1,10 +1,10 @@
-#ifndef CLEAR_GAMEBOARD_HPP
-#define CLEAR_GAMEBOARD_HPP
+#ifndef CLEAR_BOARDSTATE_HPP
+#define CLEAR_BOARDSTATE_HPP
 
 #include "Block.hpp"
 #include <iostream>
 
-class GameBoard {
+class BoardState {
     private:
         int block_ct = 0;
         int block_removed_ct = 0;
@@ -33,4 +33,4 @@ class GameBoard {
         int get_blocks_removed_ct();
 };
 
-#endif //CLEAR_GAMEBOARD_HPP
+#endif //CLEAR_BOARDSTATE_HPP

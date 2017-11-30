@@ -1,7 +1,7 @@
 #include "GameLogic.hpp"
 
-/**Sets GameBoard*/
-void GameLogic::set_GameBoard(GameBoard &board) {this->board = &board;}
+/**Sets BoardState*/
+void GameLogic::set_BoardState(BoardState &board) {this->board = &board;}
 
 /**@return x index of selected block*/
 int GameLogic::get_selected_x() {return selected_x;}

@@ -1,4 +1,4 @@
-#include "GameBoardLoader.hpp"
+#include "BoardStateLoader.hpp"
 #include "BlockNormal.hpp"
 #include "BlockDirectional.hpp"
 #include "BlockRotating.hpp"
@@ -6,12 +6,12 @@
 using namespace std;
 
 /**
-  Loads GameBoard from file
+  Loads BoardState from file
   @param filepath to load from
-  @return GameBoard built from file
+  @return BoardState built from file
 */
-GameBoard * GameBoardLoader::loadGameBoard(std::string filepath) {
-    GameBoard * board = new GameBoard();
+BoardState * BoardStateLoader::loadBoardState(std::string filepath) {
+    BoardState * board = new BoardState();
     board->init();
 
     ifstream inFile;
