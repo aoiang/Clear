@@ -1,5 +1,5 @@
-#ifndef CLEAR_BOARD_HPP
-#define CLEAR_BOARD_HPP
+#ifndef CLEAR_GAMEBOARD_HPP
+#define CLEAR_GAMEBOARD_HPP
 
 #include "Block.hpp"
 #include <iostream>

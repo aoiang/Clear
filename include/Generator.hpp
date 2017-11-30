@@ -1,18 +1,10 @@
-//
-// Created by Yiyang Zhao on 29/11/2017.
-//
+#ifndef CLEAR_GENERATOR_HPP
+#define CLEAR_GENERATOR_HPP
 
-//
-// Created by Yiyang Zhao on 28/11/2017.
-//
-
-#ifndef CSCI437_GENERATOR_H
-#define CSCI437_GENERATOR_H
 #include <iostream>
-#include<stdlib.h>
+#include <stdlib.h>
 #include <algorithm>
 using namespace std;
-
 
 class Generator {
 private:
@@ -35,8 +27,6 @@ public:
     void board_generator(int centers);
     block_type init_block_type();
     bool solver(block_type boa[100][100]);
-
 };
 
-
-#endif //CSCI437_GENERATOR_H
+#endif //CLEAR_GENERATOR_HPP

@@ -2,11 +2,8 @@
 #define CLEAR_GAMEVIEW_HPP
 
 #include <SFML/Graphics.hpp>
-#include "Block.hpp"
-#include "Normal_Block.hpp"
 #include "GameLogic.hpp"
 #include "Screens.hpp"
-
 
 class GameView {
     private:
@@ -15,7 +12,6 @@ class GameView {
         int default_window_height = 600;
     public:
         int run(GameLogic logic);
-        
 };
 
 #endif //CLEAR_GAMEVIEW_HPP

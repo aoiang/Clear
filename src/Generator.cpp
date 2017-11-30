@@ -2,7 +2,8 @@
 // Created by Yiyang Zhao on 29/11/2017.
 //
 
-#include "Generator.h"
+#include "Generator.hpp"
+
 Generator::block_type Generator::init_block_type() {
     Generator::block_type block;
     block.direction = 0;

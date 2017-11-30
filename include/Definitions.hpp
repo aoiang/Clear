@@ -1,5 +1,5 @@
-#ifndef DEFINITIONS_HPP
-#define DEFINITIONS_HPP
+#ifndef CLEAR_DEFINITIONS_HPP
+#define CLEAR_DEFINITIONS_HPP
 
 #define TITLEFONT_FILEPATH "../resources/PuzzleFont.ttf"
 #define REGULARFONT_FILEPATH "../resources/regularFont.ttf"
@@ -39,4 +39,4 @@
 #define LEVEL_01 "../resources/levels/level01.txt"
 #define LEVEL_02 "../resources/levels/level02.txt"
 
-#endif
+#endif //CLEAR_DEFINITIONS_HPP

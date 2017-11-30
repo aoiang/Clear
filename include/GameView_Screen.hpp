@@ -2,8 +2,6 @@
 #define CLEAR_GAMEVIEW_SCREEN_HPP
 
 #include <SFML/Graphics.hpp>
-#include "Block.hpp"
-#include "Normal_Block.hpp"
 #include "GameLogic.hpp"
 #include "Screen_Abstract.hpp"
 
