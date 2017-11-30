@@ -32,10 +32,10 @@ GameBoard * GameBoardLoader::loadGameBoard(std::string filepath) {
                 break;
             }
 
-            if (entry.substr(2, 1) == "1") {block->set_tab('u', true);}
-            if (entry.substr(3, 1) == "1") {block->set_tab('r', true);}
-            if (entry.substr(4, 1) == "1") {block->set_tab('d', true);}
-            if (entry.substr(5, 1) == "1") {block->set_tab('l', true);}
+            if (entry.substr(3, 1) == "1") {block->set_tab('u', true);}
+            if (entry.substr(4, 1) == "1") {block->set_tab('r', true);}
+            if (entry.substr(5, 1) == "1") {block->set_tab('d', true);}
+            if (entry.substr(6, 1) == "1") {block->set_tab('l', true);}
 
             board->add_block(block);
         }

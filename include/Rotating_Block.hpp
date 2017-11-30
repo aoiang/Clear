@@ -1,10 +1,10 @@
 #ifndef CLEAR_ROTATING_BLOCK_HPP
 #define CLEAR_ROTATING_BLOCK_HPP
 
-#include "Rotation_Aware_Block.hpp"
+#include "Block.hpp"
 #include <string>
 
-class Rotating_Block :public Rotation_Aware_Block {
+class Rotating_Block :public Block {
     public:
         Rotating_Block(int, int);
         void init();

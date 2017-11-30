@@ -1,9 +1,9 @@
 #ifndef CLEAR_DIRECTIONAL_BLOCK_HPP
 #define CLEAR_DIRECTIONAL_BLOCK_HPP
 
-#include "Rotation_Aware_Block.hpp"
+#include "Block.hpp"
 
-class Directional_Block :public Rotation_Aware_Block {
+class Directional_Block :public Block {
     public:
         Directional_Block(int x, int y, int initial_rotation);
         void rotate();

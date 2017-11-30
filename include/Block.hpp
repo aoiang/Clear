@@ -2,26 +2,36 @@
 #define CLEAR_BLOCK_HPP
 #include "Definitions.hpp"
 
+static char directions[5] = "urdl";
+
 class Block {
-    protected:
+    private:
+        int rotation = 0;
         int x;
         int y;
         int id;
+        int move_restriction = 0;
         bool can_combine;
         bool tabs[4];
+    protected:
         void set_id(int id);
         void set_combine(bool can_combine);
         void set_position(int x, int y);
+        void rotate_clockwise();
+        void reset_rotation();
     public:
         int get_id();
         int get_x();
         int get_y();
-        int dir_to_index(char dir);
-        void set_tab(char dir, bool tab);
-        bool get_tab(char dir);
+        int dir_to_index(char);
+        void set_tab(char, bool);
+        bool get_tab(char);
         void init_tabs();
         bool get_combine();
-        virtual bool type_allows_movement(char direction);
+        virtual bool type_allows_movement(char);
+        void set_move_restriction(int);
+        int get_rotation();
+        char get_direction();
 };
 
 #endif //CLEAR_BLOCK_HPP

@@ -57,3 +57,21 @@ bool Block::get_combine() {return can_combine;}
 /**Gets whether or not a block can move in a given direction*/
 //Base block can move in all directions.
 bool Block::type_allows_movement(char direction) {return true;}
+
+/**Sets how many block clears are required before removal*/
+void Block::set_move_restriction(int steps) {move_restriction = steps;}
+
+int Block::get_rotation() {return rotation;}
+
+char Block::get_direction() {return directions[get_rotation()];}
+
+void Block::rotate_clockwise() {
+    rotation = (rotation + 1) % 4;
+    int tmp = tabs[3];
+    for (int i = 3; i > 0; i--) {
+        tabs[i] = tabs[i-1];
+    }
+    tabs[0] = tmp;
+}
+
+void Block::reset_rotation() {rotation = 0;}
