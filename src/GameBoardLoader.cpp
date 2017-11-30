@@ -5,6 +5,11 @@
 #include <fstream>
 using namespace std;
 
+/**
+  Loads GameBoard from file
+  @param filepath to load from
+  @return GameBoard built from file
+*/
 GameBoard * GameBoardLoader::loadGameBoard(std::string filepath) {
     GameBoard * board = new GameBoard();
     board->init();

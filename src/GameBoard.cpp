@@ -48,8 +48,6 @@ bool GameBoard::remove_block(int x, int y) {
 
 /**
   Adds Block to board
-  @param x coordinate to add to
-  @param y coordinate to add to
   @return bool to indicate successful addition
 */
 bool GameBoard::add_block(Block * block) {
@@ -63,7 +61,7 @@ bool GameBoard::add_block(Block * block) {
 }
 
 /**
-  Gets Block on the board
+  Gets Block from the board
   @param x coordinate
   @param y coordinate
   @return Block desired

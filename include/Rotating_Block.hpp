@@ -11,7 +11,6 @@ class Rotating_Block :public Block {
         void rotate();
         bool get_combine();
         void set_combine(bool);
-        bool can_rotate(int);
 };
 
 #endif //CLEAR_ROTATING_BLOCK_HPP

@@ -6,7 +6,7 @@
 class Normal_Block :public Block {
     public:
         Normal_Block(int, int);
-        bool type_allows_movement(char, int);
+        bool type_allows_movement(char);
 };
 
 #endif //CLEAR_NORMAL_BLOCK_HPP

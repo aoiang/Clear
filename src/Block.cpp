@@ -16,7 +16,7 @@ void Block::set_position(int x, int y) {
 }
 
 /**@return block id*/
-int Block::get_id(){return id;}
+int Block::get_id() {return id;}
 
 /**@return x index of block on board*/
 int Block::get_x() {return x;}
@@ -38,12 +38,12 @@ void Block::set_tab(char dir, bool tab) {
     tabs[dir_to_index(dir)] = tab;
 }
 
-/**Gets whether or not a tab exists*/
+/**@return whether or not a block exists on a side of the block*/
 bool Block::get_tab(char dir) {
     return tabs[dir_to_index(dir)];
 }
 
-/**Sets tabs to 0*/
+/**Sets all tabs to 0*/
 void Block::init_tabs() {
     set_tab('l', 0);
     set_tab('r', 0);
@@ -56,15 +56,18 @@ bool Block::get_combine() {return can_combine;}
 
 /**Gets whether or not a block can move in a given direction*/
 //Base block can move in all directions.
-bool Block::type_allows_movement(char direction, int steps) {return steps>=move_restriction;}
+bool Block::type_allows_movement(char direction) {return true;}
+
+/**@return if fewer blocks have been removed from board than are needed*/
+bool Block::is_move_restricted(int steps) {return steps<move_restriction;}
 
 /**Sets how many block clears are required before removal*/
 void Block::set_move_restriction(int steps) {move_restriction = steps;}
 
+/**Gets the integer representing block rotation*/
 int Block::get_rotation() {return rotation;}
 
-char Block::get_direction() {return directions[get_rotation()];}
-
+/**Rotates the block and its tabs clockwise*/
 void Block::rotate_clockwise() {
     rotation = (rotation + 1) % 4;
     int tmp = tabs[3];
@@ -74,4 +77,5 @@ void Block::rotate_clockwise() {
     tabs[0] = tmp;
 }
 
+/**Resets rotation to 0*/
 void Block::reset_rotation() {rotation = 0;}
