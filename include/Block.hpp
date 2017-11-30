@@ -31,6 +31,7 @@ class Block {
         virtual bool type_allows_movement(char);
         bool is_move_restricted(int);
         void set_move_restriction(int);
+        int get_move_restriction();
         int get_rotation();
         char get_direction();
 };

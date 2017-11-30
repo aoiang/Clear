@@ -34,7 +34,7 @@ sf::RectangleShape GameView_Screen::make_path_shape(int w, int h) {
 /**Makes shapes for block restrictions*/
 sf::RectangleShape GameView_Screen::make_restriction_shape() {
     sf::RectangleShape restriction_shape(sf::Vector2f(block_size, block_size));
-    restriction_shape.setFillColor(sf::Color(255, 0, 0, 120));
+    restriction_shape.setFillColor(sf::Color(255, 0, 0, 180));
     return restriction_shape;
 }
 
@@ -266,10 +266,19 @@ void GameView_Screen::draw_blocks(int deltaTime) {
                 block_shapes[i].setPosition(BoardXToXPixel(x), BoardYToYPixel(y));
                 App->draw(block_shapes[i]);
 
-                //Draw move restrictions
                 if (logic->block_is_move_restricted(x, y)) {
-                    restriction_shapes[i].setPosition(BoardXToXPixel(x), BoardYToYPixel(y));
+                    //TODO: fix this extremely sloppy text hack
+                    sf::Text text1;
+                    sf::Font font;
+                    font.loadFromFile(REGULARFONT_FILEPATH);
+                    text1.setFont(font);
+                    text1.setPosition(BoardXToXPixel(x) + block_size/2.5, BoardYToYPixel(y) + block_size/3);
+                    text1.setString(std::to_string(logic->get_block(x, y)->get_move_restriction() - logic->get_blocks_removed_ct()));
+                    text1.setCharacterSize(20);
+
+                    restriction_shapes[i].setPosition(BoardXToXPixel(x), BoardYToYPixel(y)) ;
                     App->draw(restriction_shapes[i]);
+                    App->draw(text1);
                 }
             } else if (animation_ms[x][y] == 1) {
                 block_shapes[i].setOrigin(block_size / 2, block_size / 2);
