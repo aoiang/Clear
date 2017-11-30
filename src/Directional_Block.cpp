@@ -14,6 +14,6 @@ void Directional_Block::rotate() {
     set_id(ID_U_DIR + get_rotation());
 }
 
-bool Directional_Block::type_allows_movement(char direction) {
-    return get_direction() == direction;
+bool Directional_Block::type_allows_movement(char direction, int steps) {
+    return (get_direction() == direction) && (steps>=move_restriction);
 }

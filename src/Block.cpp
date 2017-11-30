@@ -56,7 +56,7 @@ bool Block::get_combine() {return can_combine;}
 
 /**Gets whether or not a block can move in a given direction*/
 //Base block can move in all directions.
-bool Block::type_allows_movement(char direction) {return true;}
+bool Block::type_allows_movement(char direction, int steps) {return steps>=move_restriction;}
 
 /**Sets how many block clears are required before removal*/
 void Block::set_move_restriction(int steps) {move_restriction = steps;}

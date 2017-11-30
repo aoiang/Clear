@@ -7,4 +7,4 @@ Normal_Block::Normal_Block(int x, int y) {
     init_tabs();
 }
 
-bool Normal_Block::type_allows_movement(char direction) {return true;}
+bool Normal_Block::type_allows_movement(char direction, int steps) {return steps>=move_restriction;}

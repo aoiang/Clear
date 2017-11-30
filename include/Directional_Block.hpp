@@ -5,9 +5,9 @@
 
 class Directional_Block :public Block {
     public:
-        Directional_Block(int x, int y, int initial_rotation);
+        Directional_Block(int, int, int);
         void rotate();
-        bool type_allows_movement(char direction);
+        bool type_allows_movement(char, int);
 };
 
 #endif //CLEAR_DIRECTIONAL_BLOCK_HPP

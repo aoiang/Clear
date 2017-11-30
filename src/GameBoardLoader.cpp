@@ -37,6 +37,8 @@ GameBoard * GameBoardLoader::loadGameBoard(std::string filepath) {
             if (entry.substr(5, 1) == "1") {block->set_tab('d', true);}
             if (entry.substr(6, 1) == "1") {block->set_tab('l', true);}
 
+            block->set_move_restriction(stoi(entry.substr(8, 2)));
+
             board->add_block(block);
         }
         entry_ct ++;

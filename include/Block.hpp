@@ -28,7 +28,7 @@ class Block {
         bool get_tab(char);
         void init_tabs();
         bool get_combine();
-        virtual bool type_allows_movement(char);
+        virtual bool type_allows_movement(char, int);
         void set_move_restriction(int);
         int get_rotation();
         char get_direction();

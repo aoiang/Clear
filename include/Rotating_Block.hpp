@@ -10,7 +10,7 @@ class Rotating_Block :public Block {
         void init();
         void rotate();
         bool get_combine();
-        void set_combine(bool can_combine);
+        void set_combine(bool);
         bool can_rotate(int);
 };
 
