@@ -1,7 +1,7 @@
 #include "GameLogic.hpp"
 
-/**Sets GameBoard*/
-void GameLogic::set_GameBoard(GameBoard &board) {this->board = &board;}
+/**Sets BoardState*/
+void GameLogic::set_BoardState(BoardState &board) {this->board = &board;}
 
 /**@return x index of selected block*/
 int GameLogic::get_selected_x() {return selected_x;}
@@ -109,24 +109,24 @@ void GameLogic::remove_block(int x, int y) {
 bool GameLogic::can_move_block(Block * block, char direction) {
     switch (block->get_id()) {
         case ID_NORMAL:
-            return static_cast<Normal_Block*>(block)->type_allows_movement(direction)
-                && !static_cast<Normal_Block*>(block)->is_move_restricted(get_blocks_removed_ct())
+            return static_cast<BlockNormal*>(block)->type_allows_movement(direction)
+                && !static_cast<BlockNormal*>(block)->is_move_restricted(get_blocks_removed_ct())
                 && !path_blocked(block, direction)
                 && !tabs_impede(block, direction);
         case ID_U_DIR:
         case ID_R_DIR:
         case ID_D_DIR:
         case ID_L_DIR:
-            return static_cast<Directional_Block*>(block)->type_allows_movement(direction)
-                && !static_cast<Directional_Block*>(block)->is_move_restricted(get_blocks_removed_ct())
+            return static_cast<BlockDirectional*>(block)->type_allows_movement(direction)
+                && !static_cast<BlockDirectional*>(block)->is_move_restricted(get_blocks_removed_ct())
                 && !path_blocked(block, direction)
                 && !tabs_impede(block, direction);
         case ID_ROTATE_0:
         case ID_ROTATE_1:
         case ID_ROTATE_2:
         case ID_ROTATE_3:
-            return static_cast<Rotating_Block*>(block)->type_allows_movement(direction)
-                && !static_cast<Rotating_Block*>(block)->is_move_restricted(get_blocks_removed_ct())
+            return static_cast<BlockRotating*>(block)->type_allows_movement(direction)
+                && !static_cast<BlockRotating*>(block)->is_move_restricted(get_blocks_removed_ct())
                 && !path_blocked(block, direction)
                 && !tabs_impede(block, direction);
     }
@@ -164,8 +164,8 @@ bool GameLogic::tap_selected() {
             case ID_ROTATE_1:
             case ID_ROTATE_2:
             case ID_ROTATE_3:
-                if (!static_cast<Rotating_Block*>(block)->is_move_restricted(get_blocks_removed_ct())) {
-                    static_cast<Rotating_Block*>(block)->rotate();
+                if (!static_cast<BlockRotating*>(block)->is_move_restricted(get_blocks_removed_ct())) {
+                    static_cast<BlockRotating*>(block)->rotate();
                     std::cout << "Rotated block at " << selected_x << ", " << selected_y << "\n";
                     return true;
                 };

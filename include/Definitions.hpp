@@ -38,5 +38,14 @@
 #define LEVEL_TEST "../resources/levels/testlevel.txt"
 #define LEVEL_01 "../resources/levels/level01.txt"
 #define LEVEL_02 "../resources/levels/level02.txt"
+#define LEVEL_03 "../resources/levels/level03.txt"
+#define LEVEL_04 "../resources/levels/level04.txt"
+#define LEVEL_05 "../resources/levels/level05.txt"
+#define LEVEL_06 "../resources/levels/level06.txt"
+#define LEVEL_07 "../resources/levels/level07.txt"
+#define LEVEL_08 "../resources/levels/level08.txt"
+#define LEVEL_09 "../resources/levels/level09.txt"
+#define LEVEL_10 "../resources/levels/level10.txt"
+
 
 #endif //CLEAR_DEFINITIONS_HPP

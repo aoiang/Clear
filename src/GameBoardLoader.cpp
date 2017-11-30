@@ -1,17 +1,17 @@
-#include "GameBoardLoader.hpp"
-#include "Normal_Block.hpp"
-#include "Directional_Block.hpp"
-#include "Rotating_Block.hpp"
+#include "BoardStateLoader.hpp"
+#include "BlockNormal.hpp"
+#include "BlockDirectional.hpp"
+#include "BlockRotating.hpp"
 #include <fstream>
 using namespace std;
 
 /**
-  Loads GameBoard from file
+  Loads BoardState from file
   @param filepath to load from
-  @return GameBoard built from file
+  @return BoardState built from file
 */
-GameBoard * GameBoardLoader::loadGameBoard(std::string filepath) {
-    GameBoard * board = new GameBoard();
+BoardState * BoardStateLoader::loadBoardState(std::string filepath) {
+    BoardState * board = new BoardState();
     board->init();
 
     ifstream inFile;
@@ -26,12 +26,12 @@ GameBoard * GameBoardLoader::loadGameBoard(std::string filepath) {
         else {
             Block * block;
 
-            if (entry.substr(0, 2) == "10") {block = new Normal_Block(entry_ct % 9, 8 - (entry_ct / 9));}
-            else if (entry.substr(0, 2) == to_string(ID_U_DIR)) {block = new Directional_Block(entry_ct % 9, 8 - (entry_ct / 9), 0);}
-            else if (entry.substr(0, 2) == to_string(ID_R_DIR)) {block = new Directional_Block(entry_ct % 9, 8 - (entry_ct / 9), 1);}
-            else if (entry.substr(0, 2) == to_string(ID_D_DIR)) {block = new Directional_Block(entry_ct % 9, 8 - (entry_ct / 9), 2);}
-            else if (entry.substr(0, 2) == to_string(ID_L_DIR)) {block = new Directional_Block(entry_ct % 9, 8 - (entry_ct / 9), 3);}
-            else if (entry.substr(0, 2) == to_string(ID_ROTATE_0)) {block= new Rotating_Block(entry_ct % 9, 8 - (entry_ct / 9));}
+            if (entry.substr(0, 2) == "10") {block = new BlockNormal(entry_ct % 9, 8 - (entry_ct / 9));}
+            else if (entry.substr(0, 2) == to_string(ID_U_DIR)) {block = new BlockDirectional(entry_ct % 9, 8 - (entry_ct / 9), 0);}
+            else if (entry.substr(0, 2) == to_string(ID_R_DIR)) {block = new BlockDirectional(entry_ct % 9, 8 - (entry_ct / 9), 1);}
+            else if (entry.substr(0, 2) == to_string(ID_D_DIR)) {block = new BlockDirectional(entry_ct % 9, 8 - (entry_ct / 9), 2);}
+            else if (entry.substr(0, 2) == to_string(ID_L_DIR)) {block = new BlockDirectional(entry_ct % 9, 8 - (entry_ct / 9), 3);}
+            else if (entry.substr(0, 2) == to_string(ID_ROTATE_0)) {block= new BlockRotating(entry_ct % 9, 8 - (entry_ct / 9));}
             else {
                 cout << "Invalid block at " << entry_ct%9 << ", " << entry_ct/9 << endl;
                 break;

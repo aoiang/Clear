@@ -2,20 +2,20 @@
 #define CLEAR_GAMELOGIC_HPP
 
 #include "Block.hpp"
-#include "Normal_Block.hpp"
-#include "Directional_Block.hpp"
-#include "Rotating_Block.hpp"
-#include "GameBoard.hpp"
+#include "BlockNormal.hpp"
+#include "BlockDirectional.hpp"
+#include "BlockRotating.hpp"
+#include "BoardState.hpp"
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
 class GameLogic {
     private:
-        GameBoard * board;
+        BoardState * board;
         int selected_x = -1;
         int selected_y = -1;
     public:
-        void set_GameBoard(GameBoard &board);
+        void set_BoardState(BoardState &board);
         int get_board_width();
         int get_board_height();
         void set_selected_position(int x, int y);
