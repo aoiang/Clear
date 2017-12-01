@@ -22,15 +22,12 @@ class GameView_Screen : public Screen_Abstract {
         sf::RectangleShape * shadow_shapes;
         sf::RectangleShape * path_shapes;
         sf::RectangleShape * tab_shapes;
-        sf::RectangleShape * double_tab_shapes;
         sf::RectangleShape * restriction_shapes;
         GameLogic * logic;
         float ** animation_ms;
         char ** animation_dir;
         int default_window_width = 600;
         int default_window_height = 600;
-        int bottom_spacing = 75;
-        int left_spacing = 75;
         char dir = DEFAULT_DIR;
         bool clicked = false;
         bool running = true;
@@ -39,6 +36,7 @@ class GameView_Screen : public Screen_Abstract {
         int deadzone = 10;
     public:
         int block_size = 50;
+        int tab_size = block_size/5;
         sf::RenderWindow get_App();
         void set_GameLogic(GameLogic &logic);
         GameView_Screen();
@@ -48,7 +46,6 @@ class GameView_Screen : public Screen_Abstract {
         sf::RectangleShape make_shadow_shape();
         sf::RectangleShape make_path_shape(int w, int h);
         sf::RectangleShape make_tab_shape(char dir);
-        sf::RectangleShape make_double_tab_shape(char dir);
         sf::RectangleShape make_restriction_shape();
         void load_texture(int);
         void load_textures();
@@ -57,11 +54,12 @@ class GameView_Screen : public Screen_Abstract {
         void draw_path_highlighting();
         void draw_blocks(int);
         void draw_tab(int, int, int);
-        void draw_double_tab(int, int, int);
         void draw_tabs();
         void draw_selected_block();
+        int BoardToPixel(int board_axis_index, int board_axis_length, int screen_axis_length, bool y_axis);
         int BoardXToXPixel(int x);
         int BoardYToYPixel(int y);
+        int PixelToBoard(int pixel_index, int board_axis_length, int screen_axis_length);
         int XPixelToBoardX(int x);
         int YPixelToBoardY(int y);
         int run(sf::RenderWindow &window);

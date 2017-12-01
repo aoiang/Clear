@@ -56,21 +56,11 @@ sf::RectangleShape GameView_Screen::make_shadow_shape() {
 
 /**Makes single tab shape*/
 sf::RectangleShape GameView_Screen::make_tab_shape(char dir) {
-    sf::RectangleShape tab_shape(sf::Vector2f(block_size / 5, block_size / 5));
+    sf::RectangleShape tab_shape(sf::Vector2f(tab_size, tab_size));
     tab_shape.setFillColor(sf::Color(235, 235, 235));
     tab_shape.setOutlineThickness(1);
     tab_shape.setOutlineColor(sf::Color(100, 100, 100));
     return tab_shape;
-}
-
-/**Make double tab shape*/
-sf::RectangleShape GameView_Screen::make_double_tab_shape(char dir) {
-    sf::RectangleShape double_tab_shape(sf::Vector2f(block_size/5, block_size/2.5));
-    if (dir == L_DIR) {double_tab_shape.setSize(sf::Vector2f(block_size/2.5, block_size/5));}
-    double_tab_shape.setFillColor(sf::Color(235, 235, 235));
-    double_tab_shape.setOutlineThickness(1);
-    double_tab_shape.setOutlineColor(sf::Color(100, 100, 100));
-    return double_tab_shape;
 }
 
 /**Create all of the shapes*/
@@ -85,13 +75,11 @@ void GameView_Screen::init() {
     sf::RectangleShape * shadows;
     sf::RectangleShape * paths;
     sf::RectangleShape * tabs;
-    sf::RectangleShape * double_tabs;
     sf::RectangleShape * restrictions;
 
     blocks = new sf::RectangleShape[board_width * board_height]();
     shadows = new sf::RectangleShape[board_width * board_height]();
     tabs = new sf::RectangleShape[4 * board_width * board_height]();
-    double_tabs = new sf::RectangleShape[2 * board_width * board_height]();
     paths = new sf::RectangleShape[2]();
     restrictions = new sf::RectangleShape[board_width * board_height]();
 
@@ -114,8 +102,6 @@ void GameView_Screen::init() {
                 tabs[4 * ((y * board_width) + x) + 1] = make_tab_shape(R_DIR);
                 tabs[4 * ((y * board_width) + x) + 2] = make_tab_shape(D_DIR);
                 tabs[4 * ((y * board_width) + x) + 3] = make_tab_shape(L_DIR);
-                double_tabs[2 * ((y * board_width) + x)] = make_double_tab_shape(D_DIR);
-                double_tabs[2 * ((y * board_width) + x) + 1] = make_double_tab_shape(L_DIR);
 
                 if (logic->block_is_move_restricted(x, y)) {restrictions[(y*board_width)+x] = make_restriction_shape();}
             }
@@ -129,35 +115,77 @@ void GameView_Screen::init() {
     this->shadow_shapes = shadows;
     this->path_shapes = paths;
     this->tab_shapes = tabs;
-    this->double_tab_shapes = double_tabs;
     this->restriction_shapes = restrictions;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+int GameView_Screen::BoardToPixel(int board_axis_index, int board_axis_length, int screen_axis_length, bool y_axis) {
+    int current_window_center = screen_axis_length/2;
+    if (y_axis) {current_window_center += block_size/2;}
+    else {current_window_center -= block_size/2;}
+    int board_center = board_axis_length/2;
+    int starting_edge = current_window_center - board_center*block_size;
+    return starting_edge + board_axis_index*block_size;
+    //return current_window_center + (board_axis_index-board_center)*block_size;
 }
 
 //TODO patrick: fix these conversions for resizing etc.
 /**Convert board x coordinate to drawing x coordinate*/
 int GameView_Screen::BoardXToXPixel(int x) {
-    return left_spacing + (x*block_size);
+    return BoardToPixel(x, logic->get_board_width(), App->getSize().x, false);
 }
 
 /**Convert board y coordinate to drawing y coordinate*/
 int GameView_Screen::BoardYToYPixel(int y) {
-    int current_window_height = App->getSize().y;
-    return current_window_height - (bottom_spacing + (y*block_size)) - block_size;
+    return App->getSize().y - BoardToPixel(y, logic->get_board_height(), App->getSize().y, true);
 }
+
+
+int GameView_Screen::PixelToBoard(int pixel_index, int board_axis_length, int screen_axis_length) {
+    int current_window_center = screen_axis_length/2 - block_size/2;
+    int board_center = board_axis_length/2;
+    int starting_edge = current_window_center - board_center*block_size;
+    return (pixel_index-starting_edge)/block_size;
+}
+
 
 /**Convert pixel x coordinate to board x coordinate*/
 int GameView_Screen::XPixelToBoardX(int x_pixel) {
-    if (x_pixel<left_spacing) {return -1;}
-    else {return (x_pixel-left_spacing)/block_size;}
+    return PixelToBoard(x_pixel, logic->get_board_width(), App->getSize().x);
 }
 
 /**Convert pixel y coordinate to board y coordinate*/
 int GameView_Screen::YPixelToBoardY(int y_pixel) {
-    int current_window_height = App->getSize().y;
-    int flipped_y_pixel = current_window_height - y_pixel;
-    if (flipped_y_pixel<bottom_spacing) {return -1;}
-    else {return (flipped_y_pixel-bottom_spacing)/block_size;}
+    return PixelToBoard((App->getSize().y - y_pixel), logic->get_board_height(), App->getSize().y);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**Checks if mouse has clicked on a block*/
 void GameView_Screen::check_mouse_position() {
@@ -300,48 +328,45 @@ void GameView_Screen::draw_blocks(int deltaTime) {
 }
 
 /**Draws an individual single tab*/
-void GameView_Screen::draw_tab(int i, int x, int y) {
-    tab_shapes[i].setFillColor(sf::Color(235, 235, 235));
-    tab_shapes[i].setPosition(x, y);
-    App->draw(tab_shapes[i]);
-}
-
-/**Draws an individual double tab*/
-void GameView_Screen::draw_double_tab(int i, int x, int y) {
-    double_tab_shapes[i].setFillColor(sf::Color(235, 235, 235));
-    double_tab_shapes[i].setPosition(x, y);
-    App->draw(double_tab_shapes[i]);
+void GameView_Screen::draw_tab(int tab_index, int x, int y) {
+    int pixel_x = BoardXToXPixel(x) + block_size/2 - tab_size/2;
+    int pixel_y = BoardYToYPixel(y) + block_size/2 - tab_size/2;
+    
+    int offset = block_size/2 + tab_size/2;
+    switch (tab_index%4) {
+        case 0://UP
+            pixel_y -= offset+1;
+            break;
+        case 1://RIGHT
+            pixel_x += offset;
+            break;
+        case 2://DOWN
+            pixel_y += offset;
+            break;
+        case 3://LEFT
+            pixel_x -= offset+1;
+            break;
+    }
+    
+    tab_shapes[tab_index].setFillColor(sf::Color(235, 235, 235));
+    tab_shapes[tab_index].setPosition(pixel_x, pixel_y);
+    App->draw(tab_shapes[tab_index]);
 }
 
 /**Draws all tabs*/
-void GameView_Screen::draw_tabs() {//TODO fix this, and appearance of tabs.
+void GameView_Screen::draw_tabs() {
     int width = logic->get_board_width();
     int height = logic->get_board_height();
-    int i;
+    int tab_index;
     for (int x=0; x<width; x++) {
         for (int y=0; y<height; y++) {
             if (logic->block_exists(x, y)) {
-                i = 4*((y*width)+x);
-                if (logic->get_block(x, y)->get_tab(U_DIR) && !(logic->block_exists(x, y+1) && logic->get_block(x, y+1)->get_tab(D_DIR))) {
-                    draw_tab(i, BoardXToXPixel(x) + block_size / 2.5, BoardYToYPixel(y) - block_size / 5);
-                }
-                if (logic->get_block(x, y)->get_tab(R_DIR) && !(logic->block_exists(x+1, y) && logic->get_block(x+1, y)->get_tab(L_DIR))) {
-                    draw_tab(i+1, BoardXToXPixel(x) + block_size * 0.98, BoardYToYPixel(y) + block_size / 2.5);
-                }
-                if (logic->get_block(x, y)->get_tab(D_DIR)) {
-                    if (!(logic->block_exists(x, y-1) && logic->get_block(x, y-1)->get_tab(U_DIR))) {
-                        draw_tab(i+2, BoardXToXPixel(x) + block_size / 2.5, BoardYToYPixel(y) + block_size * 0.98);
-                    } else {
-                        draw_double_tab(i/2, BoardXToXPixel(x) + block_size / 2.5, BoardYToYPixel(y) + block_size * 0.8);
-                    }
-                }
-                if (logic->get_block(x, y)->get_tab(L_DIR)) {
-                    if (!(logic->block_exists(x-1, y) && logic->get_block(x-1, y)->get_tab(R_DIR))) {
-                        draw_tab(i+3, BoardXToXPixel(x) - block_size / 5, BoardYToYPixel(y) + block_size / 2.5);
-                    } else {
-                        draw_double_tab(i/2+1, BoardXToXPixel(x) - block_size / 5, BoardYToYPixel(y) + block_size / 2.5);
-                    }
-                }
+                tab_index = 4*((y*width)+x);
+                Block * block = logic->get_block(x, y);
+                if (block->get_tab(U_DIR)) {draw_tab(tab_index, x, y);}
+                if (block->get_tab(R_DIR)) {draw_tab(tab_index+1, x, y);}
+                if (block->get_tab(D_DIR)) {draw_tab(tab_index+2, x, y);}
+                if (block->get_tab(L_DIR)) {draw_tab(tab_index+3, x, y);}
             }
         }
     }
