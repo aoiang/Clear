@@ -36,8 +36,8 @@ int Block::dir_to_index(char dir) {
 }
 
 /**Sets whether a tab exists or not*/
-void Block::set_tab(char dir, bool tab) {
-    tabs[dir_to_index(dir)] = tab;
+void Block::set_tab(char dir, bool tab_exists) {
+    tabs[dir_to_index(dir)] = tab_exists;
 }
 
 /**@return whether or not a block exists on a side of the block*/
@@ -47,10 +47,10 @@ bool Block::get_tab(char dir) {
 
 /**Sets all tabs to 0*/
 void Block::init_tabs() {
-    set_tab('l', 0);
-    set_tab('r', 0);
     set_tab('u', 0);
+    set_tab('r', 0);
     set_tab('d', 0);
+    set_tab('l', 0);
 }
 
 /**@return can_combine*/
@@ -71,11 +71,9 @@ int Block::get_rotation() {return rotation;}
 
 /**Rotates the block and its tabs clockwise*/
 void Block::rotate_clockwise() {
-    rotation = (rotation + 1) % 4;
+    rotation = (rotation+1)%4;
     int tmp = tabs[3];
-    for (int i = 3; i > 0; i--) {
-        tabs[i] = tabs[i-1];
-    }
+    for (int i=3; i>0; i--) {tabs[i] = tabs[i-1];}
     tabs[0] = tmp;
 }
 

@@ -96,29 +96,28 @@ void GameLogic::remove_block(int x, int y) {
 
 /**@return if a block can be removed*/
 bool GameLogic::can_move_block(Block * block, char direction) {
+    bool type_allows_movement;
     switch (block->get_id()) {
         case ID_NORMAL:
-            return static_cast<BlockNormal*>(block)->type_allows_movement(direction)
-                && !static_cast<BlockNormal*>(block)->is_move_restricted(get_blocks_removed_ct())
-                && !path_blocked(block, direction)
-                && !tabs_impede(block, direction);
+            type_allows_movement = static_cast<BlockNormal*>(block)->type_allows_movement(direction);
+            break;
         case ID_U_DIR:
         case ID_R_DIR:
         case ID_D_DIR:
         case ID_L_DIR:
-            return static_cast<BlockDirectional*>(block)->type_allows_movement(direction)
-                && !static_cast<BlockDirectional*>(block)->is_move_restricted(get_blocks_removed_ct())
-                && !path_blocked(block, direction)
-                && !tabs_impede(block, direction);
+            type_allows_movement = static_cast<BlockDirectional*>(block)->type_allows_movement(direction);
+            break;
         case ID_ROTATE_0:
         case ID_ROTATE_1:
         case ID_ROTATE_2:
         case ID_ROTATE_3:
-            return static_cast<BlockRotating*>(block)->type_allows_movement(direction)
-                && !static_cast<BlockRotating*>(block)->is_move_restricted(get_blocks_removed_ct())
-                && !path_blocked(block, direction)
-                && !tabs_impede(block, direction);
+            type_allows_movement = static_cast<BlockRotating*>(block)->type_allows_movement(direction);
+            break;
     }
+    return type_allows_movement
+       && !block->is_move_restricted(get_blocks_removed_ct())
+       && !path_blocked(block, direction)
+       && !tabs_impede(block, direction);
 }
 
 /**Determines if a block can be removed in any way*/
@@ -135,26 +134,25 @@ bool GameLogic::can_move(int block_x, int block_y, char direction) {
 /**Attempts to move a block*/
 bool GameLogic::try_move(int x, int y, char direction) {
     if (block_exists(x, y)) {
-        if (can_move(x, y, direction)) {
-            remove_block(x, y);
-            return true;
-        }
-        add_wrong_move();
-        return false;
+        bool valid_move = can_move(x, y, direction);
+        if (valid_move) {remove_block(x, y);}
+        else {add_wrong_move();}
+        return valid_move;
     }
 }
 
 /**@return if a block is rotated on tap*/
 bool GameLogic::tap_selected() {
     if (block_exists(selected_x, selected_y)) {
-        Block *block = get_block(selected_x, selected_y);
+        Block * block = get_block(selected_x, selected_y);
         switch (block->get_id()) {
             case ID_ROTATE_0:
             case ID_ROTATE_1:
             case ID_ROTATE_2:
             case ID_ROTATE_3:
-                if (!static_cast<BlockRotating*>(block)->is_move_restricted(get_blocks_removed_ct())) {
-                    static_cast<BlockRotating*>(block)->rotate();
+                BlockRotating * casted_block = static_cast<BlockRotating*>(block);
+                if (!casted_block->is_move_restricted(get_blocks_removed_ct())) {
+                    casted_block->rotate();
                     std::cout << "Rotated block at " << selected_x << ", " << selected_y << "\n";
                     return true;
                 };
