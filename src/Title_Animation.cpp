@@ -1,6 +1,7 @@
 #include "Title_Animation.hpp"
 #include <SFML/Graphics.hpp>
 
+/**Draws the clear animation at the start  */
 int Title_Animation :: draw_sprite(sf::RenderWindow &window)
 {
     int count=0;
@@ -40,6 +41,7 @@ int Title_Animation :: draw_sprite(sf::RenderWindow &window)
     return 1;
 }
 
+/**draws/fades in the tagline */
 int Title_Animation :: draw_tagline(sf::RenderWindow &window)
 {
     int fontSize = 50;
@@ -57,7 +59,7 @@ int Title_Animation :: draw_tagline(sf::RenderWindow &window)
     tagline.setFillColor(sf::Color(255,255,255, 34));
     while(count!=15)
     {
-        if(clock.getElapsedTime().asSeconds()>0.1f && count<15) //&& count<18)
+        if(clock.getElapsedTime().asSeconds()>0.25f && count<15) //&& count<18)
             {
                 int hue = count*17;
                 tagline.setFillColor(sf::Color(255,255,255,hue));
@@ -71,6 +73,7 @@ int Title_Animation :: draw_tagline(sf::RenderWindow &window)
     return 1;
 }
 
+/**runs the opening screen */
 int Title_Animation :: run(sf::RenderWindow &window)
 {
     sf:: Event Event;
