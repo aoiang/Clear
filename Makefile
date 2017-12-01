@@ -1,6 +1,6 @@
 .DEFAULT_GOAL:=basic
 
-basic: backup debug release
+basic: backup crd
 
 SENV = echo "skipping setting LIB and INCLUDE" &&
 
@@ -42,21 +42,23 @@ debug: cleandebug
 	mkdir -p ./Debug
 	$(SENV) $(CDD) cmake ..
 	$(CDD) make
-	$(CDD) mv $(RUNFILE) .$(DF)
-	$(CLND)
+#	$(CDD) mv $(RUNFILE) .$(DF)
+#	$(CLND)
 
 release: cleanrelease
 	mkdir -p ./Release
 	$(SENV) $(CDR) cmake ..
 	$(CDR) make
-	$(CDR) mv $(RUNFILE) .$(RF)
-	$(CLNR)
+#	$(CDR) mv $(RUNFILE) .$(RF)
+#	$(CLNR)
 
 rundebug:
-	$(DF) &
+#	$(DF) &
+	$(CDD) $(RUNFILE) &
 
 runrelease:
-	$(RF) &
+#	$(RF) &
+	$(CDR) $(RUNFILE) &
 
 
 clean: cleandebug cleanrelease
