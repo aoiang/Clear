@@ -227,6 +227,8 @@ void GameView_Screen::draw_path_highlighting() {
             case L_DIR: x_pos -= default_window_width;
             case R_DIR: path_shape_i++;
                 break;
+            case DEFAULT_DIR:
+                return;                
         }
         path_shapes[path_shape_i].setPosition(sf::Vector2f(x_pos, y_pos));
         App->draw(path_shapes[path_shape_i]);
