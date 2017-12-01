@@ -1,5 +1,6 @@
 #include "BoardState.hpp"
 #include "Block.hpp"
+#include <iostream>
 
 /**
   Sets board dimensions
@@ -82,3 +83,14 @@ void BoardState::add_wrong_move() {
 
 /**@return number of blocks removed*/
 int BoardState::get_blocks_removed_ct() {return block_removed_ct;}
+
+
+void BoardState::print_board() {
+    for (int y=0; y<get_board_height(); y++) {
+        for (int x=0; x<get_board_width(); x++) {
+            if (!block_exists(x,y)) {std::cout << true << " ";}
+            else {std::cout << get_block(x,y)->get_id() << " ";}
+        }
+        std::cout<<"\n";
+    }
+}

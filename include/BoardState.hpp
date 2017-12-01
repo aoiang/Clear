@@ -31,6 +31,7 @@ class BoardState {
         bool get_is_clear();
         void add_wrong_move();
         int get_blocks_removed_ct();
+        void print_board();
 };
 
 #endif //CLEAR_BOARDSTATE_HPP
