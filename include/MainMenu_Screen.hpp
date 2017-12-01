@@ -7,8 +7,17 @@
 #include "Screen_Abstract.hpp"
 class MainMenu_Screen : public Screen_Abstract
 {
+    private:
+       // sf::Text title;
+        sf::Text menuItem_0;
+       // sf::Text * menuItem_1;
+       // sf::Text * menuItem_2;
+        sf::FloatRect  item_0_box;
+        sf::FloatRect  item_1_box;
+        sf::FloatRect  item_2_box;
     public:
         void draw(sf::RenderWindow &window);
+        int getSelectedOption(sf::RenderWindow &window);
         int run(sf::RenderWindow &window);
 };
 #endif
