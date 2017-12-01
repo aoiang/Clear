@@ -2,19 +2,20 @@
 #define CLEAR_GAMELOGIC_HPP
 
 #include "Block.hpp"
-#include "Normal_Block.hpp"
-#include "Directional_Block.hpp"
-#include "GameBoard.hpp"
+#include "BlockNormal.hpp"
+#include "BlockDirectional.hpp"
+#include "BlockRotating.hpp"
+#include "BoardState.hpp"
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
 class GameLogic {
     private:
-        GameBoard * board;
+        BoardState * board;
         int selected_x = -1;
         int selected_y = -1;
     public:
-        void set_GameBoard(GameBoard &board);
+        void set_BoardState(BoardState &board);
         int get_board_width();
         int get_board_height();
         void set_selected_position(int x, int y);
@@ -34,6 +35,12 @@ class GameLogic {
         bool try_move_selected(char direction);
         bool is_selected_location_valid();
         void remove_block(int x, int y);
+        bool tap_selected();
+        bool get_is_clear();
+        void add_wrong_move();
+        int get_blocks_removed_ct();
+        bool block_is_move_restricted(int, int);
+        bool selected_block_is_move_restricted();
 };
 
 #endif //CLEAR_GAMELOGIC_HPP

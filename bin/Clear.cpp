@@ -5,21 +5,18 @@
 
 #include <SFML/Graphics.hpp>
 #include "GameLogic.hpp"
-#include "GameBoard.hpp"
+#include "BoardState.hpp"
 #include "GameView.hpp"
 #include "Screens.hpp"
+#include "BoardStateLoader.hpp"
 
 int main(int argc, char** argv) {
-    
+    BoardState * board = BoardStateLoader::loadBoardState(LEVEL_01);
     GameView view;
     GameLogic logic;
-    GameBoard board;
 
-    board.init(10, 10);
-    logic.set_GameBoard(board);
-    
+    logic.set_BoardState(*board);
     view.run(logic);
-    
 
     return 0;
 }

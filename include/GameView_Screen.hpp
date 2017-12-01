@@ -2,15 +2,17 @@
 #define CLEAR_GAMEVIEW_SCREEN_HPP
 
 #include <SFML/Graphics.hpp>
-#include "Block.hpp"
-#include "Normal_Block.hpp"
 #include "GameLogic.hpp"
 #include "Screen_Abstract.hpp"
 
-static char texture_filepaths[4][40] = {UP_TEXTURE,
+static char texture_filepaths[8][40] = {UP_TEXTURE,
                                         RIGHT_TEXTURE,
                                         DOWN_TEXTURE,
-                                        LEFT_TEXTURE};
+                                        LEFT_TEXTURE,
+                                        ROTATING_0_TEXTURE,
+                                        ROTATING_1_TEXTURE,
+                                        ROTATING_2_TEXTURE,
+                                        ROTATING_3_TEXTURE};
 
 class GameView_Screen : public Screen_Abstract {
     private:
@@ -21,13 +23,14 @@ class GameView_Screen : public Screen_Abstract {
         sf::RectangleShape * path_shapes;
         sf::RectangleShape * tab_shapes;
         sf::RectangleShape * double_tab_shapes;
+        sf::RectangleShape * restriction_shapes;
         GameLogic * logic;
-        int ** animation_frames;
+        float ** animation_ms;
         char ** animation_dir;
         int default_window_width = 600;
         int default_window_height = 600;
-        int bottom_spacing = 50;
-        int left_spacing = 50;
+        int bottom_spacing = 75;
+        int left_spacing = 75;
         char dir = DEFAULT_DIR;
         bool clicked = false;
         bool running = true;
@@ -46,12 +49,13 @@ class GameView_Screen : public Screen_Abstract {
         sf::RectangleShape make_path_shape(int w, int h);
         sf::RectangleShape make_tab_shape(char dir);
         sf::RectangleShape make_double_tab_shape(char dir);
+        sf::RectangleShape make_restriction_shape();
         void load_texture(int);
         void load_textures();
-        void draw();
+        void draw(int);
         void draw_shadows();
         void draw_path_highlighting();
-        void draw_blocks();
+        void draw_blocks(int);
         void draw_tab(int, int, int);
         void draw_double_tab(int, int, int);
         void draw_tabs();

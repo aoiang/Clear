@@ -6,15 +6,15 @@ int Title_Animation :: draw_sprite(sf::RenderWindow &window)
 {
     int count=0;
     sf::Clock clock;
-     
+
     sf::IntRect rectSource(0,0,396,134);
     sf::Texture titleSequence;
     titleSequence.loadFromFile(TITLE_TEXTUREMAP);
-    
+
     sf::Sprite sprite(titleSequence, rectSource);
     sprite.setOrigin(198,67);
     sprite.setPosition(window.getSize().x/2,window.getSize().y/2);
-    
+
     while(count!=18)
     {
         window.draw(sprite);
@@ -32,7 +32,7 @@ int Title_Animation :: draw_sprite(sf::RenderWindow &window)
                     }
                     else
                         rectSource.left += 392;
-                
+
                     sprite.setTextureRect(rectSource);
                     clock.restart();
                     count++;
@@ -40,12 +40,13 @@ int Title_Animation :: draw_sprite(sf::RenderWindow &window)
     }
     return 1;
 }
+
 /**draws/fades in the tagline */
 int Title_Animation :: draw_tagline(sf::RenderWindow &window)
 {
     int fontSize = 50;
     int count = 0;
-    
+
     sf::FloatRect textbox;
     sf::Clock clock;
     sf::Font font;
@@ -67,7 +68,7 @@ int Title_Animation :: draw_tagline(sf::RenderWindow &window)
                 window.draw(tagline);
                 window.display();
             }
-        
+
     }
     return 1;
 }
@@ -79,7 +80,7 @@ int Title_Animation :: run(sf::RenderWindow &window)
     bool running = true;
     while(running)
     {
-        
+
         while (window.pollEvent(Event))
         {
             if(Event.type == sf::Event::Closed)
@@ -87,13 +88,13 @@ int Title_Animation :: run(sf::RenderWindow &window)
                     running = false;
                     return -1;
             }
-            
+
         }
         window.clear(sf::Color(40,140,240));
         draw_sprite(window);
         int next_screen = draw_tagline(window);
         window.display();
         return next_screen;
-    } 
+    }
     return 1;
 }

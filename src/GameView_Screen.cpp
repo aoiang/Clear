@@ -1,10 +1,9 @@
 #include "GameView_Screen.hpp"
+#include "BoardStateLoader.hpp"
 #include <iostream>
-#include <stdlib.h>
 
 /**Create the game window*/
-GameView_Screen::GameView_Screen(){}
-
+GameView_Screen::GameView_Screen() {}
 
 /**Check if window is open*/
 bool GameView_Screen::isOpen() {
@@ -20,7 +19,8 @@ void GameView_Screen::set_GameLogic(GameLogic &logic) {
 sf::RectangleShape GameView_Screen::make_block_shape(int block_id) {
     sf::RectangleShape block_shape(sf::Vector2f(block_size, block_size));
     block_shape.setFillColor(sf::Color(235, 235, 235));
-    if (block_id>=20) {block_shape.setTexture(&texture[block_id%20]);}//TODO probably a bug here; didn't seem intended to do anything with block>23
+    if (block_id>=20 && block_id < 30) {block_shape.setTexture(&texture[block_id%20]);}//TODO probably a bug here; didn't seem intended to do anything with block>23
+    else if (block_id>=30 && block_id < 40) {block_shape.setTexture(&texture[(block_id%30)+4]);}
     return block_shape;
 }
 
@@ -29,6 +29,13 @@ sf::RectangleShape GameView_Screen::make_path_shape(int w, int h) {
   sf::RectangleShape path_shape(sf::Vector2f(w, h));
   path_shape.setFillColor(sf::Color(255, 255, 255, 120));
   return path_shape;
+}
+
+/**Makes shapes for block restrictions*/
+sf::RectangleShape GameView_Screen::make_restriction_shape() {
+    sf::RectangleShape restriction_shape(sf::Vector2f(block_size, block_size));
+    restriction_shape.setFillColor(sf::Color(255, 0, 0, 180));
+    return restriction_shape;
 }
 
 /**Load textures from files*/
@@ -41,7 +48,7 @@ void GameView_Screen::load_texture(int texture_index) {
 
 /**Loads all textures*/
 void GameView_Screen::load_textures() {
-    for (int i=0; i<4; i++) {load_texture(i);}
+    for (int i=0; i<8; i++) {load_texture(i);}
 }
 
 /**Make shadow shapes*/
@@ -78,31 +85,34 @@ void GameView_Screen::init() {
 
     load_textures();
 
-    sf::RectangleShape * shapes;
+    sf::RectangleShape * blocks;
     sf::RectangleShape * shadows;
     sf::RectangleShape * paths;
     sf::RectangleShape * tabs;
     sf::RectangleShape * double_tabs;
+    sf::RectangleShape * restrictions;
 
-    shapes = new sf::RectangleShape[board_width * board_height]();
+    blocks = new sf::RectangleShape[board_width * board_height]();
     shadows = new sf::RectangleShape[board_width * board_height]();
     tabs = new sf::RectangleShape[4 * board_width * board_height]();
     double_tabs = new sf::RectangleShape[2 * board_width * board_height]();
     paths = new sf::RectangleShape[2]();
+    restrictions = new sf::RectangleShape[board_width * board_height]();
 
-    animation_frames = new int * [board_width];
+    animation_ms = new float * [board_width];
     animation_dir = new char * [board_width];
 
     for (int x=0; x<board_width; x++) {
-        animation_frames[x] = new int[board_height];
+        animation_ms[x] = new float[board_height];
         animation_dir[x] = new char[board_height];
+
         for (int y=0; y<board_height; y++) {
-            animation_frames[x][y] = -1;
+            animation_ms[x][y] = -1;
             if (logic->block_exists(x, y)) {
-                animation_frames[x][y] = 0;
+                animation_ms[x][y] = 0;
                 animation_dir[x][y] = DEFAULT_DIR;
 
-                shapes[(y*board_width)+x] = make_block_shape(logic->get_block(x, y)->get_id());
+                blocks[(y*board_width)+x] = make_block_shape(logic->get_block(x, y)->get_id());
                 shadows[(y*board_width)+x] = make_shadow_shape();
                 tabs[4 * ((y * board_width) + x)] = make_tab_shape(U_DIR);
                 tabs[4 * ((y * board_width) + x) + 1] = make_tab_shape(R_DIR);
@@ -110,6 +120,8 @@ void GameView_Screen::init() {
                 tabs[4 * ((y * board_width) + x) + 3] = make_tab_shape(L_DIR);
                 double_tabs[2 * ((y * board_width) + x)] = make_double_tab_shape(D_DIR);
                 double_tabs[2 * ((y * board_width) + x) + 1] = make_double_tab_shape(L_DIR);
+
+                if (logic->block_is_move_restricted(x, y)) {restrictions[(y*board_width)+x] = make_restriction_shape();}
             }
         }
     }
@@ -117,11 +129,12 @@ void GameView_Screen::init() {
     paths[0] = make_path_shape(block_size*0.98, App->getSize().y);
     paths[1] = make_path_shape(App->getSize().x, block_size*0.98);
 
-    this->block_shapes = shapes;
+    this->block_shapes = blocks;
     this->shadow_shapes = shadows;
     this->path_shapes = paths;
     this->tab_shapes = tabs;
     this->double_tab_shapes = double_tabs;
+    this->restriction_shapes = restrictions;
 }
 
 //TODO patrick: fix these conversions for resizing etc.
@@ -171,13 +184,17 @@ void GameView_Screen::check_mouse_position() {
     } else {
         if (clicked) {
             clicked = false;
-            if (dir != DEFAULT_DIR) {
-                int sel_x = logic->get_selected_x();
-                int sel_y = logic->get_selected_y();
+            int sel_x = logic->get_selected_x();
+            int sel_y = logic->get_selected_y();
+            if (dir != DEFAULT_DIR && logic->selected_block_exists() && !logic->selected_block_is_move_restricted()) {
                 if (logic->try_move_selected(dir)) {
-                    animation_frames[sel_x][sel_y] = 1;
+                    animation_ms[sel_x][sel_y] = 1;
                     animation_dir[sel_x][sel_y] = dir;
                 }
+            } else if (logic->tap_selected()) {
+                // Changes BlockRotating texture on tap
+                int i = sel_y * logic->get_board_width() + sel_x;
+                block_shapes[i].setTexture(&texture[(logic->get_block(sel_x, sel_y)->get_id() % 30) + 4]);
             }
             dir = DEFAULT_DIR;
             logic->set_selected_position(-1, -1);
@@ -187,7 +204,7 @@ void GameView_Screen::check_mouse_position() {
 
 /**Draws selected block and shadow under it*/
 void GameView_Screen::draw_selected_block() {
-    if (logic->selected_block_exists()) {
+    if (logic->selected_block_exists() && !logic->selected_block_is_move_restricted()) {
         int index = (logic->get_selected_y() * logic->get_board_width()) + logic->get_selected_x();
         block_shapes[index].setSize(sf::Vector2f(block_size*1.1, block_size*1.1));
         block_shapes[index].setFillColor(sf::Color::White);
@@ -236,32 +253,47 @@ void GameView_Screen::draw_shadows() {
 }
 
 /**Draws blocks*/
-void GameView_Screen::draw_blocks() {
+void GameView_Screen::draw_blocks(int deltaTime) {
     int width = logic->get_board_width();
     int height = logic->get_board_height();
     int i;
     for (int x=0; x<width; x++) {
         for (int y=0; y<height; y++) {
             i = (y*width)+x;
-            if (logic->block_exists(x, y) && (animation_frames[x][y] == 0)) {
+            if (logic->block_exists(x, y) && (animation_ms[x][y] == 0)) {
                 block_shapes[i].setSize(sf::Vector2f(block_size*0.98, block_size*0.98));
                 block_shapes[i].setFillColor(sf::Color(235, 235, 235));
                 block_shapes[i].setPosition(BoardXToXPixel(x), BoardYToYPixel(y));
                 App->draw(block_shapes[i]);
-            } else if (animation_frames[x][y] == 1) {
+
+                if (logic->block_is_move_restricted(x, y)) {
+                    //TODO: fix this extremely sloppy text hack
+                    sf::Text text1;
+                    sf::Font font;
+                    font.loadFromFile(REGULARFONT_FILEPATH);
+                    text1.setFont(font);
+                    text1.setPosition(BoardXToXPixel(x) + block_size/2.5, BoardYToYPixel(y) + block_size/3);
+                    text1.setString(std::to_string(logic->get_block(x, y)->get_move_restriction() - logic->get_blocks_removed_ct()));
+                    text1.setCharacterSize(20);
+
+                    restriction_shapes[i].setPosition(BoardXToXPixel(x), BoardYToYPixel(y)) ;
+                    App->draw(restriction_shapes[i]);
+                    App->draw(text1);
+                }
+            } else if (animation_ms[x][y] == 1) {
                 block_shapes[i].setOrigin(block_size / 2, block_size / 2);
                 block_shapes[i].move(block_size / 2, block_size / 2);
                 block_shapes[i].setSize(sf::Vector2f(block_size*0.98, block_size*0.98));
                 block_shapes[i].setFillColor(sf::Color(235, 235, 235));
-                animation_frames[x][y] ++;
+                animation_ms[x][y] += deltaTime;
                 App->draw(block_shapes[i]);
-            } else if ((animation_frames[x][y] < 2000) && (animation_frames[x][y] > 1)) {
-                animation_frames[x][y] ++;
-                if (animation_dir[x][y] == D_DIR) { block_shapes[i].move(0, 0.25); }
-                else if (animation_dir[x][y] == U_DIR) { block_shapes[i].move(0, -0.25); }
-                else if (animation_dir[x][y] == L_DIR) { block_shapes[i].move(-0.25, 0); }
-                else if (animation_dir[x][y] == R_DIR) { block_shapes[i].move(0.25, 0); }
-                block_shapes[i].rotate(0.1);
+            } else if ((animation_ms[x][y] < 2000000) && (animation_ms[x][y] > 1)) {
+                animation_ms[x][y] += deltaTime;
+                if (animation_dir[x][y] == D_DIR) { block_shapes[i].move(0, 0.001 * deltaTime); }
+                else if (animation_dir[x][y] == U_DIR) { block_shapes[i].move(0, -0.001 * deltaTime); }
+                else if (animation_dir[x][y] == L_DIR) { block_shapes[i].move(-0.001 * deltaTime, 0); }
+                else if (animation_dir[x][y] == R_DIR) { block_shapes[i].move(0.001 * deltaTime, 0); }
+                block_shapes[i].rotate(0.0005 * deltaTime);
                 App->draw(block_shapes[i]);
             }
         }
@@ -317,10 +349,10 @@ void GameView_Screen::draw_tabs() {
 }
 
 /**Draw all blocks, shadows, movements, and selections*/
-void GameView_Screen::draw() {
+void GameView_Screen::draw(int deltaTime) {
     App->clear(sf::Color(40,140,240));
     draw_shadows();
-    draw_blocks();
+    draw_blocks(deltaTime);
     draw_tabs();
     draw_path_highlighting();
     draw_selected_block();
@@ -335,24 +367,35 @@ void GameView_Screen::check_keyboard_in() {
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {logic->try_move_selected(R_DIR);}
 }
 
-int GameView_Screen:: run(sf::RenderWindow &window)
-{
+int GameView_Screen::run(sf::RenderWindow &window) {
+    sf::Clock draw_clock;
     this->App = &window;
     init();
+
+    int time_since_completion = 0;
+
     sf:: Event Event;
-    while(running)
-    {
-        while (window.pollEvent(Event))
-        {
-            if(Event.type == sf::Event::Closed)
-            {
+    while(running) {
+        while (window.pollEvent(Event)) {
+            if(Event.type == sf::Event::Closed) {
                 running = false;
                 return -1;
             }
-
         }
+
+        //TODO: move this into GameView
+        if (logic->get_is_clear()) {
+            time_since_completion += draw_clock.getElapsedTime().asMicroseconds();
+            if (time_since_completion > 750000) {
+                BoardState * board = BoardStateLoader::loadBoardState(LEVEL_TEST);
+                logic->set_BoardState(*board);
+                init();
+                time_since_completion = 0;
+            }
+        }
+
         check_mouse_position();
         check_keyboard_in();
-        draw();
+        draw(draw_clock.restart().asMicroseconds());
     }
 }
