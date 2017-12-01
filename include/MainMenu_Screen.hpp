@@ -10,7 +10,7 @@ class MainMenu_Screen : public Screen_Abstract
 {
     private:
        // sf::Text title;
-        sf::Text menuItem_0;
+        sf::Text * menuItem_0;
        // sf::Text * menuItem_1;
        // sf::Text * menuItem_2;
         sf::FloatRect  item_0_box;
@@ -18,6 +18,7 @@ class MainMenu_Screen : public Screen_Abstract
         sf::FloatRect  item_2_box;
     public:
         void draw(sf::RenderWindow &window);
+        bool check_clicked(sf::Vector2f mousePos, sf::Text desired_option, sf::RenderWindow &window);
         int getSelectedOption(sf::RenderWindow &window);
         int run(sf::RenderWindow &window);
 };

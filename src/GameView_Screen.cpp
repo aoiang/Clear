@@ -381,6 +381,11 @@ int GameView_Screen::run(sf::RenderWindow &window) {
                 running = false;
                 return -1;
             }
+            if(Event.type == sf::Event::KeyPressed)
+            {
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+                    return 1;
+            }
         }
 
         //TODO: move this into GameView
