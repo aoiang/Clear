@@ -119,17 +119,6 @@ void GameView_Screen::init() {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
 int GameView_Screen::BoardToPixel(int board_axis_index, int board_axis_length, int screen_axis_length, bool y_axis) {
     int current_window_center = screen_axis_length/2;
     if (y_axis) {current_window_center += block_size/2;}
@@ -169,22 +158,6 @@ int GameView_Screen::XPixelToBoardX(int x_pixel) {
 int GameView_Screen::YPixelToBoardY(int y_pixel) {
     return PixelToBoard((App->getSize().y - y_pixel), logic->get_board_height(), App->getSize().y);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /**Checks if mouse has clicked on a block*/
