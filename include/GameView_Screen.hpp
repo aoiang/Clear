@@ -19,10 +19,10 @@ class GameView_Screen : public Screen_Abstract {
         sf::RenderWindow *App;
         sf::Texture texture[15];
         sf::RectangleShape * block_shapes;
-        sf::RectangleShape * shadow_shapes;
+        sf::RectangleShape shadow_shape;
+        sf::RectangleShape restriction_shape;
         sf::RectangleShape * path_shapes;
         sf::RectangleShape * tab_shapes;
-        sf::RectangleShape * restriction_shapes;
         GameLogic * logic;
         float ** animation_ms;
         char ** animation_dir;
@@ -43,10 +43,8 @@ class GameView_Screen : public Screen_Abstract {
         void init();
         bool isOpen();
         sf::RectangleShape make_block_shape(int block_id);
-        sf::RectangleShape make_shadow_shape();
-        sf::RectangleShape make_path_shape(int w, int h);
         sf::RectangleShape make_tab_shape(char dir);
-        sf::RectangleShape make_restriction_shape();
+        sf::RectangleShape make_alpha_rectangle_shape(int, int, int, int, int, int);
         void load_texture(int);
         void load_textures();
         void draw(int);
@@ -63,8 +61,8 @@ class GameView_Screen : public Screen_Abstract {
         int XPixelToBoardX(int x);
         int YPixelToBoardY(int y);
         int run(sf::RenderWindow &window);
-        void check_mouse_position();
-        void check_keyboard_in();
+        void check_mouse_input();
+        void check_keyboard_input();
 };
 
 #endif //CLEAR_GAMEVIEW_HPP
