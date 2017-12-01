@@ -41,54 +41,43 @@ int GameLogic::get_board_height() {return board->get_board_height();}
 bool GameLogic::tabs_impede(Block * block, char direction) {
     int x = block->get_x();
     int y = block->get_y();
-
-    if (direction == 'u' || direction == 'd') {
-        if (   (get_block(x, y)->get_tab('l') && block_exists(x-1, y))
-            || (get_block(x, y)->get_tab('r') && block_exists(x+1, y))
-            || (block_exists(x-1, y) && get_block(x-1, y)->get_tab('r'))
-            || (block_exists(x+1, y) && get_block(x+1, y)->get_tab('l'))) {
-            return true;
-        }
-    } else if (direction == 'l' || direction == 'r') {
-        if (   (get_block(x, y)->get_tab('u') && block_exists(x, y+1))
-            || (get_block(x, y)->get_tab('d') && block_exists(x, y-1))
-            || (block_exists(x, y+1) && get_block(x, y+1)->get_tab('d'))
-            || (block_exists(x, y-1) && get_block(x, y-1)->get_tab('u'))) {
-            return true;
-        }
+    
+    switch (direction) {
+        case 'u': case 'd':
+            return block->get_tab('l') && block_exists(x-1, y)
+                || block->get_tab('r') && block_exists(x+1, y)
+                || block_exists(x-1, y) && get_block(x-1, y)->get_tab('r')
+                || block_exists(x+1, y) && get_block(x+1, y)->get_tab('l');
+        case 'l': case 'r':
+            return block->get_tab('u') && block_exists(x, y+1)
+                || block->get_tab('d') && block_exists(x, y-1)
+                || block_exists(x, y+1) && get_block(x, y+1)->get_tab('d')
+                || block_exists(x, y-1) && get_block(x, y-1)->get_tab('u');
     }
-    return false;
 }
 
 /**Checks if a direction relative to a block is clear or blocked.*/
 bool GameLogic::path_blocked(Block * block, char direction) {
     int x = block->get_x();
     int y = block->get_y();
-
-    if (direction == 'u') {
-        for (int y2 = y+1; y2<get_board_height(); y2++) {
-            if (block_exists(x, y2)) {
-                return true;
-            }
-        }
-    } else if (direction == 'd') {
-        for (int y2 = y-1; y2>=0; y2--) {
-            if (block_exists(x, y2)) {
-                return true;
-            }
-        }
-    } else if (direction == 'l') {
-        for (int x2 = x-1; x2>=0; x2--) {
-            if (block_exists(x2, y)) {
-                return true;
-            }
-        }
-    } else if (direction == 'r') {
-        for (int x2 = x+1; x2<get_board_width(); x2++) {
-            if (block_exists(x2, y)) {
-                return true;
-            }
-        }
+    
+    switch (direction) {
+        case 'u':
+            for (int y2 = y+1; y2<get_board_height(); y2++) {
+                if (block_exists(x, y2)) {return true;}
+            } break;
+        case 'r':
+            for (int x2 = x+1; x2<get_board_width(); x2++) {
+                if (block_exists(x2, y)) {return true;}
+            } break;
+        case 'd':
+            for (int y2 = y-1; y2>=0; y2--) {
+                if (block_exists(x, y2)) {return true;}
+            } break;
+        case 'l':
+            for (int x2 = x-1; x2>=0; x2--) {
+                if (block_exists(x2, y)) {return true;}
+            } break;
     }
     return false;
 }

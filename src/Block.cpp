@@ -26,11 +26,13 @@ int Block::get_y() {return y;}
 
 /**@return index based on direction*/
 int Block::dir_to_index(char dir) {
-    if (dir == 'u') {return 0;}
-    else if (dir == 'r') {return 1;}
-    else if (dir == 'd') {return 2;}
-    else if (dir == 'l') {return 3;}
-    else {return -1;}
+    switch (dir) {
+        case 'u': return 0;
+        case 'r': return 1;
+        case 'd': return 2;
+        case 'l': return 3;
+        default: return -1;
+    }
 }
 
 /**Sets whether a tab exists or not*/
