@@ -6,14 +6,10 @@
 GameView_Screen::GameView_Screen() {}
 
 /**Check if window is open*/
-bool GameView_Screen::isOpen() {
-    return running;
-}
+bool GameView_Screen::isOpen() {return running;}
 
 /**Assigns a GameLogic to this view*/
-void GameView_Screen::set_GameLogic(GameLogic &logic) {
-    this->logic = &logic;
-}
+void GameView_Screen::set_GameLogic(GameLogic &logic) {this->logic = &logic;}
 
 /**Make block shapes based on their properties*/
 sf::RectangleShape GameView_Screen::make_block_shape(int block_id) {
@@ -174,12 +170,16 @@ void GameView_Screen::check_mouse_position() {
         } else {
             int dx = mouse_x_start - sf::Mouse::getPosition(*App).x;
             int dy = mouse_y_start - sf::Mouse::getPosition(*App).y;
-
-            if (dx < -deadzone && abs(dx) > abs(dy)) {dir = R_DIR;}
-            else if (dx > deadzone && abs(dx) > abs(dy)) {dir = L_DIR;}
-            else if (dy < -deadzone && abs(dy) > abs(dx)) {dir = D_DIR;}
-            else if (dy > deadzone && abs(dy) > abs(dx)) {dir = U_DIR;}
-            else {dir = DEFAULT_DIR;}
+            
+            if (abs(dx) > deadzone || abs(dy) > deadzone) {
+                if (abs(dx) > abs(dy)) {
+                    if (dx>0) {dir = L_DIR;}
+                    else {dir = R_DIR;}
+                } else {
+                    if (dy>0) {dir = U_DIR;}
+                    else {dir = D_DIR;}
+                }
+            } else {dir = DEFAULT_DIR;}
         }
     } else {
         if (clicked) {
@@ -216,23 +216,20 @@ void GameView_Screen::draw_selected_block() {
 /**Highlights path that the block will take*/
 void GameView_Screen::draw_path_highlighting() {
     if (logic->selected_block_exists()) {
-        if (dir == U_DIR) {
-            path_shapes[0].setPosition(sf::Vector2f(BoardXToXPixel(logic->get_selected_x()),
-                                                    BoardYToYPixel(logic->get_selected_y()) - default_window_height));
-            App->draw(path_shapes[0]);
-        } else if (dir == D_DIR) {
-            path_shapes[0].setPosition(sf::Vector2f(BoardXToXPixel(logic->get_selected_x()),
-                                                    BoardYToYPixel(logic->get_selected_y())));
-            App->draw(path_shapes[0]);
-        } else if (dir == L_DIR) {
-            path_shapes[1].setPosition(sf::Vector2f(BoardXToXPixel(logic->get_selected_x()) - default_window_width,
-                                                    BoardYToYPixel(logic->get_selected_y())));
-            App->draw(path_shapes[1]);
-        } else if (dir == R_DIR) {
-            path_shapes[1].setPosition(sf::Vector2f(BoardXToXPixel(logic->get_selected_x()),
-                                                    BoardYToYPixel(logic->get_selected_y())));
-            App->draw(path_shapes[1]);
+        
+        int path_shape_i = 0;
+        int x_pos = BoardXToXPixel(logic->get_selected_x());
+        int y_pos = BoardYToYPixel(logic->get_selected_y());
+        
+        switch (dir) {
+            case U_DIR: y_pos -= default_window_height;
+            case D_DIR: break;
+            case L_DIR: x_pos -= default_window_width;
+            case R_DIR: path_shape_i++;
+                break;
         }
+        path_shapes[path_shape_i].setPosition(sf::Vector2f(x_pos, y_pos));
+        App->draw(path_shapes[path_shape_i]);
     }
 }
 
@@ -315,7 +312,7 @@ void GameView_Screen::draw_double_tab(int i, int x, int y) {
 }
 
 /**Draws all tabs*/
-void GameView_Screen::draw_tabs() {
+void GameView_Screen::draw_tabs() {//TODO fix this, and appearance of tabs.
     int width = logic->get_board_width();
     int height = logic->get_board_height();
     int i;

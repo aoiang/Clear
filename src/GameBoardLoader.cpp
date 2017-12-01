@@ -3,7 +3,7 @@
 #include "BlockDirectional.hpp"
 #include "BlockRotating.hpp"
 #include <fstream>
-using namespace std;
+#include <string>
 
 /**
   Loads BoardState from file
@@ -13,43 +13,52 @@ using namespace std;
 BoardState * BoardStateLoader::loadBoardState(std::string filepath) {
     BoardState * board = new BoardState();
     board->init();
-
-    ifstream inFile;
+    
+    std::ifstream inFile;
     inFile.open(filepath);
-
+    
     int entry_ct = 0;
     int block_ct = 0;
-    string entry;
-
+    std::string entry;
+    
     while(inFile >> entry) {
-        if (entry == "0") {}
-        else {
+        if (entry != "0") {
             Block * block;
-
-            if (entry.substr(0, 2) == "10") {block = new BlockNormal(entry_ct % 9, 8 - (entry_ct / 9));}
-            else if (entry.substr(0, 2) == to_string(ID_U_DIR)) {block = new BlockDirectional(entry_ct % 9, 8 - (entry_ct / 9), 0);}
-            else if (entry.substr(0, 2) == to_string(ID_R_DIR)) {block = new BlockDirectional(entry_ct % 9, 8 - (entry_ct / 9), 1);}
-            else if (entry.substr(0, 2) == to_string(ID_D_DIR)) {block = new BlockDirectional(entry_ct % 9, 8 - (entry_ct / 9), 2);}
-            else if (entry.substr(0, 2) == to_string(ID_L_DIR)) {block = new BlockDirectional(entry_ct % 9, 8 - (entry_ct / 9), 3);}
-            else if (entry.substr(0, 2) == to_string(ID_ROTATE_0)) {block= new BlockRotating(entry_ct % 9, 8 - (entry_ct / 9));}
-            else {
-                cout << "Invalid block at " << entry_ct%9 << ", " << entry_ct/9 << endl;
-                break;
+            
+            int x = entry_ct%9;
+            int y = 8-(entry_ct/9);
+            
+            int direction = 0;
+            switch (std::stoi(entry.substr(0, 2))) {
+                case 10:
+                    block = new BlockNormal(x, y);
+                    break;
+                case ID_L_DIR: direction++;
+                case ID_D_DIR: direction++;
+                case ID_R_DIR: direction++;
+                case ID_U_DIR:
+                    block = new BlockDirectional(x, y, direction);
+                    break;
+                case ID_ROTATE_0:
+                    block = new BlockRotating(x, y);
+                    break;
+                default:
+                    std::cout << "Invalid block at " << x << ", " << entry_ct/9 << std::endl;
             }
-
+            
             if (entry.substr(3, 1) == "1") {block->set_tab('u', true);}
             if (entry.substr(4, 1) == "1") {block->set_tab('r', true);}
             if (entry.substr(5, 1) == "1") {block->set_tab('d', true);}
             if (entry.substr(6, 1) == "1") {block->set_tab('l', true);}
-
-            block->set_move_restriction(stoi(entry.substr(8, 2)));
-
+            
+            block->set_move_restriction(std::stoi(entry.substr(8, 2)));
+            
             board->add_block(block);
         }
-        entry_ct ++;
+        entry_ct++;
     }
-
-    cout << "Level loaded from " << filepath << endl << endl;
+    
+    std::cout << "Level loaded from " << filepath << std::endl << std::endl;
     inFile.close();
     return board;
 }
