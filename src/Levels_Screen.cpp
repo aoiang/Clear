@@ -45,7 +45,6 @@ bool Levels_Screen :: check_clicked(sf::Vector2f mousePos, int selected_level, s
     {
         level[selected_level-1].setFillColor(sf::Color::Red);
         draw((window));
-        //window.draw(desired_option);
         window.display();
         return true;
     }
@@ -54,9 +53,6 @@ bool Levels_Screen :: check_clicked(sf::Vector2f mousePos, int selected_level, s
 
 }
 
-BoardState* Levels_Screen::get_Board() {
-    return this->board;
-}
 
 
 int *Levels_Screen :: run(sf::RenderWindow &window)

@@ -356,7 +356,7 @@ int *GameView_Screen::run(sf::RenderWindow &window) {
     logic->set_BoardState(*board);
     init();
     int *re = new int[2];
-    re[0] = 0;
+    re[0] = 1;
     re[1] = 0;
 
 

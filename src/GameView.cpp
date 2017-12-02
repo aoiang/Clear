@@ -17,7 +17,6 @@ int GameView::run(GameLogic logic)
     int *curr_screen = new int[2];
     curr_screen[0] = 0;
     curr_screen[1] = 0;
-    int level = 0;
 
 
 
@@ -29,10 +28,10 @@ int GameView::run(GameLogic logic)
     screens.push_back(&screen3);
 
 
-    while(curr_screen[0] >=0)
+    while(curr_screen[0] >=0 )
     {
         current_state = GameView::loadlevel(curr_screen[1]);
-        //printf("xxxxxxxxxx!!!!!! level is %d\n", curr_screen);
+        //printf("xxxxxxxxxx!!!!!! level is %d\n", curr_screen[0]);
         screen2.set_board(current_state);
         curr_screen = screens[curr_screen[0]]->run(App);
 
