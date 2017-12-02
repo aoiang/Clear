@@ -1,11 +1,15 @@
 #include "Title_Animation.hpp"
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 /**Draws the clear animation at the start  */
 int Title_Animation :: draw_sprite(sf::RenderWindow &window)
 {
+    window.clear(sf::Color(40,140,240));
+
     int count=0;
     sf::Clock clock;
+    sf::Event event;
 
     sf::IntRect rectSource(0,0,396,134);
     sf::Texture titleSequence;
@@ -19,10 +23,11 @@ int Title_Animation :: draw_sprite(sf::RenderWindow &window)
     {
         window.draw(sprite);
         window.display();
-        if(rectSource.top==0 && rectSource.left ==0)
-            {
-                sleep(sf::seconds(0.5));
-            }
+
+        while (window.pollEvent(event)) {
+            if(event.type == sf::Event::Closed) {return -1;}
+            if(event.type == sf::Event::KeyPressed) {return 1;}
+        }
         if(clock.getElapsedTime().asSeconds()>0.1f && count<18)
             {
                 if(rectSource.left == 392)
@@ -44,8 +49,12 @@ int Title_Animation :: draw_sprite(sf::RenderWindow &window)
 /**draws/fades in the tagline */
 int Title_Animation :: draw_tagline(sf::RenderWindow &window)
 {
+    window.clear(sf::Color(40,140,240));
+
     int fontSize = 50;
     int count = 0;
+    sf:: Event event;
+    window.pollEvent(event);
 
     sf::FloatRect textbox;
     sf::Clock clock;
@@ -59,16 +68,20 @@ int Title_Animation :: draw_tagline(sf::RenderWindow &window)
     tagline.setFillColor(sf::Color(255,255,255, 34));
     while(count!=15)
     {
-        if(clock.getElapsedTime().asSeconds()>0.25f && count<15) //&& count<18)
-            {
-                int hue = count*17;
-                tagline.setFillColor(sf::Color(255,255,255,hue));
-                clock.restart();
-                count++;
-                window.draw(tagline);
-                window.display();
-            }
+        while (window.pollEvent(event)) {
+            if(event.type == sf::Event::Closed) {return -1;}
+            if(event.type == sf::Event::KeyPressed) {return 1;}
+        }
 
+        if(clock.getElapsedTime().asSeconds()>0.25f && count<15) //&& count<18)
+        {
+            int hue = count*17;
+            tagline.setFillColor(sf::Color(255,255,255,hue));
+            clock.restart();
+            count++;
+            window.draw(tagline);
+            window.display();
+        }
     }
     return 1;
 }
@@ -81,23 +94,13 @@ int *Title_Animation :: run(sf::RenderWindow &window, int curr_level)
     re[1] = curr_level;
     sf:: Event Event;
     bool running = true;
-    while(running)
+    while (running)
     {
-
-        while (window.pollEvent(Event))
-        {
-            if(Event.type == sf::Event::Closed)
-            {
-                    running = false;
-                    re[0] = -1;
-                    return re;
-            }
-
+        if (draw_sprite(window) == -1) {
+            re[0] = -1;
+            return re;
         }
-        window.clear(sf::Color(40,140,240));
-        draw_sprite(window);
         int next_screen = draw_tagline(window);
-        window.display();
         re[0] = next_screen;
         return re;
     }
