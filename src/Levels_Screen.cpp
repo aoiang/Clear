@@ -64,7 +64,7 @@ int *Levels_Screen :: run(sf::RenderWindow &window)
     re[0] = 0;
     re[1] = 0;
 
-    this->board = BoardStateLoader::loadBoardState(LEVEL_01);
+    this->board = new BoardState(LEVEL_01);
     while(running)
     {
 
@@ -98,7 +98,7 @@ int *Levels_Screen :: run(sf::RenderWindow &window)
 
             if (Levels_Screen::check_clicked(mousePosition, 1, window))
             {
-                this->board = BoardStateLoader::loadBoardState(LEVEL_TEST);
+                this->board = new BoardState(LEVEL_TEST);
                 re[0] = 2;
                 re[1] = 1;
                 return re;
@@ -106,7 +106,7 @@ int *Levels_Screen :: run(sf::RenderWindow &window)
 
             if (Levels_Screen::check_clicked(mousePosition, 2, window))
             {
-                this->board = BoardStateLoader::loadBoardState(LEVEL_01);
+                this->board = new BoardState(LEVEL_01);
                 re[0] = 2;
                 re[1] = 2;
                 return re;
@@ -114,21 +114,21 @@ int *Levels_Screen :: run(sf::RenderWindow &window)
 
             if (Levels_Screen::check_clicked(mousePosition, 3, window))
             {
-                this->board = BoardStateLoader::loadBoardState(LEVEL_TEST);
+                this->board = new BoardState(LEVEL_TEST);
                 re[0] = 2;
                 re[1] = 3;
                 return re;
             }
 
             if (Levels_Screen::check_clicked(mousePosition, 4, window)) {
-                this->board = BoardStateLoader::loadBoardState(LEVEL_TEST);
+                this->board = new BoardState(LEVEL_TEST);
                 re[0] = 2;
                 re[1] = 4;
                 return re;
             }
             if (Levels_Screen::check_clicked(mousePosition, 5, window))
             {
-                this->board = BoardStateLoader::loadBoardState(LEVEL_01);
+                this->board = new BoardState(LEVEL_01);
                 re[0] = 2;
                 re[1] = 5;
                 return re;
@@ -136,7 +136,7 @@ int *Levels_Screen :: run(sf::RenderWindow &window)
 
             if (Levels_Screen::check_clicked(mousePosition, 6, window))
             {
-                this->board = BoardStateLoader::loadBoardState(LEVEL_TEST);
+                this->board = new BoardState(LEVEL_TEST);
                 re[0] = 2;
                 re[1] = 6;
                 return re;

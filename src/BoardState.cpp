@@ -1,19 +1,86 @@
 #include "BoardState.hpp"
-#include "Block.hpp"
-#include <iostream>
+#include "BlockNormal.hpp"
+#include "BlockDirectional.hpp"
+#include "BlockRotating.hpp"
+#include <fstream>
 
 /**
   Sets board dimensions
   @param w for width
   @param h for height
 */
-void BoardState::init(int w, int h) {
+BoardState::BoardState(int w, int h) {
     this->width = w;
     this->height = h;
 }
 
 /**Initializes board*/
-void BoardState::init() {init(default_width, default_height);}
+BoardState::BoardState() {
+    this->width = default_width;
+    this->height = default_height;
+}
+
+/**Loads board from a file*/
+BoardState::BoardState(std::string filepath) {
+    this->width = default_width;
+    this->height = default_height;
+
+    std::ifstream inFile;
+    inFile.open(filepath);
+
+    int entry_ct = 0;
+    int block_ct = 0;
+    std::string entry;
+
+    while(inFile >> entry) {
+        if (entry != "0") {
+            Block * block = nullptr;
+
+            int x = entry_ct%default_width;
+            int y = 8-(entry_ct/default_width);
+
+            int direction = 0;
+            switch (std::stoi(entry.substr(0, 2))) {
+                case 10:
+                    block = new BlockNormal(x, y);
+                    break;
+                case ID_L_DIR: direction++;
+                case ID_D_DIR: direction++;
+                case ID_R_DIR: direction++;
+                case ID_U_DIR:
+                    block = new BlockDirectional(x, y, direction);
+                    break;
+                case ID_ROTATE_0:
+                    block = new BlockRotating(x, y);
+                    break;
+                default: break;
+            }
+
+            if (entry.substr(3, 1) == "1") {block->set_tab('u', true);}
+            if (entry.substr(4, 1) == "1") {block->set_tab('r', true);}
+            if (entry.substr(5, 1) == "1") {block->set_tab('d', true);}
+            if (entry.substr(6, 1) == "1") {block->set_tab('l', true);}
+
+            block->set_move_restriction(std::stoi(entry.substr(8, 2)));
+
+            add_block(block);
+        }
+        entry_ct++;
+    }
+    std::cout << "Level loaded from " << filepath << std::endl;
+    inFile.close();
+}
+
+void BoardState::export_board(std::string filepath) {
+    //height, width, and all of the blocks in an array.
+    //first two are h and w, then every one after is a block; everything on its own line.
+}
+
+unsigned long BoardState::export_block(int x, int y) {
+    Block * block = get_block(x, y);
+    return 0;
+}
+
 
 /**@return board width*/
 int BoardState::get_board_width() {return width;}
@@ -22,13 +89,13 @@ int BoardState::get_board_width() {return width;}
 int BoardState::get_board_height() {return height;}
 
 /**Checks if x coordinate exists on the board*/
-int BoardState::is_valid_x(int x) {return x>=0 && x<get_board_width();}
+bool BoardState::is_valid_x(int x) {return x>=0 && x<get_board_width();}
 
 /**Checks if y coordinate exists on the board*/
-int BoardState::is_valid_y(int y) {return y>=0 && y<get_board_height();}
+bool BoardState::is_valid_y(int y) {return y>=0 && y<get_board_height();}
 
 /**Checks if x, y position exists on the board*/
-int BoardState::is_valid_location(int x, int y) {return is_valid_x(x) && is_valid_y(y);}
+bool BoardState::is_valid_location(int x, int y) {return is_valid_x(x) && is_valid_y(y);}
 
 /**
   Removes element from board

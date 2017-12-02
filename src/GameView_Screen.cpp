@@ -1,5 +1,5 @@
 #include "GameView_Screen.hpp"
-#include "BoardStateLoader.hpp"
+#include "BoardState.hpp"
 #include <iostream>
 
 /**Create the game window*/
@@ -383,7 +383,7 @@ int *GameView_Screen::run(sf::RenderWindow &window) {
         if (logic->get_is_clear()) {
             time_since_completion += draw_clock.getElapsedTime().asMicroseconds();
             if (time_since_completion > 750000) {
-                BoardState * board = BoardStateLoader::loadBoardState(LEVEL_TEST);
+                BoardState * board = new BoardState(LEVEL_TEST);
                 logic->set_BoardState(*board);
                 init();
                 time_since_completion = 0;

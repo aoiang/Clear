@@ -5,7 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "Screen_Abstract.hpp"
-#include "BoardStateLoader.hpp"
+#include "BoardState.hpp"
 
 class MainMenu_Screen : public Screen_Abstract
 {
@@ -17,13 +17,13 @@ class MainMenu_Screen : public Screen_Abstract
         sf::FloatRect  item_0_box;
         sf::FloatRect  item_1_box;
         sf::FloatRect  item_2_box;
-        BoardState * board = BoardStateLoader::loadBoardState(LEVEL_01);
+        BoardState * board = new BoardState(LEVEL_01);
     public:
         void draw(sf::RenderWindow &window);
         bool check_clicked(sf::Vector2f mousePos, sf::Text desired_option, sf::RenderWindow &window);
         int getSelectedOption(sf::RenderWindow &window);
         int *run(sf::RenderWindow &window);
-        BoardState* get_Board();
+
 };
 
 #endif //CLEAR_MAINMENU_SCREEN_HPP

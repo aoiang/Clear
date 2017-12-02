@@ -89,9 +89,7 @@ int MainMenu_Screen :: getSelectedOption(sf::RenderWindow &window)
 
 }
 
-BoardState* MainMenu_Screen::get_Board() {
-    return this->board;
-}
+
 
 
 

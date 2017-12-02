@@ -11,13 +11,13 @@
 #include <string>
 #include "GameLogic.hpp"
 #include "GameView_Screen.hpp"
-#include "BoardStateLoader.hpp"
+#include "BoardState.hpp"
 
 class Levels_Screen : public GameView_Screen{
     private:
         sf::Text level[20];
         sf::FloatRect item_box[20];
-        BoardState * board = BoardStateLoader::loadBoardState(LEVEL_01);
+        BoardState * board = new BoardState(LEVEL_01);
 
 
     public:

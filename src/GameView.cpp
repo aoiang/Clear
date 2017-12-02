@@ -42,29 +42,29 @@ int GameView::run(GameLogic logic)
 BoardState* GameView::loadlevel(int level) {
     switch (level){
         case 0: {
-            return BoardStateLoader::loadBoardState(LEVEL_01);
+            return new BoardState(LEVEL_01);
         }
         case 1: {
-            return BoardStateLoader::loadBoardState(LEVEL_01);
+            return new BoardState(LEVEL_01);
         }
         case 2: {
-            return BoardStateLoader::loadBoardState(LEVEL_TEST);
+            return new BoardState(LEVEL_02);
 
         }
         case 3: {
-            return BoardStateLoader::loadBoardState(LEVEL_01);
+            return new BoardState(LEVEL_01);
 
         }
         case 4: {
-             return BoardStateLoader::loadBoardState(LEVEL_TEST);
+             return new BoardState(LEVEL_TEST);
 
         }
         case 5: {
-            return BoardStateLoader::loadBoardState(LEVEL_01);
+            return new BoardState(LEVEL_01);
 
         }
         case 6: {
-            return BoardStateLoader::loadBoardState(LEVEL_TEST);
+            return new BoardState(LEVEL_TEST);
 
         }
         default:break;

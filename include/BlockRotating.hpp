@@ -7,10 +7,6 @@
 class BlockRotating :public Block {
     public:
         BlockRotating(int, int);
-        void init();
-        void rotate();
-        bool get_combine();
-        void set_combine(bool);
 };
 
 #endif //CLEAR_BLOCKROTATING_HPP
