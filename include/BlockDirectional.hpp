@@ -6,9 +6,8 @@
 class BlockDirectional :public Block {
     public:
         BlockDirectional(int, int, int);
-        void rotate();
-        bool type_allows_movement(char);
-        char get_direction();
+        const static int base_id = ID_U_DIR;
+        bool type_allows_movement(char) override;
 };
 
 #endif //CLEAR_BLOCKDIRECTIONAL_HPP

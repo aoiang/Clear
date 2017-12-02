@@ -1,10 +1,11 @@
 #include "Block.hpp"
 
-int x, y, id;
-bool can_combine;
 
 /**Sets block id*/
-void Block::set_id(int id) {this->id = id;}
+void Block::set_id() {
+    id = base_id;
+    if (rotation_changes_id) {id += get_rotation();}
+}
 
 /**Sets whether or not a block can combine*/
 void Block::set_combine(bool can_combine) {this->can_combine = can_combine;}
@@ -47,10 +48,10 @@ bool Block::get_tab(char dir) {
 
 /**Sets all tabs to 0*/
 void Block::init_tabs() {
-    set_tab('u', 0);
-    set_tab('r', 0);
-    set_tab('d', 0);
-    set_tab('l', 0);
+    set_tab('u', false);
+    set_tab('r', false);
+    set_tab('d', false);
+    set_tab('l', false);
 }
 
 /**@return can_combine*/
@@ -70,11 +71,12 @@ void Block::set_move_restriction(int steps) {move_restriction = steps;}
 int Block::get_rotation() {return rotation;}
 
 /**Rotates the block and its tabs clockwise*/
-void Block::rotate_clockwise() {
+void Block::rotate() {
     rotation = (rotation+1)%4;
-    int tmp = tabs[3];
+    bool tmp = tabs[3];
     for (int i=3; i>0; i--) {tabs[i] = tabs[i-1];}
     tabs[0] = tmp;
+    set_id();
 }
 
 /**Resets rotation to 0*/
@@ -82,3 +84,21 @@ void Block::reset_rotation() {rotation = 0;}
 
 /**@return number of moves before this can be removed*/
 int Block::get_move_restriction() {return move_restriction;}
+
+
+/**@return the direction of the block*/
+char Block::get_direction() {return directions[get_rotation()];}
+
+
+void Block::basic_init(int x, int y) {
+    set_position(x, y);
+    set_combine(false);
+    reset_rotation();
+    set_id();
+    init_tabs();
+    set_move_restriction(0);
+}
+
+unsigned long Block::get_identity() {
+    //basic_id, get_rotation(), get_combine(), get_tab('u')(x4), get_move_restriction()(potentially high)
+}

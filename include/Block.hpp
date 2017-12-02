@@ -6,20 +6,23 @@
 static char directions[5] = "urdl";
 
 class Block {
-    protected:
-        int rotation = 0;
+    private:
+        const static int base_id = 0;
         int x;
         int y;
         int id;
+    protected:
+        int rotation = 0;
         bool can_combine;
         bool tabs[4];
         int move_restriction = 0;
-        void set_id(int id);
+        void set_id();
         void set_combine(bool can_combine);
         void set_position(int x, int y);
-        void rotate_clockwise();
+        void rotate();
         void reset_rotation();
     public:
+        bool rotation_changes_id = false;
         int get_id();
         int get_x();
         int get_y();
@@ -34,6 +37,8 @@ class Block {
         int get_move_restriction();
         int get_rotation();
         char get_direction();
+        void basic_init(int x, int y);
+        unsigned long get_identity();
 };
 
 #endif //CLEAR_BLOCK_HPP

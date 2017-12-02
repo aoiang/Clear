@@ -6,7 +6,7 @@
 class BlockNormal :public Block {
     public:
         BlockNormal(int, int);
-        bool type_allows_movement(char);
+        const static int base_id = ID_NORMAL;
 };
 
 #endif //CLEAR_BLOCKNORMAL_HPP
