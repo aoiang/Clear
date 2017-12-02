@@ -2,7 +2,7 @@
 // Created by Yiyang Zhao on 28/11/2017.
 //
 
-#include "Generator.h"
+#include "Generator.hpp"
 
 Generator::block_type Generator::init_block_type() {
     Generator::block_type block;
@@ -304,15 +304,14 @@ bool Generator::solver() {
                 if (y.exist==1) {current_total++;}
             }
         }
-
         if (current_total == total || current_total == 0) {
             printf("remaining %d blocks!!!\n", current_total);
             return current_total == 0;
         }
     }
-
 }
- bool Generator::move_block(int x, int y) {
+
+bool Generator::move_block(int x, int y) {
      bool blocked;
      if (copy[x][y].exist == 1) {
          if (copy[x][y].direction != 0) {

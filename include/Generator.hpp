@@ -11,7 +11,7 @@ class Generator {
         int block_num;
         int w;
         int h;
-        int random_list[100];
+        int random_list[81];
         struct block_type{
             int exist;
             int direction;
@@ -23,10 +23,17 @@ class Generator {
     public:
         void init_random_list();
         block_type block_type_generator();
-        block_type board[10][10];
+        block_type board[9][9];
+        block_type copy[9][9];
         void board_generator(int centers);
         block_type init_block_type();
-        bool solver(block_type boa[100][100]);
+        bool try_rotate(int x, int y);
+        bool solver();
+        bool move_block(int x, int y);
+        bool move_up(int x, int y);
+        bool move_down(int x, int y);
+        bool move_left(int x, int y);
+        bool move_right(int x, int y);
 };
 
 #endif //CLEAR_GENERATOR_HPP
