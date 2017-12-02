@@ -25,6 +25,7 @@ class GameView_Screen : public Screen_Abstract {
         sf::RectangleShape * tab_shapes;
         sf::RectangleShape * double_tab_shapes;
         GameLogic * logic;
+        BoardState * board;
         float ** animation_ms;
         char ** animation_dir;
         int default_window_width = 600;
@@ -65,6 +66,7 @@ class GameView_Screen : public Screen_Abstract {
         int run(sf::RenderWindow &window);
         void check_mouse_input();
         void check_keyboard_input();
+        void set_board(BoardState *board);
 };
 
 #endif //CLEAR_GAMEVIEW_HPP
