@@ -15,6 +15,7 @@ int GameView::run(GameLogic logic)
     Levels_Screen screen3;
     std::vector<Screen_Abstract*> screens;
     int *curr_screen = new int[2];
+    int level_keeper = 0;
     curr_screen[0] = 0;
     curr_screen[1] = 0;
 
@@ -30,44 +31,20 @@ int GameView::run(GameLogic logic)
 
     while(curr_screen[0] >=0 )
     {
-        current_state = GameView::loadlevel(curr_screen[1]);
-        //printf("xxxxxxxxxx!!!!!! level is %d\n", curr_screen[0]);
+        if (curr_screen[1] < 99){
+            level_keeper = curr_screen[1];
+        }
+        printf("current level is %d\n", level_keeper);
+        current_state = GameView::loadlevel(level_keeper);
         screen2.set_board(current_state);
-        curr_screen = screens[curr_screen[0]]->run(App);
+        curr_screen = screens[curr_screen[0]]->run(App, level_keeper);
 
     }
 }
 
 
 BoardState* GameView::loadlevel(int level) {
-    switch (level){
-        case 0: {
-            return new BoardState(LEVEL_01);
-        }
-        case 1: {
-            return new BoardState(LEVEL_01);
-        }
-        case 2: {
-            return new BoardState(LEVEL_02);
-
-        }
-        case 3: {
-            return new BoardState(LEVEL_01);
-
-        }
-        case 4: {
-             return new BoardState(LEVEL_TEST);
-
-        }
-        case 5: {
-            return new BoardState(LEVEL_01);
-
-        }
-        case 6: {
-            return new BoardState(LEVEL_TEST);
-
-        }
-        default:break;
-    }
+    std::string levels[13] = {LEVEL_01, LEVEL_02, LEVEL_03, LEVEL_04, LEVEL_05, LEVEL_TEST};
+    return new BoardState(levels[level-1]);
 
 }

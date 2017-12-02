@@ -74,7 +74,7 @@ int Title_Animation :: draw_tagline(sf::RenderWindow &window)
 }
 
 /**runs the opening screen */
-int *Title_Animation :: run(sf::RenderWindow &window)
+int *Title_Animation :: run(sf::RenderWindow &window, int curr_level)
 {
     int *re = new int[2];
     re[0] = 0;

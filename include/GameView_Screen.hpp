@@ -38,6 +38,8 @@ class GameView_Screen : public Screen_Abstract {
         int mouse_x_start;
         int mouse_y_start;
         int deadzone = 10;
+        std::string levels[13] = {LEVEL_01, LEVEL_02, LEVEL_03, LEVEL_04, LEVEL_05, LEVEL_TEST};
+
     public:
         int block_size = 50;
         sf::RenderWindow get_App();
@@ -63,7 +65,7 @@ class GameView_Screen : public Screen_Abstract {
         int BoardYToYPixel(int y);
         int XPixelToBoardX(int x);
         int YPixelToBoardY(int y);
-        int *run(sf::RenderWindow &window);
+        int *run(sf::RenderWindow &window, int curr_level);
         void check_mouse_input();
         void check_keyboard_input();
         void set_board(BoardState* board);

@@ -55,7 +55,7 @@ bool Levels_Screen :: check_clicked(sf::Vector2f mousePos, int selected_level, s
 
 
 
-int *Levels_Screen :: run(sf::RenderWindow &window)
+int *Levels_Screen :: run(sf::RenderWindow &window, int curr_level)
 
 {
     sf:: Event Event;

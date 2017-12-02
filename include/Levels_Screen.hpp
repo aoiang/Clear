@@ -23,7 +23,7 @@ class Levels_Screen : public GameView_Screen{
     public:
         void draw(sf::RenderWindow &window);
         bool check_clicked(sf::Vector2f mousePos, int selected_level, sf::RenderWindow &window);
-        int *run(sf::RenderWindow &window);
+        int *run(sf::RenderWindow &window, int curr_level);
         BoardState* get_Board();
 
 

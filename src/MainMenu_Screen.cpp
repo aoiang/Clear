@@ -34,11 +34,11 @@ void MainMenu_Screen:: draw(sf::RenderWindow &window)
     item_0_box = menuItem_0->getGlobalBounds();
 
 
-    sf::Text menuItem_1(MAINMENUITEM_1, font, fontSize);
+    this->menuItem_1= new sf::Text(MAINMENUITEM_1, font, fontSize);
     //sf::FloatRect item_1_box;
-    item_1_box = menuItem_1.getGlobalBounds();
-    menuItem_1.setOrigin(item_1_box.width/2.0f,item_1_box.height/2.0f);
-    menuItem_1.setPosition(sf::Vector2f(window.getSize().x/2,(window.getSize().y/2)+50));
+    item_1_box = menuItem_1->getGlobalBounds();
+    menuItem_1->setOrigin(item_1_box.width/2.0f,item_1_box.height/2.0f);
+    menuItem_1->setPosition(sf::Vector2f(window.getSize().x/2,(window.getSize().y/2)+50));
 
 
     this->menuItem_2 = new sf::Text(MAINMENUITEM_2, font, fontSize);
@@ -60,7 +60,7 @@ void MainMenu_Screen:: draw(sf::RenderWindow &window)
     menuItem_4.setPosition(sf::Vector2f(window.getSize().x/2,(window.getSize().y/2)+200));
 
     window.draw(*(menuItem_0));
-    window.draw(menuItem_1);
+    window.draw(*(menuItem_1));
     window.draw(*(menuItem_2));
     window.draw(menuItem_3);
     window.draw(menuItem_4);
@@ -93,7 +93,7 @@ int MainMenu_Screen :: getSelectedOption(sf::RenderWindow &window)
 
 
 
-int *MainMenu_Screen :: run(sf::RenderWindow &window)
+int *MainMenu_Screen :: run(sf::RenderWindow &window, int curr_level)
 
 
 {
@@ -130,6 +130,11 @@ int *MainMenu_Screen :: run(sf::RenderWindow &window)
             if (check_clicked(mousePosition, *menuItem_0, window)) {
                 re[0] = 2;
                 re[1] = 1;
+                return re;
+            }
+            if (check_clicked(mousePosition, *menuItem_1, window)) {
+                re[0] = 2;
+                re[1] = 99;
                 return re;
             }
             if (check_clicked(mousePosition, *menuItem_2, window)) {
