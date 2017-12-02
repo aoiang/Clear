@@ -10,6 +10,7 @@ class Block {
         int x;
         int y;
         int id;
+        char bool_to_char(bool boolean);
     protected:
         int base_id = 0;
         int simple_id = 0;

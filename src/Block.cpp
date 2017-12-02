@@ -99,6 +99,11 @@ void Block::basic_init(int x, int y) {
     set_move_restriction(0);
 }
 
+char Block::bool_to_char(bool boolean) {
+    if (boolean) {return 't';}
+    else {return 'f';}
+}
+
 std::string Block::get_identity() {
     //simple_id, get_rotation(), get_combine(), get_tab('u')(x4), get_move_restriction()(potentially high)
 }
