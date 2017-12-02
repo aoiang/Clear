@@ -1,9 +1,8 @@
 #include "Title_Animation.hpp"
-#include <SFML/Graphics.hpp>
 
 /**Draws the clear animation at the start  */
 int Title_Animation::draw_sprite(sf::RenderWindow &window) {
-    sf:: Event Event;
+    sf:: Event Event{};
     window.clear(sf::Color(40,140,240));
 
     int count=0;
@@ -43,7 +42,7 @@ int Title_Animation::draw_sprite(sf::RenderWindow &window) {
 
 /**draws/fades in the tagline */
 int Title_Animation::draw_tagline(sf::RenderWindow &window) {
-    sf:: Event Event;
+    sf:: Event Event{};
     window.clear(sf::Color(40,140,240));
 
     int fontSize = 50;
@@ -78,12 +77,10 @@ int Title_Animation::draw_tagline(sf::RenderWindow &window) {
 
 /**runs the opening screen */
 int Title_Animation::run(sf::RenderWindow &window) {
-    sf:: Event Event;
-    bool running = true;
-    while (running) {
+    sf:: Event Event{};
+    while (true) {
         while (window.pollEvent(Event)) {
             if (Event.type == sf::Event::Closed) {
-                running = false;
                 return -1;
             }
         }
@@ -92,5 +89,4 @@ int Title_Animation::run(sf::RenderWindow &window) {
         window.display();
         return next_screen;
     }
-    return 1;
 }

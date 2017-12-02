@@ -101,19 +101,19 @@ bool GameLogic::can_move_block(Block * block, char direction) {
     bool type_allows_movement;
     switch (block->get_id()) {
         case ID_NORMAL:
-            type_allows_movement = static_cast<BlockNormal*>(block)->type_allows_movement(direction);
+            type_allows_movement = dynamic_cast<BlockNormal*>(block)->type_allows_movement(direction);
             break;
         case ID_U_DIR:
         case ID_R_DIR:
         case ID_D_DIR:
         case ID_L_DIR:
-            type_allows_movement = static_cast<BlockDirectional*>(block)->type_allows_movement(direction);
+            type_allows_movement = dynamic_cast<BlockDirectional*>(block)->type_allows_movement(direction);
             break;
         case ID_ROTATE_0:
         case ID_ROTATE_1:
         case ID_ROTATE_2:
         case ID_ROTATE_3:
-            type_allows_movement = static_cast<BlockRotating*>(block)->type_allows_movement(direction);
+            type_allows_movement = dynamic_cast<BlockRotating*>(block)->type_allows_movement(direction);
             break;
         default:break;
     }
@@ -152,14 +152,15 @@ bool GameLogic::tap_selected() {
             case ID_ROTATE_0:
             case ID_ROTATE_1:
             case ID_ROTATE_2:
-            case ID_ROTATE_3:
-                BlockRotating * casted_block = static_cast<BlockRotating*>(block);
+            case ID_ROTATE_3: {
+                auto * casted_block = dynamic_cast<BlockRotating*>(block);
                 if (!casted_block->is_move_restricted(get_blocks_removed_ct())) {
                     casted_block->rotate();
                     std::cout << "Rotated block at " << selected_x << ", " << selected_y << "\n";
                     return true;
                 };
-            default:break;
+            }
+            default: break;
         }
     }
     return false;

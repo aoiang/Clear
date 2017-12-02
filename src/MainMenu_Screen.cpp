@@ -1,13 +1,9 @@
 #include "MainMenu_Screen.hpp"
-#include "Title_Animation.hpp"
-#include <iostream>
-#include <SFML/System.hpp>
-#include <SFML/Graphics.hpp>
 
 
 
 void MainMenu_Screen::draw(sf::RenderWindow &window) {
-    int fontSize = 50;
+    unsigned int fontSize = 50;
     sf::Font font;
     font.loadFromFile(REGULARFONT_FILEPATH);
     if (!font.loadFromFile(REGULARFONT_FILEPATH)) {
@@ -62,30 +58,24 @@ bool MainMenu_Screen::check_clicked(sf::Vector2f mousePos, sf::Text desired_opti
 int MainMenu_Screen::getSelectedOption(sf::RenderWindow &window) {
     sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
     /*
-    item_0_box = 
+    //item_0_box = ;
     sf::Vector2f mpFloat = static_cast<sf::FloatRect>((mousePosition));
     sf::Vector2f worldPos = window.mapPixelToCoords(mousePosition);
     sf::Vector2f pixlePosition = mousePosition.mapCoordsToPixel(static_cast<sf::FloatRect>(sf::Mouse::getPosition(window)));
     if (item_0_box.top < mousePosition.y
-    && (item_0_box->top + item_0_box->height) > mousePosition.y
-    && item_0_box->left < mousePosition.x
-    && (item_0_box->left + item_0_box->width) > mousePosition.x) {return 2;}
+    && (item_0_box.top + item_0_box.height) > mousePosition.y
+    && item_0_box.left < mousePosition.x
+    && (item_0_box.left + item_0_box.width) > mousePosition.x) {return 2;}
     else {return -1;}
     */
 }
 
 int MainMenu_Screen::run(sf::RenderWindow &window) {
-    sf:: Event Event;
-    bool running = true;
-
-    while (running) {
+    sf:: Event Event{};
+    while (true) {
         while (window.pollEvent(Event)) {
-            if (Event.type == sf::Event::Closed) {
-                running = false;
-                return -1;
-            }
-            //return 2;
-            if(Event.type == sf::Event::KeyPressed) {
+            if (Event.type == sf::Event::Closed) {return -1;}
+            if (Event.type == sf::Event::KeyPressed) {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {return 2;}
             }
         }
@@ -97,5 +87,4 @@ int MainMenu_Screen::run(sf::RenderWindow &window) {
         draw(window);
         window.display();
     }
-    return 1;
 }
