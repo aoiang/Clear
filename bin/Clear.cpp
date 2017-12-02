@@ -6,7 +6,6 @@
 #include <SFML/Graphics.hpp>
 #include "GameLogic.hpp"
 #include "GameView.hpp"
-#include "GameStateLoader.hpp"
 
 int main(int argc, char** argv) {
     auto * board = new BoardState(LEVEL_01);

@@ -78,7 +78,7 @@ void BoardState::export_board(std::string filepath) {
 
 unsigned long BoardState::export_block(int x, int y) {
     Block * block = get_block(x, y);
-    return nullptr;
+    return 0;
 }
 
 

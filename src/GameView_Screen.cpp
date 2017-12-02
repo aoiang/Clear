@@ -1,6 +1,4 @@
 #include "GameView_Screen.hpp"
-#include "GameStateLoader.hpp"
-#include <iostream>
 
 /**Create the game window*/
 GameView_Screen::GameView_Screen() = default;
