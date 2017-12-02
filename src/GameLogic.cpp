@@ -1,4 +1,4 @@
-#include "GameLogic.hpp"
+#include "GameLogic.hpp" 
 
 /**Sets BoardState*/
 void GameLogic::set_BoardState(BoardState &board) {this->board = &board;}
@@ -43,16 +43,16 @@ bool GameLogic::tabs_impede(Block * block, char direction) {
     int y = block->get_y();
     
     switch (direction) {
-        case 'u': case 'd':
-            return block->get_tab('l') && block_exists(x-1, y)
-                || block->get_tab('r') && block_exists(x+1, y)
-                || block_exists(x-1, y) && get_block(x-1, y)->get_tab('r')
-                || block_exists(x+1, y) && get_block(x+1, y)->get_tab('l');
-        case 'l': case 'r':
-            return block->get_tab('u') && block_exists(x, y+1)
-                || block->get_tab('d') && block_exists(x, y-1)
-                || block_exists(x, y+1) && get_block(x, y+1)->get_tab('d')
-                || block_exists(x, y-1) && get_block(x, y-1)->get_tab('u');
+        case U_DIR: case D_DIR:
+            return block->get_tab(L_DIR) && block_exists(x-1, y)
+                || block->get_tab(R_DIR) && block_exists(x+1, y)
+                || block_exists(x-1, y) && get_block(x-1, y)->get_tab(R_DIR)
+                || block_exists(x+1, y) && get_block(x+1, y)->get_tab(L_DIR);
+        case L_DIR: case R_DIR:
+            return block->get_tab(U_DIR) && block_exists(x, y+1)
+                || block->get_tab(D_DIR) && block_exists(x, y-1)
+                || block_exists(x, y+1) && get_block(x, y+1)->get_tab(D_DIR)
+                || block_exists(x, y-1) && get_block(x, y-1)->get_tab(U_DIR);
         default:break;
     }
 }
@@ -63,19 +63,19 @@ bool GameLogic::path_blocked(Block * block, char direction) {
     int y = block->get_y();
     
     switch (direction) {
-        case 'u':
+        case U_DIR:
             for (int y2 = y+1; y2<get_board_height(); y2++) {
                 if (block_exists(x, y2)) {return true;}
             } break;
-        case 'r':
+        case R_DIR:
             for (int x2 = x+1; x2<get_board_width(); x2++) {
                 if (block_exists(x2, y)) {return true;}
             } break;
-        case 'd':
+        case D_DIR:
             for (int y2 = y-1; y2>=0; y2--) {
                 if (block_exists(x, y2)) {return true;}
             } break;
-        case 'l':
+        case L_DIR:
             for (int x2 = x-1; x2>=0; x2--) {
                 if (block_exists(x2, y)) {return true;}
             } break;
@@ -90,6 +90,7 @@ bool GameLogic::path_blocked(int x, int y, char direction) {
 }
 
 /**Removes block at index x,y*/
+//TODO remove hard coded string
 void GameLogic::remove_block(int x, int y) {
     std::cout << "Removed block at " << x << ", " << y << "\n";
     board->remove_block(x, y);
@@ -125,7 +126,7 @@ bool GameLogic::can_move_block(Block * block, char direction) {
 
 /**Determines if a block can be removed in any way*/
 bool GameLogic::can_be_removed(Block * block) {
-    return can_move_block(block, 'u') || can_move_block(block, 'd') || can_move_block(block, 'l') || can_move_block(block, 'r');
+    return can_move_block(block, U_DIR) || can_move_block(block, D_DIR) || can_move_block(block, L_DIR) || can_move_block(block, R_DIR);
 }
 
 /**Determines if block can be moved*/
@@ -145,6 +146,7 @@ bool GameLogic::try_move(int x, int y, char direction) {
 }
 
 /**@return if a block is rotated on tap*/
+//TODO remove hard coded string
 bool GameLogic::tap_selected() {
     if (block_exists(selected_x, selected_y)) {
         Block * block = get_block(selected_x, selected_y);
