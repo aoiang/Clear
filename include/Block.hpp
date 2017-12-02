@@ -2,6 +2,7 @@
 #define CLEAR_BLOCK_HPP
 
 #include "Definitions.hpp"
+#include <iostream>
 
 static char directions[5] = "urdl";
 
