@@ -28,6 +28,7 @@ sf::RectangleShape GameView_Screen::make_alpha_rectangle_shape(int width, int he
 /**Load textures from files*/
 void GameView_Screen::load_texture(int texture_index) {
     texture[texture_index].loadFromFile(texture_filepaths[texture_index]);
+    texture[texture_index].setSmooth(true);
 }
 
 /**Loads all textures*/
@@ -350,7 +351,6 @@ int *GameView_Screen::run(sf::RenderWindow &window, int curr_level) {
     BoardState * board = new BoardState(levels[re[1]-1]);
     logic->set_BoardState(*board);
     init();
-
     int time_since_completion = 0;
 
     sf:: Event Event;

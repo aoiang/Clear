@@ -108,17 +108,6 @@ int *MainMenu_Screen :: run(sf::RenderWindow &window, int curr_level)
                     re[0] = -1;
                     return re;
             }
-
-           // return 2;
-
-            if(Event.type == sf::Event::KeyPressed)
-            {
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-                    re[0] = 2;
-                    return re;
-            }
-
-
         }
         if(sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
             sf::Vector2f mousePosition = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
