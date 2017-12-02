@@ -42,7 +42,7 @@ int GameView::run(GameLogic logic)
     }
 }
 
-
+/**load level state from here */
 BoardState* GameView::loadlevel(int level) {
     std::string levels[13] = {LEVEL_01, LEVEL_02, LEVEL_03, LEVEL_04, LEVEL_05, LEVEL_TEST, LEVEL_06};
     return new BoardState(levels[level-1]);

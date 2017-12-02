@@ -6,6 +6,7 @@
 
 
 
+/**Draws main menu, five buttons (start, continue, levels, infinite mode, setting)*/
 void MainMenu_Screen:: draw(sf::RenderWindow &window)
 {
     unsigned int fontSize = 50;
@@ -67,6 +68,7 @@ void MainMenu_Screen:: draw(sf::RenderWindow &window)
     window.draw(title);
 }
 
+/**check when mouse is clicked*/
 bool MainMenu_Screen :: check_clicked(sf::Vector2f mousePos, sf::Text desired_option, sf::RenderWindow &window)
 {
     sf::FloatRect item_box = desired_option.getGlobalBounds();
@@ -83,16 +85,9 @@ bool MainMenu_Screen :: check_clicked(sf::Vector2f mousePos, sf::Text desired_op
     
 }
 
-int MainMenu_Screen :: getSelectedOption(sf::RenderWindow &window)
-{
-        sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
-
-}
 
 
-
-
-
+/**inialize all parameters and run the main menu screen*/
 int *MainMenu_Screen :: run(sf::RenderWindow &window, int curr_level)
 
 

@@ -6,7 +6,7 @@
 
 
 
-
+/**Draws each level, mark red to unaccessible level*/
 void Levels_Screen::draw(sf::RenderWindow &window)
 {
     unsigned int fontSize = 36;
@@ -41,6 +41,7 @@ void Levels_Screen::draw(sf::RenderWindow &window)
     window.draw(title);
 }
 
+/**check when mouse is clicked*/
 bool Levels_Screen :: check_clicked(sf::Vector2f mousePos, int selected_level, sf::RenderWindow &window)
 {
     sf::FloatRect item_box = level[selected_level-1].getGlobalBounds();
@@ -57,7 +58,7 @@ bool Levels_Screen :: check_clicked(sf::Vector2f mousePos, int selected_level, s
 }
 
 
-
+/**inialize all parameters & run the levels screen*/
 int *Levels_Screen :: run(sf::RenderWindow &window, int curr_level)
 
 {
@@ -114,8 +115,6 @@ int *Levels_Screen :: run(sf::RenderWindow &window, int curr_level)
 
 
         }
-
-
         window.clear(sf::Color(40,140,240));
         draw(window);
         window.display();
