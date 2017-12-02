@@ -24,6 +24,7 @@ class GameView_Screen : public Screen_Abstract {
         sf::RectangleShape * path_shapes;
         sf::RectangleShape * tab_shapes;
         GameLogic * logic;
+        BoardState * board;
         float ** animation_ms;
         char ** animation_dir;
         int default_window_width = 600;
@@ -34,6 +35,7 @@ class GameView_Screen : public Screen_Abstract {
         int mouse_x_start;
         int mouse_y_start;
         int deadzone = 10;
+         std::string levels[13] = {LEVEL_01, LEVEL_02, LEVEL_03, LEVEL_04, LEVEL_05, LEVEL_TEST};
     public:
         int block_size = 50;
         int tab_size = block_size/5;
@@ -59,8 +61,9 @@ class GameView_Screen : public Screen_Abstract {
         int PixelToBoard(int pixel_index, int board_axis_length, int screen_axis_length);
         int XPixelToBoardX(int x);
         int YPixelToBoardY(int y);
-        int run(sf::RenderWindow &window) override;
+        int *run(sf::RenderWindow &window, int curr_level);
         void check_mouse_input();
+        void set_board(BoardState* board);
         void check_keyboard_input();
 };
 

@@ -21,9 +21,11 @@
 
 #define GAME_TITLE "Clear"
 #define TAG_LINE "You Know What to Do."
-#define MAINMENUITEM_0 "Play"
-#define MAINMENUITEM_1 "Levels"
-#define MAINMENUITEM_2 "Settings"
+#define MAINMENUITEM_0 "Start"
+#define MAINMENUITEM_1 "Continue"
+#define MAINMENUITEM_2 "Levels"
+#define MAINMENUITEM_3 "Infinite Mode"
+#define MAINMENUITEM_4 "Settings"
 
 #define ID_NORMAL 10
 #define ID_U_DIR 20
@@ -35,6 +37,7 @@
 #define ID_ROTATE_2 32
 #define ID_ROTATE_3 33
 
+#define LEVELS 20
 #define LEVEL_TEST "../resources/levels/testlevel.txt"
 #define LEVEL_01 "../resources/levels/level01.txt"
 #define LEVEL_02 "../resources/levels/level02.txt"

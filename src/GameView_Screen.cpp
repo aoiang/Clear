@@ -191,7 +191,7 @@ void GameView_Screen::draw_selected_block() {
 
 /**Highlights path that the block will take*/
 void GameView_Screen::draw_path_highlighting() {
-    if (logic->selected_block_exists()) {
+    if (logic->selected_block_exists() && !logic->selected_block_is_move_restricted()) {
 
         int path_shape_i = 0;
         int x_pos = BoardXToXPixel(logic->get_selected_x());
@@ -339,22 +339,38 @@ void GameView_Screen::check_keyboard_input() {
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {logic->try_move_selected(R_DIR);}
 }
 
-int GameView_Screen::run(sf::RenderWindow &window) {
+void GameView_Screen::set_board(BoardState* board){
+    this->board = board;
+}
+
+int *GameView_Screen::run(sf::RenderWindow &window, int curr_level) {
     sf::Clock draw_clock;
     this->App = &window;
+    logic->set_BoardState(*board);
     init();
+    int *re = new int[2];
+    re[0] = 1;
+    re[1] = curr_level;
+
+
 
     int time_since_completion = 0;
 
-    sf:: Event Event{};
-    while (running) {
+    sf:: Event Event;
+    while(running) {
         while (window.pollEvent(Event)) {
-            if (Event.type == sf::Event::Closed) {
+            if(Event.type == sf::Event::Closed) {
                 running = false;
-                return -1;
+                re[0] = -1;
+
+                return re;
             }
-            if (Event.type == sf::Event::KeyPressed) {
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {return 1;}
+            if(Event.type == sf::Event::KeyPressed)
+            {
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+                    re[0] = 1;
+                    //printf("current level is %d\n",re[1]);
+                    return re;
             }
         }
 
@@ -362,7 +378,9 @@ int GameView_Screen::run(sf::RenderWindow &window) {
         if (logic->get_is_clear()) {
             time_since_completion += draw_clock.getElapsedTime().asMicroseconds();
             if (time_since_completion > 750000) {
-                auto * board = new BoardState(LEVEL_TEST);
+                re[1]++;
+                //printf("current level is %d\n",re[1]);
+                auto * board = new BoardState(levels[re[1]-1]);
                 logic->set_BoardState(*board);
                 init();
                 time_since_completion = 0;
@@ -373,4 +391,5 @@ int GameView_Screen::run(sf::RenderWindow &window) {
         check_keyboard_input();
         draw(draw_clock.restart().asMicroseconds());
     }
+    return re;
 }
