@@ -7,7 +7,7 @@
 
 
 
-void Levels_Screen::draw(sf::RenderWindow &window)
+void Levels_Screen::draw(sf::RenderWindow &window, int curr_level)
 {
     unsigned int fontSize = 36;
     sf::Font font;
@@ -32,19 +32,22 @@ void Levels_Screen::draw(sf::RenderWindow &window)
 
         level[i].setOrigin(item_box[i].width/3.0f, item_box[0].height/3.0f);
         level[i].setPosition(sf::Vector2f((window.getSize().x/6) + (i % 5) * 100, (window.getSize().y/3) + i / 5 * 100));
+        if(i >= curr_level){
+            level[i].setFillColor(sf::Color::Red);
+        }
         item_box[i] = level[i].getGlobalBounds();
         window.draw(level[i]);
     }
     window.draw(title);
 }
 
-bool Levels_Screen :: check_clicked(sf::Vector2f mousePos, int selected_level, sf::RenderWindow &window)
+bool Levels_Screen :: check_clicked(sf::Vector2f mousePos, int selected_level, sf::RenderWindow &window, int curr_level)
 {
     sf::FloatRect item_box = level[selected_level-1].getGlobalBounds();
     if(item_box.top < mousePos.y && (item_box.top + item_box.height) > mousePos.y && item_box.left < mousePos.x && (item_box.left + item_box.width) > mousePos.x)
     {
         level[selected_level-1].setFillColor(sf::Color::Red);
-        draw((window));
+        draw(window, curr_level);
         window.display();
         return true;
     }
@@ -62,7 +65,7 @@ int *Levels_Screen :: run(sf::RenderWindow &window, int curr_level)
     bool running = true;
     int *re = new int[2];
     re[0] = 0;
-    re[1] = 0;
+    re[1] = curr_level;
 
     this->board = new BoardState(LEVEL_01);
     while(running)
@@ -96,50 +99,14 @@ int *Levels_Screen :: run(sf::RenderWindow &window, int curr_level)
             sf::Vector2f mousePosition = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
 
 
-            if (Levels_Screen::check_clicked(mousePosition, 1, window))
-            {
-                this->board = new BoardState(LEVEL_TEST);
-                re[0] = 2;
-                re[1] = 1;
-                return re;
-            }
-
-            if (Levels_Screen::check_clicked(mousePosition, 2, window))
-            {
-                this->board = new BoardState(LEVEL_01);
-                re[0] = 2;
-                re[1] = 2;
-                return re;
-            }
-
-            if (Levels_Screen::check_clicked(mousePosition, 3, window))
-            {
-                this->board = new BoardState(LEVEL_TEST);
-                re[0] = 2;
-                re[1] = 3;
-                return re;
-            }
-
-            if (Levels_Screen::check_clicked(mousePosition, 4, window)) {
-                this->board = new BoardState(LEVEL_TEST);
-                re[0] = 2;
-                re[1] = 4;
-                return re;
-            }
-            if (Levels_Screen::check_clicked(mousePosition, 5, window))
-            {
-                this->board = new BoardState(LEVEL_01);
-                re[0] = 2;
-                re[1] = 5;
-                return re;
-            }
-
-            if (Levels_Screen::check_clicked(mousePosition, 6, window))
-            {
-                this->board = new BoardState(LEVEL_TEST);
-                re[0] = 2;
-                re[1] = 6;
-                return re;
+            for (int lv = 0; lv < 6; lv ++){
+                if (Levels_Screen::check_clicked(mousePosition, lv+1, window, curr_level) && level[lv].getFillColor() != sf::Color::Red)
+                {
+                    this->board = new BoardState(LEVEL_TEST);
+                    re[0] = 2;
+                    re[1] = lv+1;
+                    return re;
+                }
             }
 
 
@@ -147,7 +114,7 @@ int *Levels_Screen :: run(sf::RenderWindow &window, int curr_level)
 
 
         window.clear(sf::Color(40,140,240));
-        draw(window);
+        draw(window, curr_level);
         window.display();
 
     }

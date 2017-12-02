@@ -78,7 +78,7 @@ int *Title_Animation :: run(sf::RenderWindow &window, int curr_level)
 {
     int *re = new int[2];
     re[0] = 0;
-    re[1] = 0;
+    re[1] = curr_level;
     sf:: Event Event;
     bool running = true;
     while(running)

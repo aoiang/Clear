@@ -15,9 +15,9 @@ int GameView::run(GameLogic logic)
     Levels_Screen screen3;
     std::vector<Screen_Abstract*> screens;
     int *curr_screen = new int[2];
-    int level_keeper = 0;
+    int level_keeper = 1;
     curr_screen[0] = 0;
-    curr_screen[1] = 0;
+    curr_screen[1] = 1;
 
 
 

@@ -101,7 +101,7 @@ int *MainMenu_Screen :: run(sf::RenderWindow &window, int curr_level)
     bool running = true;
     int *re = new int[2];
     re[0] = 0;
-    re[1] = 0;
+    re[1] = curr_level;
 
     while(running)
     {
