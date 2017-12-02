@@ -15,10 +15,10 @@ class BoardState {
         Block * board[default_width][default_height] = {{nullptr}};
         int width;
         int height;
-        void init(int x, int y);
-
     public:
-        void init();
+        BoardState();
+        BoardState(int x, int y);
+        explicit BoardState(std::string filepath);
         int get_board_width();
         int get_board_height();
         bool is_valid_x(int x);
@@ -32,6 +32,8 @@ class BoardState {
         void add_wrong_move();
         int get_blocks_removed_ct();
         void print_board();
+        void export_board(std::string filepath);
+        unsigned long export_block(int x, int y);
 };
 
 #endif //CLEAR_BOARDSTATE_HPP

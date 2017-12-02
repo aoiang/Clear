@@ -6,10 +6,10 @@
 #include <SFML/Graphics.hpp>
 #include "GameLogic.hpp"
 #include "GameView.hpp"
-#include "BoardStateLoader.hpp"
+#include "GameStateLoader.hpp"
 
 int main(int argc, char** argv) {
-    BoardState * board = BoardStateLoader::loadBoardState(LEVEL_01);
+    auto * board = new BoardState(LEVEL_01);
     GameView view;
     GameLogic logic;
 
