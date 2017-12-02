@@ -345,16 +345,19 @@ void GameView_Screen::check_keyboard_input() {
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {logic->try_move_selected(R_DIR);}
 }
 
-void GameView_Screen::set_board(BoardState *board){
+void GameView_Screen::set_board(BoardState* board){
     this->board = board;
 }
 
 
-int GameView_Screen::run(sf::RenderWindow &window) {
+int *GameView_Screen::run(sf::RenderWindow &window) {
     sf::Clock draw_clock;
     this->App = &window;
     logic->set_BoardState(*board);
     init();
+    int *re = new int[2];
+    re[0] = 0;
+    re[1] = 0;
 
 
 
@@ -365,12 +368,14 @@ int GameView_Screen::run(sf::RenderWindow &window) {
         while (window.pollEvent(Event)) {
             if(Event.type == sf::Event::Closed) {
                 running = false;
-                return -1;
+                re[0] = -1;
+                return re;
             }
             if(Event.type == sf::Event::KeyPressed)
             {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-                    return 1;
+                    re[0] = 1;
+                    return re;
             }
         }
 
@@ -389,4 +394,5 @@ int GameView_Screen::run(sf::RenderWindow &window) {
         check_keyboard_input();
         draw(draw_clock.restart().asMicroseconds());
     }
+    return re;
 }

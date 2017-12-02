@@ -63,10 +63,10 @@ class GameView_Screen : public Screen_Abstract {
         int BoardYToYPixel(int y);
         int XPixelToBoardX(int x);
         int YPixelToBoardY(int y);
-        int run(sf::RenderWindow &window);
+        int *run(sf::RenderWindow &window);
         void check_mouse_input();
         void check_keyboard_input();
-        void set_board(BoardState *board);
+        void set_board(BoardState* board);
 };
 
 #endif //CLEAR_GAMEVIEW_HPP

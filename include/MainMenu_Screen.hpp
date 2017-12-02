@@ -17,12 +17,12 @@ class MainMenu_Screen : public Screen_Abstract
         sf::FloatRect  item_0_box;
         sf::FloatRect  item_1_box;
         sf::FloatRect  item_2_box;
-        BoardState * board;
+        BoardState * board = BoardStateLoader::loadBoardState(LEVEL_01);
     public:
         void draw(sf::RenderWindow &window);
         bool check_clicked(sf::Vector2f mousePos, sf::Text desired_option, sf::RenderWindow &window);
         int getSelectedOption(sf::RenderWindow &window);
-        int run(sf::RenderWindow &window);
+        int *run(sf::RenderWindow &window);
         BoardState* get_Board();
 };
 

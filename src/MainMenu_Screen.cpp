@@ -95,12 +95,15 @@ BoardState* MainMenu_Screen::get_Board() {
 
 
 
-int MainMenu_Screen :: run(sf::RenderWindow &window)
+int *MainMenu_Screen :: run(sf::RenderWindow &window)
 
 
 {
     sf:: Event Event;
     bool running = true;
+    int *re = new int[2];
+    re[0] = 0;
+    re[1] = 0;
 
     while(running)
     {
@@ -109,7 +112,8 @@ int MainMenu_Screen :: run(sf::RenderWindow &window)
             if(Event.type == sf::Event::Closed)
             {
                     running = false;
-                    return -1;
+                    re[0] = -1;
+                    return re;
             }
 
            // return 2;
@@ -117,7 +121,8 @@ int MainMenu_Screen :: run(sf::RenderWindow &window)
             if(Event.type == sf::Event::KeyPressed)
             {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-                    return 2;
+                    re[0] = 2;
+                    return re;
             }
 
 
@@ -125,11 +130,13 @@ int MainMenu_Screen :: run(sf::RenderWindow &window)
         if(sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
             sf::Vector2f mousePosition = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
             if (check_clicked(mousePosition, *menuItem_0, window)) {
-                this->board = BoardStateLoader::loadBoardState(LEVEL_01);
-                return 2;
+                re[0] = 2;
+                re[1] = 1;
+                return re;
             }
             if (check_clicked(mousePosition, *menuItem_2, window)) {
-                return 3;
+                re[0] = 3;
+                return re;
             }
         }
         window.clear(sf::Color(40,140,240));
@@ -137,6 +144,6 @@ int MainMenu_Screen :: run(sf::RenderWindow &window)
         window.display();
 
     }
-   return 1;
+
 
 }

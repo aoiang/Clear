@@ -59,12 +59,14 @@ BoardState* Levels_Screen::get_Board() {
 }
 
 
-int Levels_Screen :: run(sf::RenderWindow &window)
+int *Levels_Screen :: run(sf::RenderWindow &window)
 
 {
     sf:: Event Event;
     bool running = true;
-
+    int *re = new int[2];
+    re[0] = 0;
+    re[1] = 0;
 
     this->board = BoardStateLoader::loadBoardState(LEVEL_01);
     while(running)
@@ -76,7 +78,8 @@ int Levels_Screen :: run(sf::RenderWindow &window)
             if(Event.type == sf::Event::Closed)
             {
                 running = false;
-                return -1;
+                re[0] = -1;
+                return re;
             }
 
             // return 2;
@@ -84,7 +87,8 @@ int Levels_Screen :: run(sf::RenderWindow &window)
             if(Event.type == sf::Event::KeyPressed)
             {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-                    return 1;
+                    re[0] = 1;
+                    return re;
             }
 
 
@@ -99,37 +103,47 @@ int Levels_Screen :: run(sf::RenderWindow &window)
             if (Levels_Screen::check_clicked(mousePosition, 1, window))
             {
                 this->board = BoardStateLoader::loadBoardState(LEVEL_TEST);
-                return 2;
+                re[0] = 2;
+                re[1] = 1;
+                return re;
             }
 
             if (Levels_Screen::check_clicked(mousePosition, 2, window))
             {
                 this->board = BoardStateLoader::loadBoardState(LEVEL_01);
-                return 2;
+                re[0] = 2;
+                re[1] = 2;
+                return re;
             }
 
             if (Levels_Screen::check_clicked(mousePosition, 3, window))
             {
                 this->board = BoardStateLoader::loadBoardState(LEVEL_TEST);
-                return 2;
+                re[0] = 2;
+                re[1] = 3;
+                return re;
             }
 
-            if (Levels_Screen::check_clicked(mousePosition, 4, window))
-            {
+            if (Levels_Screen::check_clicked(mousePosition, 4, window)) {
                 this->board = BoardStateLoader::loadBoardState(LEVEL_TEST);
-                return 2;
+                re[0] = 2;
+                re[1] = 4;
+                return re;
             }
-
             if (Levels_Screen::check_clicked(mousePosition, 5, window))
             {
                 this->board = BoardStateLoader::loadBoardState(LEVEL_01);
-                return 2;
+                re[0] = 2;
+                re[1] = 5;
+                return re;
             }
 
             if (Levels_Screen::check_clicked(mousePosition, 6, window))
             {
                 this->board = BoardStateLoader::loadBoardState(LEVEL_TEST);
-                return 2;
+                re[0] = 2;
+                re[1] = 6;
+                return re;
             }
 
 
@@ -141,6 +155,6 @@ int Levels_Screen :: run(sf::RenderWindow &window)
         window.display();
 
     }
-    return 1;
+
 
 }

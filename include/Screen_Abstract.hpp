@@ -7,7 +7,7 @@
 class Screen_Abstract
 {
     public:
-        virtual int run (sf::RenderWindow &window) = 0;
+        virtual int *run (sf::RenderWindow &window) = 0;
 };
 
 #endif //CLEAR_SCREEN_ABSTRACT_HPP

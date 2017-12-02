@@ -74,8 +74,11 @@ int Title_Animation :: draw_tagline(sf::RenderWindow &window)
 }
 
 /**runs the opening screen */
-int Title_Animation :: run(sf::RenderWindow &window)
+int *Title_Animation :: run(sf::RenderWindow &window)
 {
+    int *re = new int[2];
+    re[0] = 0;
+    re[1] = 0;
     sf:: Event Event;
     bool running = true;
     while(running)
@@ -86,7 +89,8 @@ int Title_Animation :: run(sf::RenderWindow &window)
             if(Event.type == sf::Event::Closed)
             {
                     running = false;
-                    return -1;
+                    re[0] = -1;
+                    return re;
             }
 
         }
@@ -94,7 +98,7 @@ int Title_Animation :: run(sf::RenderWindow &window)
         draw_sprite(window);
         int next_screen = draw_tagline(window);
         window.display();
-        return next_screen;
+        re[0] = next_screen;
+        return re;
     }
-    return 1;
 }
