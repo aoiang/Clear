@@ -20,13 +20,13 @@ int BoardState::get_board_width() {return width;}
 int BoardState::get_board_height() {return height;}
 
 /**Checks if x coordinate exists on the board*/
-int BoardState::is_valid_x(int x) {return x>=0 && x<get_board_width();}
+bool BoardState::is_valid_x(int x) {return x>=0 && x<get_board_width();}
 
 /**Checks if y coordinate exists on the board*/
-int BoardState::is_valid_y(int y) {return y>=0 && y<get_board_height();}
+bool BoardState::is_valid_y(int y) {return y>=0 && y<get_board_height();}
 
 /**Checks if x, y position exists on the board*/
-int BoardState::is_valid_location(int x, int y) {return is_valid_x(x) && is_valid_y(y);}
+bool BoardState::is_valid_location(int x, int y) {return is_valid_x(x) && is_valid_y(y);}
 
 /**
   Removes element from board

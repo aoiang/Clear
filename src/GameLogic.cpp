@@ -98,7 +98,7 @@ void GameLogic::remove_block(int x, int y) {
 
 /**@return if a block can be removed*/
 bool GameLogic::can_move_block(Block * block, char direction) {
-    bool type_allows_movement;
+    bool type_allows_movement = nullptr;
     switch (block->get_id()) {
         case ID_NORMAL:
             type_allows_movement = dynamic_cast<BlockNormal*>(block)->type_allows_movement(direction);
