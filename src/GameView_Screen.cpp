@@ -339,20 +339,17 @@ void GameView_Screen::check_keyboard_input() {
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {logic->try_move_selected(R_DIR);}
 }
 
-void GameView_Screen::set_board(BoardState* board){
-    this->board = board;
-}
 
 int *GameView_Screen::run(sf::RenderWindow &window, int curr_level) {
-    sf::Clock draw_clock;
-    this->App = &window;
-    logic->set_BoardState(*board);
-    init();
     int *re = new int[2];
     re[0] = 1;
     re[1] = curr_level;
 
-
+    sf::Clock draw_clock;
+    this->App = &window;
+    BoardState * board = new BoardState(levels[re[1]-1]);
+    logic->set_BoardState(*board);
+    init();
 
     int time_since_completion = 0;
 
@@ -362,14 +359,12 @@ int *GameView_Screen::run(sf::RenderWindow &window, int curr_level) {
             if(Event.type == sf::Event::Closed) {
                 running = false;
                 re[0] = -1;
-
                 return re;
             }
             if(Event.type == sf::Event::KeyPressed)
             {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                     re[0] = 1;
-                    //printf("current level is %d\n",re[1]);
                     return re;
             }
         }
@@ -379,7 +374,6 @@ int *GameView_Screen::run(sf::RenderWindow &window, int curr_level) {
             time_since_completion += draw_clock.getElapsedTime().asMicroseconds();
             if (time_since_completion > 750000) {
                 re[1]++;
-                //printf("current level is %d\n",re[1]);
                 auto * board = new BoardState(levels[re[1]-1]);
                 logic->set_BoardState(*board);
                 init();

@@ -11,8 +11,7 @@ class GameView {
         int default_window_width = 600;
         int default_window_height = 600;
         BoardState* current_state;
-
-public:
+    public:
         int run(GameLogic logic);
         BoardState* loadlevel(int level);
 };

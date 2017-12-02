@@ -19,32 +19,17 @@ int GameView::run(GameLogic logic)
     curr_screen[0] = 0;
     curr_screen[1] = 1;
 
-
-
-
     screen2.set_GameLogic(logic);
     screens.push_back(&screen0);
     screens.push_back(&screen1);
     screens.push_back(&screen2);
     screens.push_back(&screen3);
 
-
     while(curr_screen[0] >=0 )
     {
         if (curr_screen[1] < 99){
             level_keeper = curr_screen[1];
         }
-        printf("current level is %d\n", level_keeper);
-        current_state = GameView::loadlevel(level_keeper);
-        screen2.set_board(current_state);
         curr_screen = screens[curr_screen[0]]->run(App, level_keeper);
-
     }
-}
-
-/**load level state from here */
-BoardState* GameView::loadlevel(int level) {
-    std::string levels[13] = {LEVEL_01, LEVEL_02, LEVEL_03, LEVEL_04, LEVEL_05, LEVEL_TEST, LEVEL_06};
-    return new BoardState(levels[level-1]);
-
 }
