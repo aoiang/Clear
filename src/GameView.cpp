@@ -1,7 +1,4 @@
 #include "GameView.hpp"
-#include "Screens.hpp"
-#include <iostream>
-#include <stdlib.h>
 
 
 /**runs the window: creates the window and all screens*/

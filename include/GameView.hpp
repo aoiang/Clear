@@ -7,9 +7,8 @@
 
 class GameView {
     private:
-        sf::RenderWindow *App;
-        int default_window_width = 600;
-        int default_window_height = 600;
+        unsigned int default_window_width = 600;
+        unsigned int default_window_height = 600;
     public:
         int run(GameLogic logic);
 };

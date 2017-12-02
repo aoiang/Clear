@@ -1,6 +1,4 @@
 #include "BoardState.hpp"
-#include "Block.hpp"
-#include <iostream>
 
 /**
   Sets board dimensions

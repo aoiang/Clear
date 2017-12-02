@@ -3,7 +3,7 @@
 #include <iostream>
 
 /**Create the game window*/
-GameView_Screen::GameView_Screen() {}
+GameView_Screen::GameView_Screen() = default;
 
 /**Check if window is open*/
 bool GameView_Screen::isOpen() {return running;}
@@ -29,10 +29,7 @@ sf::RectangleShape GameView_Screen::make_alpha_rectangle_shape(int width, int he
 
 /**Load textures from files*/
 void GameView_Screen::load_texture(int texture_index) {
-    if (!texture[texture_index].loadFromFile(texture_filepaths[texture_index])) {
-        texture[texture_index].loadFromFile(texture_filepaths[texture_index]+1);
-        //Converts ../* to ./*
-    }
+    texture[texture_index].loadFromFile(texture_filepaths[texture_index]);
 }
 
 /**Loads all textures*/
@@ -41,7 +38,7 @@ void GameView_Screen::load_textures() {
 }
 
 /**Makes single tab shape*/
-sf::RectangleShape GameView_Screen::make_tab_shape(char dir) {
+sf::RectangleShape GameView_Screen::make_tab_shape() {
     sf::RectangleShape tab_shape(sf::Vector2f(tab_size, tab_size));
     tab_shape.setFillColor(sf::Color(235, 235, 235));
     tab_shape.setOutlineThickness(1);
@@ -79,10 +76,10 @@ void GameView_Screen::init() {
                 animation_dir[x][y] = DEFAULT_DIR;
 
                 blocks[(y*board_width)+x] = make_block_shape(logic->get_block(x, y)->get_id());
-                tabs[4 * ((y * board_width) + x)] = make_tab_shape(U_DIR);
-                tabs[4 * ((y * board_width) + x) + 1] = make_tab_shape(R_DIR);
-                tabs[4 * ((y * board_width) + x) + 2] = make_tab_shape(D_DIR);
-                tabs[4 * ((y * board_width) + x) + 3] = make_tab_shape(L_DIR);
+                tabs[4 * ((y * board_width) + x)] = make_tab_shape();
+                tabs[4 * ((y * board_width) + x) + 1] = make_tab_shape();
+                tabs[4 * ((y * board_width) + x) + 2] = make_tab_shape();
+                tabs[4 * ((y * board_width) + x) + 3] = make_tab_shape();
             }
         }
     }
@@ -210,6 +207,7 @@ void GameView_Screen::draw_path_highlighting() {
                 break;
             case DEFAULT_DIR:
                 return;
+            default:break;
         }
         path_shapes[path_shape_i].setPosition(sf::Vector2f(x_pos, y_pos));
         App->draw(path_shapes[path_shape_i]);
@@ -297,6 +295,7 @@ void GameView_Screen::draw_tab(int tab_index, int x, int y) {
         case 3://LEFT
             pixel_x -= offset+1;
             break;
+        default:break;
     }
 
     tab_shapes[tab_index].setFillColor(sf::Color(235, 235, 235));
@@ -349,10 +348,10 @@ int GameView_Screen::run(sf::RenderWindow &window) {
 
     int time_since_completion = 0;
 
-    sf:: Event Event;
-    while(running) {
+    sf:: Event Event{};
+    while (running) {
         while (window.pollEvent(Event)) {
-            if(Event.type == sf::Event::Closed) {
+            if (Event.type == sf::Event::Closed) {
                 running = false;
                 return -1;
             }

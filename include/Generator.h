@@ -5,7 +5,7 @@
 #ifndef CSCI437_GENERATOR_H
 #define CSCI437_GENERATOR_H
 #include <iostream>
-#include<stdlib.h>
+#include <stdlib.h>
 #include <algorithm>
 using namespace std;
 

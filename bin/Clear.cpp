@@ -5,9 +5,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "GameLogic.hpp"
-#include "BoardState.hpp"
 #include "GameView.hpp"
-#include "Screens.hpp"
 #include "BoardStateLoader.hpp"
 
 int main(int argc, char** argv) {

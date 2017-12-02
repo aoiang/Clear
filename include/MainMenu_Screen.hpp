@@ -19,7 +19,7 @@ class MainMenu_Screen : public Screen_Abstract {
         void draw(sf::RenderWindow &window);
         bool check_clicked(sf::Vector2f mousePos, sf::Text desired_option, sf::RenderWindow &window);
         int getSelectedOption(sf::RenderWindow &window);
-        int run(sf::RenderWindow &window);
+        int run(sf::RenderWindow &window) override;
 };
 
 #endif //CLEAR_MAINMENU_SCREEN_HPP

@@ -11,7 +11,7 @@
   @return BoardState built from file
 */
 BoardState * BoardStateLoader::loadBoardState(std::string filepath) {
-    BoardState * board = new BoardState();
+    auto * board = new BoardState();
     board->init();
     
     std::ifstream inFile;
@@ -23,7 +23,7 @@ BoardState * BoardStateLoader::loadBoardState(std::string filepath) {
     
     while(inFile >> entry) {
         if (entry != "0") {
-            Block * block;
+            Block * block = nullptr;
             
             int x = entry_ct%9;
             int y = 8-(entry_ct/9);

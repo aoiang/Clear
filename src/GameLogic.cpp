@@ -53,6 +53,7 @@ bool GameLogic::tabs_impede(Block * block, char direction) {
                 || block->get_tab('d') && block_exists(x, y-1)
                 || block_exists(x, y+1) && get_block(x, y+1)->get_tab('d')
                 || block_exists(x, y-1) && get_block(x, y-1)->get_tab('u');
+        default:break;
     }
 }
 
@@ -78,6 +79,7 @@ bool GameLogic::path_blocked(Block * block, char direction) {
             for (int x2 = x-1; x2>=0; x2--) {
                 if (block_exists(x2, y)) {return true;}
             } break;
+        default:break;
     }
     return false;
 }
@@ -113,6 +115,7 @@ bool GameLogic::can_move_block(Block * block, char direction) {
         case ID_ROTATE_3:
             type_allows_movement = static_cast<BlockRotating*>(block)->type_allows_movement(direction);
             break;
+        default:break;
     }
     return type_allows_movement
        && !block->is_move_restricted(get_blocks_removed_ct())
@@ -156,6 +159,7 @@ bool GameLogic::tap_selected() {
                     std::cout << "Rotated block at " << selected_x << ", " << selected_y << "\n";
                     return true;
                 };
+            default:break;
         }
     }
     return false;

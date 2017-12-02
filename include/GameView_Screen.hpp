@@ -37,13 +37,12 @@ class GameView_Screen : public Screen_Abstract {
     public:
         int block_size = 50;
         int tab_size = block_size/5;
-        sf::RenderWindow get_App();
         void set_GameLogic(GameLogic &logic);
         GameView_Screen();
         void init();
         bool isOpen();
         sf::RectangleShape make_block_shape(int block_id);
-        sf::RectangleShape make_tab_shape(char dir);
+        sf::RectangleShape make_tab_shape();
         sf::RectangleShape make_alpha_rectangle_shape(int, int, int, int, int, int);
         void load_texture(int);
         void load_textures();
@@ -60,7 +59,7 @@ class GameView_Screen : public Screen_Abstract {
         int PixelToBoard(int pixel_index, int board_axis_length, int screen_axis_length);
         int XPixelToBoardX(int x);
         int YPixelToBoardY(int y);
-        int run(sf::RenderWindow &window);
+        int run(sf::RenderWindow &window) override;
         void check_mouse_input();
         void check_keyboard_input();
 };
