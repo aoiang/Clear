@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "Screen_Abstract.hpp"
 
-class Title_Animation : public Screen_Abstract{
+class Title_Animation : public Screen_Abstract {
     public:
         int draw_sprite(sf::RenderWindow &window);
         int draw_tagline(sf::RenderWindow &window);

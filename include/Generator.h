@@ -38,9 +38,6 @@ class Generator {
         bool move_down(int x, int y);
         bool move_left(int x, int y);
         bool move_right(int x, int y);
-
-
-
 };
 
 

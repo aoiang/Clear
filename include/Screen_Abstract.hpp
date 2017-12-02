@@ -4,8 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "Definitions.hpp"
 
-class Screen_Abstract
-{
+class Screen_Abstract {
     public:
         virtual int run (sf::RenderWindow &window) = 0;
 };

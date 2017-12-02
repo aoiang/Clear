@@ -6,8 +6,7 @@
 #include <iostream>
 #include "Screen_Abstract.hpp"
 
-class MainMenu_Screen : public Screen_Abstract
-{
+class MainMenu_Screen : public Screen_Abstract {
     private:
        // sf::Text title;
         sf::Text * menuItem_0;
