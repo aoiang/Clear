@@ -12,6 +12,7 @@ class Block {
         int id;
     protected:
         int base_id = 0;
+        int simple_id = 0;
         int rotation = 0;
         bool can_combine;
         bool tabs[4];
@@ -38,7 +39,7 @@ class Block {
         int get_rotation();
         char get_direction();
         void basic_init(int x, int y);
-        unsigned long get_identity();
+        std::string get_identity();
 };
 
 #endif //CLEAR_BLOCK_HPP

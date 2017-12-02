@@ -99,6 +99,6 @@ void Block::basic_init(int x, int y) {
     set_move_restriction(0);
 }
 
-unsigned long Block::get_identity() {
-    //basic_id, get_rotation(), get_combine(), get_tab('u')(x4), get_move_restriction()(potentially high)
+std::string Block::get_identity() {
+    //simple_id, get_rotation(), get_combine(), get_tab('u')(x4), get_move_restriction()(potentially high)
 }

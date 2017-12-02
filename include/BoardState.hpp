@@ -33,7 +33,8 @@ class BoardState {
         int get_blocks_removed_ct();
         void print_board();
         void export_board(std::string filepath);
-        unsigned long export_block(int x, int y);
+        std::string export_block(int x, int y);
+        Block * import_block(std::string block_identity);
 };
 
 #endif //CLEAR_BOARDSTATE_HPP

@@ -76,9 +76,12 @@ void BoardState::export_board(std::string filepath) {
     //first two are h and w, then every one after is a block; everything on its own line.
 }
 
-unsigned long BoardState::export_block(int x, int y) {
-    Block * block = get_block(x, y);
-    return 0;
+std::string BoardState::export_block(int x, int y) {
+    return get_block(x, y)->get_identity();
+}
+
+Block * BoardState::import_block(std::string block_type) {
+
 }
 
 
