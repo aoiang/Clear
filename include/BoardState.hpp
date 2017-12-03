@@ -7,7 +7,6 @@
 class BoardState {
     private:
         int block_ct = 0;
-        int block_removed_ct = 0;
         int wrong_moves = 0;
         bool is_clear = false;
         const static int default_width = 9;
@@ -28,8 +27,7 @@ class BoardState {
         Block * get_block(int x, int y);
         bool block_exists(int x, int y);
         bool add_block(Block * block);
-        bool get_is_clear();
-        int get_blocks_removed_ct();
+        int get_block_ct();
         void print_board();
         void export_board(std::string filepath);
         unsigned long export_block(int x, int y);

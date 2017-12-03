@@ -3,7 +3,7 @@
 /**Sets BoardState*/
 void GameLogic::set_BoardState(BoardState &board) {
     this->board = &board;
-    init_current_board();
+    state->init_current_board();
 }
 
 /**Sets GameState*/
@@ -100,7 +100,12 @@ bool GameLogic::path_blocked(int x, int y, char direction) {
 void GameLogic::remove_block(int x, int y) {
     std::cout << "Removed block at " << x << ", " << y << "\n";
     board->remove_block(x, y);
+    state->increment_blocks_removed();
     set_selected_position(-1, -1);
+    if (get_blocks_removed_ct() == board->get_block_ct()) {
+        std::cout << std::endl << "Board is clear" << std::endl << std::endl;
+        state->set_is_clear();
+    }
 }
 
 /**@return if a block can be removed*/
@@ -178,18 +183,16 @@ bool GameLogic::tap_selected() {
 bool GameLogic::try_move_selected(char direction) {return try_move(selected_x, selected_y, direction);}
 
 /**@return if the board has been cleared*/
-bool GameLogic::get_is_clear() {return board->get_is_clear();}
+bool GameLogic::get_is_clear() {return state->get_is_clear();}
 
 /**Adds to wrong move counter*/
 void GameLogic::add_wrong_move() {state->add_wrong_move();}
 
 /**@return number of blocks removed from the board*/
-int GameLogic::get_blocks_removed_ct() {return board->get_blocks_removed_ct();}
+int GameLogic::get_blocks_removed_ct() {return state->get_blocks_removed();}
 
 /**@return if a given block is move restricted*/
 bool GameLogic::block_is_move_restricted(int x, int y) {return get_block(x, y)->is_move_restricted(get_blocks_removed_ct());}
 
 /**@return if selected block is move restricted*/
 bool GameLogic::selected_block_is_move_restricted() {return block_is_move_restricted(selected_x, selected_y);}
-
-void GameLogic::init_current_board() {state->init_current_board();}

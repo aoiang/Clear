@@ -105,11 +105,6 @@ bool BoardState::is_valid_location(int x, int y) {return is_valid_x(x) && is_val
 bool BoardState::remove_block(int x, int y) {
     if (x>width || y>height) {return false;}//doesn't handle if they're negative though.
     else {board[x][y] = nullptr;}
-    block_removed_ct ++;
-    if (block_removed_ct == block_ct) {
-        std::cout << std::endl << "Board is clear" << std::endl << std::endl;
-        is_clear = true;
-    }
     return true;
 }
 
@@ -138,11 +133,8 @@ Block * BoardState::get_block(int x, int y) {return board[x][y];}
 /**Checks if block exists at index*/
 bool BoardState::block_exists(int x, int y) {return is_valid_location(x,y) && board[x][y]!=nullptr;}
 
-/**Checks if the board is empty*/
-bool BoardState::get_is_clear() {return is_clear;}
-
-/**@return number of blocks removed*/
-int BoardState::get_blocks_removed_ct() {return block_removed_ct;}
+/**@return number of blocks on board*/
+int BoardState::get_block_ct() {return block_ct;}
 
 void BoardState::print_board() {
     for (int y=0; y<get_board_height(); y++) {
