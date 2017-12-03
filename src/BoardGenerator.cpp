@@ -3,7 +3,7 @@
 #include <iostream>
 #include <random>
 
-BoardGenerator::BoardGenerator() {}
+BoardGenerator::BoardGenerator() {number_generator = get_random_num_generator();}
 
 BoardState * BoardGenerator::make_board(int width, int height) {
     board = new BoardState(width, height);
@@ -11,11 +11,15 @@ BoardState * BoardGenerator::make_board(int width, int height) {
     generator_logic.set_GameState(*state);
     generator_logic.set_BoardState(*board);
     
-    number_generator = get_random_num_generator();
+    for (int i=0; i<(width*height*10); i++) {
+        add_block_if_possible(pick_number_between(0, width-1), pick_number_between(0, height-1));        
+    }
+    remove_pointless_tabs();
     
     for (int i=0; i<(width*height*10); i++) {
         add_block_if_possible(pick_number_between(0, width-1), pick_number_between(0, height-1));        
     }
+    remove_pointless_tabs();
     
     return board;
 }
@@ -44,11 +48,28 @@ std::mt19937 BoardGenerator::get_random_num_generator() {
 }
 
 std::string BoardGenerator::pick_config() {
-    static const char* const configs[number_of_configs] = {"1,0,f,ffff,0","1,0,f,ffft,0","1,0,f,fftf,0","1,0,f,fftt,0","1,0,f,ftff,0","1,0,f,ftft,0","1,0,f,fttf,0","1,0,f,fttt,0","1,0,f,tfff,0","1,0,f,tfft,0","1,0,f,tftf,0","1,0,f,tftt,0","1,0,f,ttff,0","1,0,f,ttft,0","1,0,f,tttf,0","1,0,f,tttt,0","2,0,f,ffff,0","2,0,f,ffft,0","2,0,f,fftf,0","2,0,f,fftt,0","2,0,f,ftff,0","2,0,f,ftft,0","2,0,f,fttf,0","2,0,f,fttt,0","2,0,f,tfff,0","2,0,f,tfft,0","2,0,f,tftf,0","2,0,f,tftt,0","2,0,f,ttff,0","2,0,f,ttft,0","2,0,f,tttf,0","2,0,f,tttt,0","2,1,f,ffff,0","2,1,f,ffft,0","2,1,f,fftf,0","2,1,f,fftt,0","2,1,f,ftff,0","2,1,f,ftft,0","2,1,f,fttf,0","2,1,f,fttt,0","2,1,f,tfff,0","2,1,f,tfft,0","2,1,f,tftf,0","2,1,f,tftt,0","2,1,f,ttff,0","2,1,f,ttft,0","2,1,f,tttf,0","2,1,f,tttt,0","2,2,f,ffff,0","2,2,f,ffft,0","2,2,f,fftf,0","2,2,f,fftt,0","2,2,f,ftff,0","2,2,f,ftft,0","2,2,f,fttf,0","2,2,f,fttt,0","2,2,f,tfff,0","2,2,f,tfft,0","2,2,f,tftf,0","2,2,f,tftt,0","2,2,f,ttff,0","2,2,f,ttft,0","2,2,f,tttf,0","2,2,f,tttt,0","2,3,f,ffff,0","2,3,f,ffft,0","2,3,f,fftf,0","2,3,f,fftt,0","2,3,f,ftff,0","2,3,f,ftft,0","2,3,f,fttf,0","2,3,f,fttt,0","2,3,f,tfff,0","2,3,f,tfft,0","2,3,f,tftf,0","2,3,f,tftt,0","2,3,f,ttff,0","2,3,f,ttft,0","2,3,f,tttf,0","2,3,f,tttt,0","3,0,f,ffff,0","3,0,f,ffft,0","3,0,f,fftf,0","3,0,f,fftt,0","3,0,f,ftff,0","3,0,f,ftft,0","3,0,f,fttf,0","3,0,f,fttt,0","3,0,f,tfff,0","3,0,f,tfft,0","3,0,f,tftf,0","3,0,f,tftt,0","3,0,f,ttff,0","3,0,f,ttft,0","3,0,f,tttf,0","3,0,f,tttt,0"};
+    static const char* const configs[number_of_configs] = {"1,0,f,ffff,0","1,0,f,ffft,0","1,0,f,fftf,0","1,0,f,fftt,0","1,0,f,ftff,0","1,0,f,ftft,0","1,0,f,fttf,0","1,0,f,fttt,0","1,0,f,tfff,0","1,0,f,tfft,0","1,0,f,tftf,0","1,0,f,tftt,0","1,0,f,ttff,0","1,0,f,ttft,0","1,0,f,tttf,0","1,0,f,tttt,0","2,0,f,ffff,0","2,0,f,ffft,0","2,0,f,fftf,0","2,0,f,fftt,0","2,0,f,ftff,0","2,0,f,ftft,0","2,0,f,fttf,0","2,0,f,fttt,0","2,0,f,tfff,0","2,0,f,tfft,0","2,0,f,tftf,0","2,0,f,tftt,0","2,0,f,ttff,0","2,0,f,ttft,0","2,0,f,tttf,0","2,0,f,tttt,0","2,1,f,ffff,0","2,1,f,ffft,0","2,1,f,fftf,0","2,1,f,fftt,0","2,1,f,ftff,0","2,1,f,ftft,0","2,1,f,fttf,0","2,1,f,fttt,0","2,1,f,tfff,0","2,1,f,tfft,0","2,1,f,tftf,0","2,1,f,tftt,0","2,1,f,ttff,0","2,1,f,ttft,0","2,1,f,tttf,0","2,1,f,tttt,0","2,2,f,ffff,0","2,2,f,ffft,0","2,2,f,fftf,0","2,2,f,fftt,0","2,2,f,ftff,0","2,2,f,ftft,0","2,2,f,fttf,0","2,2,f,fttt,0","2,2,f,tfff,0","2,2,f,tfft,0","2,2,f,tftf,0","2,2,f,tftt,0","2,2,f,ttff,0","2,2,f,ttft,0","2,2,f,tttf,0","2,2,f,tttt,0","2,3,f,ffff,0","2,3,f,ffft,0","2,3,f,fftf,0","2,3,f,fftt,0","2,3,f,ftff,0","2,3,f,ftft,0","2,3,f,fttf,0","2,3,f,fttt,0","2,3,f,tfff,0","2,3,f,tfft,0","2,3,f,tftf,0","2,3,f,tftt,0","2,3,f,ttff,0","2,3,f,ttft,0","2,3,f,tttf,0","2,3,f,tttt,0","3,0,f,tfff,0","3,1,f,tfff,0","3,2,f,tfff,0","3,3,f,tfff,0","3,0,f,tftf,0","3,1,f,tftf,0","3,0,f,ttff,0","3,1,f,ttff,0","3,2,f,ttff,0","3,3,f,ttff,0","3,0,f,ttft,0","3,1,f,ttft,0","3,2,f,ttft,0","3,3,f,ttft,0"};
     return configs[pick_number_between(0, number_of_configs-1)];
 }
 
 int BoardGenerator::pick_number_between(int min, int max) {
     std::uniform_int_distribution<> distr(min, max);
     return distr(number_generator);
+}
+
+
+void BoardGenerator::remove_pointless_tabs() {
+    for (int y=0; y<board->get_board_height(); y++) {
+        for (int x=0; x<board->get_board_width(); x++) {
+            if (board->block_exists(x, y)) {
+                Block * block = board->get_block(x, y);
+                if (block->get_simple_id()!=3) {
+                    if (!board->block_exists(x, y+1)) {block->set_tab(U_DIR, false);}
+                    if (!board->block_exists(x+1, y)) {block->set_tab(R_DIR, false);}
+                    if (!board->block_exists(x, y-1)) {block->set_tab(D_DIR, false);}
+                    if (!board->block_exists(x-1, y)) {block->set_tab(L_DIR, false);}
+                }
+            }
+        }
+    }
 }
