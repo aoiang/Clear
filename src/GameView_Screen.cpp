@@ -385,7 +385,7 @@ int *GameView_Screen::run(sf::RenderWindow &window, int curr_level) {
                 }
                 else{
                     re[1]++;
-                    BoardState * board = new BoardState(levels[re[1]-1]);
+                    board = new BoardState(levels[re[1]-1]);
                 }
                 logic->set_BoardState(*board);
                 init();
