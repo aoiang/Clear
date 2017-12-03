@@ -22,11 +22,15 @@ BoardState::BoardState() {
 
 /**Loads board from a file*/
 BoardState::BoardState(std::string filepath) {
+    //old_import_board(filepath);
+    import_board(filepath + ".new");
+}
+
+void BoardState::old_import_board(std::string filepath) {
     this->width = default_width;
     this->height = default_height;
 
-    std::ifstream inFile;
-    inFile.open(filepath);
+    std::ifstream inFile(filepath);
 
     int entry_ct = 0;
     int block_ct = 0;
@@ -69,18 +73,51 @@ BoardState::BoardState(std::string filepath) {
     }
     std::cout << "Level loaded from " << filepath << std::endl;
     inFile.close();
+    export_board(filepath + ".new");
+}
+
+void BoardState::import_board(std::string filepath) {
+    std::ifstream level_file(filepath);
+    
+    std::string line;
+    getline(level_file, line);
+    this->width = stoi(line);
+    getline(level_file, line);
+    this->height = stoi(line);
+    
+    for (int y=0; y<height; y++) {
+        getline(level_file, line);
+        std::vector<std::string> blocks = Block::split_string(line, '\t');
+        for (int x=0; x<width; x++) {
+            if (!blocks[x].empty()) {
+                add_block(Block::import_block(blocks[x], x, y));
+            }
+        }
+    }
+    level_file.close();
 }
 
 void BoardState::export_board(std::string filepath) {
-    //height, width, and all of the blocks in an array.
-    //first two are h and w, then every one after is a block; everything on its own line.
+    //width, height, and all of the blocks in an array.
+    std::ofstream level_file;
+    level_file.open(filepath);
+    level_file << width <<"\n";
+    level_file << height <<"\n";
+    for (int y=0; y<height; y++) {
+        for (int x=0; x<width; x++) {
+            if (block_exists(x, y)) {
+                level_file << export_block(x, y);
+            }
+            level_file << "\t";
+        }
+        level_file << "\n";
+    }
+    level_file.close();
 }
 
-unsigned long BoardState::export_block(int x, int y) {
-    Block * block = get_block(x, y);
-    return 0;
+std::string BoardState::export_block(int x, int y) {
+    return get_block(x, y)->get_identity();
 }
-
 
 /**@return board width*/
 int BoardState::get_board_width() {return width;}
@@ -106,11 +143,6 @@ bool BoardState::is_valid_location(int x, int y) {return is_valid_x(x) && is_val
 bool BoardState::remove_block(int x, int y) {
     if (x>width || y>height) {return false;}//doesn't handle if they're negative though.
     else {board[x][y] = nullptr;}
-    block_removed_ct ++;
-    if (block_removed_ct == block_ct) {
-        std::cout << std::endl << "Board is clear" << std::endl << std::endl;
-        is_clear = true;
-    }
     return true;
 }
 
@@ -139,19 +171,10 @@ Block * BoardState::get_block(int x, int y) {return board[x][y];}
 /**Checks if block exists at index*/
 bool BoardState::block_exists(int x, int y) {return is_valid_location(x,y) && board[x][y]!=nullptr;}
 
-/**Checks if the board is empty*/
-bool BoardState::get_is_clear() {return is_clear;}
+/**@return number of blocks on board*/
+int BoardState::get_block_ct() {return block_ct;}
 
-/**Adds a wrong move to the board*/
-void BoardState::add_wrong_move() {
-    wrong_moves++;
-    std::cout << "Wrong move; " << wrong_moves << " total" << std::endl;
-}
-
-/**@return number of blocks removed*/
-int BoardState::get_blocks_removed_ct() {return block_removed_ct;}
-
-
+/**Prints the current board configuration*/
 void BoardState::print_board() {
     for (int y=0; y<get_board_height(); y++) {
         for (int x=0; x<get_board_width(); x++) {

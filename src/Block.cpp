@@ -1,5 +1,7 @@
-#include "Block.hpp"
-
+#include <vector>
+#include <BlockRotating.hpp>
+#include <BlockDirectional.hpp>
+#include <BlockNormal.hpp>
 
 /**Sets block id*/
 void Block::set_id() {
@@ -28,10 +30,10 @@ int Block::get_y() {return y;}
 /**@return index based on direction*/
 int Block::dir_to_index(char dir) {
     switch (dir) {
-        case 'u': return 0;
-        case 'r': return 1;
-        case 'd': return 2;
-        case 'l': return 3;
+        case U_DIR: return 0;
+        case R_DIR: return 1;
+        case D_DIR: return 2;
+        case L_DIR: return 3;
         default: return -1;
     }
 }
@@ -48,10 +50,10 @@ bool Block::get_tab(char dir) {
 
 /**Sets all tabs to 0*/
 void Block::init_tabs() {
-    set_tab('u', false);
-    set_tab('r', false);
-    set_tab('d', false);
-    set_tab('l', false);
+    set_tab(U_DIR, false);
+    set_tab(R_DIR, false);
+    set_tab(D_DIR, false);
+    set_tab(L_DIR, false);
 }
 
 /**@return can_combine*/
@@ -99,6 +101,91 @@ void Block::basic_init(int x, int y) {
     set_move_restriction(0);
 }
 
-unsigned long Block::get_identity() {
-    //basic_id, get_rotation(), get_combine(), get_tab('u')(x4), get_move_restriction()(potentially high)
+void Block::import_init(std::string identity) {
+    std::vector<std::string> characteristics = split_string(identity, ',');
+    int imported_simple_id, imported_rotation, imported_move_restriction;
+    bool imported_tab_up, imported_tab_right, imported_tab_down, imported_tab_left, imported_combine;
+
+    imported_simple_id = stoi(characteristics[0]);
+    imported_rotation = stoi(characteristics[1]);
+    imported_tab_up = string_to_bool(characteristics[3].substr(0, 1));
+    imported_tab_right = string_to_bool(characteristics[3].substr(1, 1));
+    imported_tab_down = string_to_bool(characteristics[3].substr(2, 1));
+    imported_tab_left = string_to_bool(characteristics[3].substr(3, 1));
+    imported_combine = string_to_bool(characteristics[2]);
+    imported_move_restriction = stoi(characteristics[4]);
+
+
+    //get_rotation(), get_combine(), get_tab('u')(x4), get_move_restriction()(potentially high)
+
+    if (imported_simple_id != simple_id) {std::cout << "Badly Initialized Block" << std::endl;}
+    set_combine(imported_combine);
+    while (imported_rotation) {rotate(); imported_rotation--;}
+    set_move_restriction(imported_move_restriction);
+    set_tab(U_DIR, imported_tab_up);
+    set_tab(R_DIR, imported_tab_right);
+    set_tab(D_DIR, imported_tab_down);
+    set_tab(L_DIR, imported_tab_left);
 }
+
+char Block::bool_to_char(bool boolean) {
+    if (boolean) {return 't';}
+    else {return 'f';}
+}
+
+bool Block::string_to_bool(std::string text) {
+    return text == "t";
+}
+
+
+
+std::vector<std::string> Block::split_string(const std::string &text, char delimiter) {
+    // Adapted from https://stackoverflow.com/a/7408245
+    std::vector<std::string> tokens;
+    std::size_t start = 0, end = 0;
+    while ((end = text.find(delimiter, start)) != std::string::npos) {
+        tokens.push_back(text.substr(start, end-start));
+        start = end+1;
+    }
+    tokens.push_back(text.substr(start));
+    return tokens;
+}
+
+Block * Block::import_block(std::string identity, int x, int y) {
+    Block * block;
+    int imported_simple_id = stoi(split_string(identity, ',')[0]);
+    switch (imported_simple_id) {
+        case 1:
+            block = new BlockNormal(x, y);
+            break;
+        case 2:
+            block = new BlockDirectional(x, y, 0);
+            break;
+        case 3:
+            block = new BlockRotating(x, y);
+            break;
+        default:
+            block = nullptr;
+            std::cout << "Bad ID in import_block: " << imported_simple_id << " from identity: " << identity << std::endl;
+            break;
+    }
+    block->import_init(identity);
+    return block;
+}
+
+std::string Block::get_identity() {
+    //simple_id, get_rotation(), get_combine(), get_tab('u')(x4), get_move_restriction()(potentially high)
+    std::string tabs;
+    tabs += bool_to_char(get_tab(U_DIR));
+    tabs += bool_to_char(get_tab(R_DIR));
+    tabs += bool_to_char(get_tab(D_DIR));
+    tabs += bool_to_char(get_tab(L_DIR));
+    std::string identity = std::to_string(simple_id) + ","
+                         + std::to_string(get_rotation()) + ","
+                         + bool_to_char(get_combine()) + ","
+                         + tabs + ","
+                         + std::to_string(get_move_restriction());
+    return identity;
+}
+
+

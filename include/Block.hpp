@@ -2,6 +2,8 @@
 #define CLEAR_BLOCK_HPP
 
 #include "Definitions.hpp"
+#include <iostream>
+#include <vector>
 
 static char directions[5] = "urdl";
 
@@ -10,8 +12,11 @@ class Block {
         int x;
         int y;
         int id;
+        char bool_to_char(bool boolean);
+        bool string_to_bool(std::string text);
     protected:
         int base_id = 0;
+        int simple_id = 0;
         int rotation = 0;
         bool can_combine;
         bool tabs[4];
@@ -21,6 +26,7 @@ class Block {
         void set_position(int x, int y);
         void reset_rotation();
     public:
+        static Block * import_block(std::string identity, int x, int y);
         bool rotation_changes_id = false;
         int get_id();
         int get_x();
@@ -38,7 +44,9 @@ class Block {
         int get_rotation();
         char get_direction();
         void basic_init(int x, int y);
-        unsigned long get_identity();
+        std::string get_identity();
+        static std::vector<std::string> split_string(const std::string &text, char delimiter);
+        void import_init(std::string identity);
 };
 
 #endif //CLEAR_BLOCK_HPP

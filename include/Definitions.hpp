@@ -27,7 +27,6 @@
 #define MAINMENUITEM_3 "Infinite Mode"
 #define MAINMENUITEM_4 "Settings"
 
-
 #define ID_NORMAL 10
 #define ID_U_DIR 20
 #define ID_R_DIR 21

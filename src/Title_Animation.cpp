@@ -1,11 +1,14 @@
 #include "Title_Animation.hpp"
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
-/**Draws the clear animation at the start  */
-int Title_Animation :: draw_sprite(sf::RenderWindow &window)
-{
-    int count=0;
+/**Draws the Clear animation at the start*/
+int Title_Animation::draw_sprite(sf::RenderWindow &window) {
+    window.clear(sf::Color(40,140,240));
+
     sf::Clock clock;
+    sf::Event event;
+    int frame_count = 0;
 
     sf::IntRect rectSource(0,0,396,134);
     sf::Texture titleSequence;
@@ -15,90 +18,78 @@ int Title_Animation :: draw_sprite(sf::RenderWindow &window)
     sprite.setOrigin(198,67);
     sprite.setPosition(window.getSize().x/2,window.getSize().y/2);
 
-    while(count!=18)
-    {
+    while(frame_count <= 18) {
+        while (window.pollEvent(event)) {
+            if(event.type == sf::Event::Closed) {return -1;}
+            if(event.type == sf::Event::KeyPressed) {return 1;}
+        }
+
         window.draw(sprite);
         window.display();
-        if(rectSource.top==0 && rectSource.left ==0)
-            {
-                sleep(sf::seconds(0.5));
-            }
-        if(clock.getElapsedTime().asSeconds()>0.1f && count<18)
-            {
-                if(rectSource.left == 392)
-                    {
-                        rectSource.left = 0;
-                        rectSource.top += 134;
-                    }
-                    else
-                        rectSource.left += 392;
 
-                    sprite.setTextureRect(rectSource);
-                    clock.restart();
-                    count++;
+        if (clock.getElapsedTime().asSeconds()>0.1f) {
+            if (rectSource.left == 396) {
+                rectSource.left = 0;
+                rectSource.top += 134;
+            } else {
+                rectSource.left += 396;
             }
+            sprite.setTextureRect(rectSource);
+            clock.restart();
+            frame_count++;
+        }
     }
     return 1;
 }
 
 /**draws/fades in the tagline */
-int Title_Animation :: draw_tagline(sf::RenderWindow &window)
-{
-    int fontSize = 50;
-    int count = 0;
-
-    sf::FloatRect textbox;
+int Title_Animation :: draw_tagline(sf::RenderWindow &window) {
+    int frame_count = 0;
+    sf:: Event event;
     sf::Clock clock;
+
+    int fontSize = 50;
     sf::Font font;
     font.loadFromFile(REGULARFONT_FILEPATH);
     sf::Text tagline(TAG_LINE, font, fontSize);
-    tagline.setCharacterSize(50);
-    textbox = tagline.getGlobalBounds();
-    tagline.setOrigin(textbox.width/2.0f,textbox.height/2.0f);
-    tagline.setPosition(window.getSize().x/2,window.getSize().y/2);
-    tagline.setFillColor(sf::Color(255,255,255, 34));
-    while(count!=15)
-    {
-        if(clock.getElapsedTime().asSeconds()>0.25f && count<15) //&& count<18)
-            {
-                int hue = count*17;
-                tagline.setFillColor(sf::Color(255,255,255,hue));
-                clock.restart();
-                count++;
-                window.draw(tagline);
-                window.display();
-            }
+    tagline.setCharacterSize(fontSize);
 
+    sf::FloatRect textbox;
+    textbox = tagline.getGlobalBounds();
+
+    tagline.setOrigin(textbox.width / 2.0f, textbox.height / 2.0f);
+    tagline.setPosition(window.getSize().x / 2, window.getSize().y / 2);
+    tagline.setFillColor(sf::Color(255, 255, 255, 0));
+
+    while (frame_count <= 255) {
+        while (window.pollEvent(event)) {
+            if(event.type == sf::Event::Closed) {return -1;}
+            if(event.type == sf::Event::KeyPressed) {return 1;}
+        }
+        if(clock.getElapsedTime().asSeconds() > 0.01f) {
+            window.clear(sf::Color(40,140,240));
+            tagline.setFillColor(sf::Color(255, 255, 255, frame_count));
+            clock.restart();
+            frame_count++;
+            window.draw(tagline);
+            window.display();
+        }
     }
     return 1;
 }
 
 /**runs the opening screen */
-int *Title_Animation :: run(sf::RenderWindow &window, int curr_level)
-{
+int *Title_Animation::run(sf::RenderWindow &window, int cur_lvl) {
     int *re = new int[2];
     re[0] = 0;
-    re[1] = curr_level;
-    sf:: Event Event;
+    re[1] = cur_lvl;
+
     bool running = true;
-    while(running)
-    {
-
-        while (window.pollEvent(Event))
-        {
-            if(Event.type == sf::Event::Closed)
-            {
-                    running = false;
-                    re[0] = -1;
-                    return re;
-            }
-
-        }
-        window.clear(sf::Color(40,140,240));
-        draw_sprite(window);
-        int next_screen = draw_tagline(window);
-        window.display();
-        re[0] = next_screen;
+    if (draw_sprite(window) == -1) {
+        re[0] = -1;
         return re;
     }
+
+    re[0] = draw_tagline(window);
+    return re;
 }

@@ -3,13 +3,11 @@
 
 #include "Block.hpp"
 #include <iostream>
+#include <string>
 
 class BoardState {
     private:
         int block_ct = 0;
-        int block_removed_ct = 0;
-        int wrong_moves = 0;
-        bool is_clear = false;
         const static int default_width = 9;
         const static int default_height = 9;
         Block * board[default_width][default_height] = {{nullptr}};
@@ -28,12 +26,12 @@ class BoardState {
         Block * get_block(int x, int y);
         bool block_exists(int x, int y);
         bool add_block(Block * block);
-        bool get_is_clear();
-        void add_wrong_move();
-        int get_blocks_removed_ct();
+        int get_block_ct();
         void print_board();
         void export_board(std::string filepath);
-        unsigned long export_block(int x, int y);
+        void import_board(std::string filepath);
+        void old_import_board(std::string filepath);
+        std::string export_block(int x, int y);
 };
 
 #endif //CLEAR_BOARDSTATE_HPP

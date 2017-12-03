@@ -6,12 +6,14 @@
 #include "BlockDirectional.hpp"
 #include "BlockRotating.hpp"
 #include "BoardState.hpp"
+#include "GameState.hpp"
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
 class GameLogic {
     private:
         BoardState * board;
+        GameState * state;
         int selected_x = -1;
         int selected_y = -1;
     public:
@@ -41,6 +43,8 @@ class GameLogic {
         int get_blocks_removed_ct();
         bool block_is_move_restricted(int, int);
         bool selected_block_is_move_restricted();
+        void set_GameState(GameState &state);
+        void init_current_board();
 };
 
 #endif //CLEAR_GAMELOGIC_HPP

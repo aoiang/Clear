@@ -1,10 +1,4 @@
-//
-// Created by Yiyang Zhao on 01/12/2017.
-//
-
 #include "Levels_Screen.hpp"
-
-
 
 /**Draws each level, mark red to unaccessible level*/
 void Levels_Screen::draw(sf::RenderWindow &window)
@@ -71,7 +65,6 @@ int *Levels_Screen :: run(sf::RenderWindow &window, int curr_level)
         finished_level = curr_level;
     }
 
-    this->board = new BoardState(LEVEL_01);
     while(running)
     {
 
@@ -85,16 +78,12 @@ int *Levels_Screen :: run(sf::RenderWindow &window, int curr_level)
                 return re;
             }
 
-            // return 2;
-
             if(Event.type == sf::Event::KeyPressed)
             {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                     re[0] = 1;
                     return re;
             }
-
-
         }
 
 
@@ -106,7 +95,6 @@ int *Levels_Screen :: run(sf::RenderWindow &window, int curr_level)
             for (int lv = 0; lv < 6; lv ++){
                 if (Levels_Screen::check_clicked(mousePosition, lv+1, window) && level[lv].getFillColor() != sf::Color::Red)
                 {
-                    this->board = new BoardState(LEVEL_TEST);
                     re[0] = 2;
                     re[1] = lv+1;
                     return re;
