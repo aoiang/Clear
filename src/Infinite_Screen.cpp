@@ -140,7 +140,6 @@ int *Infinite_Screen :: run(sf::RenderWindow &window, int cur_level)
     sf::Clock clock;
     float starttime;
     float endtime;
-    //set(window);
 
     while(running)
     {
@@ -151,6 +150,13 @@ int *Infinite_Screen :: run(sf::RenderWindow &window, int cur_level)
             {
                 running = false;
                 re[0] = -1;
+                return re;
+            }
+        }
+
+        if(Event.type == sf::Event::KeyPressed) {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+                re[0] = 1;
                 return re;
             }
         }
