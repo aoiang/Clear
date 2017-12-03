@@ -10,7 +10,7 @@
 
 class Infinite_Screen : public Screen_Abstract{
     private:
-        sf::Text ro_block_up_button;
+        sf::Text* ro_block_up_button;
         sf::Text dir_block_up_button;
         sf::Text nor_block_up_button;
         sf::Text ro_block_down_button;
@@ -35,9 +35,10 @@ class Infinite_Screen : public Screen_Abstract{
         int num_of_nor = 0;
 
     public:
+        void set(sf::RenderWindow &window);
         int block_size = 50;
         void draw(sf::RenderWindow &window);
-        bool check_clicked(sf::Vector2f mousePos, sf::RenderWindow &window);
+        bool check_clicked(sf::Vector2f mousePos, sf::Text desired_option, sf::RenderWindow &window);
         int *run(sf::RenderWindow &window, int curr_level);
 
 
