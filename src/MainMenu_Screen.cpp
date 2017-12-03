@@ -97,7 +97,7 @@ int *MainMenu_Screen :: run(sf::RenderWindow &window, int cur_level) {
                 re[0] = 3;
                 return re;
             } else if (check_mousover(mousePosition, menuItems[3], window)) { //infinite mode
-                re[0] = 2;
+                re[0] = 4;
                 re[1] = 1;
                 return re;
             } else if (check_mousover(mousePosition, menuItems[4], window)) {} //settings
