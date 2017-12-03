@@ -113,7 +113,7 @@ int *MainMenu_Screen :: run(sf::RenderWindow &window, int cur_level)
             }
             if (check_clicked(mousePosition, *menuItem_1, window)) {
                 re[0] = 2;
-                re[1] = 99;
+                //re[1] = 99;
                 return re;
             }
             if (check_clicked(mousePosition, *menuItem_2, window)) {

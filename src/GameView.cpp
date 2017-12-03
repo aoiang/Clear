@@ -15,7 +15,6 @@ int GameView::run(GameLogic logic)
     Levels_Screen screen3;
     std::vector<Screen_Abstract*> screens;
     int *curr_screen = new int[2];
-    int level_keeper = 1;
     curr_screen[0] = 0;
     curr_screen[1] = 1;
 
@@ -27,9 +26,6 @@ int GameView::run(GameLogic logic)
 
     while(curr_screen[0] >=0 )
     {
-        if (curr_screen[1] < 99){
-            level_keeper = curr_screen[1];
-        }
-        curr_screen = screens[curr_screen[0]]->run(App, level_keeper);
+        curr_screen = screens[curr_screen[0]]->run(App, curr_screen[1]);
     }
 }
