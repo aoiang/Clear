@@ -374,7 +374,7 @@ int *GameView_Screen::run(sf::RenderWindow &window, int curr_level) {
             time_since_completion += draw_clock.getElapsedTime().asMicroseconds();
             if (time_since_completion > 750000) {
                 re[1]++;
-                auto * board = new BoardState(levels[re[1]-1]);
+                BoardState * board = new BoardState(levels[re[1]-1]);
                 logic->set_BoardState(*board);
                 init();
                 time_since_completion = 0;
