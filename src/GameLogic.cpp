@@ -67,7 +67,11 @@ bool GameLogic::tabs_impede(Block * block, char direction) {
 bool GameLogic::path_blocked(Block * block, char direction) {
     int x = block->get_x();
     int y = block->get_y();
+    return path_blocked(x, y, direction);
+}
 
+/**@return if a block's path is blocked*/
+bool GameLogic::path_blocked(int x, int y, char direction) {
     switch (direction) {
         case U_DIR:
             for (int y2 = y+1; y2<get_board_height(); y2++) {
@@ -90,9 +94,12 @@ bool GameLogic::path_blocked(Block * block, char direction) {
     return false;
 }
 
-/**@return if a block's path is blocked*/
-bool GameLogic::path_blocked(int x, int y, char direction) {
-    return path_blocked(get_block(x,y), direction);
+/**@return if location is fully blocked*/
+bool GameLogic::path_fully_blocked(int x, int y) {
+    return path_blocked(x, y, U_DIR)
+        && path_blocked(x, y, R_DIR)
+        && path_blocked(x, y, D_DIR)
+        && path_blocked(x, y, L_DIR);
 }
 
 /**Removes block at index x,y*/

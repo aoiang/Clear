@@ -29,6 +29,7 @@ class GameLogic {
         Block * get_selected_block();
         bool path_blocked(Block * block, char direction);
         bool path_blocked(int x, int y, char direction);
+        bool path_fully_blocked(int x, int y);
         bool can_be_removed(Block * block);
         bool can_move_block(Block * block, char direction);
         bool tabs_impede(Block * block, char direction);
