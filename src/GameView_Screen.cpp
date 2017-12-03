@@ -379,8 +379,14 @@ int *GameView_Screen::run(sf::RenderWindow &window, int curr_level) {
         if (logic->get_is_clear()) {
             time_since_completion += draw_clock.getElapsedTime().asMicroseconds();
             if (time_since_completion > 750000) {
-                re[1]++;
-                BoardState * board = new BoardState(levels[re[1]-1]);
+                if (re[1] == 0){
+                    BoardGenerator * generator = new BoardGenerator();
+                    board = generator->make_board(logic->get_generated_board_x(), logic->get_generated_board_y());
+                }
+                else{
+                    re[1]++;
+                    BoardState * board = new BoardState(levels[re[1]-1]);
+                }
                 logic->set_BoardState(*board);
                 init();
                 time_since_completion = 0;
