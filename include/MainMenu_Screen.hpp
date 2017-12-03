@@ -14,10 +14,13 @@ class MainMenu_Screen : public Screen_Abstract
         sf::Text * menuItem_0;
         sf::Text * menuItem_1;
         sf::Text * menuItem_2;
+        sf::Text * menuItem_3;
         sf::FloatRect  item_0_box;
         sf::FloatRect  item_1_box;
         sf::FloatRect  item_2_box;
-        BoardState * board = new BoardState(LEVEL_01);
+        sf::FloatRect  item_3_box;
+        //BoardState * board = new BoardState(LEVEL_01);
+
     public:
         void draw(sf::RenderWindow &window);
         bool check_clicked(sf::Vector2f mousePos, sf::Text desired_option, sf::RenderWindow &window);

@@ -47,11 +47,11 @@ void MainMenu_Screen:: draw(sf::RenderWindow &window)
     menuItem_2->setOrigin(item_2_box.width/2.0f,item_2_box.height/2.0f);
     menuItem_2->setPosition(sf::Vector2f(window.getSize().x/2,(window.getSize().y/2)+100));
 
-    sf::Text menuItem_3(MAINMENUITEM_3, font, fontSize);
+    this->menuItem_3 = new sf::Text(MAINMENUITEM_3, font, fontSize);
     sf::FloatRect item_3_box;
-    item_3_box = menuItem_3.getGlobalBounds();
-    menuItem_3.setOrigin(item_3_box.width/2.0f,item_3_box.height/2.0f);
-    menuItem_3.setPosition(sf::Vector2f(window.getSize().x/2,(window.getSize().y/2)+150));
+    item_3_box = menuItem_3->getGlobalBounds();
+    menuItem_3->setOrigin(item_3_box.width/2.0f,item_3_box.height/2.0f);
+    menuItem_3->setPosition(sf::Vector2f(window.getSize().x/2,(window.getSize().y/2)+150));
 
     sf::Text menuItem_4(MAINMENUITEM_4, font, fontSize);
     sf::FloatRect item_4_box;
@@ -62,7 +62,7 @@ void MainMenu_Screen:: draw(sf::RenderWindow &window)
     window.draw(*(menuItem_0));
     window.draw(*(menuItem_1));
     window.draw(*(menuItem_2));
-    window.draw(menuItem_3);
+    window.draw(*(menuItem_3));
     window.draw(menuItem_4);
     window.draw(title);
 }
@@ -113,11 +113,14 @@ int *MainMenu_Screen :: run(sf::RenderWindow &window, int cur_level)
             }
             if (check_clicked(mousePosition, *menuItem_1, window)) {
                 re[0] = 2;
-                //re[1] = 99;
                 return re;
             }
             if (check_clicked(mousePosition, *menuItem_2, window)) {
                 re[0] = 3;
+                return re;
+            }
+            if (check_clicked(mousePosition, *menuItem_3, window)) {
+                re[0] = 4;
                 return re;
             }
         }

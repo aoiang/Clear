@@ -353,7 +353,7 @@ int *GameView_Screen::run(sf::RenderWindow &window, int curr_level) {
     
     //BoardState * board = new BoardState(levels[re[1]-1]);
     BoardGenerator * generator = new BoardGenerator();
-    BoardState * board = generator->make_board(9, 9);
+    BoardState * board = generator->make_board(3, 3);
     
     
     logic->set_BoardState(*board);
