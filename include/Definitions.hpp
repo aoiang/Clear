@@ -37,8 +37,8 @@
 #define ID_ROTATE_2 32
 #define ID_ROTATE_3 33
 
-#define MODE_STORY 'l'
-#define MODE_GENERATOR 'G'
+#define MODE_STORY 's'
+#define MODE_GENERATOR 'g'
 
 #define LEVELS 20
 #define LEVEL_TEST "../resources/levels/testlevel.txt"
