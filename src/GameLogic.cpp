@@ -203,3 +203,10 @@ bool GameLogic::block_is_move_restricted(int x, int y) {return get_block(x, y)->
 
 /**@return if selected block is move restricted*/
 bool GameLogic::selected_block_is_move_restricted() {return block_is_move_restricted(selected_x, selected_y);}
+
+/**@return maximum level the player has reached*/
+int GameLogic::get_max_level() {return state->get_max_level();}
+
+/**Set maximum level finished by player*/
+//TODO: move from GameLogic into GameState
+void GameLogic::set_max_level(int lvl) {state->set_max_level(lvl);}

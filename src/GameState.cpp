@@ -2,6 +2,8 @@
 
 GameState::GameState(std::string) {}
 
+GameState::GameState() {max_level = 0;}
+
 /**Reset current board variables*/
 void GameState::init_current_board() {
     current_board_wrong_moves = 0;
@@ -26,3 +28,9 @@ void GameState::set_is_clear() {current_board_is_clear = true;}
 
 /**@return if the board is clear*/
 bool GameState::get_is_clear() {return current_board_is_clear;}
+
+/**@return highest level the player has completed*/
+int GameState::get_max_level() {return max_level;}
+
+/**Sets highest level player has reached*/
+void GameState::set_max_level(int lvl) {max_level = lvl;}

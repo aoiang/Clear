@@ -46,6 +46,8 @@ class GameLogic {
         bool selected_block_is_move_restricted();
         void set_GameState(GameState &state);
         void init_current_board();
+        int get_max_level();
+        void set_max_level(int);
 };
 
 #endif //CLEAR_GAMELOGIC_HPP
