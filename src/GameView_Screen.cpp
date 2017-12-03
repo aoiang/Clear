@@ -117,14 +117,12 @@ int GameView_Screen::BoardYToYPixel(int y) {
     return App->getSize().y - BoardToPixel(y, logic->get_board_height(), App->getSize().y, true);
 }
 
-
 int GameView_Screen::PixelToBoard(int pixel_index, int board_axis_length, int screen_axis_length) {
     int current_window_center = screen_axis_length/2 - block_size/2;
     int board_center = board_axis_length/2;
     int starting_edge = current_window_center - board_center*block_size;
     return (pixel_index-starting_edge)/block_size;
 }
-
 
 /**Convert pixel x coordinate to board x coordinate*/
 int GameView_Screen::XPixelToBoardX(int x_pixel) {
@@ -135,7 +133,6 @@ int GameView_Screen::XPixelToBoardX(int x_pixel) {
 int GameView_Screen::YPixelToBoardY(int y_pixel) {
     return PixelToBoard((App->getSize().y - y_pixel), logic->get_board_height(), App->getSize().y);
 }
-
 
 /**Checks if mouse has clicked on a block*/
 void GameView_Screen::check_mouse_input() {
@@ -341,7 +338,6 @@ void GameView_Screen::check_keyboard_input() {
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {logic->try_move_selected(R_DIR);}
 }
 
-
 int *GameView_Screen::run(sf::RenderWindow &window, int curr_level) {
     int *re = new int[2];
     re[0] = 1;
@@ -349,13 +345,11 @@ int *GameView_Screen::run(sf::RenderWindow &window, int curr_level) {
 
     sf::Clock draw_clock;
     this->App = &window;
-    
-    
+
     //BoardState * board = new BoardState(levels[re[1]-1]);
     BoardGenerator * generator = new BoardGenerator();
-    BoardState * board = generator->make_board(9, 9);
-    
-    
+    BoardState * board = generator->make_board(3, 3);
+
     logic->set_BoardState(*board);
     init();
     int time_since_completion = 0;
