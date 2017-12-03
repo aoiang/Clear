@@ -1,7 +1,3 @@
-//
-// Created by Yiyang Zhao on 28/11/2017.
-//
-
 #include "Generator.hpp"
 
 Generator::block_type Generator::init_block_type() {

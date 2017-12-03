@@ -1,5 +1,5 @@
 #include "Block.hpp"
-
+#include "Definitions.hpp"
 
 /**Sets block id*/
 void Block::set_id() {
@@ -28,10 +28,10 @@ int Block::get_y() {return y;}
 /**@return index based on direction*/
 int Block::dir_to_index(char dir) {
     switch (dir) {
-        case 'u': return 0;
-        case 'r': return 1;
-        case 'd': return 2;
-        case 'l': return 3;
+        case U_DIR: return 0;
+        case R_DIR: return 1;
+        case D_DIR: return 2;
+        case L_DIR: return 3;
         default: return -1;
     }
 }
@@ -48,10 +48,10 @@ bool Block::get_tab(char dir) {
 
 /**Sets all tabs to 0*/
 void Block::init_tabs() {
-    set_tab('u', false);
-    set_tab('r', false);
-    set_tab('d', false);
-    set_tab('l', false);
+    set_tab(U_DIR, false);
+    set_tab(R_DIR, false);
+    set_tab(D_DIR, false);
+    set_tab(L_DIR, false);
 }
 
 /**@return can_combine*/

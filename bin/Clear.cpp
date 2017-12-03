@@ -8,12 +8,9 @@
 #include "GameView.hpp"
 
 int main(int argc, char** argv) {
-    auto * board = new BoardState(LEVEL_01);
     GameView view;
     GameLogic logic;
 
-    logic.set_BoardState(*board);
     view.run(logic);
-
     return 0;
 }
