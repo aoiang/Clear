@@ -136,6 +136,7 @@ bool BoardState::block_exists(int x, int y) {return is_valid_location(x,y) && bo
 /**@return number of blocks on board*/
 int BoardState::get_block_ct() {return block_ct;}
 
+/**Prints the current board configuration*/
 void BoardState::print_board() {
     for (int y=0; y<get_board_height(); y++) {
         for (int x=0; x<get_board_width(); x++) {
