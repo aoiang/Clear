@@ -1,9 +1,7 @@
 #include "BoardState.hpp"
-#include "Block.hpp"
 #include "BlockNormal.hpp"
 #include "BlockDirectional.hpp"
 #include "BlockRotating.hpp"
-#include <iostream>
 #include <fstream>
 
 /**
@@ -91,7 +89,7 @@ void BoardState::import_board(std::string filepath) {
         getline(level_file, line);
         std::vector<std::string> blocks = Block::split_string(line, '\t');
         for (int x=0; x<width; x++) {
-            if (blocks[x]!="") {
+            if (!blocks[x].empty()) {
                 add_block(Block::import_block(blocks[x], x, y));
             }
         }

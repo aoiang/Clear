@@ -37,7 +37,6 @@ class BoardState {
         void import_board(std::string filepath);
         void old_import_board(std::string filepath);
         std::string export_block(int x, int y);
-        Block * import_block(std::string block_identity);
 };
 
 #endif //CLEAR_BOARDSTATE_HPP

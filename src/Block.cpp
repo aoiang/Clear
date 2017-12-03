@@ -2,8 +2,6 @@
 #include <BlockRotating.hpp>
 #include <BlockDirectional.hpp>
 #include <BlockNormal.hpp>
-#include "Block.hpp"
-#include "Definitions.hpp"
 
 /**Sets block id*/
 void Block::set_id() {
