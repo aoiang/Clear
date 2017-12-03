@@ -17,7 +17,7 @@ int GameView::run(GameLogic logic) {
     curr_screen[0] = 0;
     curr_screen[1] = 1;
 
-    // screen1.set_GameLogic(logic);
+    screen1.set_GameLogic(logic);
     screen2.set_GameLogic(logic);
     screen3.set_GameLogic(logic);
     screens.push_back(&screen0);
@@ -25,8 +25,7 @@ int GameView::run(GameLogic logic) {
     screens.push_back(&screen2);
     screens.push_back(&screen3);
 
-    while(curr_screen[0] >=0 )
-    {
+    while(curr_screen[0] >=0 ) {
         curr_screen = screens[curr_screen[0]]->run(App, curr_screen[1]);
     }
 }

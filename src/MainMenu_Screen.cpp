@@ -23,6 +23,9 @@ bool MainMenu_Screen::check_mousover(sf::Vector2f mousePos, sf::Text desired_opt
     }
 }
 
+/**Sets GameLogic*/
+void MainMenu_Screen::set_GameLogic(GameLogic &logic) {this->logic = &logic;}
+
 /**Sets menu item positions*/
 void MainMenu_Screen::set_item_position(sf::Text * item, int y, sf::RenderWindow &window) {
     sf::FloatRect tmp = item->getGlobalBounds();
