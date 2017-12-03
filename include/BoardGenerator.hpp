@@ -16,6 +16,7 @@ class BoardGenerator {
         std::mt19937 number_generator;
         std::string pick_config();
         int pick_number_between(int min, int max);
+        void remove_pointless_tabs();
     public:
         BoardGenerator();
         BoardState * make_board(int width, int height);

@@ -14,6 +14,12 @@ BoardState * BoardGenerator::make_board(int width, int height) {
     for (int i=0; i<(width*height*10); i++) {
         add_block_if_possible(pick_number_between(0, width-1), pick_number_between(0, height-1));        
     }
+    remove_pointless_tabs();
+    
+    for (int i=0; i<(width*height*10); i++) {
+        add_block_if_possible(pick_number_between(0, width-1), pick_number_between(0, height-1));        
+    }
+    remove_pointless_tabs();
     
     return board;
 }
@@ -49,4 +55,21 @@ std::string BoardGenerator::pick_config() {
 int BoardGenerator::pick_number_between(int min, int max) {
     std::uniform_int_distribution<> distr(min, max);
     return distr(number_generator);
+}
+
+
+void BoardGenerator::remove_pointless_tabs() {
+    for (int y=0; y<board->get_board_height(); y++) {
+        for (int x=0; x<board->get_board_width(); x++) {
+            if (board->block_exists(x, y)) {
+                Block * block = board->get_block(x, y);
+                if (block->get_simple_id()!=3) {
+                    if (!board->block_exists(x, y+1)) {block->set_tab(U_DIR, false);}
+                    if (!board->block_exists(x+1, y)) {block->set_tab(R_DIR, false);}
+                    if (!board->block_exists(x, y-1)) {block->set_tab(D_DIR, false);}
+                    if (!board->block_exists(x-1, y)) {block->set_tab(L_DIR, false);}
+                }
+            }
+        }
+    }
 }

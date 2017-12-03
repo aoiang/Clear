@@ -21,6 +21,8 @@ void Block::set_position(int x, int y) {
 /**@return block id*/
 int Block::get_id() {return id;}
 
+int Block::get_simple_id() {return simple_id;}
+
 /**@return x index of block on board*/
 int Block::get_x() {return x;}
 
