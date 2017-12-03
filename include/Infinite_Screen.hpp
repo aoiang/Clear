@@ -10,7 +10,7 @@
 
 class Infinite_Screen : public Screen_Abstract{
     private:
-        sf::Text* ro_block_up_button;
+        sf::Text ro_block_up_button;
         sf::Text dir_block_up_button;
         sf::Text nor_block_up_button;
         sf::Text ro_block_down_button;

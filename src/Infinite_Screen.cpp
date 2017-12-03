@@ -17,10 +17,10 @@ void Infinite_Screen::set(sf::RenderWindow &window) {
 //        window.draw(circle);
 //
 //    }
-    this->ro_block_up_button = new sf::Text("+", font, buttonSize);
-    item_2_box = ro_block_up_button->getGlobalBounds();
-    ro_block_up_button->setOrigin(item_2_box.width/2.0f,item_2_box.height/2.0f);
-    ro_block_up_button->setPosition(sf::Vector2f(250, 250));
+//    this->ro_block_up_button = new sf::Text("+", font, buttonSize);
+//    item_2_box = ro_block_up_button->getGlobalBounds();
+//    ro_block_up_button->setOrigin(item_2_box.width/2.0f,item_2_box.height/2.0f);
+//    ro_block_up_button->setPosition(sf::Vector2f(250, 250));
 
 }
 
@@ -82,7 +82,10 @@ void Infinite_Screen::draw(sf::RenderWindow &window) {
     nor_block_down_button.setOrigin(item_1_box.width/2.0f,item_1_box.height/2.0f);
     nor_block_down_button.setPosition(sf::Vector2f(140, 250));
 
-
+    ro_block_up_button = sf::Text("+", font, buttonSize);
+    item_2_box = ro_block_up_button.getGlobalBounds();
+    ro_block_up_button.setOrigin(item_2_box.width/2.0f,item_2_box.height/2.0f);
+    ro_block_up_button.setPosition(sf::Vector2f(250, 250));
 
     ro_block_down_button = sf::Text("-", font, buttonSize);
     item_3_box = ro_block_down_button.getGlobalBounds();
@@ -112,7 +115,7 @@ void Infinite_Screen::draw(sf::RenderWindow &window) {
 
     window.draw(nor_block_up_button);
     window.draw(nor_block_down_button);
-    window.draw(*ro_block_up_button);
+    window.draw(ro_block_up_button);
     window.draw(ro_block_down_button);
     window.draw(dir_block_up_button);
     window.draw(dir_block_down_button);
@@ -168,14 +171,18 @@ int *Infinite_Screen :: run(sf::RenderWindow &window, int cur_level)
             }
         }
 
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
+            num_of_ro++;
+        }
+
 
         if(sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
             sf::Vector2f mousePosition = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
 
 
-            if (check_clicked(mousePosition, *ro_block_up_button, window)) {
-                num_of_ro ++;
-            }
+//            if (check_clicked(mousePosition, *ro_block_up_button, window)) {
+//                num_of_ro ++;
+//            }
 //            if (check_clicked(mousePosition, window)) {
 //                if(num_of_ro > 0){
 //                    num_of_ro --;
