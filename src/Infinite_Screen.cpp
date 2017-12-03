@@ -14,7 +14,7 @@ void Infinite_Screen::init() {
 void Infinite_Screen::draw(sf::RenderWindow &window) {
 
     unsigned int fontSize = 25;
-    unsigned int buttonSize = 50;
+    unsigned int buttonSize = 75;
     sf::Font font;
     font.loadFromFile(REGULARFONT_FILEPATH);
     if(!font.loadFromFile(REGULARFONT_FILEPATH))
@@ -95,10 +95,10 @@ void Infinite_Screen::draw(sf::RenderWindow &window) {
     for (int i = 0; i < 5; i++){
         block_num[i] = sf::Text(sf::String(std::to_string(num_of_blocks[i])), font, fontSize);
         if (i < 3){
-            block_num[i].setPosition(sf::Vector2f(95 + (200 * i), 260));
+            block_num[i].setPosition(sf::Vector2f(95 + (200 * i), 270));
         }
         else{
-            block_num[i].setPosition(sf::Vector2f(195 + (200 * (i-3)), 410));
+            block_num[i].setPosition(sf::Vector2f(195 + (200 * (i-3)), 420));
         }
 
         window.draw(block_num[i]);
