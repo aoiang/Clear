@@ -1,4 +1,5 @@
 #include "GameView_Screen.hpp"
+#include "BoardGenerator.hpp"
 
 /**Create the game window*/
 GameView_Screen::GameView_Screen() = default;
@@ -348,7 +349,13 @@ int *GameView_Screen::run(sf::RenderWindow &window, int curr_level) {
 
     sf::Clock draw_clock;
     this->App = &window;
-    BoardState * board = new BoardState(levels[re[1]-1]);
+    
+    
+    //BoardState * board = new BoardState(levels[re[1]-1]);
+    BoardGenerator * generator = new BoardGenerator();
+    BoardState * board = generator->make_board(9, 9);
+    
+    
     logic->set_BoardState(*board);
     init();
     int time_since_completion = 0;
