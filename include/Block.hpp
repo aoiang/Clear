@@ -3,6 +3,7 @@
 
 #include "Definitions.hpp"
 #include <iostream>
+#include <vector>
 
 static char directions[5] = "urdl";
 
@@ -12,6 +13,7 @@ class Block {
         int y;
         int id;
         char bool_to_char(bool boolean);
+        bool string_to_bool(std::string text);
     protected:
         int base_id = 0;
         int simple_id = 0;
@@ -24,6 +26,7 @@ class Block {
         void set_position(int x, int y);
         void reset_rotation();
     public:
+        static Block * import_block(std::string identity, int x, int y);
         bool rotation_changes_id = false;
         int get_id();
         int get_x();
@@ -42,6 +45,8 @@ class Block {
         char get_direction();
         void basic_init(int x, int y);
         std::string get_identity();
+        static std::vector<std::string> split_string(const std::string &text, char delimiter);
+        void import_init(std::string identity);
 };
 
 #endif //CLEAR_BLOCK_HPP
