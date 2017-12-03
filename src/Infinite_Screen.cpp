@@ -176,7 +176,7 @@ int *Infinite_Screen :: run(sf::RenderWindow &window, int cur_level)
             if (start_clicked(mousePosition, window)){
                 logic->set_generated_board_size(num_of_blocks[3], num_of_blocks[4]);
                 re[0] = 2;
-                re[1] = 99;
+                re[1] = -1;
                 return re;
             }
 

@@ -48,6 +48,11 @@ bool Levels_Screen::check_clicked(sf::Vector2f mousePos, int selected_level, sf:
 
 /**Inialize all parameters & run the levels screen*/
 int * Levels_Screen::run(sf::RenderWindow &window, int curr_level) {
+
+    if (logic->get_max_level() <= 0){
+        curr_level = 1;
+    }
+
     sf:: Event Event;
     bool running = true;
     int *re = new int[2];
@@ -58,6 +63,8 @@ int * Levels_Screen::run(sf::RenderWindow &window, int curr_level) {
         logic->set_max_level(curr_level);
         std::cout << curr_level << std::endl;
     }
+
+
 
     while(running) {
         while (window.pollEvent(Event)) {
