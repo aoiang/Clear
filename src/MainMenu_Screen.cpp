@@ -25,7 +25,6 @@ void MainMenu_Screen:: draw(sf::RenderWindow &window)
     title.setOrigin(titlebox.width/2.0f, titlebox.height/2.0f);
     title.setPosition(sf::Vector2f(window.getSize().x/2,(window.getSize().y/2)-200));
 
-
     this->menuItem_0 = new sf::Text(MAINMENUITEM_0, font, fontSize);
     //sf::FloatRect item_0_box;
     item_0_box = menuItem_0->getGlobalBounds();
@@ -85,18 +84,14 @@ bool MainMenu_Screen :: check_clicked(sf::Vector2f mousePos, sf::Text desired_op
 
 }
 
-
-
 /**inialize all parameters and run the main menu screen*/
-int *MainMenu_Screen :: run(sf::RenderWindow &window, int curr_level)
-
-
+int *MainMenu_Screen :: run(sf::RenderWindow &window, int cur_level)
 {
     sf:: Event Event;
     bool running = true;
     int *re = new int[2];
     re[0] = 0;
-    re[1] = curr_level;
+    re[1] = cur_level;
 
     while(running)
     {
@@ -129,8 +124,5 @@ int *MainMenu_Screen :: run(sf::RenderWindow &window, int curr_level)
         window.clear(sf::Color(40,140,240));
         draw(window);
         window.display();
-
     }
-
-
 }

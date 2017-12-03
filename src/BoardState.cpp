@@ -81,7 +81,6 @@ unsigned long BoardState::export_block(int x, int y) {
     return 0;
 }
 
-
 /**@return board width*/
 int BoardState::get_board_width() {return width;}
 
@@ -142,15 +141,8 @@ bool BoardState::block_exists(int x, int y) {return is_valid_location(x,y) && bo
 /**Checks if the board is empty*/
 bool BoardState::get_is_clear() {return is_clear;}
 
-/**Adds a wrong move to the board*/
-void BoardState::add_wrong_move() {
-    wrong_moves++;
-    std::cout << "Wrong move; " << wrong_moves << " total" << std::endl;
-}
-
 /**@return number of blocks removed*/
 int BoardState::get_blocks_removed_ct() {return block_removed_ct;}
-
 
 void BoardState::print_board() {
     for (int y=0; y<get_board_height(); y++) {

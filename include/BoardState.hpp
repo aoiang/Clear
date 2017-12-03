@@ -29,7 +29,6 @@ class BoardState {
         bool block_exists(int x, int y);
         bool add_block(Block * block);
         bool get_is_clear();
-        void add_wrong_move();
         int get_blocks_removed_ct();
         void print_board();
         void export_board(std::string filepath);
