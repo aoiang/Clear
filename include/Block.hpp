@@ -29,6 +29,7 @@ class Block {
         static Block * import_block(std::string identity, int x, int y);
         bool rotation_changes_id = false;
         int get_id();
+        int get_simple_id();
         int get_x();
         int get_y();
         int dir_to_index(char);
