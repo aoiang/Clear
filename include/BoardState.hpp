@@ -3,6 +3,7 @@
 
 #include "Block.hpp"
 #include <iostream>
+#include <string>
 
 class BoardState {
     private:
@@ -33,6 +34,8 @@ class BoardState {
         int get_blocks_removed_ct();
         void print_board();
         void export_board(std::string filepath);
+        void import_board(std::string filepath);
+        void old_import_board(std::string filepath);
         std::string export_block(int x, int y);
         Block * import_block(std::string block_identity);
 };

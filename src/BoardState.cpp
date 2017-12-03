@@ -1,7 +1,9 @@
 #include "BoardState.hpp"
+#include "Block.hpp"
 #include "BlockNormal.hpp"
 #include "BlockDirectional.hpp"
 #include "BlockRotating.hpp"
+#include <iostream>
 #include <fstream>
 
 /**
@@ -22,11 +24,15 @@ BoardState::BoardState() {
 
 /**Loads board from a file*/
 BoardState::BoardState(std::string filepath) {
+    //old_import_board(filepath);
+    import_board(filepath + ".new");
+}
+
+void BoardState::old_import_board(std::string filepath) {
     this->width = default_width;
     this->height = default_height;
 
-    std::ifstream inFile;
-    inFile.open(filepath);
+    std::ifstream inFile(filepath);
 
     int entry_ct = 0;
     int block_ct = 0;
@@ -69,19 +75,50 @@ BoardState::BoardState(std::string filepath) {
     }
     std::cout << "Level loaded from " << filepath << std::endl;
     inFile.close();
+    export_board(filepath + ".new");
+}
+
+void BoardState::import_board(std::string filepath) {
+    std::ifstream level_file(filepath);
+    
+    std::string line;
+    getline(level_file, line);
+    this->width = stoi(line);
+    getline(level_file, line);
+    this->height = stoi(line);
+    
+    for (int y=0; y<height; y++) {
+        getline(level_file, line);
+        std::vector<std::string> blocks = Block::split_string(line, '\t');
+        for (int x=0; x<width; x++) {
+            if (blocks[x]!="") {
+                add_block(Block::import_block(blocks[x], x, y));
+            }
+        }
+    }
+    level_file.close();
 }
 
 void BoardState::export_board(std::string filepath) {
-    //height, width, and all of the blocks in an array.
-    //first two are h and w, then every one after is a block; everything on its own line.
+    //width, height, and all of the blocks in an array.
+    std::ofstream level_file;
+    level_file.open(filepath);
+    level_file << width <<"\n";
+    level_file << height <<"\n";
+    for (int y=0; y<height; y++) {
+        for (int x=0; x<width; x++) {
+            if (block_exists(x, y)) {
+                level_file << export_block(x, y);
+            }
+            level_file << "\t";
+        }
+        level_file << "\n";
+    }
+    level_file.close();
 }
 
 std::string BoardState::export_block(int x, int y) {
     return get_block(x, y)->get_identity();
-}
-
-Block * BoardState::import_block(std::string block_type) {
-
 }
 
 
