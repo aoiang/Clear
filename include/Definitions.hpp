@@ -3,6 +3,7 @@
 
 #define TITLEFONT_FILEPATH "../resources/PuzzleFont.ttf"
 #define REGULARFONT_FILEPATH "../resources/regularFont.ttf"
+#define HANDWRITTENFONT_FILEPATH "../resources/handwriting.ttf"
 #define UP_TEXTURE "../resources/textures/dir_u.png"
 #define RIGHT_TEXTURE "../resources/textures/dir_r.png"
 #define DOWN_TEXTURE "../resources/textures/dir_d.png"
@@ -12,6 +13,7 @@
 #define ROTATING_2_TEXTURE "../resources/textures/rotate2.png"
 #define ROTATING_3_TEXTURE "../resources/textures/rotate3.png"
 #define TITLE_TEXTUREMAP "../resources/clear_spritesheet.png"
+#define MAINMENU_BACKGROUND "../resources/postItNote.png"
 
 #define DEFAULT_DIR 'n'
 #define U_DIR 'u'

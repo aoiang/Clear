@@ -36,7 +36,12 @@ void MainMenu_Screen::set_item_position(sf::Text * item, int y, sf::RenderWindow
 /**Inialize all parameters and run the main menu screen*/
 int MainMenu_Screen::run(sf::RenderWindow &window) {
     unsigned int fontSize = 50;
-
+    sf::RectangleShape background;
+    sf::Texture background_texture;
+    background_texture.loadFromFile(MAINMENU_BACKGROUND);
+    background.setTexture(&background_texture);
+    //sf::Image background;
+    //background.loadFromFile(MAINMENU_BACKGROUND);
     sf::Font font;
     font.loadFromFile(REGULARFONT_FILEPATH);
     if(!font.loadFromFile(REGULARFONT_FILEPATH)) {
@@ -100,7 +105,7 @@ int MainMenu_Screen::run(sf::RenderWindow &window) {
                 menuItems[i].setFillColor(sf::Color::White);
             }
         }
-
+        window.draw(background);
         draw(window);
         window.display();
     }
