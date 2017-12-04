@@ -23,7 +23,9 @@ BoardState::BoardState() {
 /**Loads board from a file*/
 BoardState::BoardState(std::string filepath) {
     //old_import_board(filepath);
-    import_board(filepath + ".new");
+    filepath += ".new";
+    import_board(filepath);
+    std::cout << "Level loaded from " << filepath << std::endl;
 }
 
 void BoardState::old_import_board(std::string filepath) {
@@ -71,7 +73,6 @@ void BoardState::old_import_board(std::string filepath) {
         }
         entry_ct++;
     }
-    std::cout << "Level loaded from " << filepath << std::endl;
     inFile.close();
     export_board(filepath + ".new");
 }
@@ -141,9 +142,9 @@ bool BoardState::is_valid_location(int x, int y) {return is_valid_x(x) && is_val
   @return bool to indicate successful removal
 */
 bool BoardState::remove_block(int x, int y) {
-    if (x>width || y>height) {return false;}//doesn't handle if they're negative though.
+    if (!is_valid_location(x, y)) {std::cout << "bad remove request at " << x << "," << y << "\n";}
     else {board[x][y] = nullptr;}
-    return true;
+    return (is_valid_location(x, y));
 }
 
 /**
@@ -151,13 +152,15 @@ bool BoardState::remove_block(int x, int y) {
   @return bool to indicate successful addition
 */
 bool BoardState::add_block(Block * block) {
-    //doesn't check for invalid position; unlike remove.
     int x = block->get_x();
     int y = block->get_y();
-    if (board[x][y] != nullptr) {return false;}
-    else {board[x][y] = block;}
-    block_ct ++;
-    return true;
+    if (is_valid_location(x, y) && !block_exists(x, y)) {
+        board[x][y] = block;
+        block_ct++;
+        return true;
+    }
+    std::cout << "bad add request at " << x << "," << y << "\n";
+    return false;
 }
 
 /**
@@ -173,15 +176,3 @@ bool BoardState::block_exists(int x, int y) {return is_valid_location(x,y) && bo
 
 /**@return number of blocks on board*/
 int BoardState::get_block_ct() {return block_ct;}
-
-/**Prints the current board configuration*/
-void BoardState::print_board() {
-    for (int y=0; y<get_board_height(); y++) {
-        for (int x=0; x<get_board_width(); x++) {
-            if (!block_exists(x,y)) {std::cout << true << " ";}
-            else {std::cout << get_block(x,y)->get_id() << " ";}
-        }
-        std::cout<<"\n";
-    }
-}
-
