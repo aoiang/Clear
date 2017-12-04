@@ -213,18 +213,17 @@ bool GameLogic::selected_block_is_move_restricted() {return block_is_move_restri
 /**@return maximum level the player has reached*/
 int GameLogic::get_max_level() {return state->get_max_level();}
 
-/**Set maximum level finished by player*/
-//TODO: move from GameLogic into GameState
-void GameLogic::set_max_level(int lvl) {state->set_max_level(lvl);}
+/**@return current level*/
+int GameLogic::get_cur_level() {return state->get_cur_level();}
+
+/**Sets current level*/
+void GameLogic::set_cur_level(int lvl) {state->set_cur_level(lvl);}
+
+/**Adds 1 to current level*/
+void GameLogic::increment_cur_level() {state->increment_cur_level();}
 
 /**get the board x created by generator*/
 int GameLogic::get_generated_board_x() {return generated_board_x;}
 
 /**get the board y created by generator*/
 int GameLogic::get_generated_board_y() {return generated_board_y;}
-
-int GameLogic::get_cur_level() {return state->get_cur_level();}
-
-void GameLogic::set_cur_level(int lvl) {state->set_cur_level(lvl);}
-
-void GameLogic::increment_cur_level() {state->increment_cur_level();}

@@ -356,15 +356,10 @@ int GameView_Screen::run(sf::RenderWindow &window) {
     sf:: Event Event;
     while(running) {
         while (window.pollEvent(Event)) {
-            if(Event.type == sf::Event::Closed) {
-                return EXIT_GAME;
-            }
-            if (Event.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-                return SCREEN_MAINMENU;
-            }
+            if (Event.type == sf::Event::Closed) {return EXIT_GAME;}
+            if (Event.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {return SCREEN_MAINMENU;}
         }
 
-        //TODO: move this into GameView
         if (logic->get_is_clear()) {
             time_since_completion += draw_clock.getElapsedTime().asMicroseconds();
             if (time_since_completion > 750000) {

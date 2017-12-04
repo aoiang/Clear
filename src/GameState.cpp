@@ -35,9 +35,6 @@ bool GameState::get_is_clear() {return current_board_is_clear;}
 /**@return highest level the player has completed*/
 int GameState::get_max_level() {return max_level;}
 
-/**Sets highest level player has reached*/
-void GameState::set_max_level(int lvl) {max_level = lvl;}
-
 /**Gets the current level*/
 int GameState::get_cur_level() {return cur_level;}
 
@@ -47,6 +44,7 @@ void GameState::set_cur_level(int lvl) {
     if (lvl > max_level) {max_level = lvl;}
 }
 
+/**Adds 1 to cur_level, possibly increases max_level*/
 void GameState::increment_cur_level() {
     cur_level++;
     if (cur_level > max_level) {max_level = cur_level;}
