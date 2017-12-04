@@ -36,9 +36,7 @@
 #define ID_ROTATE_1 31
 #define ID_ROTATE_2 32
 #define ID_ROTATE_3 33
-
-#define MODE_STORY 's'
-#define MODE_GENERATOR 'g'
+#define ID_GROUPED 40
 
 #define EXIT_GAME -1
 #define SCREEN_TITLE 0
