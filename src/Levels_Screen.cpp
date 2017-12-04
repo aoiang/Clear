@@ -67,7 +67,7 @@ int Levels_Screen::run(sf::RenderWindow &window) {
             sf::Vector2f mousePosition = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
             for (int lv = 0; lv < 6; lv ++) {
                 if (Levels_Screen::check_clicked(mousePosition, lv+1, window) && lv < logic->get_max_level()) {
-                    logic->increment_cur_level();
+                    logic->set_cur_level(lv+1);
                     return SCREEN_GAMEVIEW;
                 }
             }
