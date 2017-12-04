@@ -34,7 +34,7 @@ void MainMenu_Screen::set_item_position(sf::Text * item, int y, sf::RenderWindow
 }
 
 /**Inialize all parameters and run the main menu screen*/
-int *MainMenu_Screen :: run(sf::RenderWindow &window, int cur_level) {
+int MainMenu_Screen::run(sf::RenderWindow &window) {
     unsigned int fontSize = 50;
 
     sf::Font font;
@@ -67,19 +67,14 @@ int *MainMenu_Screen :: run(sf::RenderWindow &window, int cur_level) {
     menuItems[3] = *menuItem_3;
     menuItems[4] = *menuItem_4;
 
-
     sf:: Event Event;
     bool running = true;
-    int *re = new int[2];
-    re[0] = 0;
-    re[1] = cur_level;
 
     while(running) {
         while (window.pollEvent(Event)) {
             if(Event.type == sf::Event::Closed) {
                 running = false;
-                re[0] = EXIT_GAME;
-                return re;
+                return EXIT_GAME;
             }
         }
 
@@ -87,19 +82,14 @@ int *MainMenu_Screen :: run(sf::RenderWindow &window, int cur_level) {
 
         if(sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
             if (check_mousover(mousePosition, menuItems[0], window)) { //new game
-                re[0] = SCREEN_GAMEVIEW;
-                re[1] = 1;
-                return re;
+                logic->set_cur_level(1);
+                return SCREEN_GAMEVIEW;
             } else if (check_mousover(mousePosition, menuItems[1], window)) { //continue
-                re[0] = SCREEN_GAMEVIEW;
-                return re;
+                return SCREEN_GAMEVIEW;
             } else if (check_mousover(mousePosition, menuItems[2], window)) { //level selection
-                re[0] = SCREEN_LEVELSELECT;
-                return re;
+                return SCREEN_LEVELSELECT;
             } else if (check_mousover(mousePosition, menuItems[3], window)) { //infinite mode
-                re[0] = SCREEN_INFINITE;
-                re[1] = 1;
-                return re;
+                return SCREEN_INFINITE;
             } else if (check_mousover(mousePosition, menuItems[4], window)) {} //settings
         }
 

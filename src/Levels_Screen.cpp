@@ -47,44 +47,28 @@ bool Levels_Screen::check_clicked(sf::Vector2f mousePos, int selected_level, sf:
 }
 
 /**Inialize all parameters & run the levels screen*/
-int * Levels_Screen::run(sf::RenderWindow &window, int curr_level) {
+int Levels_Screen::run(sf::RenderWindow &window) {
 
-    if (logic->get_max_level() <= 0){
-        curr_level = 1;
-    }
+    if (logic->get_max_level() <= 0) {logic->set_cur_level(1);}
 
     sf:: Event Event;
     bool running = true;
-    int *re = new int[2];
-    re[0] = 0;
-    re[1] = curr_level;
-
-    if (curr_level >= logic->get_max_level()) {
-        logic->set_max_level(curr_level);
-    }
 
     while(running) {
         while (window.pollEvent(Event)) {
             if(Event.type == sf::Event::Closed) {
                 running = false;
-                re[0] = EXIT_GAME;
-                return re;
+                return EXIT_GAME;
             }
-            if(Event.type == sf::Event::KeyPressed) {
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-                    re[0] = SCREEN_MAINMENU;
-                    return re;
-                }
-            }
+            if ((Event.type == sf::Event::KeyPressed) && (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))) {return SCREEN_MAINMENU;}
         }
 
         if(sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
             sf::Vector2f mousePosition = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
             for (int lv = 0; lv < 6; lv ++) {
                 if (Levels_Screen::check_clicked(mousePosition, lv+1, window) && lv < logic->get_max_level()) {
-                    re[0] = SCREEN_GAMEVIEW;
-                    re[1] = lv+1;
-                    return re;
+                    logic->increment_cur_level();
+                    return SCREEN_GAMEVIEW;
                 }
             }
         }

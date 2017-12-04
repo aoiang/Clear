@@ -60,7 +60,7 @@ class GameView_Screen : public Screen_Abstract {
         int PixelToBoard(int pixel_index, int board_axis_length, int screen_axis_length);
         int XPixelToBoardX(int x);
         int YPixelToBoardY(int y);
-        int *run(sf::RenderWindow &window, int curr_level);
+        int run(sf::RenderWindow &window);
         void check_mouse_input();
         void check_keyboard_input();
 };

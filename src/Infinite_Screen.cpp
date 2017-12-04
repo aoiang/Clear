@@ -96,13 +96,10 @@ bool Infinite_Screen ::start_clicked(sf::Vector2f mousePos, sf::RenderWindow &wi
     return item_box.top < mousePos.y && (item_box.top + item_box.height) > mousePos.y && item_box.left < mousePos.x && (item_box.left + item_box.width);
 }
 
-int *Infinite_Screen :: run(sf::RenderWindow &window, int cur_level) {
+int Infinite_Screen::run(sf::RenderWindow &window) {
     init();
     sf:: Event Event;
     bool running = true;
-    int *re = new int[2];
-    re[0] = 0;
-    re[1] = cur_level;
     sf::Clock clock;
     float starttime;
     float endtime;
@@ -111,15 +108,13 @@ int *Infinite_Screen :: run(sf::RenderWindow &window, int cur_level) {
         while (window.pollEvent(Event)) {
             if(Event.type == sf::Event::Closed) {
                 running = false;
-                re[0] = EXIT_GAME;
-                return re;
+                return EXIT_GAME;
             }
         }
 
         if(Event.type == sf::Event::KeyPressed) {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-                re[0] = SCREEN_MAINMENU;
-                return re;
+                return SCREEN_MAINMENU;
             }
         }
 
@@ -142,9 +137,8 @@ int *Infinite_Screen :: run(sf::RenderWindow &window, int cur_level) {
 
             if (start_clicked(mousePosition, window)){
                 logic->set_generated_board_size(num_of_blocks[3], num_of_blocks[4]);
-                re[0] = SCREEN_GAMEVIEW;
-                re[1] = 0;
-                return re;
+                logic->set_cur_level(0);
+                return SCREEN_GAMEVIEW;
             }
         }
 

@@ -218,7 +218,13 @@ int GameLogic::get_max_level() {return state->get_max_level();}
 void GameLogic::set_max_level(int lvl) {state->set_max_level(lvl);}
 
 /**get the board x created by generator*/
-int GameLogic ::get_generated_board_x() {return generated_board_x;}
+int GameLogic::get_generated_board_x() {return generated_board_x;}
 
 /**get the board y created by generator*/
-int GameLogic ::get_generated_board_y() {return generated_board_y;}
+int GameLogic::get_generated_board_y() {return generated_board_y;}
+
+int GameLogic::get_cur_level() {return state->get_cur_level();}
+
+void GameLogic::set_cur_level(int lvl) {state->set_cur_level(lvl);}
+
+void GameLogic::increment_cur_level() {state->increment_cur_level();}

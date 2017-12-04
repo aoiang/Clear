@@ -338,20 +338,16 @@ void GameView_Screen::check_keyboard_input() {
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {logic->try_move_selected(R_DIR);}
 }
 
-int *GameView_Screen::run(sf::RenderWindow &window, int cur_level) {
-    int *re = new int[2];
-    re[0] = SCREEN_MAINMENU;
-    re[1] = cur_level;
-
+int GameView_Screen::run(sf::RenderWindow &window) {
     sf::Clock draw_clock;
     this->App = &window;
 
     BoardState * board;
-    if (cur_level == 0) {
+    if (logic->get_cur_level() == 0) {
         BoardGenerator * generator = new BoardGenerator();
         board = generator->make_board(logic->get_generated_board_x(), logic->get_generated_board_y());
     }
-    else {board = new BoardState(levels[re[1]-1]);}
+    else {board = new BoardState(levels[logic->get_cur_level()-1]);}
 
     logic->set_BoardState(*board);
     init();
@@ -361,12 +357,10 @@ int *GameView_Screen::run(sf::RenderWindow &window, int cur_level) {
     while(running) {
         while (window.pollEvent(Event)) {
             if(Event.type == sf::Event::Closed) {
-                re[0] = EXIT_GAME;
-                return re;
+                return EXIT_GAME;
             }
             if (Event.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-                re[0] = SCREEN_MAINMENU;
-                return re;
+                return SCREEN_MAINMENU;
             }
         }
 
@@ -374,12 +368,12 @@ int *GameView_Screen::run(sf::RenderWindow &window, int cur_level) {
         if (logic->get_is_clear()) {
             time_since_completion += draw_clock.getElapsedTime().asMicroseconds();
             if (time_since_completion > 750000) {
-                if (re[1] == 0){
+                if (logic->get_cur_level() == 0){
                     BoardGenerator * generator = new BoardGenerator();
                     board = generator->make_board(logic->get_generated_board_x(), logic->get_generated_board_y());
                 } else {
-                    re[1]++;
-                    board = new BoardState(levels[re[1]-1]);
+                    logic->increment_cur_level();
+                    board = new BoardState(levels[logic->get_cur_level()-1]);
                 }
                 logic->set_BoardState(*board);
                 init();
@@ -391,5 +385,5 @@ int *GameView_Screen::run(sf::RenderWindow &window, int cur_level) {
         check_keyboard_input();
         draw(draw_clock.restart().asMicroseconds());
     }
-    return re;
+    return SCREEN_MAINMENU;
 }

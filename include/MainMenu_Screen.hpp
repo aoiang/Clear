@@ -20,7 +20,7 @@ class MainMenu_Screen : public Screen_Abstract
         bool check_mousover(sf::Vector2f, sf::Text, sf::RenderWindow&);
         void set_item_position(sf::Text*, int, sf::RenderWindow&);
         int getSelectedOption(sf::RenderWindow&);
-        int *run(sf::RenderWindow&, int);
+        int run(sf::RenderWindow &window);
         void set_GameLogic(GameLogic&);
 };
 

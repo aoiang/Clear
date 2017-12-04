@@ -23,6 +23,7 @@ class GameState {
       int get_max_level();
       void set_cur_level(int);
       int get_cur_level();
+      void increment_cur_level();
 };
 
 #endif //CLEAR_GAMESTATE_HPP
