@@ -71,8 +71,8 @@ class GameLogic {
         void init_current_board();
         int get_max_level();
         void set_max_level(int);
-        void set_cur_level(int);
         int get_cur_level();
+        void set_cur_level(int);
         void increment_cur_level();
 };
 

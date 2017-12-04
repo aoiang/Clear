@@ -21,6 +21,7 @@ void Block::set_position(int x, int y) {
 /**@return block id*/
 int Block::get_id() {return id;}
 
+/**@return simple id*/
 int Block::get_simple_id() {return simple_id;}
 
 /**@return x index of block on board*/
@@ -100,11 +101,10 @@ void Block::set_rotation(int new_rotation) {
 /**@return number of moves before this can be removed*/
 int Block::get_move_restriction() {return move_restriction;}
 
-
 /**@return the direction of the block*/
 char Block::get_direction() {return directions[get_rotation()];}
 
-
+/**Initializes block attributes*/
 void Block::basic_init(int x, int y) {
     set_position(x, y);
     set_combine(false);
@@ -128,7 +128,6 @@ void Block::import_init(std::string identity) {
     imported_combine = string_to_bool(characteristics[2]);
     imported_move_restriction = stoi(characteristics[4]);
 
-
     //get_rotation(), get_combine(), get_tab('u')(x4), get_move_restriction()(potentially high)
 
     if (imported_simple_id != simple_id) {std::cout << "Badly Initialized Block" << std::endl;}
@@ -149,8 +148,6 @@ char Block::bool_to_char(bool boolean) {
 bool Block::string_to_bool(std::string text) {
     return text == "t";
 }
-
-
 
 std::vector<std::string> Block::split_string(const std::string &text, char delimiter) {
     // Adapted from https://stackoverflow.com/a/7408245
@@ -200,5 +197,3 @@ std::string Block::get_identity() {
                          + std::to_string(get_move_restriction());
     return identity;
 }
-
-

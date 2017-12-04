@@ -56,10 +56,7 @@ int Levels_Screen::run(sf::RenderWindow &window) {
 
     while(running) {
         while (window.pollEvent(Event)) {
-            if(Event.type == sf::Event::Closed) {
-                running = false;
-                return EXIT_GAME;
-            }
+            if (Event.type == sf::Event::Closed) {return EXIT_GAME;}
             if ((Event.type == sf::Event::KeyPressed) && (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))) {return SCREEN_MAINMENU;}
         }
 

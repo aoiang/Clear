@@ -2,7 +2,6 @@
 #define CLEAR_BLOCKROTATING_HPP
 
 #include "Block.hpp"
-#include <string>
 
 class BlockRotating :public Block {
     public:
