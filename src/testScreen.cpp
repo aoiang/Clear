@@ -13,13 +13,13 @@ int testScreen::run(sf::RenderWindow &window)
 {
     sf:: Event Event;
     bool running = true;
-    unsigned int fontSize = 50;
+    unsigned int fontSize = 30;
     sf::Text title;
     sf::Font handFont;
     handFont.loadFromFile(HANDWRITTENFONT_FILEPATH);
     title =  sf::Text("TO DO", handFont, 50);
-    sf::Text  menuItem_0 =  sf::Text(MAINMENUITEM_0, handFont, fontSize);
-    sf::Text  menuItem_1 =  sf::Text(MAINMENUITEM_1, handFont, fontSize);
+    sf::Text  menuItem_0 =  sf::Text("Play Story Mode", handFont, fontSize);
+    sf::Text  menuItem_1 =  sf::Text("Continue Playing", handFont, fontSize);
     title.setFillColor(sf::Color::Black);
     menuItem_0.setFillColor(sf::Color::Black);
     menuItem_1.setFillColor(sf::Color::Black);
@@ -51,16 +51,17 @@ int testScreen::run(sf::RenderWindow &window)
     checkBox1.setOutlineColor(sf::Color::Red);
     checkBox1.setOutlineThickness(3);
     checkBox1.setFillColor(sf::Color::Transparent);
-    checkBox1.setPosition(menuItem_0.getPosition().x/2.5, menuItem_0.getPosition().y);
     sf::FloatRect cb1tmp = checkBox1.getGlobalBounds();
+    checkBox1.setPosition(tmp2.left -((cb1tmp.left + cb1tmp.width)+cb1tmp.width/4), (tmp2.top+tmp2.height) - (cb1tmp.height +cb1tmp.width/6));
+   
     
     sf::RectangleShape checkBox2;
     checkBox2.setSize(sf::Vector2f(30,30));
-    checkBox2.setOutlineColor(sf::Color::Black);
+    checkBox2.setOutlineColor(sf::Color::Red);
     checkBox2.setOutlineThickness(3);
     checkBox2.setFillColor(sf::Color::Transparent);
-    checkBox2.setPosition(menuItem_1.getPosition().x/2, menuItem_1.getPosition().y);
     sf::FloatRect cb2tmp = checkBox2.getGlobalBounds();
+    checkBox2.setPosition(tmp3.left -((cb2tmp.left + cb2tmp.width)+cb2tmp.width/4), (tmp3.top+tmp3.height) - (cb2tmp.height +cb2tmp.width/6));
     sf::Texture background_texture;
     sf::Vector2u tSize;
     sf::Vector2u wSize;
@@ -102,20 +103,28 @@ int testScreen::run(sf::RenderWindow &window)
         }
         sf::Vector2f mousePos = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
         sf::FloatRect item_box = menuItem_1.getGlobalBounds();
-        float linelength = (item_box.width + cb2tmp.left)+10;
-        if (item_box.top < mousePos.y && (item_box.top + item_box.height) > mousePos.y && item_box.left < mousePos.x &&         (item_box.left + item_box.width) > mousePos.x) {
+        sf::FloatRect item_box0 = menuItem_0.getGlobalBounds();
+        float linelength = (cb2tmp.width + item_box.width)+(cb2tmp.width+cb2tmp.left); //- (cb2tmp.left-cb2tmp.width));
+        float line2length = (cb1tmp.width + item_box0.width)+(cb2tmp.width+cb2tmp.left);
+        if (item_box.top < mousePos.y && (item_box.top + item_box.height) > mousePos.y && item_box.left < mousePos.x && (item_box.left + item_box.width) > mousePos.x) {
             line = sf::RectangleShape(sf::Vector2f(linelength, 3));
-            line2 = sf::RectangleShape(sf::Vector2f(35,6));
             line.rotate(180);
             line.setFillColor(sf::Color::Red);
-            line.setOrigin(menuItem_1.getPosition().x + cb2tmp.width, menuItem_1.getPosition().y);
-            line.setPosition(cb2tmp.width/2 + tmp3.width/2, cb2tmp.height/2);
-            //line2.rotate(-45);
-            //line2.setFillColor(sf::Color::Green);
-            //line2.setPosition((checkBox2.getPosition().x)+cb2tmp.height, (checkBox2.getPosition().y) + cb2tmp.width);
-        //return true;
-        } else {
+            line.setOrigin(((cb2tmp.left +cb2tmp.width +item_box.left + item_box.width)+(item_box.left - (cb2tmp.left-cb2tmp.width)))/2, menuItem_1.getPosition().y - item_box.height/3);
+            line.setPosition(((cb2tmp.width + tmp3.width)/2)-cb2tmp.width/2, cb2tmp.height/2);
+        }
+        else{
             line = sf::RectangleShape(sf::Vector2f(0,0));
+        }
+        if  (item_box0.top < mousePos.y && (item_box0.top + item_box0.height) > mousePos.y && item_box0.left < mousePos.x && (item_box0.left + item_box0.width) > mousePos.x) {   
+                line2 = sf::RectangleShape(sf::Vector2f(line2length,3));
+                line2.rotate(180);
+                line2.setFillColor(sf::Color::Red);
+                line2.setOrigin(((cb1tmp.left +cb1tmp.width +item_box0.left + item_box0.width)+(item_box0.left - (cb1tmp.left-cb1tmp.width)))/2, menuItem_0.getPosition().y - item_box0.height/3);
+                line2.setPosition(((cb1tmp.width + tmp2.width)/2)-cb1tmp.width/2, cb1tmp.height/2);
+            }
+        else {
+            line2 = sf::RectangleShape(sf::Vector2f(0,0));
         }
          window.clear(sf::Color::White);
          window.draw(backgroundImage);
