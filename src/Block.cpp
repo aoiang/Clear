@@ -50,6 +50,16 @@ bool Block::get_tab(char dir) {
     return tabs[dir_to_index(dir)];
 }
 
+
+int Block::get_tab_count() {
+    int tab_count = 0;
+    if (get_tab(U_DIR)) {tab_count++;}
+    if (get_tab(R_DIR)) {tab_count++;}
+    if (get_tab(D_DIR)) {tab_count++;}
+    if (get_tab(L_DIR)) {tab_count++;}
+    return tab_count;
+}
+
 /**Sets all tabs to 0*/
 void Block::init_tabs() {
     set_tab(U_DIR, false);
@@ -83,8 +93,9 @@ void Block::rotate() {
     set_id();
 }
 
-/**Resets rotation to 0*/
-void Block::reset_rotation() {rotation = 0;}
+void Block::set_rotation(int new_rotation) {
+    while (get_rotation()!=new_rotation) {rotate();}
+}
 
 /**@return number of moves before this can be removed*/
 int Block::get_move_restriction() {return move_restriction;}
@@ -97,7 +108,7 @@ char Block::get_direction() {return directions[get_rotation()];}
 void Block::basic_init(int x, int y) {
     set_position(x, y);
     set_combine(false);
-    reset_rotation();
+    rotation = 0;
     set_id();
     init_tabs();
     set_move_restriction(0);

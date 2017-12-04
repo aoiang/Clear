@@ -24,7 +24,6 @@ class Block {
         void set_id();
         void set_combine(bool can_combine);
         void set_position(int x, int y);
-        void reset_rotation();
     public:
         static Block * import_block(std::string identity, int x, int y);
         bool rotation_changes_id = false;
@@ -35,6 +34,7 @@ class Block {
         int dir_to_index(char);
         void set_tab(char, bool);
         bool get_tab(char);
+        int get_tab_count();
         void init_tabs();
         bool get_combine();
         virtual bool type_allows_movement(char);
@@ -43,6 +43,7 @@ class Block {
         int get_move_restriction();
         void rotate();
         int get_rotation();
+        void set_rotation(int rotation);
         char get_direction();
         void basic_init(int x, int y);
         std::string get_identity();
