@@ -186,6 +186,12 @@ bool GameLogic::tap_selected() {
     return false;
 }
 
+/**set the board size created by generator*/
+void GameLogic::set_generated_board_size(int x, int y) {
+    this->generated_board_x = x;
+    this->generated_board_y = y;
+}
+
 /**Attempts to move the selected block*/
 bool GameLogic::try_move_selected(char direction) {return try_move(selected_x, selected_y, direction);}
 
@@ -207,6 +213,17 @@ bool GameLogic::selected_block_is_move_restricted() {return block_is_move_restri
 /**@return maximum level the player has reached*/
 int GameLogic::get_max_level() {return state->get_max_level();}
 
-/**Set maximum level finished by player*/
-//TODO: move from GameLogic into GameState
-void GameLogic::set_max_level(int lvl) {state->set_max_level(lvl);}
+/**@return current level*/
+int GameLogic::get_cur_level() {return state->get_cur_level();}
+
+/**Sets current level*/
+void GameLogic::set_cur_level(int lvl) {state->set_cur_level(lvl);}
+
+/**Adds 1 to current level*/
+void GameLogic::increment_cur_level() {state->increment_cur_level();}
+
+/**get the board x created by generator*/
+int GameLogic::get_generated_board_x() {return generated_board_x;}
+
+/**get the board y created by generator*/
+int GameLogic::get_generated_board_y() {return generated_board_y;}

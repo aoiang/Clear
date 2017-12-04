@@ -24,7 +24,7 @@
 #define MAINMENUITEM_0 "New Game"
 #define MAINMENUITEM_1 "Continue"
 #define MAINMENUITEM_2 "Levels"
-#define MAINMENUITEM_3 "Infinite Mode"
+#define MAINMENUITEM_3 "Custom Mode"
 #define MAINMENUITEM_4 "Settings"
 
 #define ID_NORMAL 10
@@ -39,6 +39,13 @@
 
 #define MODE_STORY 's'
 #define MODE_GENERATOR 'g'
+
+#define EXIT_GAME -1
+#define SCREEN_TITLE 0
+#define SCREEN_MAINMENU 1
+#define SCREEN_GAMEVIEW 2
+#define SCREEN_LEVELSELECT 3
+#define SCREEN_INFINITE 4
 
 #define LEVELS 20
 #define LEVEL_TEST "../resources/levels/testlevel.txt"

@@ -16,7 +16,13 @@ class GameLogic {
         GameState * state;
         int selected_x = -1;
         int selected_y = -1;
+        int generated_board_x;
+        int generated_board_y;
+
     public:
+        int get_generated_board_x();
+        int get_generated_board_y();
+        void set_generated_board_size(int x, int y);
         void set_BoardState(BoardState &board);
         int get_board_width();
         int get_board_height();
@@ -48,6 +54,9 @@ class GameLogic {
         void init_current_board();
         int get_max_level();
         void set_max_level(int);
+        void set_cur_level(int);
+        int get_cur_level();
+        void increment_cur_level();
 };
 
 #endif //CLEAR_GAMELOGIC_HPP

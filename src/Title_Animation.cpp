@@ -43,7 +43,7 @@ int Title_Animation::draw_sprite(sf::RenderWindow &window) {
 }
 
 /**draws/fades in the tagline */
-int Title_Animation :: draw_tagline(sf::RenderWindow &window) {
+int Title_Animation::draw_tagline(sf::RenderWindow &window) {
     int frame_count = 0;
     sf:: Event event;
     sf::Clock clock;
@@ -79,17 +79,12 @@ int Title_Animation :: draw_tagline(sf::RenderWindow &window) {
 }
 
 /**runs the opening screen */
-int *Title_Animation::run(sf::RenderWindow &window, int cur_lvl) {
-    int *re = new int[2];
-    re[0] = 0;
-    re[1] = cur_lvl;
+int Title_Animation::run(sf::RenderWindow &window) {
+    int re = SCREEN_TITLE;
 
-    bool running = true;
     if (draw_sprite(window) == -1) {
-        re[0] = -1;
-        return re;
+        return EXIT_GAME;
     }
 
-    re[0] = draw_tagline(window);
-    return re;
+    return draw_tagline(window);
 }

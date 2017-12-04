@@ -16,7 +16,7 @@ class Levels_Screen : public GameView_Screen{
     public:
         void draw(sf::RenderWindow&);
         bool check_clicked(sf::Vector2f mousePos, int selected_level, sf::RenderWindow &window);
-        int *run(sf::RenderWindow&, int curr_level);
+        int run(sf::RenderWindow &window);
         void set_GameLogic(GameLogic&);
 };
 
