@@ -10,12 +10,20 @@ class BoardGenerator {
         GameLogic generator_logic;
         GameState * state;
         BoardState * board;
+        int width;
+        int height;
         static const int number_of_configs = 94;
         void add_block_if_possible(int x, int y);
+        void add_block_if_possible();
         std::mt19937 get_random_num_generator();
         std::mt19937 number_generator;
         std::string pick_config();
         int pick_number_between(int min, int max);
+        int random_x();
+        int random_y();
+        std::tuple<int, int> pick_location();
+        bool potential_location(int x, int y);
+        int potential_locations();
         void remove_pointless_tabs();
     public:
         BoardGenerator();

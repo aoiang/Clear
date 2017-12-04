@@ -2,24 +2,25 @@
 #include "BoardState.hpp"
 #include <iostream>
 #include <random>
+#include <tuple>
 
 BoardGenerator::BoardGenerator() {number_generator = get_random_num_generator();}
 
 BoardState * BoardGenerator::make_board(int width, int height) {
+    this->width = width;
+    this->height = height;
     board = new BoardState(width, height);
     state = new GameState();
     generator_logic.set_GameState(*state);
     generator_logic.set_BoardState(*board);
     
-    for (int i=0; i<(width*height*10); i++) {
-        add_block_if_possible(pick_number_between(0, width-1), pick_number_between(0, height-1));        
-    }
-    remove_pointless_tabs();
     
-    for (int i=0; i<(width*height*10); i++) {
-        add_block_if_possible(pick_number_between(0, width-1), pick_number_between(0, height-1));        
+    while (potential_locations()) {
+        while (potential_locations()) {
+            add_block_if_possible();
+        }
+        remove_pointless_tabs();
     }
-    remove_pointless_tabs();
     
     return board;
 }
@@ -33,11 +34,18 @@ BoardState * BoardGenerator::make_board(int width, int height, std::string filep
 void BoardGenerator::add_block_if_possible(int x, int y) {
     //note that sometimes, even if not blocked, any block could be locked in place by tabs. (possible for no block to be addable even if )
     //this is poc, it'll make a super easy board lol.
-    if (!generator_logic.can_be_removed(Block::import_block("1,0,f,ffff,0", x, y))) {return;}
-    while (!board->block_exists(x, y)) {
+    while (potential_location(x, y)) {
         Block * potential_block = Block::import_block(pick_config(), x, y);
-        if (generator_logic.can_be_removed(potential_block)) {board->add_block(potential_block);}
+        if (generator_logic.can_be_removed(potential_block)) {
+            board->add_block(potential_block);
+        }
     }
+}
+
+void BoardGenerator::add_block_if_possible() {
+    int x, y;
+    std::tie(x, y) = pick_location();
+    add_block_if_possible(x, y);
 }
 
 std::mt19937 BoardGenerator::get_random_num_generator() {
@@ -57,10 +65,52 @@ int BoardGenerator::pick_number_between(int min, int max) {
     return distr(number_generator);
 }
 
+int BoardGenerator::random_x() {return pick_number_between(0, width-1);}
+int BoardGenerator::random_y() {return pick_number_between(0, height-1);}
+
+std::tuple<int, int> BoardGenerator::pick_location() {
+    int desired_valid_locations = potential_locations();
+    int x, y;
+    bool found_location = false;
+    Block * block;
+    
+    while (!found_location) {
+        desired_valid_locations--;
+        for (int i=0; i<(width*height*3); i++) {
+            if (!found_location) {
+                x = random_x();
+                y = random_y();
+                if (!board->block_exists(x, y)) {
+                    block = Block::import_block("1,0,f,ffff,0", x, y);
+                    board->add_block(block);
+                    if (potential_locations()>=desired_valid_locations) {found_location = true;}
+                    board->remove_block(x, y);
+                }
+            }
+        }
+    }
+    return std::make_tuple(x, y);
+}
+
+bool BoardGenerator::potential_location(int x, int y) {
+    return !board->block_exists(x, y)
+        && generator_logic.can_be_removed(Block::import_block("1,0,f,ffff,0", x, y));
+}
+
+int BoardGenerator::potential_locations() {
+    int potential_location_count = 0;
+    for (int y=0; y<height; y++) {
+        for (int x=0; x<width; x++) {
+            if (potential_location(x, y)) {potential_location_count++;}
+        }
+    }
+    return potential_location_count;
+}
+
 
 void BoardGenerator::remove_pointless_tabs() {
-    for (int y=0; y<board->get_board_height(); y++) {
-        for (int x=0; x<board->get_board_width(); x++) {
+    for (int y=0; y<height; y++) {
+        for (int x=0; x<width; x++) {
             if (board->block_exists(x, y)) {
                 Block * block = board->get_block(x, y);
                 if (block->get_simple_id()!=3) {
