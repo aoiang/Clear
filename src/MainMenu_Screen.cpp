@@ -72,10 +72,7 @@ int MainMenu_Screen::run(sf::RenderWindow &window) {
 
     while(running) {
         while (window.pollEvent(Event)) {
-            if(Event.type == sf::Event::Closed) {
-                running = false;
-                return EXIT_GAME;
-            }
+            if(Event.type == sf::Event::Closed) {return EXIT_GAME;}
         }
 
         sf::Vector2f mousePosition = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
