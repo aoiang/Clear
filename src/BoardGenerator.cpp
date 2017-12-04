@@ -14,13 +14,21 @@ BoardState * BoardGenerator::make_board(int width, int height) {
     generator_logic.set_GameState(*state);
     generator_logic.set_BoardState(*board);
     
-    
-    while (potential_locations()) {
-        while (potential_locations()) {
+    int poten_locs = potential_locations();
+    while (poten_locs) {
+        while (poten_locs) {
+            //std::cout << poten_locs << "potential locations left!!\n";
             add_block_if_possible();
+            //board->export_board("../resources/levels/broken.txt.new");
+            poten_locs = potential_locations();
         }
         remove_pointless_tabs();
+        poten_locs = potential_locations();
     }
+    
+    //std::cout << "done generating!\n";
+    //std::cout << removable_blocks() << "<-\n";
+    //std::cout << potentially_removable_blocks() << "<+\n";
     
     return board;
 }
@@ -36,7 +44,7 @@ void BoardGenerator::add_block_if_possible(int x, int y) {
     //this is poc, it'll make a super easy board lol.
     while (potential_location(x, y)) {
         Block * potential_block = Block::import_block(pick_config(), x, y);
-        if (generator_logic.can_be_removed(potential_block)) {
+        if (generator_logic.potentially_removable(potential_block)) {
             board->add_block(potential_block);
         }
     }
@@ -94,7 +102,7 @@ std::tuple<int, int> BoardGenerator::pick_location() {
 
 bool BoardGenerator::potential_location(int x, int y) {
     return !board->block_exists(x, y)
-        && generator_logic.can_be_removed(Block::import_block("1,0,f,ffff,0", x, y));
+        && generator_logic.potentially_removable(Block::import_block("1,0,f,ffff,0", x, y));
 }
 
 int BoardGenerator::potential_locations() {
@@ -105,6 +113,26 @@ int BoardGenerator::potential_locations() {
         }
     }
     return potential_location_count;
+}
+
+int BoardGenerator::removable_blocks() {
+    int removable_block_count = 0;
+    for (int y=0; y<height; y++) {
+        for (int x=0; x<width; x++) {
+            if (board->block_exists(x, y) && generator_logic.can_be_removed(x, y)) {removable_block_count++;}
+        }
+    }
+    return removable_block_count;
+}
+
+int BoardGenerator::potentially_removable_blocks() {
+    int potentially_removable_block_count = 0;
+    for (int y=0; y<height; y++) {
+        for (int x=0; x<width; x++) {
+            if (board->block_exists(x, y) && generator_logic.potentially_removable(x, y)) {potentially_removable_block_count++;}
+        }
+    }
+    return potentially_removable_block_count;
 }
 
 

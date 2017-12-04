@@ -24,6 +24,8 @@ class BoardGenerator {
         std::tuple<int, int> pick_location();
         bool potential_location(int x, int y);
         int potential_locations();
+        int removable_blocks();
+        int potentially_removable_blocks();
         void remove_pointless_tabs();
     public:
         BoardGenerator();
