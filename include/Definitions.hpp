@@ -24,7 +24,7 @@
 #define MAINMENUITEM_0 "New Game"
 #define MAINMENUITEM_1 "Continue"
 #define MAINMENUITEM_2 "Levels"
-#define MAINMENUITEM_3 "Infinite Mode"
+#define MAINMENUITEM_3 "Custom Mode"
 #define MAINMENUITEM_4 "Settings"
 
 #define ID_NORMAL 10
