@@ -78,7 +78,7 @@ int *MainMenu_Screen :: run(sf::RenderWindow &window, int cur_level) {
         while (window.pollEvent(Event)) {
             if(Event.type == sf::Event::Closed) {
                 running = false;
-                re[0] = -1;
+                re[0] = EXIT_GAME;
                 return re;
             }
         }
@@ -87,17 +87,17 @@ int *MainMenu_Screen :: run(sf::RenderWindow &window, int cur_level) {
 
         if(sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
             if (check_mousover(mousePosition, menuItems[0], window)) { //new game
-                re[0] = 2;
+                re[0] = SCREEN_GAMEVIEW;
                 re[1] = 1;
                 return re;
             } else if (check_mousover(mousePosition, menuItems[1], window)) { //continue
-                re[0] = 2;
+                re[0] = SCREEN_GAMEVIEW;
                 return re;
             } else if (check_mousover(mousePosition, menuItems[2], window)) { //level selection
-                re[0] = 3;
+                re[0] = SCREEN_LEVELSELECT;
                 return re;
             } else if (check_mousover(mousePosition, menuItems[3], window)) { //infinite mode
-                re[0] = 4;
+                re[0] = SCREEN_INFINITE;
                 re[1] = 1;
                 return re;
             } else if (check_mousover(mousePosition, menuItems[4], window)) {} //settings

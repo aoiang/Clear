@@ -61,21 +61,18 @@ int * Levels_Screen::run(sf::RenderWindow &window, int curr_level) {
 
     if (curr_level >= logic->get_max_level()) {
         logic->set_max_level(curr_level);
-        std::cout << curr_level << std::endl;
     }
-
-
 
     while(running) {
         while (window.pollEvent(Event)) {
             if(Event.type == sf::Event::Closed) {
                 running = false;
-                re[0] = -1;
+                re[0] = EXIT_GAME;
                 return re;
             }
             if(Event.type == sf::Event::KeyPressed) {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-                    re[0] = 1;
+                    re[0] = SCREEN_MAINMENU;
                     return re;
                 }
             }
@@ -85,7 +82,7 @@ int * Levels_Screen::run(sf::RenderWindow &window, int curr_level) {
             sf::Vector2f mousePosition = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
             for (int lv = 0; lv < 6; lv ++) {
                 if (Levels_Screen::check_clicked(mousePosition, lv+1, window) && lv < logic->get_max_level()) {
-                    re[0] = 2;
+                    re[0] = SCREEN_GAMEVIEW;
                     re[1] = lv+1;
                     return re;
                 }

@@ -338,22 +338,20 @@ void GameView_Screen::check_keyboard_input() {
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {logic->try_move_selected(R_DIR);}
 }
 
-int *GameView_Screen::run(sf::RenderWindow &window, int curr_level) {
+int *GameView_Screen::run(sf::RenderWindow &window, int cur_level) {
     int *re = new int[2];
-    re[0] = 1;
-    re[1] = curr_level;
+    re[0] = SCREEN_MAINMENU;
+    re[1] = cur_level;
 
     sf::Clock draw_clock;
     this->App = &window;
 
     BoardState * board;
-    if (curr_level == 0){
+    if (cur_level == 0) {
         BoardGenerator * generator = new BoardGenerator();
         board = generator->make_board(logic->get_generated_board_x(), logic->get_generated_board_y());
     }
-    else{
-        board = new BoardState(levels[re[1]-1]);
-    }
+    else {board = new BoardState(levels[re[1]-1]);}
 
     logic->set_BoardState(*board);
     init();
@@ -363,15 +361,12 @@ int *GameView_Screen::run(sf::RenderWindow &window, int curr_level) {
     while(running) {
         while (window.pollEvent(Event)) {
             if(Event.type == sf::Event::Closed) {
-                running = false;
-                re[0] = -1;
+                re[0] = EXIT_GAME;
                 return re;
             }
-            if(Event.type == sf::Event::KeyPressed)
-            {
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-                    re[0] = 1;
-                    return re;
+            if (Event.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+                re[0] = SCREEN_MAINMENU;
+                return re;
             }
         }
 
@@ -382,8 +377,7 @@ int *GameView_Screen::run(sf::RenderWindow &window, int curr_level) {
                 if (re[1] == 0){
                     BoardGenerator * generator = new BoardGenerator();
                     board = generator->make_board(logic->get_generated_board_x(), logic->get_generated_board_y());
-                }
-                else{
+                } else {
                     re[1]++;
                     board = new BoardState(levels[re[1]-1]);
                 }

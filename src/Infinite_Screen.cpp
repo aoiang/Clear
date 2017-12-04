@@ -1,7 +1,3 @@
-//
-// Created by Yiyang Zhao on 03/12/2017.
-//
-
 #include "Infinite_Screen.hpp"
 
 void Infinite_Screen::init() {
@@ -10,20 +6,17 @@ void Infinite_Screen::init() {
     }
 }
 
-
 void Infinite_Screen::draw(sf::RenderWindow &window) {
-
     unsigned int fontSize = 25;
     unsigned int buttonSize = 75;
     sf::Font font;
     font.loadFromFile(REGULARFONT_FILEPATH);
-    if(!font.loadFromFile(REGULARFONT_FILEPATH))
-    {
+    if(!font.loadFromFile(REGULARFONT_FILEPATH)) {
         sf::CircleShape circle;
         circle.setRadius(20);
         window.draw(circle);
-
     }
+
     sf::Text title(MAINMENUITEM_3, font, 75);
     start =  sf::Text("Start", font, 50);
     sf::FloatRect titlebox;
@@ -39,8 +32,6 @@ void Infinite_Screen::draw(sf::RenderWindow &window) {
     titlebox = start.getGlobalBounds();
     start.setOrigin(titlebox.width/2.0f, titlebox.height/2.0f);
     start.setPosition(sf::Vector2f(window.getSize().x/2,(window.getSize().y/2)+200));
-
-
 
     sf::RectangleShape rotating_block;
     sf::RectangleShape directional_block;
@@ -63,44 +54,25 @@ void Infinite_Screen::draw(sf::RenderWindow &window) {
     rotating_block.setPosition(275,180);
     directional_block.setPosition(475,180);
 
-    for(int i = 0; i < 10; i++){
-        if(i % 2 == 0){
-            button[i] = sf::Text("+", font, buttonSize);
-        }
-        else{
-            button[i] = sf::Text("-", font, buttonSize);
-        }
+    for (int i = 0; i < 10; i++) {
+        if (i % 2 == 0) {button[i] = sf::Text("+", font, buttonSize);}
+        else {button[i] = sf::Text("-", font, buttonSize);}
         item_box[i] = button[i].getGlobalBounds();
         button[i].setOrigin(item_box[i].width/2.0f,item_box[i].height/2.0f);
-        if(i < 6){
-            if (i % 2 == 0){
-                button[i].setPosition(sf::Vector2f(50+(200 * i / 2), 250));
-            }
-            else {
-                button[i].setPosition(sf::Vector2f(140+(200 * (i / 2)), 250));
-            }
-        }
-        else{
-            if (i % 2 == 0){
-                button[i].setPosition(sf::Vector2f(150+(200 * (i / 8)), 400));
-            }
-            else {
-                button[i].setPosition(sf::Vector2f(240+(200 * (i / 8)), 400));
-            }
-
+        if (i < 6) {
+            if (i % 2 == 0) {button[i].setPosition(sf::Vector2f(50+(200 * i / 2), 250));}
+            else {button[i].setPosition(sf::Vector2f(140+(200 * (i / 2)), 250));}
+        } else {
+            if (i % 2 == 0) {button[i].setPosition(sf::Vector2f(150+(200 * (i / 8)), 400));}
+            else {button[i].setPosition(sf::Vector2f(240+(200 * (i / 8)), 400));}
         }
         window.draw(button[i]);
     }
 
     for (int i = 0; i < 5; i++){
         block_num[i] = sf::Text(sf::String(std::to_string(num_of_blocks[i])), font, fontSize);
-        if (i < 3){
-            block_num[i].setPosition(sf::Vector2f(95 + (200 * i), 270));
-        }
-        else{
-            block_num[i].setPosition(sf::Vector2f(195 + (200 * (i-3)), 420));
-        }
-
+        if (i < 3) {block_num[i].setPosition(sf::Vector2f(95 + (200 * i), 270));}
+        else {block_num[i].setPosition(sf::Vector2f(195 + (200 * (i-3)), 420));}
         window.draw(block_num[i]);
     }
 
@@ -110,27 +82,21 @@ void Infinite_Screen::draw(sf::RenderWindow &window) {
     window.draw(title);
     window.draw(board_size);
     window.draw(start);
-
 }
 
 void Infinite_Screen::set_GameLogic(GameLogic &logic) {this->logic = &logic;}
-
 
 bool Infinite_Screen :: check_clicked(sf::Vector2f mousePos, int cur_button, sf::RenderWindow &window) {
     sf::FloatRect item_box = button[cur_button].getGlobalBounds();
     return item_box.top < mousePos.y && (item_box.top + item_box.height) > mousePos.y && item_box.left < mousePos.x && (item_box.left + item_box.width) > mousePos.x;
 }
 
-
 bool Infinite_Screen ::start_clicked(sf::Vector2f mousePos, sf::RenderWindow &window) {
     sf::FloatRect item_box = start.getGlobalBounds();
     return item_box.top < mousePos.y && (item_box.top + item_box.height) > mousePos.y && item_box.left < mousePos.x && (item_box.left + item_box.width);
 }
 
-
-
-int *Infinite_Screen :: run(sf::RenderWindow &window, int cur_level)
-{
+int *Infinite_Screen :: run(sf::RenderWindow &window, int cur_level) {
     init();
     sf:: Event Event;
     bool running = true;
@@ -141,26 +107,21 @@ int *Infinite_Screen :: run(sf::RenderWindow &window, int cur_level)
     float starttime;
     float endtime;
 
-    while(running)
-    {
-
-        while (window.pollEvent(Event))
-        {
-            if(Event.type == sf::Event::Closed)
-            {
+    while(running) {
+        while (window.pollEvent(Event)) {
+            if(Event.type == sf::Event::Closed) {
                 running = false;
-                re[0] = -1;
+                re[0] = EXIT_GAME;
                 return re;
             }
         }
 
         if(Event.type == sf::Event::KeyPressed) {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-                re[0] = 1;
+                re[0] = SCREEN_MAINMENU;
                 return re;
             }
         }
-
 
         if(sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
             sf::Vector2f mousePosition = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
@@ -181,12 +142,12 @@ int *Infinite_Screen :: run(sf::RenderWindow &window, int cur_level)
 
             if (start_clicked(mousePosition, window)){
                 logic->set_generated_board_size(num_of_blocks[3], num_of_blocks[4]);
-                re[0] = 2;
+                re[0] = SCREEN_GAMEVIEW;
                 re[1] = 0;
                 return re;
             }
-
         }
+
         window.clear(sf::Color(40,140,240));
         draw(window);
         window.display();

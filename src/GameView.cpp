@@ -8,29 +8,29 @@
 /**runs the window: creates the window and all screens*/
 int GameView::run(GameLogic logic) {
     sf::RenderWindow App(sf::VideoMode(default_window_height, default_window_width, 32), GAME_TITLE,  sf::Style::Default);
-    Title_Animation screen0;
-    MainMenu_Screen screen1;
-    GameView_Screen screen2;
-    Levels_Screen screen3;
-    Infinite_Screen screen4;
+    Title_Animation screen_title;
+    MainMenu_Screen screen_mainmenu;
+    GameView_Screen screen_gameview;
+    Levels_Screen screen_levelselect;
+    Infinite_Screen screen_infinite;
 
     std::vector<Screen_Abstract*> screens;
-    int *curr_screen = new int[2];
-    curr_screen[0] = 0;
-    curr_screen[1] = 1;
+    int *cur_screen = new int[2];
+    cur_screen[0] = SCREEN_TITLE;
+    cur_screen[1] = 1;
 
-    screen1.set_GameLogic(logic);
-    screen2.set_GameLogic(logic);
-    screen3.set_GameLogic(logic);
-    screen4.set_GameLogic(logic);
-    screens.push_back(&screen0);
-    screens.push_back(&screen1);
-    screens.push_back(&screen2);
-    screens.push_back(&screen3);
-    screens.push_back(&screen4);
+    screen_mainmenu.set_GameLogic(logic);
+    screen_gameview.set_GameLogic(logic);
+    screen_levelselect.set_GameLogic(logic);
+    screen_infinite.set_GameLogic(logic);
+    screens.push_back(&screen_title);
+    screens.push_back(&screen_mainmenu);
+    screens.push_back(&screen_gameview);
+    screens.push_back(&screen_levelselect);
+    screens.push_back(&screen_infinite);
 
 
-    while(curr_screen[0] >=0 ) {
-        curr_screen = screens[curr_screen[0]]->run(App, curr_screen[1]);
+    while(cur_screen[0] >=0 ) {
+        cur_screen = screens[cur_screen[0]]->run(App, cur_screen[1]);
     }
 }

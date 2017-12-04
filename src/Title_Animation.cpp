@@ -81,12 +81,12 @@ int Title_Animation :: draw_tagline(sf::RenderWindow &window) {
 /**runs the opening screen */
 int *Title_Animation::run(sf::RenderWindow &window, int cur_lvl) {
     int *re = new int[2];
-    re[0] = 0;
+    re[0] = SCREEN_TITLE;
     re[1] = cur_lvl;
 
     bool running = true;
     if (draw_sprite(window) == -1) {
-        re[0] = -1;
+        re[0] = EXIT_GAME;
         return re;
     }
 
