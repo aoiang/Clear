@@ -18,7 +18,6 @@ class GameLogic {
         int selected_y = -1;
         int generated_board_x;
         int generated_board_y;
-
     public:
         int get_generated_board_x();
         int get_generated_board_y();
@@ -36,9 +35,27 @@ class GameLogic {
         bool path_blocked(Block * block, char direction);
         bool path_blocked(int x, int y, char direction);
         bool path_fully_blocked(int x, int y);
-        bool can_be_removed(Block * block);
         bool can_move_block(Block * block, char direction);
+        bool can_be_removed(Block * block);
+        bool can_be_removed(int x, int y);
+        bool potentially_removable(Block * block);
+        bool potentially_removable(int x, int y);
+        bool block_allows_movement(Block * block, char direction);
+        bool can_potentially_move_block(Block * block, char direction);
         bool tabs_impede(Block * block, char direction);
+        bool tabs_always_impede(Block * block, char direction);
+        bool tabs_temporarily_impede(Block * block, char direction);
+        bool movement_is_tablocked_by_adjacent(Block * block, char direction);
+        bool movement_is_temporarily_tablocked_by_adjacent(Block * block, char direction);
+        bool movement_is_tablocked_by_self(Block * block, char direction);
+        bool movement_is_temporarily_tablocked_by_self(Block * block, char direction);
+        bool side_is_tablocked(Block * block, char direction);
+        bool side_is_temporarily_tablocked(Block * block, char direction);
+        bool side_is_always_tablocked_by_adjacent(Block * block, char direction);
+        bool side_is_tablocked_by_adjacent(Block * block, char direction);
+        bool side_is_temporarily_tablocked_by_adjacent(Block * block, char direction);
+        bool side_is_tablocked_by_self(Block * block, char direction);
+        bool side_is_temporarily_tablocked_by_self(Block * block, char direction);
         bool can_move(int block_x, int block_y, char direction);
         bool try_move(int x, int y, char direction);
         bool try_move_selected(char direction);

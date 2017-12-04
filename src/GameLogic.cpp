@@ -45,22 +45,144 @@ int GameLogic::get_board_height() {return board->get_board_height();}
 
 /**Checks if tabs restrict a block's movement*/
 bool GameLogic::tabs_impede(Block * block, char direction) {
-    int x = block->get_x();
-    int y = block->get_y();
-
     switch (direction) {
         case U_DIR: case D_DIR:
-            return block->get_tab(L_DIR) && block_exists(x-1, y)
-                || block->get_tab(R_DIR) && block_exists(x+1, y)
-                || block_exists(x-1, y) && get_block(x-1, y)->get_tab(R_DIR)
-                || block_exists(x+1, y) && get_block(x+1, y)->get_tab(L_DIR);
+            return side_is_tablocked(block, L_DIR) || side_is_tablocked(block, R_DIR);
         case L_DIR: case R_DIR:
-            return block->get_tab(U_DIR) && block_exists(x, y+1)
-                || block->get_tab(D_DIR) && block_exists(x, y-1)
-                || block_exists(x, y+1) && get_block(x, y+1)->get_tab(D_DIR)
-                || block_exists(x, y-1) && get_block(x, y-1)->get_tab(U_DIR);
+            return side_is_tablocked(block, U_DIR) || side_is_tablocked(block, D_DIR);
         default:break;
     }
+}
+
+/**Checks if tabs always restrict a block's movement*/
+bool GameLogic::tabs_always_impede(Block * block, char direction) {
+    return tabs_impede(block, direction) && !tabs_temporarily_impede(block, direction);
+}
+
+/**Checks if tabs restrict a block's movement even if it and adjacent blocks are rotated.*/
+bool GameLogic::tabs_temporarily_impede(Block * block, char direction) {
+    if (!tabs_impede(block, direction)) {return false;}
+    bool self_tabs_fine = !movement_is_tablocked_by_self(block, direction) || movement_is_temporarily_tablocked_by_self(block, direction);
+    bool adjacent_tabs_fine = !movement_is_tablocked_by_adjacent(block, direction) || movement_is_temporarily_tablocked_by_adjacent(block, direction);
+    return self_tabs_fine && adjacent_tabs_fine;
+}
+
+/**Checks if the axis's tablocked status can be removed by rotating the block.*/
+bool GameLogic::movement_is_tablocked_by_adjacent(Block * block, char direction) {
+    switch (direction) {
+        case U_DIR: case D_DIR: return side_is_tablocked_by_adjacent(block, L_DIR) || side_is_tablocked_by_adjacent(block, R_DIR);
+        case L_DIR: case R_DIR: return side_is_tablocked_by_adjacent(block, U_DIR) || side_is_tablocked_by_adjacent(block, D_DIR);
+        default:break;
+    }
+}
+
+/**Checks if the axis's tablocked status can be removed by rotating the block.*/
+bool GameLogic::movement_is_temporarily_tablocked_by_adjacent(Block * block, char direction) {
+    bool movement_tablocked_by_adjacent = movement_is_tablocked_by_adjacent(block, direction);
+    if (!movement_tablocked_by_adjacent) {return false;}
+    switch (direction) {
+        case U_DIR: case D_DIR: return !side_is_always_tablocked_by_adjacent(block, L_DIR) || !side_is_always_tablocked_by_adjacent(block, R_DIR);
+        case L_DIR: case R_DIR: return !side_is_always_tablocked_by_adjacent(block, U_DIR) || !side_is_always_tablocked_by_adjacent(block, D_DIR);
+        default:break;
+    }
+}
+
+
+/**Checks if the axis's tablocked status can be removed by rotating the block.*/
+bool GameLogic::movement_is_tablocked_by_self(Block * block, char direction) {
+    switch (direction) {
+        case U_DIR: case D_DIR: return side_is_tablocked_by_self(block, L_DIR) || side_is_tablocked_by_self(block, R_DIR);
+        case L_DIR: case R_DIR: return side_is_tablocked_by_self(block, U_DIR) || side_is_tablocked_by_self(block, D_DIR);
+        default:break;
+    }
+}
+
+/**Checks if the axis's tablocked status can be removed by rotating the block.*/
+bool GameLogic::movement_is_temporarily_tablocked_by_self(Block * block, char direction) {
+    bool movement_tablocked_by_self = movement_is_tablocked_by_self(block, direction);
+    if (!movement_tablocked_by_self) {return false;}
+    bool block_is_rotateable = block->get_simple_id()==3;
+    bool tab_configuration_is_ok = (!block->get_tab(U_DIR) && !block->get_tab(D_DIR))
+                                || (!block->get_tab(R_DIR) && !block->get_tab(L_DIR));
+    return block_is_rotateable
+        && movement_tablocked_by_self//for clarity
+        && tab_configuration_is_ok;
+}
+
+/**Checks if one of the block's sides has an adjacent block; and either of the two blocks have a tab on that shared side.*/
+bool GameLogic::side_is_tablocked(Block * block, char direction) {
+    return side_is_tablocked_by_adjacent(block, direction)
+        || side_is_tablocked_by_self(block, direction);
+}
+
+
+bool GameLogic::side_is_temporarily_tablocked(Block * block, char direction) {
+    return side_is_temporarily_tablocked_by_adjacent(block, direction)
+        || side_is_temporarily_tablocked_by_self(block, direction);
+}
+
+
+bool GameLogic::side_is_always_tablocked_by_adjacent(Block * block, char direction) {
+    return side_is_tablocked_by_adjacent(block, direction)
+       && !side_is_temporarily_tablocked_by_adjacent(block, direction);
+}
+
+/**Checks if one of the block's sides has an adjacent block with a tab on the shared side.*/
+bool GameLogic::side_is_tablocked_by_adjacent(Block * block, char direction) {
+    int x = block->get_x();
+    int y = block->get_y();
+    switch (direction) {
+        case U_DIR: return block_exists(x, y+1) && get_block(x, y+1)->get_tab(D_DIR);
+        case D_DIR: return block_exists(x, y-1) && get_block(x, y-1)->get_tab(U_DIR);
+        case L_DIR: return block_exists(x-1, y) && get_block(x-1, y)->get_tab(R_DIR);
+        case R_DIR: return block_exists(x+1, y) && get_block(x+1, y)->get_tab(L_DIR);
+        default:break;
+    }
+}
+
+/**Checks if the side's tablocked status can be removed by rotating the adjacent block.*/
+bool GameLogic::side_is_temporarily_tablocked_by_adjacent(Block * block, char direction) {
+    bool adjacent_block_is_tablocking = side_is_tablocked_by_adjacent(block, direction);
+    if (!adjacent_block_is_tablocking) {return false;}//can now assume (below) that the adjacent block exists
+    int x = block->get_x();
+    int y = block->get_y();
+    Block * adjacent_block;
+    switch (direction) {
+        case U_DIR: adjacent_block = get_block(x, y+1); break;
+        case D_DIR: adjacent_block = get_block(x, y-1); break;
+        case L_DIR: adjacent_block = get_block(x-1, y); break;
+        case R_DIR: adjacent_block = get_block(x+1, y); break;
+        default:break;
+    }
+    bool adjacent_block_is_rotateable = adjacent_block->get_simple_id()==3;
+    bool adjacent_block_is_not_fully_tabbed = adjacent_block->get_tab_count()!=4;
+    return adjacent_block_is_rotateable
+        && adjacent_block_is_tablocking//for clarity
+        && adjacent_block_is_not_fully_tabbed;
+}
+
+/**Checks if one of the block's sides has an adjacent block and a tab on the shared side.*/
+bool GameLogic::side_is_tablocked_by_self(Block * block, char direction) {
+    int x = block->get_x();
+    int y = block->get_y();
+    switch (direction) {
+        case U_DIR: return block_exists(x, y+1) && block->get_tab(U_DIR);
+        case D_DIR: return block_exists(x, y-1) && block->get_tab(D_DIR);
+        case L_DIR: return block_exists(x-1, y) && block->get_tab(L_DIR);
+        case R_DIR: return block_exists(x+1, y) && block->get_tab(R_DIR);
+        default:break;
+    }
+}
+
+/**Checks if the side's tablocked status can be removed by rotating the adjacent block.*/
+bool GameLogic::side_is_temporarily_tablocked_by_self(Block * block, char direction) {
+    bool block_is_tablocking = side_is_tablocked_by_self(block, direction);
+    if (!block_is_tablocking) {return false;}//can now assume (below) that the adjacent block exists
+    bool block_is_rotateable = block->get_simple_id()==3;
+    bool block_is_not_fully_tabbed = block->get_tab_count()!=4;
+    return block_is_rotateable
+        && block_is_tablocking//for clarity
+        && block_is_not_fully_tabbed;
 }
 
 /**Checks if a direction relative to a block is clear or blocked.*/
@@ -115,8 +237,7 @@ void GameLogic::remove_block(int x, int y) {
     }
 }
 
-/**@return if a block can be removed*/
-bool GameLogic::can_move_block(Block * block, char direction) {
+bool GameLogic::block_allows_movement(Block * block, char direction) {
     bool type_allows_movement;
     switch (block->get_id()) {
         case ID_NORMAL:
@@ -137,14 +258,43 @@ bool GameLogic::can_move_block(Block * block, char direction) {
         default:break;
     }
     return type_allows_movement
-       && !block->is_move_restricted(get_blocks_removed_ct())
+       && !block->is_move_restricted(get_blocks_removed_ct());
+}
+
+/**@return if a block can be removed*/
+bool GameLogic::can_move_block(Block * block, char direction) {
+    return block_allows_movement(block, direction)
        && !path_blocked(block, direction)
        && !tabs_impede(block, direction);
+}
+
+bool GameLogic::can_potentially_move_block(Block * block, char direction) {
+    return block_allows_movement(block, direction)
+       && !path_blocked(block, direction)
+       && !tabs_always_impede(block, direction);
 }
 
 /**Determines if a block can be removed in any way*/
 bool GameLogic::can_be_removed(Block * block) {
     return can_move_block(block, U_DIR) || can_move_block(block, D_DIR) || can_move_block(block, L_DIR) || can_move_block(block, R_DIR);
+}
+
+/**Determines if a block can be removed in any way*/
+bool GameLogic::can_be_removed(int x, int y) {
+    return can_be_removed(get_block(x, y));
+}
+
+/**Determines if a block can be removed, including if it and nearby rotateable blocks are rotated etc.*/
+bool GameLogic::potentially_removable(Block * block) {
+    return can_potentially_move_block(block, U_DIR)
+        || can_potentially_move_block(block, D_DIR)
+        || can_potentially_move_block(block, L_DIR)
+        || can_potentially_move_block(block, R_DIR);
+}
+
+/**Determines if a block can be removed, including if it and nearby rotateable blocks are rotated etc.*/
+bool GameLogic::potentially_removable(int x, int y) {
+    return potentially_removable(get_block(x, y));
 }
 
 /**Determines if block can be moved*/
