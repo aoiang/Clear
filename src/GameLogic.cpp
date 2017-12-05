@@ -342,6 +342,13 @@ void GameLogic::set_generated_board_size(int x, int y) {
     this->generated_board_y = y;
 }
 
+/**set how many blocks of each type*/
+void GameLogic::set_nums_of_blocks(std::string nums_of_nor, std::string nums_of_rot, std::string nums_of_dir) {
+    this->nums_of_nor = nums_of_nor;
+    this->nums_of_rot = nums_of_rot;
+    this->nums_of_dir = nums_of_dir;
+}
+
 /**Attempts to move the selected block*/
 bool GameLogic::try_move_selected(char direction) {return try_move(selected_x, selected_y, direction);}
 
@@ -377,3 +384,12 @@ int GameLogic::get_generated_board_x() {return generated_board_x;}
 
 /**get the board y created by generator*/
 int GameLogic::get_generated_board_y() {return generated_board_y;}
+
+/** get nums of directional blocks*/
+std::string GameLogic::get_nums_of_dir() {return nums_of_dir;}
+
+/** get nums of rotating blocks*/
+std::string GameLogic::get_nums_of_rot() {return nums_of_rot;}
+
+/** get nums of normal blocks*/
+std::string GameLogic::get_nums_of_nor() {return nums_of_nor;}
