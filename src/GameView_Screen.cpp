@@ -332,7 +332,7 @@ void GameView_Screen::draw_hint() {
     if (hint_box.top < mousePos.y && (hint_box.top + hint_box.height) > mousePos.y && hint_box.left < mousePos.x && (hint_box.left + hint_box.width) > mousePos.x) {
         hintButton->setFillColor(sf::Color(240, 100, 100));
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-            hint_shape.setPosition(BoardXToXPixel(logic->get_hint().x), BoardYToYPixel(logic->get_hint().y));
+            hint_shape.setPosition(BoardXToXPixel(logic->get_hint()->get_x()), BoardYToYPixel(logic->get_hint()->get_y()));
             App->draw(hint_shape);
         }
     }

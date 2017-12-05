@@ -309,20 +309,21 @@ void GameLogic::print_removable() {
 }
 
 /**takes one valid move and returns the block location */
-sf::Vector2i GameLogic::get_hint() {//TODO fix how this breaks encapsulation
+Block * GameLogic::get_hint() {
+    Block * hint_block;
     for (int y=0; y<get_board_height(); y++) {
         for (int x=0; x<get_board_width(); x++) {
-            if (board->block_exists(x, y) && can_be_removed(x, y)) {
-                sf::Vector2i hint(x,y);
-                return hint;
+            if (board->block_exists(x, y)) {
+                hint_block = get_block(x, y);
+                if (can_be_removed(x, y)) {return hint_block;}
             }
         }
     }
     for (int y=0; y<get_board_height(); y++) {
         for (int x=0; x<get_board_width(); x++) {
-            if (board->block_exists(x, y) && potentially_removable(x, y)) {
-                sf::Vector2i hint(x,y);
-                return hint;
+            if (board->block_exists(x, y)) {
+                hint_block = get_block(x, y);
+                if (potentially_removable(x, y)) {return hint_block;}
             }
         }
     }
