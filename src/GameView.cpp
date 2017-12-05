@@ -14,6 +14,8 @@ int GameView::run(GameLogic logic) {
     Levels_Screen screen_levelselect;
     Infinite_Screen screen_infinite;
     testScreen screenTest;
+    Transition_Screen screen_transition;
+    //screen_transition();
 
     std::vector<Screen_Abstract*> screens;
     int cur_screen = 0;//SCREEN_TITLE;
@@ -22,10 +24,13 @@ int GameView::run(GameLogic logic) {
     screen_gameview.set_GameLogic(logic);
     screen_levelselect.set_GameLogic(logic);
     screen_infinite.set_GameLogic(logic);
-    screens.push_back(&screenTest);
+    screen_transition.set_GameLogic(logic);
+    //screens.push_back(&screenTest);
     screens.push_back(&screen_title);
     screens.push_back(&screen_mainmenu);
+    //screens.push_back(&screen_transition);
     screens.push_back(&screen_gameview);
+    screens.push_back(&screen_transition);
     screens.push_back(&screen_levelselect);
     screens.push_back(&screen_infinite);
 

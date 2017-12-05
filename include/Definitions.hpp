@@ -28,6 +28,7 @@
 #define MAINMENUITEM_2 "Levels"
 #define MAINMENUITEM_3 "Custom Mode"
 #define MAINMENUITEM_4 "Settings"
+#define HINT "Hint"
 
 #define ID_NORMAL 10
 #define ID_U_DIR 20
@@ -46,8 +47,9 @@
 #define SCREEN_TITLE 0
 #define SCREEN_MAINMENU 1
 #define SCREEN_GAMEVIEW 2
-#define SCREEN_LEVELSELECT 3
-#define SCREEN_INFINITE 4
+#define SCREEN_TRANSITION 3
+#define SCREEN_LEVELSELECT 4
+#define SCREEN_INFINITE 5
 
 #define LEVELS 20
 #define LEVEL_TEST "../resources/levels/testlevel.txt"

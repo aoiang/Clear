@@ -23,6 +23,7 @@ class GameView_Screen : public Screen_Abstract {
         sf::RectangleShape restriction_shape;
         sf::RectangleShape * path_shapes;
         sf::RectangleShape * tab_shapes;
+        sf::Text * hintButton;
         GameLogic * logic;
         float ** animation_ms;
         char ** animation_dir;
@@ -49,6 +50,8 @@ class GameView_Screen : public Screen_Abstract {
         void load_textures();
         void draw(int);
         void draw_shadows();
+        void draw_hintbutton();
+        void select_hintbutton();
         void draw_path_highlighting();
         void draw_blocks(int);
         void draw_tab(int, int, int);

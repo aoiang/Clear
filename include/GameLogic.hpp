@@ -57,6 +57,7 @@ class GameLogic {
         void set_cur_level(int);
         int get_cur_level();
         void increment_cur_level();
+        
 };
 
 #endif //CLEAR_GAMELOGIC_HPP

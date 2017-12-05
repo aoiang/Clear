@@ -318,7 +318,33 @@ void GameView_Screen::draw_tabs() {
         }
     }
 }
-
+void GameView_Screen::draw_hintbutton()
+{
+    sf::Font font;
+    font.loadFromFile(REGULARFONT_FILEPATH);
+    int fontsize = 50;
+    hintButton = new sf::Text(HINT, font, fontsize); 
+    hintButton->setPosition(500,30);
+    select_hintbutton();
+    App->draw(*hintButton);
+}
+ void GameView_Screen::select_hintbutton()
+ {
+    sf::Vector2f mousePos = static_cast<sf::Vector2f>(sf::Mouse::getPosition(*App));
+    sf::FloatRect hint_box= hintButton->getGlobalBounds();
+    if (hint_box.top < mousePos.y && (hint_box.top + hint_box.height) > mousePos.y && hint_box.left < mousePos.x && (hint_box.left + hint_box.width) > mousePos.x) {
+            hintButton->setFillColor(sf::Color::Black); 
+            App->draw(*hintButton);
+            if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
+            {
+                logic->print_removeable();
+            }
+      } else {}
+    if
+    {
+        
+    }
+ }
 /**Draw all blocks, shadows, movements, and selections*/
 void GameView_Screen::draw(int deltaTime) {
     App->clear(sf::Color(40,140,240));
@@ -327,6 +353,7 @@ void GameView_Screen::draw(int deltaTime) {
     draw_tabs();
     draw_path_highlighting();
     draw_selected_block();
+    draw_hintbutton();
     App->display();
 }
 
@@ -366,19 +393,27 @@ int GameView_Screen::run(sf::RenderWindow &window) {
                 if (logic->get_cur_level() == 0){
                     BoardGenerator * generator = new BoardGenerator();
                     board = generator->make_board(logic->get_generated_board_x(), logic->get_generated_board_y());
+                   // return SCREEN_TRANSITION;
                 } else {
                     logic->increment_cur_level();
                     board = new BoardState(levels[logic->get_cur_level()-1]);
+                    //return SCREEN_TRANSITION;
                 }
                 logic->set_BoardState(*board);
                 init();
                 time_since_completion = 0;
+                if (logic->get_cur_level() == 0)
+                    return SCREEN_TRANSITION;
+                else
+                    return SCREEN_TRANSITION;
             }
         }
 
         check_mouse_input();
         check_keyboard_input();
         draw(draw_clock.restart().asMicroseconds());
+    
     }
+        
     return SCREEN_MAINMENU;
 }
