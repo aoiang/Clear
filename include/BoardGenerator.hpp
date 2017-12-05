@@ -12,7 +12,7 @@ class BoardGenerator {
         BoardState * board;
         int width;
         int height;
-        static const int number_of_configs = 94;
+        static const int number_of_configs = 90;
         void add_block_if_possible(int x, int y);
         void add_block_if_possible();
         std::mt19937 get_random_num_generator();
