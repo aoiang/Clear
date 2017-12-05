@@ -24,7 +24,6 @@ int Title_Animation::draw_sprite(sf::RenderWindow &window) {
             if(event.type == sf::Event::KeyPressed) {return 1;}
         }
 
-
         if (clock.getElapsedTime().asSeconds()>0.1f) {
             if (rectSource.left == 396) {
                 rectSource.left = 0;
@@ -32,9 +31,11 @@ int Title_Animation::draw_sprite(sf::RenderWindow &window) {
             } else {
                 rectSource.left += 396;
             }
+
             sprite.setTextureRect(rectSource);
             clock.restart();
             frame_count++;
+
             window.clear(sf::Color(40,140,240));
             window.draw(sprite);
             window.display();
@@ -81,11 +82,6 @@ int Title_Animation::draw_tagline(sf::RenderWindow &window) {
 
 /**runs the opening screen */
 int Title_Animation::run(sf::RenderWindow &window) {
-    int re = SCREEN_TITLE;
-
-    if (draw_sprite(window) == -1) {
-        return EXIT_GAME;
-    }
-
+    if (draw_sprite(window) == -1) {return EXIT_GAME;}
     return draw_tagline(window);
 }
