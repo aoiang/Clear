@@ -19,6 +19,7 @@ class Infinite_Screen : public Screen_Abstract{
         sf::Text start;
         int num_of_blocks[5];
         GameLogic * logic;
+        bool clicked = false;
 
     public:
         void init();

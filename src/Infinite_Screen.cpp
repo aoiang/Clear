@@ -112,25 +112,36 @@ int Infinite_Screen::run(sf::RenderWindow &window) {
 
         if(sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
             sf::Vector2f mousePosition = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
-            for (int butt = 0; butt < 10; butt++){
-                if (check_clicked(mousePosition, butt, window)){
-                    if(butt % 2 == 0){
-                        if (num_of_blocks[butt/2] < 9){
-                            num_of_blocks[butt/2] ++;
-                        }
-                    }
-                    else{
-                        if (num_of_blocks[butt/2] > 0){
-                            num_of_blocks[butt/2] --;
-                        }
-                    }
-                }
+            if (!clicked){
+                clicked = true;
             }
+
 
             if (start_clicked(mousePosition, window)){
                 logic->set_generated_board_size(num_of_blocks[3], num_of_blocks[4]);
                 logic->set_cur_level(0);
                 return SCREEN_GAMEVIEW;
+            }
+        }
+
+        else {
+            if (clicked) {
+                clicked =false;
+                sf::Vector2f mousePosition = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
+                for (int butt = 0; butt < 10; butt++){
+                    if (check_clicked(mousePosition, butt, window)){
+                        if(butt % 2 == 0){
+                            if (num_of_blocks[butt/2] < 9){
+                                num_of_blocks[butt/2] ++;
+                            }
+                        }
+                        else{
+                            if (num_of_blocks[butt/2] > 0){
+                                num_of_blocks[butt/2] --;
+                            }
+                        }
+                    }
+                }
             }
         }
 
