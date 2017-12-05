@@ -12,7 +12,7 @@ Transition_Screen::Transition_Screen()
 {
   string joke;
   ifstream fileRead;
-  fileRead.open("/home/f85/ytejigu/Clear/resources/work_jokes.txt");
+  fileRead.open("../resources/work_jokes.txt");
   if(!fileRead)
   {
       cerr << "Unable to open find work_jokes.txt";
