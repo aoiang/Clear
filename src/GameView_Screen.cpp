@@ -395,6 +395,10 @@ int GameView_Screen::run(sf::RenderWindow &window) {
                 logic->set_BoardState(*board);
                 init();
                 time_since_completion = 0;
+                if(logic->get_cur_level()==0)
+                    return SCREEN_TRANSITION;
+               else
+                    return SCREEN_TRANSITION;
             }
         }
 
