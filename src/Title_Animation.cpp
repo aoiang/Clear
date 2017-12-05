@@ -35,6 +35,7 @@ int Title_Animation::draw_sprite(sf::RenderWindow &window) {
             sprite.setTextureRect(rectSource);
             clock.restart();
             frame_count++;
+            window.clear(sf::Color(40,140,240));
             window.draw(sprite);
             window.display();
         }
