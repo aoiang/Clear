@@ -87,6 +87,7 @@ void GameView_Screen::init() {
     paths[0] = make_alpha_rectangle_shape(block_size*0.98, App->getSize().y, 255, 255, 255, 120);
     paths[1] = make_alpha_rectangle_shape(App->getSize().x, block_size*0.98, 255, 255, 255, 120);
 
+    this->hint_shape = make_alpha_rectangle_shape(block_size*0.98, block_size*0.98, 250, 250, 0, 180);
     this->shadow_shape = make_alpha_rectangle_shape(block_size*0.98, block_size*0.98, 0, 0, 0, 60);
     this->restriction_shape = make_alpha_rectangle_shape(block_size*0.98, block_size*0.98, 255, 0, 0, 180);
     this->path_shapes = paths;
@@ -174,15 +175,6 @@ void GameView_Screen::check_mouse_input() {
         logic->set_selected_position(-1, -1);
     }
 }
-/**Visual shows the player a possible move*/
-void GameView_Screen::draw_hint_block(sf::Vector2i hint_block)
-{
-    int index = (hint_block.y * logic->get_board_width()) + hint_block.x;
-    block_shapes[index].setSize(sf::Vector2f(block_size*1.1, block_size*1.1));
-    block_shapes[index].setFillColor(sf::Color(135, 206, 250));
-    block_shapes[index].move(-0.05*block_size, -0.05*block_size);
-    App->draw(block_shapes[index]);
-}
 
 /**Draws selected block and shadow under it*/
 void GameView_Screen::draw_selected_block() {
@@ -201,7 +193,7 @@ void GameView_Screen::draw_path_highlighting() {
 
         int path_shape_i = 0;
         int x_pos = BoardXToXPixel(logic->get_selected_x());
-        int y_pos = BoardYToYPixel(logic->get_selected_y());                      
+        int y_pos = BoardYToYPixel(logic->get_selected_y());
 
         switch (dir) {
             case U_DIR: y_pos -= default_window_height;
@@ -231,41 +223,6 @@ void GameView_Screen::draw_shadows() {
         }
     }
 }
-/**Draws the hint button*/
-void GameView_Screen::draw_hintbutton()
-{
-    sf::Font font;
-    font.loadFromFile(REGULARFONT_FILEPATH);
-    int fontsize = 40;
-    int count = 0;
-    hintButton = new sf::Text(HINT, font, fontsize); 
-    hintButton->setPosition(500,10);
-    App->draw(*hintButton);
-    sf::Vector2f mousePos = static_cast<sf::Vector2f>(sf::Mouse::getPosition(*App));
-    sf::FloatRect hint_box= hintButton->getGlobalBounds(); 
-    if (hint_box.top < mousePos.y && (hint_box.top + hint_box.height) > mousePos.y && hint_box.left < mousePos.x && (hint_box.left + hint_box.width) > mousePos.x)
-    {
-        hintButton->setFillColor(sf::Color::Black);
-        App->draw(*hintButton);
-
-    } 
-    else{}
-
-
-}
-
-/**shows the next possible move*/
-void GameView_Screen::show_hint()
-{
-    sf::Vector2f mousePos = static_cast<sf::Vector2f>(sf::Mouse::getPosition(*App));
-    sf::FloatRect hint_box= hintButton->getGlobalBounds(); 
-    if ((hint_box.top < mousePos.y && (hint_box.top + hint_box.height) > mousePos.y && hint_box.left < mousePos.x && (hint_box.left + hint_box.width) > mousePos.x) && sf::Mouse::isButtonPressed(sf::Mouse::Left))
-        {
-                sf::Vector2i block_loc = logic->get_hint();
-                draw_hint_block(block_loc);
-                App->display();
-        }
-}
 
 /**Draws blocks*/
 void GameView_Screen::draw_blocks(int deltaTime) {
@@ -283,17 +240,16 @@ void GameView_Screen::draw_blocks(int deltaTime) {
 
                 if (logic->block_is_move_restricted(x, y)) {
                     //TODO: fix this extremely sloppy text hack
-                    sf::Text text1;
+                    sf::Text text;
                     sf::Font font;
                     font.loadFromFile(REGULARFONT_FILEPATH);
-                    text1.setFont(font);
-                    text1.setPosition(BoardXToXPixel(x) + block_size/2.5, BoardYToYPixel(y) + block_size/3);
-                    text1.setString(std::to_string(logic->get_block(x, y)->get_move_restriction() - logic->get_blocks_removed_ct()));
-                    text1.setCharacterSize(20);
-
+                    text.setFont(font);
+                    text.setPosition(BoardXToXPixel(x) + block_size/2.5, BoardYToYPixel(y) + block_size/3);
+                    text.setString(std::to_string(logic->get_block(x, y)->get_move_restriction() - logic->get_blocks_removed_ct()));
+                    text.setCharacterSize(20);
                     restriction_shape.setPosition(BoardXToXPixel(x), BoardYToYPixel(y)) ;
                     App->draw(restriction_shape);
-                    App->draw(text1);
+                    App->draw(text);
                 }
             } else if (animation_ms[x][y] == 1) {
                 block_shapes[i].setOrigin(block_size / 2, block_size / 2);
@@ -361,6 +317,28 @@ void GameView_Screen::draw_tabs() {
     }
 }
 
+/**Draws the hint button and hint shape*/
+void GameView_Screen::draw_hint() {
+    int fontsize = 40;
+    sf::Font font;
+    font.loadFromFile(REGULARFONT_FILEPATH);
+
+    hintButton = new sf::Text(HINT, font, fontsize);
+    hintButton->setPosition(500,10);
+
+    sf::Vector2f mousePos = static_cast<sf::Vector2f>(sf::Mouse::getPosition(*App));
+    sf::FloatRect hint_box = hintButton->getGlobalBounds();
+
+    if (hint_box.top < mousePos.y && (hint_box.top + hint_box.height) > mousePos.y && hint_box.left < mousePos.x && (hint_box.left + hint_box.width) > mousePos.x) {
+        hintButton->setFillColor(sf::Color(240, 100, 100));
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+            hint_shape.setPosition(BoardXToXPixel(logic->get_hint().x), BoardYToYPixel(logic->get_hint().y));
+            App->draw(hint_shape);
+        }
+    }
+    App->draw(*hintButton);
+}
+
 /**Draw all blocks, shadows, movements, and selections*/
 void GameView_Screen::draw(int deltaTime) {
     App->clear(sf::Color(40,140,240));
@@ -369,7 +347,7 @@ void GameView_Screen::draw(int deltaTime) {
     draw_tabs();
     draw_path_highlighting();
     draw_selected_block();
-    draw_hintbutton();
+    draw_hint();
     App->display();
 }
 
@@ -396,18 +374,13 @@ int GameView_Screen::run(sf::RenderWindow &window) {
     logic->set_BoardState(*board);
     init();
     int time_since_completion = 0;
-    
-    //if(isOver_hintbutton())
-    //{
-        //logic->print_removable();
-    //}
+
     sf:: Event Event;
     while(running) {
         while (window.pollEvent(Event)) {
             if (Event.type == sf::Event::Closed) {return EXIT_GAME;}
             if (Event.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {return SCREEN_MAINMENU;}
         }
-
 
         if (board->is_clear()) {
             time_since_completion += draw_clock.getElapsedTime().asMicroseconds();
@@ -424,16 +397,11 @@ int GameView_Screen::run(sf::RenderWindow &window) {
                 time_since_completion = 0;
             }
         }
-         
-        
-        
-        
+
         check_mouse_input();
         check_keyboard_input();
         draw(draw_clock.restart().asMicroseconds());
-        draw_hintbutton();
-        show_hint();
     }
-    
+
     return SCREEN_MAINMENU;
 }

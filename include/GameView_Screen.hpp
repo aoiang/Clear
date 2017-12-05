@@ -21,6 +21,7 @@ class GameView_Screen : public Screen_Abstract {
         sf::RectangleShape * block_shapes;
         sf::RectangleShape shadow_shape;
         sf::RectangleShape restriction_shape;
+        sf::RectangleShape hint_shape;
         sf::RectangleShape * path_shapes;
         sf::RectangleShape * tab_shapes;
         sf::Text * hintButton;
@@ -58,7 +59,7 @@ class GameView_Screen : public Screen_Abstract {
         void draw_tab(int, int, int);
         void draw_tabs();
         void draw_selected_block();
-        void draw_hint_block(sf::Vector2i hint_block);
+        void draw_hint();
         int BoardToPixel(int board_axis_index, int board_axis_length, int screen_axis_length, bool y_axis);
         int BoardXToXPixel(int x);
         int BoardYToYPixel(int y);
