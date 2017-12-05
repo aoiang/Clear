@@ -295,16 +295,30 @@ bool GameLogic::potentially_removable(Block * block) {
 bool GameLogic::potentially_removable(int x, int y) {
     return potentially_removable(get_block(x, y));
 }
-
+/**prints all removable block locations to the terminal*/
 void GameLogic::print_removable() {
     for (int y=0; y<get_board_height(); y++) {
         for (int x=0; x<get_board_width(); x++) {
             if (board->block_exists(x, y) && potentially_removable(x, y)) {
                 std::cout << "removable at " << x << "," << y << std::endl;
+                return;
             }
         }
     }
 }
+/**takes one valid move and returns the block location */
+sf::Vector2i GameLogic::get_hint()
+{
+    for (int y=0; y<get_board_height(); y++) {
+        for (int x=0; x<get_board_width(); x++) {
+            if (board->block_exists(x, y) && potentially_removable(x, y)) {
+                 sf::Vector2i hint(x,y);
+                return hint;
+            }
+        }
+    }
+}
+
 
 /**Determines if block can be moved*/
 bool GameLogic::can_move(int block_x, int block_y, char direction) {

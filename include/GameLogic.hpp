@@ -50,6 +50,7 @@ class GameLogic {
         bool potentially_removable(Block * block);
         bool potentially_removable(int x, int y);
         void print_removable();
+        sf::Vector2i get_hint();
         bool block_allows_movement(Block * block, char direction);
         bool can_potentially_move_block(Block * block, char direction);
         bool tabs_impede(Block * block, char direction);

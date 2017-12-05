@@ -66,7 +66,8 @@ int MainMenu_Screen::run(sf::RenderWindow &window) {
 
     sf:: Event Event;
     bool running = true;
-
+    
+    
     while(running) {
         while (window.pollEvent(Event)) {
             if(Event.type == sf::Event::Closed) {return EXIT_GAME;}
