@@ -59,6 +59,15 @@
 #define LEVEL_08 "../resources/levels/level08.txt"
 #define LEVEL_09 "../resources/levels/level09.txt"
 #define LEVEL_10 "../resources/levels/level10.txt"
-
+#define LEVEL_11 "../resources/levels/level11.txt"
+#define LEVEL_12 "../resources/levels/level12.txt"
+#define LEVEL_13 "../resources/levels/level13.txt"
+#define LEVEL_14 "../resources/levels/level14.txt"
+#define LEVEL_15 "../resources/levels/level15.txt"
+#define LEVEL_16 "../resources/levels/level16.txt"
+#define LEVEL_17 "../resources/levels/level17.txt"
+#define LEVEL_18 "../resources/levels/level18.txt"
+#define LEVEL_19 "../resources/levels/level19.txt"
+#define LEVEL_20 "../resources/levels/level20.txt"
 
 #endif //CLEAR_DEFINITIONS_HPP

@@ -36,7 +36,7 @@ void BoardState::import_board(std::string filepath) {
     getline(level_file, line);
     this->height = stoi(line);
 
-    for (int y=0; y<height; y++) {
+    for (int y=height-1; y>=0; y--) {
         getline(level_file, line);
         std::vector<std::string> blocks = Block::split_string(line, '\t');
         for (int x=0; x<width; x++) {

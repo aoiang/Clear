@@ -89,12 +89,4 @@ int Title_Animation::draw_tagline(sf::RenderWindow &window) {
 }
 
 /**runs the opening screen */
-int Title_Animation::run(sf::RenderWindow &window) {
-    int re = SCREEN_TITLE;
-
-    if (draw_sprite(window) == -1) {
-        return EXIT_GAME;
-    }
-
-    return draw_tagline(window);
-}
+int Title_Animation::run(sf::RenderWindow &window) {return draw_sprite(window);}

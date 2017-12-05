@@ -21,6 +21,7 @@ class GameView_Screen : public Screen_Abstract {
         sf::RectangleShape * block_shapes;
         sf::RectangleShape shadow_shape;
         sf::RectangleShape restriction_shape;
+        sf::RectangleShape hint_shape;
         sf::RectangleShape * path_shapes;
         sf::RectangleShape * tab_shapes;
         sf::Text * hintButton;
@@ -35,7 +36,10 @@ class GameView_Screen : public Screen_Abstract {
         int mouse_x_start;
         int mouse_y_start;
         int deadzone = 10;
-        std::string levels[13] = {LEVEL_01, LEVEL_02, LEVEL_03, LEVEL_04, LEVEL_05, LEVEL_TEST};
+        std::string levels[20] = {LEVEL_01, LEVEL_02, LEVEL_03, LEVEL_04, LEVEL_05, 
+                                  LEVEL_06, LEVEL_07, LEVEL_08, LEVEL_09, LEVEL_10,
+                                  LEVEL_11, LEVEL_12, LEVEL_13, LEVEL_14, LEVEL_15,
+                                  LEVEL_16, LEVEL_17, LEVEL_18, LEVEL_19, LEVEL_20};
     public:
         int block_size = 50;
         int tab_size = block_size/5;
@@ -58,7 +62,7 @@ class GameView_Screen : public Screen_Abstract {
         void draw_tab(int, int, int);
         void draw_tabs();
         void draw_selected_block();
-        void draw_hint_block(sf::Vector2i hint_block);
+        void draw_hint();
         int BoardToPixel(int board_axis_index, int board_axis_length, int screen_axis_length, bool y_axis);
         int BoardXToXPixel(int x);
         int BoardYToYPixel(int y);
