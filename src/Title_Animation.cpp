@@ -24,8 +24,6 @@ int Title_Animation::draw_sprite(sf::RenderWindow &window) {
             if(event.type == sf::Event::KeyPressed) {return 1;}
         }
 
-        window.draw(sprite);
-        window.display();
 
         if (clock.getElapsedTime().asSeconds()>0.1f) {
             if (rectSource.left == 396) {
@@ -37,6 +35,8 @@ int Title_Animation::draw_sprite(sf::RenderWindow &window) {
             sprite.setTextureRect(rectSource);
             clock.restart();
             frame_count++;
+            window.draw(sprite);
+            window.display();
         }
     }
     return 1;
