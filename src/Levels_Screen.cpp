@@ -33,16 +33,12 @@ int Levels_Screen::run(sf::RenderWindow &window) {
     title->setOrigin(titlebox.width/2.0f, titlebox.height/2.0f);
     title->setPosition(sf::Vector2f(window.getSize().x/2,(window.getSize().y/2)-260));
 
-    if (logic->get_max_level() <= 0) {logic->set_cur_level(1);}
-
     for (int i = 0; i < LEVELS; i++){
         std::string str_level = std::to_string(i+1);
         level[i] = sf::Text(sf::String(str_level), font, fontSize);
         sf::FloatRect tmp = level[i].getGlobalBounds();
         level[i].setOrigin(tmp.width/3.0f, tmp.height/3.0f);
         level[i].setPosition(sf::Vector2f((window.getSize().x/6) + (i % 5) * 100, (window.getSize().y/3) + i / 5 * 100));
-        if (i >= logic->get_max_level()) {level[i].setFillColor(sf::Color(255, 255, 255, 120));}
-        window.draw(level[i]);
     }
 
     sf:: Event Event;
@@ -67,7 +63,7 @@ int Levels_Screen::run(sf::RenderWindow &window) {
 
         for (int i=0; i < LEVELS; i++) {
             if (i < logic->get_max_level()) {level[i].setFillColor(sf::Color::White);}
-            else {level[i].setFillColor(sf::Color(255, 255, 255, 120));}
+            else {level[i].setFillColor(sf::Color(255, 255, 255, 90));}
             if (Levels_Screen::check_mousover(mousePosition, i+1, window) && i < logic->get_max_level()) {level[i].setFillColor(sf::Color(240, 100, 100));}
         }
 
