@@ -81,8 +81,8 @@ bool GameLogic::movement_is_temporarily_tablocked_by_adjacent(Block * block, cha
     bool movement_tablocked_by_adjacent = movement_is_tablocked_by_adjacent(block, direction);
     if (!movement_tablocked_by_adjacent) {return false;}
     switch (direction) {
-        case U_DIR: case D_DIR: return !side_is_always_tablocked_by_adjacent(block, L_DIR) || !side_is_always_tablocked_by_adjacent(block, R_DIR);
-        case L_DIR: case R_DIR: return !side_is_always_tablocked_by_adjacent(block, U_DIR) || !side_is_always_tablocked_by_adjacent(block, D_DIR);
+        case U_DIR: case D_DIR: return !side_is_always_tablocked_by_adjacent(block, L_DIR) && !side_is_always_tablocked_by_adjacent(block, R_DIR);
+        case L_DIR: case R_DIR: return !side_is_always_tablocked_by_adjacent(block, U_DIR) && !side_is_always_tablocked_by_adjacent(block, D_DIR);
         default:break;
     }
 }
@@ -295,6 +295,16 @@ bool GameLogic::potentially_removable(Block * block) {
 /**Determines if a block can be removed, including if it and nearby rotateable blocks are rotated etc.*/
 bool GameLogic::potentially_removable(int x, int y) {
     return potentially_removable(get_block(x, y));
+}
+
+void GameLogic::print_removable() {
+    for (int y=0; y<get_board_height(); y++) {
+        for (int x=0; x<get_board_width(); x++) {
+            if (board->block_exists(x, y) && potentially_removable(x, y)) {
+                std::cout << "removable at " << x << "," << y << std::endl;
+            }
+        }
+    }
 }
 
 /**Determines if block can be moved*/
