@@ -1,0 +1,7 @@
+5
+5
+	1,0,f,ffff,0	1,0,f,fttf,0	1,0,f,ffff,0	
+1,0,f,ffff,0	1,0,f,tttt,0	1,0,f,ffff,0	1,0,f,ffff,0	1,0,f,ffft,0
+1,0,f,tfff,0	1,0,f,fftf,0		1,0,f,tfff,0	1,0,f,fftf,0
+1,0,f,ftff,0	1,0,f,ffff,0	1,0,f,ffff,0	1,0,f,tttt,0	1,0,f,ffff,0
+	1,0,f,ffff,0	1,0,f,tfft,0	1,0,f,ffff,0	

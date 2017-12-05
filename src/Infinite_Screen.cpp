@@ -1,9 +1,7 @@
 #include "Infinite_Screen.hpp"
 
 void Infinite_Screen::init() {
-    for(int i = 0; i < 5; i++){
-        num_of_blocks[i] = 0;
-    }
+    for(int i = 0; i < 5; i++) {num_of_blocks[i] = 0;}
 }
 
 void Infinite_Screen::counts_of_block() {
@@ -99,7 +97,6 @@ void Infinite_Screen::draw(sf::RenderWindow &window) {
         if (i < 3) {block_num[i].setPosition(sf::Vector2f(75 + (200 * i), 270));}
         else {block_num[i].setPosition(sf::Vector2f(195 + (200 * (i-3)), 420));}
         window.draw(block_num[i]);
-
     }
 
     window.draw(normal_block);
@@ -136,7 +133,7 @@ int Infinite_Screen::run(sf::RenderWindow &window) {
             if ((Event.type == sf::Event::KeyPressed) && (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))) {return SCREEN_MAINMENU;}
         }
 
-        if(sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
             sf::Vector2f mousePosition = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
             if (!clicked){
                 clicked = true;
@@ -147,8 +144,7 @@ int Infinite_Screen::run(sf::RenderWindow &window) {
                 logic->set_nums_of_blocks(block_counts[0], block_counts[1], block_counts[2]);
                 return SCREEN_GAMEVIEW;
             }
-        }
-        else if (clicked) {
+        } else if (clicked) {
             clicked = false;
             sf::Vector2f mousePosition = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
             for (int butt = 0; butt < 10; butt++){

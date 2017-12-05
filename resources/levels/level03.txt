@@ -1,4 +1,4 @@
 2
 2
-1,0,f,ttff,0	1,0,f,ffff,0
-1,0,f,ffff,0	1,0,f,fftf,0
+1,0,f,fftf,0	1,0,f,fftf,0
+1,0,f,tfff,0	1,0,f,tfff,0

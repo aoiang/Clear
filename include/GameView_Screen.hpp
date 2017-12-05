@@ -36,7 +36,10 @@ class GameView_Screen : public Screen_Abstract {
         int mouse_x_start;
         int mouse_y_start;
         int deadzone = 10;
-        std::string levels[13] = {LEVEL_01, LEVEL_02, LEVEL_03, LEVEL_04, LEVEL_05, LEVEL_TEST};
+        std::string levels[20] = {LEVEL_01, LEVEL_02, LEVEL_03, LEVEL_04, LEVEL_05, 
+                                  LEVEL_06, LEVEL_07, LEVEL_08, LEVEL_09, LEVEL_10,
+                                  LEVEL_11, LEVEL_12, LEVEL_13, LEVEL_14, LEVEL_15,
+                                  LEVEL_16, LEVEL_17, LEVEL_18, LEVEL_19, LEVEL_20};
     public:
         int block_size = 50;
         int tab_size = block_size/5;
