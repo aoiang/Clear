@@ -23,7 +23,6 @@ BoardState::BoardState() {
 /**Loads board from a file*/
 BoardState::BoardState(std::string filepath) {
     //old_import_board(filepath);
-    filepath += ".new";
     import_board(filepath);
     std::cout << "Level loaded from " << filepath << std::endl;
 }
@@ -79,13 +78,13 @@ void BoardState::old_import_board(std::string filepath) {
 
 void BoardState::import_board(std::string filepath) {
     std::ifstream level_file(filepath);
-    
+
     std::string line;
     getline(level_file, line);
     this->width = stoi(line);
     getline(level_file, line);
     this->height = stoi(line);
-    
+
     for (int y=0; y<height; y++) {
         getline(level_file, line);
         std::vector<std::string> blocks = Block::split_string(line, '\t');

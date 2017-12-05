@@ -5,10 +5,10 @@
 
 class BlockGrouped :public Block {
     private:
-        int group;
+        int group_id;
     public:
         BlockGrouped(int, int, int);
-        int get_group();
+        int get_group_id();
 };
 
 #endif //CLEAR_BLOCKGROUPED_HPP
