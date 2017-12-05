@@ -1,27 +1,15 @@
 #include "Infinite_Screen.hpp"
 
 void Infinite_Screen::init() {
-    for(int i = 0; i < 5; i++) {num_of_blocks[i] = 0;}
+    for(int i=0; i<3; i++) {num_of_blocks[i] = 1;}
+    num_of_blocks[3] = 5;
+    num_of_blocks[4] = 5;
 }
 
 void Infinite_Screen::counts_of_block() {
-    for (int i = 0; i < 3; i++){
-        switch (num_of_blocks[i]){
-            case 0: {
-                block_counts[i] = "none";
-                break;
-            }
-            case 1: {
-                block_counts[i] = "some";
-                break;
-            }
-            case 2: {
-                block_counts[i] = "many";
-                break;
-            }
-            default:
-                break;
-        }
+    static const char* const options[3] = {"none", "some", "many"};
+    for (int i=0; i<3; i++) {
+        block_counts[i] = options[num_of_blocks[i]];
     }
 }
 
