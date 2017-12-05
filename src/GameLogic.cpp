@@ -312,6 +312,14 @@ void GameLogic::print_removable() {
 sf::Vector2i GameLogic::get_hint() {//TODO fix how this breaks encapsulation
     for (int y=0; y<get_board_height(); y++) {
         for (int x=0; x<get_board_width(); x++) {
+            if (board->block_exists(x, y) && can_be_removed(x, y)) {
+                sf::Vector2i hint(x,y);
+                return hint;
+            }
+        }
+    }
+    for (int y=0; y<get_board_height(); y++) {
+        for (int x=0; x<get_board_width(); x++) {
             if (board->block_exists(x, y) && potentially_removable(x, y)) {
                 sf::Vector2i hint(x,y);
                 return hint;
