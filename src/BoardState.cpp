@@ -23,69 +23,19 @@ BoardState::BoardState() {
 /**Loads board from a file*/
 BoardState::BoardState(std::string filepath) {
     //old_import_board(filepath);
-    filepath += ".new";
     import_board(filepath);
     std::cout << "Level loaded from " << filepath << std::endl;
 }
 
-void BoardState::old_import_board(std::string filepath) {
-    this->width = default_width;
-    this->height = default_height;
-
-    std::ifstream inFile(filepath);
-
-    int entry_ct = 0;
-    int block_ct = 0;
-    std::string entry;
-
-    while(inFile >> entry) {
-        if (entry != "0") {
-            Block * block = nullptr;
-
-            int x = entry_ct%default_width;
-            int y = 8-(entry_ct/default_width);
-
-            int direction = 0;
-            switch (std::stoi(entry.substr(0, 2))) {
-                case 10:
-                    block = new BlockNormal(x, y);
-                    break;
-                case ID_L_DIR: direction++;
-                case ID_D_DIR: direction++;
-                case ID_R_DIR: direction++;
-                case ID_U_DIR:
-                    block = new BlockDirectional(x, y, direction);
-                    break;
-                case ID_ROTATE_0:
-                    block = new BlockRotating(x, y);
-                    break;
-                default: break;
-            }
-
-            if (entry.substr(3, 1) == "1") {block->set_tab('u', true);}
-            if (entry.substr(4, 1) == "1") {block->set_tab('r', true);}
-            if (entry.substr(5, 1) == "1") {block->set_tab('d', true);}
-            if (entry.substr(6, 1) == "1") {block->set_tab('l', true);}
-
-            block->set_move_restriction(std::stoi(entry.substr(8, 2)));
-
-            add_block(block);
-        }
-        entry_ct++;
-    }
-    inFile.close();
-    export_board(filepath + ".new");
-}
-
 void BoardState::import_board(std::string filepath) {
     std::ifstream level_file(filepath);
-    
+
     std::string line;
     getline(level_file, line);
     this->width = stoi(line);
     getline(level_file, line);
     this->height = stoi(line);
-    
+
     for (int y=0; y<height; y++) {
         getline(level_file, line);
         std::vector<std::string> blocks = Block::split_string(line, '\t');

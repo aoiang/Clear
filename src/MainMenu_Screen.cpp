@@ -16,11 +16,8 @@ void MainMenu_Screen::draw(sf::RenderWindow &window) {
 /**Check when mouse is over an sf::Text object*/
 bool MainMenu_Screen::check_mousover(sf::Vector2f mousePos, sf::Text desired_option, sf::RenderWindow &window) {
     sf::FloatRect item_box = desired_option.getGlobalBounds();
-    if (item_box.top < mousePos.y && (item_box.top + item_box.height) > mousePos.y && item_box.left < mousePos.x && (item_box.left + item_box.width) > mousePos.x) {
-        return true;
-    } else {
-        return false;
-    }
+    if (item_box.top < mousePos.y && (item_box.top + item_box.height) > mousePos.y && item_box.left < mousePos.x && (item_box.left + item_box.width) > mousePos.x) {return true;}
+    else {return false;}
 }
 
 /**Sets GameLogic*/
@@ -91,11 +88,8 @@ int MainMenu_Screen::run(sf::RenderWindow &window) {
         }
 
         for (int i = 0; i < 5; i++) {
-            if (check_mousover(mousePosition, menuItems[i], window)) {
-                menuItems[i].setFillColor(sf::Color(240, 100, 100));
-            } else {
-                menuItems[i].setFillColor(sf::Color::White);
-            }
+            if (check_mousover(mousePosition, menuItems[i], window)) {menuItems[i].setFillColor(sf::Color(240, 100, 100));}
+            else {menuItems[i].setFillColor(sf::Color::White);}
         }
 
         draw(window);

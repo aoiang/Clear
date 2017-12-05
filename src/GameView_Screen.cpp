@@ -156,24 +156,22 @@ void GameView_Screen::check_mouse_input() {
                 }
             } else {dir = DEFAULT_DIR;}
         }
-    } else {
-        if (clicked) {
-            clicked = false;
-            int sel_x = logic->get_selected_x();
-            int sel_y = logic->get_selected_y();
-            if (dir != DEFAULT_DIR && logic->selected_block_exists() && !logic->selected_block_is_move_restricted()) {
-                if (logic->try_move_selected(dir)) {
-                    animation_ms[sel_x][sel_y] = 1;
-                    animation_dir[sel_x][sel_y] = dir;
-                }
-            } else if (logic->tap_selected()) {
-                // Changes BlockRotating texture on tap
-                int i = sel_y * logic->get_board_width() + sel_x;
-                block_shapes[i].setTexture(&texture[(logic->get_block(sel_x, sel_y)->get_id() % 30) + 4]);
+    } else if (clicked) {
+        clicked = false;
+        int sel_x = logic->get_selected_x();
+        int sel_y = logic->get_selected_y();
+        if (dir != DEFAULT_DIR && logic->selected_block_exists() && !logic->selected_block_is_move_restricted()) {
+            if (logic->try_move_selected(dir)) {
+                animation_ms[sel_x][sel_y] = 1;
+                animation_dir[sel_x][sel_y] = dir;
             }
-            dir = DEFAULT_DIR;
-            logic->set_selected_position(-1, -1);
+        } else if (logic->tap_selected()) {
+            // Changes BlockRotating texture on tap
+            int i = sel_y * logic->get_board_width() + sel_x;
+            block_shapes[i].setTexture(&texture[(logic->get_block(sel_x, sel_y)->get_id() % 30) + 4]);
         }
+        dir = DEFAULT_DIR;
+        logic->set_selected_position(-1, -1);
     }
 }
 

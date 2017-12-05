@@ -6,6 +6,27 @@ void Infinite_Screen::init() {
     }
 }
 
+void Infinite_Screen::counts_of_block() {
+    for (int i = 0; i < 3; i++){
+        switch (num_of_blocks[i]){
+            case 0: {
+                block_counts[i] = "none";
+                break;
+            }
+            case 1: {
+                block_counts[i] = "some";
+                break;
+            }
+            case 2: {
+                block_counts[i] = "many";
+                break;
+            }
+            default:
+                break;
+        }
+    }
+}
+
 void Infinite_Screen::draw(sf::RenderWindow &window) {
     unsigned int fontSize = 25;
     unsigned int buttonSize = 75;
@@ -70,10 +91,15 @@ void Infinite_Screen::draw(sf::RenderWindow &window) {
     }
 
     for (int i = 0; i < 5; i++){
-        block_num[i] = sf::Text(sf::String(std::to_string(num_of_blocks[i])), font, fontSize);
-        if (i < 3) {block_num[i].setPosition(sf::Vector2f(95 + (200 * i), 270));}
+        if (i >= 3){ block_num[i] = sf::Text(sf::String(std::to_string(num_of_blocks[i])), font, fontSize); }
+        else{
+            counts_of_block();
+            block_num[i] = sf::Text(sf::String(block_counts[i]), font, fontSize);
+        }
+        if (i < 3) {block_num[i].setPosition(sf::Vector2f(75 + (200 * i), 270));}
         else {block_num[i].setPosition(sf::Vector2f(195 + (200 * (i-3)), 420));}
         window.draw(block_num[i]);
+
     }
 
     window.draw(normal_block);
@@ -112,25 +138,29 @@ int Infinite_Screen::run(sf::RenderWindow &window) {
 
         if(sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
             sf::Vector2f mousePosition = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
-            for (int butt = 0; butt < 10; butt++){
-                if (check_clicked(mousePosition, butt, window)){
-                    if(butt % 2 == 0){
-                        if (num_of_blocks[butt/2] < 9){
-                            num_of_blocks[butt/2] ++;
-                        }
-                    }
-                    else{
-                        if (num_of_blocks[butt/2] > 0){
-                            num_of_blocks[butt/2] --;
-                        }
-                    }
-                }
+            if (!clicked){
+                clicked = true;
             }
-
             if (start_clicked(mousePosition, window)){
                 logic->set_generated_board_size(num_of_blocks[3], num_of_blocks[4]);
                 logic->set_cur_level(0);
+                logic->set_nums_of_blocks(block_counts[0], block_counts[1], block_counts[2]);
                 return SCREEN_GAMEVIEW;
+            }
+        }
+        else if (clicked) {
+            clicked = false;
+            sf::Vector2f mousePosition = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
+            for (int butt = 0; butt < 10; butt++){
+                if (check_clicked(mousePosition, butt, window)){
+                    if (butt < 6) {
+                        if ((butt % 2 == 0) && (num_of_blocks[butt/2] < 2)) {num_of_blocks[butt/2]++;}
+                        else if (num_of_blocks[butt/2] > 0) {num_of_blocks[butt/2]--;}
+                    } else {
+                        if ((butt % 2 == 0) && (num_of_blocks[butt/2] < 9)) {num_of_blocks[butt/2]++;}
+                        else if (num_of_blocks[butt/2] > 0) {num_of_blocks[butt/2] --;}
+                    }
+                }
             }
         }
 

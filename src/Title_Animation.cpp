@@ -18,16 +18,23 @@ int Title_Animation::draw_sprite(sf::RenderWindow &window) {
     sprite.setOrigin(198,67);
     sprite.setPosition(window.getSize().x/2,window.getSize().y/2);
 
+    bool waited = false;
+    window.clear(sf::Color(40,140,240));
+    rectSource.left = 0;
+    rectSource.top = 0;
+    sprite.setTextureRect(rectSource);
+    window.draw(sprite);
+    window.display();
+
     while(frame_count <= 18) {
+
         while (window.pollEvent(event)) {
             if(event.type == sf::Event::Closed) {return -1;}
             if(event.type == sf::Event::KeyPressed) {return 1;}
         }
 
-        window.draw(sprite);
-        window.display();
-
-        if (clock.getElapsedTime().asSeconds()>0.1f) {
+        if (!waited && clock.getElapsedTime().asSeconds() > 1) { waited = true; }
+        else if (waited && clock.getElapsedTime().asSeconds()>0.1f) {
             if (rectSource.left == 396) {
                 rectSource.left = 0;
                 rectSource.top += 134;
@@ -37,6 +44,9 @@ int Title_Animation::draw_sprite(sf::RenderWindow &window) {
             sprite.setTextureRect(rectSource);
             clock.restart();
             frame_count++;
+            window.clear(sf::Color(40,140,240));
+            window.draw(sprite);
+            window.display();
         }
     }
     return 1;

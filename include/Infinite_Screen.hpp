@@ -18,9 +18,12 @@ class Infinite_Screen : public Screen_Abstract{
         sf::Text block_num[5];
         sf::Text start;
         int num_of_blocks[5];
+        std::string block_counts[3];
         GameLogic * logic;
+        bool clicked = false;
 
     public:
+        void counts_of_block();
         void init();
         void set(sf::RenderWindow &window);
         int block_size = 50;
