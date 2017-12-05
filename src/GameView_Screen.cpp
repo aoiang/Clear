@@ -396,11 +396,7 @@ int GameView_Screen::run(sf::RenderWindow &window) {
     logic->set_BoardState(*board);
     init();
     int time_since_completion = 0;
-    
-    //if(isOver_hintbutton())
-    //{
-        //logic->print_removable();
-    //}
+   
     sf:: Event Event;
     while(running) {
         while (window.pollEvent(Event)) {
@@ -422,6 +418,10 @@ int GameView_Screen::run(sf::RenderWindow &window) {
                 logic->set_BoardState(*board);
                 init();
                 time_since_completion = 0;
+                if(logic->get_cur_level()==0)
+                    return SCREEN_TRANSITION;
+               else
+                    return SCREEN_TRANSITION;
             }
         }
          

@@ -66,8 +66,8 @@ int MainMenu_Screen::run(sf::RenderWindow &window) {
 
     sf:: Event Event;
     bool running = true;
-    
-    
+
+
     while(running) {
         while (window.pollEvent(Event)) {
             if(Event.type == sf::Event::Closed) {return EXIT_GAME;}
@@ -78,7 +78,7 @@ int MainMenu_Screen::run(sf::RenderWindow &window) {
         if(sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
             if (check_mousover(mousePosition, menuItems[0], window)) { //new game
                 logic->set_cur_level(1);
-                return SCREEN_GAMEVIEW;
+                return SCREEN_TRANSITION;
             } else if (check_mousover(mousePosition, menuItems[1], window)) { //continue
                 return SCREEN_GAMEVIEW;
             } else if (check_mousover(mousePosition, menuItems[2], window)) { //level selection
