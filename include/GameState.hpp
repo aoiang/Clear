@@ -9,7 +9,6 @@ class GameState {
       int current_board_block_removed;
       int max_level;
       int cur_level;
-      bool current_board_is_clear;
   public:
       GameState(std::string);
       GameState();
@@ -17,8 +16,6 @@ class GameState {
       void add_wrong_move();
       int get_blocks_removed();
       void increment_blocks_removed();
-      void set_is_clear();
-      bool get_is_clear();
       void set_max_level(int);
       int get_max_level();
       void set_cur_level(int);

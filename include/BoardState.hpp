@@ -7,7 +7,6 @@
 
 class BoardState {
     private:
-        int block_ct = 0;
         const static int default_width = 9;
         const static int default_height = 9;
         Block * board[default_width][default_height] = {{nullptr}};
@@ -26,8 +25,8 @@ class BoardState {
         Block * get_block(int x, int y);
         bool block_exists(int x, int y);
         bool add_block(Block * block);
-        int get_block_ct();
         void print_board();
+        bool is_clear();
         void export_board(std::string filepath);
         void import_board(std::string filepath);
         void old_import_board(std::string filepath);

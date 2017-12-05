@@ -358,7 +358,7 @@ int GameView_Screen::run(sf::RenderWindow &window) {
             if (Event.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {return SCREEN_MAINMENU;}
         }
 
-        if (logic->get_is_clear()) {
+        if (board->is_clear()) {
             time_since_completion += draw_clock.getElapsedTime().asMicroseconds();
             if (time_since_completion > 750000) {
                 if (logic->get_cur_level() == 0){

@@ -231,9 +231,8 @@ void GameLogic::remove_block(int x, int y) {
     board->remove_block(x, y);
     state->increment_blocks_removed();
     set_selected_position(-1, -1);
-    if (get_blocks_removed_ct() == board->get_block_ct()) {
+    if (board->is_clear()) {
         std::cout << std::endl << "Board is clear" << std::endl << std::endl;
-        state->set_is_clear();
     }
 }
 
@@ -361,9 +360,6 @@ void GameLogic::set_nums_of_blocks(std::string nums_of_nor, std::string nums_of_
 
 /**Attempts to move the selected block*/
 bool GameLogic::try_move_selected(char direction) {return try_move(selected_x, selected_y, direction);}
-
-/**@return if the board has been cleared*/
-bool GameLogic::get_is_clear() {return state->get_is_clear();}
 
 /**Adds to wrong move counter*/
 void GameLogic::add_wrong_move() {state->add_wrong_move();}

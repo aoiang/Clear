@@ -106,7 +106,6 @@ bool BoardState::add_block(Block * block) {
     int y = block->get_y();
     if (is_valid_location(x, y) && !block_exists(x, y)) {
         board[x][y] = block;
-        block_ct++;
         return true;
     }
     std::cout << "bad add request at " << x << "," << y << "\n";
@@ -124,5 +123,11 @@ Block * BoardState::get_block(int x, int y) {return board[x][y];}
 /**Checks if block exists at index*/
 bool BoardState::block_exists(int x, int y) {return is_valid_location(x,y) && board[x][y]!=nullptr;}
 
-/**@return number of blocks on board*/
-int BoardState::get_block_ct() {return block_ct;}
+bool BoardState::is_clear() {
+    for (int y=0; y<height; y++) {
+        for (int x=0; x<width; x++) {
+            if (block_exists(x, y)) {return false;}
+        }
+    }
+    return true;
+}
