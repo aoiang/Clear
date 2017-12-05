@@ -69,18 +69,22 @@ void Block::init_tabs() {
     set_tab(L_DIR, false);
 }
 
-/**@return can_combine*/
-bool Block::get_combine() {return can_combine;}
-
 /**Gets whether or not a block can move in a given direction*/
 //Base block can move in all directions.
 bool Block::type_allows_movement(char direction) {return true;}
 
 /**@return if fewer blocks have been removed from board than are needed*/
-bool Block::is_move_restricted(int steps) {return steps<move_restriction;}
+bool Block::is_move_restricted() {return get_move_restriction()>0;}
 
-/**Sets how many block clears are required before removal*/
-void Block::set_move_restriction(int steps) {move_restriction = steps;}
+void Block::increase_move_restriction() {move_restriction++;}
+
+void Block::decrease_move_restriction() {move_restriction--;}
+
+/**@return number of moves before this can be removed*/
+int Block::get_move_restriction() {return move_restriction;}
+
+void Block::set_move_restriction(int moves) {move_restriction = moves;}
+
 
 /**Gets the integer representing block rotation*/
 int Block::get_rotation() {return rotation;}
@@ -98,26 +102,27 @@ void Block::set_rotation(int new_rotation) {
     while (get_rotation()!=new_rotation) {rotate();}
 }
 
-/**@return number of moves before this can be removed*/
-int Block::get_move_restriction() {return move_restriction;}
-
 /**@return the direction of the block*/
 char Block::get_direction() {return directions[get_rotation()];}
+
+void Block::set_group(int group) {this->group = group;}
+
+int Block::get_group() {return group;}
 
 /**Initializes block attributes*/
 void Block::basic_init(int x, int y) {
     set_position(x, y);
-    set_combine(false);
     rotation = 0;
+    set_group(0);
     set_id();
     init_tabs();
-    set_move_restriction(0);
+    move_restriction = 0;
 }
 
 void Block::import_init(std::string identity) {
     std::vector<std::string> characteristics = split_string(identity, ',');
-    int imported_simple_id, imported_rotation, imported_move_restriction;
-    bool imported_tab_up, imported_tab_right, imported_tab_down, imported_tab_left, imported_combine;
+    int imported_simple_id, imported_rotation, imported_move_restriction, imported_group;
+    bool imported_tab_up, imported_tab_right, imported_tab_down, imported_tab_left;
 
     imported_simple_id = stoi(characteristics[0]);
     imported_rotation = stoi(characteristics[1]);
@@ -125,13 +130,11 @@ void Block::import_init(std::string identity) {
     imported_tab_right = string_to_bool(characteristics[3].substr(1, 1));
     imported_tab_down = string_to_bool(characteristics[3].substr(2, 1));
     imported_tab_left = string_to_bool(characteristics[3].substr(3, 1));
-    imported_combine = string_to_bool(characteristics[2]);
+    imported_group = stoi(characteristics[2]);
     imported_move_restriction = stoi(characteristics[4]);
 
-    //get_rotation(), get_combine(), get_tab('u')(x4), get_move_restriction()(potentially high)
-
     if (imported_simple_id != simple_id) {std::cout << "Badly Initialized Block" << std::endl;}
-    set_combine(imported_combine);
+    set_group(imported_group);
     while (imported_rotation) {rotate(); imported_rotation--;}
     set_move_restriction(imported_move_restriction);
     set_tab(U_DIR, imported_tab_up);
@@ -184,7 +187,6 @@ Block * Block::import_block(std::string identity, int x, int y) {
 }
 
 std::string Block::get_identity() {
-    //simple_id, get_rotation(), get_combine(), get_tab('u')(x4), get_move_restriction()(potentially high)
     std::string tabs;
     tabs += bool_to_char(get_tab(U_DIR));
     tabs += bool_to_char(get_tab(R_DIR));
@@ -192,7 +194,7 @@ std::string Block::get_identity() {
     tabs += bool_to_char(get_tab(L_DIR));
     std::string identity = std::to_string(simple_id) + ","
                          + std::to_string(get_rotation()) + ","
-                         + bool_to_char(get_combine()) + ","
+                         + std::to_string(get_group()) + ","
                          + tabs + ","
                          + std::to_string(get_move_restriction());
     return identity;

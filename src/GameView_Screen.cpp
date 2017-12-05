@@ -245,7 +245,7 @@ void GameView_Screen::draw_blocks(int deltaTime) {
                     font.loadFromFile(REGULARFONT_FILEPATH);
                     text.setFont(font);
                     text.setPosition(BoardXToXPixel(x) + block_size/2.5, BoardYToYPixel(y) + block_size/3);
-                    text.setString(std::to_string(logic->get_block(x, y)->get_move_restriction() - logic->get_blocks_removed_ct()));
+                    text.setString(std::to_string(logic->get_block(x, y)->get_move_restriction()));
                     text.setCharacterSize(20);
                     restriction_shape.setPosition(BoardXToXPixel(x), BoardYToYPixel(y)) ;
                     App->draw(restriction_shape);

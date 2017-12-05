@@ -257,7 +257,7 @@ bool GameLogic::block_allows_movement(Block * block, char direction) {
         default:break;
     }
     return type_allows_movement
-       && !block->is_move_restricted(get_blocks_removed_ct());
+       && !block->is_move_restricted();
 }
 
 /**@return if a block can be removed*/
@@ -295,6 +295,7 @@ bool GameLogic::potentially_removable(Block * block) {
 bool GameLogic::potentially_removable(int x, int y) {
     return potentially_removable(get_block(x, y));
 }
+
 /**prints all removable block locations to the terminal*/
 void GameLogic::print_removable() {
     for (int y=0; y<get_board_height(); y++) {
@@ -306,13 +307,13 @@ void GameLogic::print_removable() {
         }
     }
 }
+
 /**takes one valid move and returns the block location */
-sf::Vector2i GameLogic::get_hint()
-{
+sf::Vector2i GameLogic::get_hint() {//TODO fix how this breaks encapsulation
     for (int y=0; y<get_board_height(); y++) {
         for (int x=0; x<get_board_width(); x++) {
             if (board->block_exists(x, y) && potentially_removable(x, y)) {
-                 sf::Vector2i hint(x,y);
+                sf::Vector2i hint(x,y);
                 return hint;
             }
         }
@@ -347,7 +348,7 @@ bool GameLogic::tap_selected() {
             case ID_ROTATE_2:
             case ID_ROTATE_3: {
                 auto * casted_block = dynamic_cast<BlockRotating*>(block);
-                if (!casted_block->is_move_restricted(get_blocks_removed_ct())) {
+                if (!casted_block->is_move_restricted()) {
                     casted_block->rotate();
                     std::cout << "Rotated block at " << selected_x << ", " << selected_y << "\n";
                     return true;
@@ -378,11 +379,8 @@ bool GameLogic::try_move_selected(char direction) {return try_move(selected_x, s
 /**Adds to wrong move counter*/
 void GameLogic::add_wrong_move() {state->add_wrong_move();}
 
-/**@return number of blocks removed from the board*/
-int GameLogic::get_blocks_removed_ct() {return state->get_blocks_removed();}
-
 /**@return if a given block is move restricted*/
-bool GameLogic::block_is_move_restricted(int x, int y) {return get_block(x, y)->is_move_restricted(get_blocks_removed_ct());}
+bool GameLogic::block_is_move_restricted(int x, int y) {return get_block(x, y)->is_move_restricted();}
 
 /**@return if selected block is move restricted*/
 bool GameLogic::selected_block_is_move_restricted() {return block_is_move_restricted(selected_x, selected_y);}

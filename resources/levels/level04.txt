@@ -1,5 +1,5 @@
 3
 3
-1,0,f,ftff,0	1,0,f,ftff,0	1,0,f,fftf,0
-1,0,f,tfff,0	1,0,f,ffff,0	1,0,f,fftf,0
-1,0,f,ffff,0	1,0,f,ffft,0	1,0,f,ffft,0
+1,0,0,ftff,0	1,0,0,ftff,0	1,0,0,fftf,0
+1,0,0,tfff,0	1,0,0,ffff,0	1,0,0,fftf,0
+1,0,0,ffff,0	1,0,0,ffft,0	1,0,0,ffft,0

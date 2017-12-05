@@ -10,6 +10,8 @@ class BoardState {
         const static int default_width = 9;
         const static int default_height = 9;
         Block * board[default_width][default_height] = {{nullptr}};
+        void increase_move_restrictions();
+        void decrease_move_restrictions();
         int width;
         int height;
     public:
@@ -22,14 +24,15 @@ class BoardState {
         bool is_valid_y(int y);
         bool is_valid_location(int x, int y);
         bool remove_block(int x, int y);
+        bool remove_block(int x, int y, bool modify_restrictions);
+        bool add_block(Block * block, bool modify_restrictions);
+        bool add_block(Block * block);
         Block * get_block(int x, int y);
         bool block_exists(int x, int y);
-        bool add_block(Block * block);
         void print_board();
         bool is_clear();
         void export_board(std::string filepath);
         void import_board(std::string filepath);
-        void old_import_board(std::string filepath);
         std::string export_block(int x, int y);
 };
 

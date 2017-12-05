@@ -22,7 +22,6 @@ BoardState::BoardState() {
 
 /**Loads board from a file*/
 BoardState::BoardState(std::string filepath) {
-    //old_import_board(filepath);
     import_board(filepath);
     std::cout << "Level loaded from " << filepath << std::endl;
 }
@@ -41,7 +40,7 @@ void BoardState::import_board(std::string filepath) {
         std::vector<std::string> blocks = Block::split_string(line, '\t');
         for (int x=0; x<width; x++) {
             if (!blocks[x].empty()) {
-                add_block(Block::import_block(blocks[x], x, y));
+                add_block(Block::import_block(blocks[x], x, y), false);
             }
         }
     }
@@ -85,31 +84,60 @@ bool BoardState::is_valid_y(int y) {return y>=0 && y<get_board_height();}
 /**Checks if x, y position exists on the board*/
 bool BoardState::is_valid_location(int x, int y) {return is_valid_x(x) && is_valid_y(y);}
 
+
+bool BoardState::remove_block(int x, int y) {remove_block(x, y, true);}
+
 /**
   Removes element from board
   @param x coordinate to remove
   @param y coordinate to remove
   @return bool to indicate successful removal
 */
-bool BoardState::remove_block(int x, int y) {
-    if (!is_valid_location(x, y)) {std::cout << "bad remove request at " << x << "," << y << "\n";}
-    else {board[x][y] = nullptr;}
+bool BoardState::remove_block(int x, int y, bool modify_restrictions) {
+    if (is_valid_location(x, y)) {
+        board[x][y] = nullptr;
+        if (modify_restrictions) {decrease_move_restrictions();}
+    }
+    else {std::cout << "bad remove request at " << x << "," << y << "\n";}
     return (is_valid_location(x, y));
 }
+
+bool BoardState::add_block(Block * block) {add_block(block, true);}
 
 /**
   Adds Block to board
   @return bool to indicate successful addition
 */
-bool BoardState::add_block(Block * block) {
+bool BoardState::add_block(Block * block, bool modify_restrictions) {
     int x = block->get_x();
     int y = block->get_y();
     if (is_valid_location(x, y) && !block_exists(x, y)) {
         board[x][y] = block;
+        if (modify_restrictions) {increase_move_restrictions();}
         return true;
     }
     std::cout << "bad add request at " << x << "," << y << "\n";
     return false;
+}
+
+void BoardState::increase_move_restrictions() {
+    for (int y=0; y<height; y++) {
+        for (int x=0; x<width; x++) {
+            if (block_exists(x, y) && get_block(x, y)->is_move_restricted()) {
+                get_block(x, y)->increase_move_restriction();
+            }
+        }
+    }
+}
+
+void BoardState::decrease_move_restrictions() {
+    for (int y=0; y<height; y++) {
+        for (int x=0; x<width; x++) {
+            if (block_exists(x, y) && get_block(x, y)->is_move_restricted()) {
+                get_block(x, y)->decrease_move_restriction();
+            }
+        }
+    }
 }
 
 /**

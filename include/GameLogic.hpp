@@ -74,7 +74,6 @@ class GameLogic {
         void remove_block(int x, int y);
         bool tap_selected();
         void add_wrong_move();
-        int get_blocks_removed_ct();
         bool block_is_move_restricted(int, int);
         bool selected_block_is_move_restricted();
         void set_GameState(GameState &state);

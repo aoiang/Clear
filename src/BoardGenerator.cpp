@@ -26,10 +26,6 @@ BoardState * BoardGenerator::make_board(int width, int height) {
         poten_locs = potential_locations();
     }
     
-    //std::cout << "done generating!\n";
-    //std::cout << removable_blocks() << "<-\n";
-    //std::cout << potentially_removable_blocks() << "<+\n";
-    
     return board;
 }
 
@@ -64,7 +60,7 @@ std::mt19937 BoardGenerator::get_random_num_generator() {
 }
 
 std::string BoardGenerator::pick_config() {
-    static const char* const configs[number_of_configs] = {"1,0,f,ffff,0","1,0,f,ffft,0","1,0,f,fftf,0","1,0,f,fftt,0","1,0,f,ftff,0","1,0,f,ftft,0","1,0,f,fttf,0","1,0,f,fttt,0","1,0,f,tfff,0","1,0,f,tfft,0","1,0,f,tftf,0","1,0,f,tftt,0","1,0,f,ttff,0","1,0,f,ttft,0","1,0,f,tttf,0","1,0,f,tttt,0","2,0,f,ffff,0","2,0,f,ffft,0","2,0,f,fftf,0","2,0,f,fftt,0","2,0,f,ftff,0","2,0,f,ftft,0","2,0,f,fttf,0","2,0,f,fttt,0","2,0,f,tfff,0","2,0,f,tfft,0","2,0,f,tftf,0","2,0,f,tftt,0","2,0,f,ttff,0","2,0,f,ttft,0","2,0,f,tttf,0","2,0,f,tttt,0","2,1,f,ffff,0","2,1,f,ffft,0","2,1,f,fftf,0","2,1,f,fftt,0","2,1,f,ftff,0","2,1,f,ftft,0","2,1,f,fttf,0","2,1,f,fttt,0","2,1,f,tfff,0","2,1,f,tfft,0","2,1,f,tftf,0","2,1,f,tftt,0","2,1,f,ttff,0","2,1,f,ttft,0","2,1,f,tttf,0","2,1,f,tttt,0","2,2,f,ffff,0","2,2,f,ffft,0","2,2,f,fftf,0","2,2,f,fftt,0","2,2,f,ftff,0","2,2,f,ftft,0","2,2,f,fttf,0","2,2,f,fttt,0","2,2,f,tfff,0","2,2,f,tfft,0","2,2,f,tftf,0","2,2,f,tftt,0","2,2,f,ttff,0","2,2,f,ttft,0","2,2,f,tttf,0","2,2,f,tttt,0","2,3,f,ffff,0","2,3,f,ffft,0","2,3,f,fftf,0","2,3,f,fftt,0","2,3,f,ftff,0","2,3,f,ftft,0","2,3,f,fttf,0","2,3,f,fttt,0","2,3,f,tfff,0","2,3,f,tfft,0","2,3,f,tftf,0","2,3,f,tftt,0","2,3,f,ttff,0","2,3,f,ttft,0","2,3,f,tttf,0","2,3,f,tttt,0","3,0,f,tfff,0","3,1,f,tfff,0","3,2,f,tfff,0","3,3,f,tfff,0","3,0,f,tftf,0","3,1,f,tftf,0","3,0,f,ttff,0","3,1,f,ttff,0","3,2,f,ttff,0","3,3,f,ttff,0","3,0,f,ttft,0","3,1,f,ttft,0","3,2,f,ttft,0","3,3,f,ttft,0"};
+    static const char* const configs[number_of_configs] = {"1,0,0,ffff,0","1,0,0,ffft,0","1,0,0,fftf,0","1,0,0,fftt,0","1,0,0,ftff,0","1,0,0,ftft,0","1,0,0,fttf,0","1,0,0,fttt,0","1,0,0,tfff,0","1,0,0,tfft,0","1,0,0,tftf,0","1,0,0,tftt,0","1,0,0,ttff,0","1,0,0,ttft,0","1,0,0,tttf,0","1,0,0,tttt,0","2,0,0,ffff,0","2,0,0,ffft,0","2,0,0,fftf,0","2,0,0,fftt,0","2,0,0,ftff,0","2,0,0,ftft,0","2,0,0,fttf,0","2,0,0,fttt,0","2,0,0,tfff,0","2,0,0,tfft,0","2,0,0,tftf,0","2,0,0,tftt,0","2,0,0,ttff,0","2,0,0,ttft,0","2,0,0,tttf,0","2,0,0,tttt,0","2,1,0,ffff,0","2,1,0,ffft,0","2,1,0,fftf,0","2,1,0,fftt,0","2,1,0,ftff,0","2,1,0,ftft,0","2,1,0,fttf,0","2,1,0,fttt,0","2,1,0,tfff,0","2,1,0,tfft,0","2,1,0,tftf,0","2,1,0,tftt,0","2,1,0,ttff,0","2,1,0,ttft,0","2,1,0,tttf,0","2,1,0,tttt,0","2,2,0,ffff,0","2,2,0,ffft,0","2,2,0,fftf,0","2,2,0,fftt,0","2,2,0,ftff,0","2,2,0,ftft,0","2,2,0,fttf,0","2,2,0,fttt,0","2,2,0,tfff,0","2,2,0,tfft,0","2,2,0,tftf,0","2,2,0,tftt,0","2,2,0,ttff,0","2,2,0,ttft,0","2,2,0,tttf,0","2,2,0,tttt,0","2,3,0,ffff,0","2,3,0,ffft,0","2,3,0,fftf,0","2,3,0,fftt,0","2,3,0,ftff,0","2,3,0,ftft,0","2,3,0,fttf,0","2,3,0,fttt,0","2,3,0,tfff,0","2,3,0,tfft,0","2,3,0,tftf,0","2,3,0,tftt,0","2,3,0,ttff,0","2,3,0,ttft,0","2,3,0,tttf,0","2,3,0,tttt,0","3,0,0,tfff,0","3,1,0,tfff,0","3,2,0,tfff,0","3,3,0,tfff,0","3,0,0,tftf,0","3,1,0,tftf,0","3,0,0,ttff,0","3,1,0,ttff,0","3,2,0,ttff,0","3,3,0,ttff,0","3,0,0,ttft,0","3,1,0,ttft,0","3,2,0,ttft,0","3,3,0,ttft,0"};
     return configs[pick_number_between(0, number_of_configs-1)];
 }
 
@@ -89,7 +85,7 @@ std::tuple<int, int> BoardGenerator::pick_location() {
                 x = random_x();
                 y = random_y();
                 if (!board->block_exists(x, y)) {
-                    block = Block::import_block("1,0,f,ffff,0", x, y);
+                    block = Block::import_block("1,0,0,ffff,0", x, y);
                     board->add_block(block);
                     if (potential_locations()>=desired_valid_locations) {found_location = true;}
                     board->remove_block(x, y);
@@ -102,7 +98,7 @@ std::tuple<int, int> BoardGenerator::pick_location() {
 
 bool BoardGenerator::potential_location(int x, int y) {
     return !board->block_exists(x, y)
-        && generator_logic.potentially_removable(Block::import_block("1,0,f,ffff,0", x, y));
+        && generator_logic.potentially_removable(Block::import_block("1,0,0,ffff,0", x, y));
 }
 
 int BoardGenerator::potential_locations() {
