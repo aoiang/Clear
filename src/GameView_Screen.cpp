@@ -324,7 +324,7 @@ void GameView_Screen::draw_hint() {
     font.loadFromFile(REGULARFONT_FILEPATH);
 
     hintButton = new sf::Text(HINT, font, fontsize);
-    hintButton->setPosition(500,10);
+    hintButton->setPosition(20,20);
 
     sf::Vector2f mousePos = static_cast<sf::Vector2f>(sf::Mouse::getPosition(*App));
     sf::FloatRect hint_box = hintButton->getGlobalBounds();
