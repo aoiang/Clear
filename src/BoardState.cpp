@@ -53,7 +53,7 @@ void BoardState::export_board(std::string filepath) {
     level_file.open(filepath);
     level_file << width <<"\n";
     level_file << height <<"\n";
-    for (int y=0; y<height; y++) {
+    for (int y=height-1; y>=0; y--) {
         for (int x=0; x<width; x++) {
             if (block_exists(x, y)) {
                 level_file << export_block(x, y);
