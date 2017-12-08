@@ -4,6 +4,7 @@
 /Backups/
 Clear-debug
 Clear-release
+generated.txt
 
 /cmake-build-debug/
 **/.DS_Store

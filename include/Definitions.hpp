@@ -68,4 +68,6 @@
 #define LEVEL_19 "../resources/levels/level19.txt"
 #define LEVEL_20 "../resources/levels/level20.txt"
 
+#define GENERATED_FILE "../resources/levels/generated.txt"
+
 #endif //CLEAR_DEFINITIONS_HPP

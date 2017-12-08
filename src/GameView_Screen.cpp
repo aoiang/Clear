@@ -368,7 +368,7 @@ int GameView_Screen::run() {
     BoardState * board;
     if (logic->get_cur_level() == 0) {
         BoardGenerator * generator = new BoardGenerator();
-        board = generator->make_board(*logic);
+        board = generator->make_board(*logic, GENERATED_FILE);
     } else if (logic->get_cur_level()>20) {
         board = new BoardState(levels[19]);
         logic->set_cur_level(20);
@@ -393,7 +393,7 @@ int GameView_Screen::run() {
                 time_since_completion = 0;
                 if (logic->get_cur_level() == 0){
                     BoardGenerator * generator = new BoardGenerator();
-                    board = generator->make_board(*logic);
+                    board = generator->make_board(*logic, GENERATED_FILE);
                     logic->set_BoardState(*board);
                     init();
                 } else {

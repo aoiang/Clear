@@ -30,7 +30,6 @@ BoardState * BoardGenerator::make_board(GameLogic logic) {
         while (poten_locs) {
             //std::cout << poten_locs << "potential locations left!!\n";
             add_block_if_possible();
-            //board->export_board("../resources/levels/broken.txt.new");
             poten_locs = potential_locations();
         }
         remove_pointless_tabs();
