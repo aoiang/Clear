@@ -19,15 +19,15 @@ class GameLogic {
         int selected_y = -1;
         int generated_board_x;
         int generated_board_y;
-        std::string nums_of_nor;
-        std::string nums_of_rot;
-        std::string nums_of_dir;
+        int nums_of_nor;
+        int nums_of_rot;
+        int nums_of_dir;
 
     public:
-        void set_nums_of_blocks(std::string nums_of_nor, std::string nums_of_rot, std::string nums_of_dir);
-        std::string get_nums_of_nor();
-        std::string get_nums_of_rot();
-        std::string get_nums_of_dir();
+        void set_nums_of_blocks(int nums_of_nor, int nums_of_rot, int nums_of_dir);
+        int get_nums_of_nor();
+        int get_nums_of_rot();
+        int get_nums_of_dir();
         int get_generated_board_x();
         int get_generated_board_y();
         void set_generated_board_size(int x, int y);

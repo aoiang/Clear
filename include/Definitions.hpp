@@ -13,6 +13,8 @@
 #define ROTATING_3_TEXTURE "../resources/textures/rotate3.png"
 #define TITLE_TEXTUREMAP "../resources/clear_spritesheet.png"
 
+#define JOKES_FILE "../resources/work_jokes.txt"
+
 #define DEFAULT_DIR 'n'
 #define U_DIR 'u'
 #define R_DIR 'r'

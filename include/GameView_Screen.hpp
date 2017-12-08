@@ -17,7 +17,8 @@ static char texture_filepaths[8][40] = {UP_TEXTURE,
 class GameView_Screen : public Screen_Abstract {
     private:
         sf::RenderWindow *App;
-        sf::Texture texture[15];
+        static const int texture_count = 8;
+        static sf::Texture texture[texture_count];
         sf::RectangleShape * block_shapes;
         sf::RectangleShape shadow_shape;
         sf::RectangleShape restriction_shape;
@@ -40,16 +41,16 @@ class GameView_Screen : public Screen_Abstract {
                                   LEVEL_11, LEVEL_12, LEVEL_13, LEVEL_14, LEVEL_15,
                                   LEVEL_16, LEVEL_17, LEVEL_18, LEVEL_19, LEVEL_20};
     public:
-        int block_size = 50;
+        static const int block_size = 50;
         int tab_size = block_size/5;
         GameView_Screen();
         void init();
         bool isOpen();
-        sf::RectangleShape make_block_shape(int block_id);
+        static sf::RectangleShape make_block_shape(int block_id);
         sf::RectangleShape make_tab_shape();
         sf::RectangleShape make_alpha_rectangle_shape(int, int, int, int, int, int);
-        void load_texture(int);
-        void load_textures();
+        static void load_texture(int);
+        static void load_textures();
         void draw(int);
         void draw_shadows();
         void draw_hintbutton();

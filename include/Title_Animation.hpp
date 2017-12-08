@@ -3,11 +3,14 @@
 
 #include <SFML/Graphics.hpp>
 #include "Screen_Abstract.hpp"
+#include "Definitions.hpp"
 
 class Title_Animation : public Screen_Abstract {
+    private:
+        sf::Text tagline;
+        int frame_count;
+        bool waited;
     public:
-        int draw_sprite();
-        int draw_tagline();
         int run();
 };
 

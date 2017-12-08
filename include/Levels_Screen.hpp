@@ -10,7 +10,7 @@
 
 class Levels_Screen : public GameView_Screen{
     private:
-        sf::Text level[20];
+        sf::Text level[LEVELS];
         sf::Text title;
     public:
         void draw();

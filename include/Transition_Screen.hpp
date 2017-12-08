@@ -9,13 +9,12 @@
 class Transition_Screen : public Screen_Abstract {
     private:
         std::vector<std::string> jokes;
-        sf::Text* message;
+        std::string message_text;
+        sf::Text message;
+        int frame_count;
+        std::string get_message(int current_level);
     public:
-        int count = 0;
         Transition_Screen();
         int run();
-        int animate_text(sf::Text text);
-        std::string print_message(std::vector<std::string> jokes);
-        std::string randomize_message(std::vector<std::string> jokes);
 };
 #endif

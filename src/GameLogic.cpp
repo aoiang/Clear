@@ -376,7 +376,7 @@ void GameLogic::set_generated_board_size(int x, int y) {
 }
 
 /**set how many blocks of each type*/
-void GameLogic::set_nums_of_blocks(std::string nums_of_nor, std::string nums_of_rot, std::string nums_of_dir) {
+void GameLogic::set_nums_of_blocks(int nums_of_nor, int nums_of_rot, int nums_of_dir) {
     this->nums_of_nor = nums_of_nor;
     this->nums_of_rot = nums_of_rot;
     this->nums_of_dir = nums_of_dir;
@@ -413,10 +413,10 @@ int GameLogic::get_generated_board_x() {return generated_board_x;}
 int GameLogic::get_generated_board_y() {return generated_board_y;}
 
 /** get nums of directional blocks*/
-std::string GameLogic::get_nums_of_dir() {return nums_of_dir;}
+int GameLogic::get_nums_of_dir() {return nums_of_dir;}
 
 /** get nums of rotating blocks*/
-std::string GameLogic::get_nums_of_rot() {return nums_of_rot;}
+int GameLogic::get_nums_of_rot() {return nums_of_rot;}
 
 /** get nums of normal blocks*/
-std::string GameLogic::get_nums_of_nor() {return nums_of_nor;}
+int GameLogic::get_nums_of_nor() {return nums_of_nor;}

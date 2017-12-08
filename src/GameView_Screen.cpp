@@ -1,6 +1,8 @@
 #include "GameView_Screen.hpp"
 #include "BoardGenerator.hpp"
 
+sf::Texture GameView_Screen::texture[texture_count];
+
 /**Create the game window*/
 GameView_Screen::GameView_Screen() = default;
 
@@ -25,13 +27,15 @@ sf::RectangleShape GameView_Screen::make_alpha_rectangle_shape(int width, int he
 
 /**Load textures from files*/
 void GameView_Screen::load_texture(int texture_index) {
-    texture[texture_index].loadFromFile(texture_filepaths[texture_index]);
+    sf::Texture new_texture;
+    new_texture.loadFromFile(texture_filepaths[texture_index]);
+    texture[texture_index] = new_texture;
     texture[texture_index].setSmooth(true);
 }
 
 /**Loads all textures*/
 void GameView_Screen::load_textures() {
-    for (int i=0; i<8; i++) {load_texture(i);}
+    for (int i=0; i<texture_count; i++) {load_texture(i);}
 }
 
 /**Makes single tab shape*/

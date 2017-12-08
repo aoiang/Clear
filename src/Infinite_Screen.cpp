@@ -1,100 +1,70 @@
 #include "Infinite_Screen.hpp"
+#include "GameView_Screen.hpp"
 
-void Infinite_Screen::init() {
-    for(int i=0; i<3; i++) {num_of_blocks[i] = 1;}
-    num_of_blocks[3] = 5;
-    num_of_blocks[4] = 5;
-}
-
-void Infinite_Screen::counts_of_block() {
-    static const char* const options[3] = {"none", "some", "many"};
-    for (int i=0; i<3; i++) {
-        block_counts[i] = options[num_of_blocks[i]];
-    }
+Infinite_Screen::Infinite_Screen() {
+    normal_frequency = 1;
+    rotating_frequency = 1;
+    directional_frequency = 1;
+    width = 5;
+    height = 5;
 }
 
 void Infinite_Screen::draw() {
+    clear_window();
+    
+    for (int i=0; i<10; i++) {window->draw(button[i]);}
+    
     unsigned int fontSize = 25;
-    unsigned int buttonSize = 75;
-    load_font(REGULARFONT_FILEPATH);
-
-    sf::Text title("Infinite", font, 75);
-    start = sf::Text("Start", font, 50);
-    sf::FloatRect titlebox;
-    titlebox = title.getGlobalBounds();
-    title.setOrigin(titlebox.width/2.0f, titlebox.height/2.0f);
-    title.setPosition(sf::Vector2f(window->getSize().x/2,(window->getSize().y/2)-230));
-
-    sf::Text board_size("Size", font, 35);
-    titlebox = board_size.getGlobalBounds();
-    board_size.setOrigin(titlebox.width/2.0f, titlebox.height/2.0f);
-    board_size.setPosition(sf::Vector2f(window->getSize().x/2,(window->getSize().y/2)+50));
-
-    titlebox = start.getGlobalBounds();
-    start.setOrigin(titlebox.width/2.0f, titlebox.height/2.0f);
-    start.setPosition(sf::Vector2f(window->getSize().x/2,(window->getSize().y/2)+200));
-
-    sf::RectangleShape rotating_block;
-    sf::RectangleShape directional_block;
-    sf::RectangleShape normal_block;
-    sf::Texture ro_texture;
-    sf::Texture dir_texture;
-    sf::Texture nor_texture;
-    sf::CircleShape triangle(12.5, 3);
-
-    rotating_block.setSize(sf::Vector2f(block_size,block_size));
-    directional_block.setSize(sf::Vector2f(block_size,block_size));
-    normal_block.setSize(sf::Vector2f(block_size,block_size));
-    dir_texture.loadFromFile(UP_TEXTURE);
-    dir_texture.setSmooth(true);
-    ro_texture.loadFromFile(ROTATING_0_TEXTURE);
-    ro_texture.setSmooth(true);
-    rotating_block.setTexture(&ro_texture);
-    directional_block.setTexture(&dir_texture);
-    normal_block.setPosition(75, 180);
-    rotating_block.setPosition(275,180);
-    directional_block.setPosition(475,180);
-
-    for (int i=0; i<10; i++) {
-        if (i%2 == 0) {button[i] = sf::Text("+", font, buttonSize);}
-        else {button[i] = sf::Text("-", font, buttonSize);}
-        item_box[i] = button[i].getGlobalBounds();
-        button[i].setOrigin(item_box[i].width/2.0f,item_box[i].height/2.0f);
-        if (i<6) {
-            if (i%2 == 0) {button[i].setPosition(sf::Vector2f(50+(200 * i / 2), 250));}
-            else {button[i].setPosition(sf::Vector2f(140+(200 * (i / 2)), 250));}
-        } else {
-            if (i%2 == 0) {button[i].setPosition(sf::Vector2f(150+(200 * (i / 8)), 400));}
-            else {button[i].setPosition(sf::Vector2f(240+(200 * (i / 8)), 400));}
-        }
-        window->draw(button[i]);
-    }
-
-    for (int i=0; i<5; i++){
-        if (i>=3) {
-            block_num[i] = sf::Text(sf::String(std::to_string(num_of_blocks[i])), font, fontSize);
-            block_num[i].setPosition(sf::Vector2f(195 + (200 * (i-3)), 420));
-        } else {
-            counts_of_block();
-            block_num[i] = sf::Text(sf::String(block_counts[i]), font, fontSize);
-            block_num[i].setPosition(sf::Vector2f(75 + (200 * i), 270));
-        }
-        window->draw(block_num[i]);
-    }
+    window->draw(make_text(std::to_string(width), fontSize, -100, -100));
+    window->draw(make_text(std::to_string(height), fontSize, 100, -100));
+    static const std::string options[3] = {"none", "some", "many"};
+    window->draw(make_text(options[normal_frequency], fontSize, -200, 50));
+    window->draw(make_text(options[rotating_frequency], fontSize, 0, 50));
+    window->draw(make_text(options[directional_frequency], fontSize, 200, 50));
+    
     window->draw(normal_block);
     window->draw(rotating_block);
     window->draw(directional_block);
     window->draw(title);
     window->draw(board_size);
     window->draw(start);
+    window->display();
 }
 
 int Infinite_Screen::run() {
-    init();
     sf::Clock clock;
-    float starttime;
-    float endtime;
+    load_font(REGULARFONT_FILEPATH);
+    
+    GameView_Screen::load_textures();
+    normal_block = GameView_Screen::make_block_shape(ID_NORMAL);
+    rotating_block = GameView_Screen::make_block_shape(ID_ROTATE_0);
+    directional_block = GameView_Screen::make_block_shape(ID_U_DIR);
+    
+    normal_block.setPosition(75, 180);
+    rotating_block.setPosition(275,180);
+    directional_block.setPosition(475,180);
 
+    title = make_title("Infinite");
+    start = make_text("Start", 50, 0, -200);
+    board_size = make_text("Size", 35, 0, -50);
+    
+    
+    
+    static const char* const signs[2] = {"+", "-"};
+    
+    for (int i=0; i<10; i++) {
+        int x, y;
+        switch (i) {
+            case 0: case 1: x = -200; y = 50; break;
+            case 2: case 3: x = 0; y = 50; break;
+            case 4: case 5: x = 200; y = 50; break;
+            case 6: case 7: x = -100; y = -100; break;
+            case 8: case 9: x = 100; y = -100; break;
+        }
+        button[i] = make_text(signs[i%2], 75, x+(35-((i%2)*80)), y+(5*(i%2))+30);
+    }
+    
+    
     while (true) {
         while (window->pollEvent(Event)) {
             if (Event.type == sf::Event::Closed) {return EXIT_GAME;}
@@ -102,29 +72,33 @@ int Infinite_Screen::run() {
         }
         
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-            if (!clicked) {clicked = true;}
-            if (is_mouse_over_text(start)) {
-                logic->set_generated_board_size(num_of_blocks[3], num_of_blocks[4]);
-                logic->set_cur_level(0);
-                logic->set_nums_of_blocks(block_counts[0], block_counts[1], block_counts[2]);
-                return SCREEN_GAMEVIEW;
-            }
-        } else if (clicked) {
-            clicked = false;
-            for (int butt = 0; butt < 10; butt++){
-                if (is_mouse_over(button[butt].getGlobalBounds())){
-                    if (butt < 6) {
-                        if ((butt % 2 == 0) && (num_of_blocks[butt/2] < 2)) {num_of_blocks[butt/2]++;}
-                        else if (num_of_blocks[butt/2] > 0) {num_of_blocks[butt/2]--;}
-                    } else {
-                        if ((butt % 2 == 0) && (num_of_blocks[butt/2] < 9)) {num_of_blocks[butt/2]++;}
-                        else if (num_of_blocks[butt/2] > 0) {num_of_blocks[butt/2] --;}
+            if (!clicked) {
+                clicked = true;
+                if (is_mouse_over_text(start)) {
+                    logic->set_generated_board_size(width, height);
+                    logic->set_cur_level(0);
+                    logic->set_nums_of_blocks(normal_frequency, rotating_frequency, directional_frequency);
+                    return SCREEN_GAMEVIEW;
+                } else {
+                    for (int i=0; i<10; i++) {
+                        if (is_mouse_over_text(button[i])) {
+                            switch (i) {
+                                case 0: if (normal_frequency<2) {normal_frequency++;} break;
+                                case 1: if (normal_frequency>0) {normal_frequency--;} break;
+                                case 2: if (rotating_frequency<2) {rotating_frequency++;} break;
+                                case 3: if (rotating_frequency>0) {rotating_frequency--;} break;
+                                case 4: if (directional_frequency<2) {directional_frequency++;} break;
+                                case 5: if (directional_frequency>0) {directional_frequency--;} break;
+                                case 6: if (width<9) {width++;} break;
+                                case 7: if (width>1) {width--;} break;
+                                case 8: if (height<9) {height++;} break;
+                                case 9: if (height>1) {height--;} break;
+                            }
+                        }
                     }
                 }
             }
-        }
-        window->clear(sf::Color(40,140,240));
+        } else if (clicked) {clicked = false;}
         draw();
-        window->display();
     }
 }

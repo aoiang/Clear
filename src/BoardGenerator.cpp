@@ -75,27 +75,30 @@ int BoardGenerator::random_x() {return pick_number_between(0, width-1);}
 int BoardGenerator::random_y() {return pick_number_between(0, height-1);}
 
 std::tuple<int, int> BoardGenerator::pick_location() {
-    int desired_valid_locations = potential_locations();
-    int x, y;
+    int current_valid_locations = potential_locations();
+    int current_removeable = potentially_removable_blocks();
+    int minimum_removeable = potentially_removable_blocks();
+    int x, y, score, best_x, best_y;
+    int best_score = -999;//can't be 0 to start.
     bool found_location = false;
     Block * block;
-    
-    while (!found_location) {
-        desired_valid_locations--;
-        for (int i=0; i<(width*height*3); i++) {
-            if (!found_location) {
-                x = random_x();
-                y = random_y();
-                if (!board->block_exists(x, y)) {
-                    block = Block::import_block("1,0,0,ffff,0", x, y);
-                    board->add_block(block);
-                    if (potential_locations()>=desired_valid_locations) {found_location = true;}
-                    board->remove_block(x, y);
-                }
+    std::cout << "checking";
+    for (int i=0; i<(width*height); i++) {
+        x = random_x();
+        y = random_y();
+        if (!board->block_exists(x, y) && potential_location(x, y)) {
+            block = Block::import_block("1,0,0,ffff,0", x, y);
+            board->add_block(block);
+            score = potential_locations()-potentially_removable_blocks();
+            if (score>=best_score) {
+                best_x = x;
+                best_y = y;
+                best_score = score;
             }
+            board->remove_block(x, y);
         }
     }
-    return std::make_tuple(x, y);
+    return std::make_tuple(best_x, best_y);
 }
 
 bool BoardGenerator::potential_location(int x, int y) {

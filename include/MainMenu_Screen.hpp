@@ -17,7 +17,6 @@ class MainMenu_Screen : public Screen_Abstract {
         static std::string const options[];
     public:
         void draw();
-        void set_item_position(sf::Text *, int);
         int run();
 };
 
