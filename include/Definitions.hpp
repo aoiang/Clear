@@ -12,6 +12,7 @@
 #define ROTATING_2_TEXTURE "../resources/textures/rotate2.png"
 #define ROTATING_3_TEXTURE "../resources/textures/rotate3.png"
 #define TITLE_TEXTUREMAP "../resources/clear_spritesheet.png"
+#define MUSIC_FILEPATH "../resources/Elevator_music.wav"
 
 #define JOKES_FILE "../resources/work_jokes.txt"
 

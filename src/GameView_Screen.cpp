@@ -1,5 +1,6 @@
 #include "GameView_Screen.hpp"
 #include "BoardGenerator.hpp"
+#include <SFML/Audio.hpp>
 
 sf::Texture GameView_Screen::texture[texture_count];
 
@@ -363,13 +364,20 @@ void GameView_Screen::check_keyboard_input() {
 int GameView_Screen::run() {
     sf::Clock draw_clock;
     this->App = window;
-    int count = 0;
+
+    sf::Music elevator_music;
+    if (!elevator_music.openFromFile(MUSIC_FILEPATH))
+        return -1;
+    elevator_music.play();
+    elevator_music.setLoop(true);
+    elevator_music.setVolume(22);
 
     BoardState * board;
     if (logic->get_cur_level() == 0) {
         BoardGenerator * generator = new BoardGenerator();
         board = generator->make_board(logic->get_generated_board_x(), logic->get_generated_board_y());
     }
+    else if (logic->get_cur_level()>20) {board = new BoardState(levels[19]);}
     else {board = new BoardState(levels[logic->get_cur_level()-1]);}
 
     logic->set_BoardState(*board);
@@ -386,20 +394,16 @@ int GameView_Screen::run() {
         if (board->is_clear()) {
             time_since_completion += draw_clock.getElapsedTime().asMicroseconds();
             if (time_since_completion > 750000) {
+                time_since_completion = 0;
                 if (logic->get_cur_level() == 0){
                     BoardGenerator * generator = new BoardGenerator();
                     board = generator->make_board(logic->get_generated_board_x(), logic->get_generated_board_y());
+                    logic->set_BoardState(*board);
+                    init();
                 } else {
                     logic->increment_cur_level();
-                    board = new BoardState(levels[logic->get_cur_level()-1]);
+                    return SCREEN_TRANSITION;
                 }
-                logic->set_BoardState(*board);
-                init();
-                time_since_completion = 0;
-                if(logic->get_cur_level()==0)
-                    return SCREEN_TRANSITION;
-               else
-                    return SCREEN_TRANSITION;
             }
         }
         check_mouse_input();

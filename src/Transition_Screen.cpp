@@ -25,14 +25,14 @@ std::string Transition_Screen::get_message(int current_level) {
 
 int Transition_Screen::run() {
     load_font(REGULARFONT_FILEPATH);
-    
+
     message_text = get_message(logic->get_cur_level());
     if (message_text=="") {return SCREEN_GAMEVIEW;}
     message = make_text(message_text, 30, 0, 0);
-    
+
     frame_count = 0;
     sf::Clock clock;
-    
+
     while (true) {
         while (window->pollEvent(Event)) {
             if (Event.type == sf::Event::Closed) {return EXIT_GAME;}
@@ -48,7 +48,10 @@ int Transition_Screen::run() {
                 window->display();
             }
             else if (frame_count <= 200) {window->display();}
-            else {return SCREEN_GAMEVIEW;}
+            else {
+                if (logic->get_cur_level()<=20) {return SCREEN_GAMEVIEW;}
+                else {return SCREEN_MAINMENU;}
+            }
         }
     }
 }
