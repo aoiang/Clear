@@ -377,7 +377,11 @@ int GameView_Screen::run() {
         BoardGenerator * generator = new BoardGenerator();
         board = generator->make_board(logic->get_generated_board_x(), logic->get_generated_board_y());
     }
-    else if (logic->get_cur_level()>20) {board = new BoardState(levels[19]);}
+    else if (logic->get_cur_level()>20) {
+        board = new BoardState(levels[19]);
+        logic->set_cur_level(20);
+        return SCREEN_MAINMENU;
+    }
     else {board = new BoardState(levels[logic->get_cur_level()-1]);}
 
     logic->set_BoardState(*board);
@@ -388,7 +392,7 @@ int GameView_Screen::run() {
     while(running) {
         while (window->pollEvent(Event)) {
             if (Event.type == sf::Event::Closed) {return EXIT_GAME;}
-            if (Event.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {return SCREEN_MAINMENU;}
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {return SCREEN_MAINMENU;}
         }
 
         if (board->is_clear()) {
