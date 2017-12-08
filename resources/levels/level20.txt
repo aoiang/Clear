@@ -1,3 +1,11 @@
-1
-1
-1,0,0,ffff,0
+9
+9
+3,1,0,tftf,22	3,1,0,tftf,21	3,1,0,ttff,42		3,3,0,ttff,34	2,0,0,ftff,53	3,2,0,ttft,59		2,1,0,fftf,55	
+	2,0,0,fftf,0		3,3,0,ttft,46	3,1,0,ttff,36		2,2,0,ffff,35	1,0,0,fftf,16	3,1,0,tftf,54	
+3,1,0,ttft,17	3,0,0,tftf,34	1,0,0,ftft,26	1,0,0,ttft,45	2,1,0,ffff,2	3,2,0,ttff,15		3,2,0,ttft,0		
+1,0,0,ffff,6			1,0,0,ffff,0	1,0,0,ffft,0	1,0,0,ffft,5		1,0,0,ffff,4	3,2,0,ttff,2	
+1,0,0,ffff,0	2,3,0,ffff,20			1,0,0,ffff,36		1,0,0,ffff,34		1,0,0,ffff,28	
+2,3,0,fftf,52	2,2,0,ffft,50	3,1,0,ttff,36	3,1,0,ttff,49	1,0,0,ffft,15	3,0,0,tftf,29	1,0,0,ffff,27		3,0,0,ttft,32	
+2,2,0,ffff,0		1,0,0,ftff,10	1,0,0,ftft,39	3,1,0,tftf,15			3,0,0,tftf,8		
+1,0,0,ftff,0	2,2,0,ffff,32	3,1,0,tftf,2	1,0,0,ffff,15	1,0,0,fftf,0	1,0,0,ffff,30	3,1,0,tftf,14		3,0,0,tftf,51	
+1,0,0,ffff,8	2,2,0,ffff,18	3,1,0,tftf,2	1,0,0,tfff,14	3,0,0,tftf,2	3,1,0,tftf,0	1,0,0,tfff,36	3,2,0,ttff,30	3,3,0,ttff,15	
