@@ -3,7 +3,7 @@
 GameState::GameState(std::string) {}
 
 GameState::GameState() {
-    max_level = 1;
+    max_level = 20;
     cur_level = 1;
 }
 
