@@ -1,6 +1,5 @@
-5
-4
-3,1,0,ttff,0	3,0,0,ttft,16		1,0,0,ffff,0	2,1,0,ffff,7	
-2,0,0,fftf,5		1,0,0,ffff,2	1,0,0,ftff,0	1,0,0,ffff,0	
-1,0,0,fftf,0	2,2,0,ffff,7	2,2,0,tftf,0	2,2,0,fftf,12	2,3,0,fftf,4	
-3,0,0,tftf,0	2,3,0,ffff,13	1,0,0,ffff,0	1,0,0,ffff,3	1,0,0,tfff,0	
+1
+1
+1,0,0,ftff,0	1,0,0,ftff,0	1,0,0,fftf,0
+3,0,0,tfff,0	1,0,0,ffff,0	1,0,0,fftf,0
+1,0,0,tfff,0	1,0,0,ffft,0	1,0,0,ffft,0
