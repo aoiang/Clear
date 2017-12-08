@@ -156,8 +156,10 @@ bool GameLogic::side_is_temporarily_tablocked_by_adjacent(Block * block, char di
     }
     bool adjacent_block_is_rotateable = adjacent_block->get_simple_id()==3;
     bool adjacent_block_is_not_fully_tabbed = adjacent_block->get_tab_count()!=4;
+    bool adjacent_block_is_currently_rotateable = !adjacent_block->is_move_restricted();
     return adjacent_block_is_rotateable
         && adjacent_block_is_tablocking//for clarity
+        && adjacent_block_is_currently_rotateable
         && adjacent_block_is_not_fully_tabbed;
 }
 
@@ -180,8 +182,10 @@ bool GameLogic::side_is_temporarily_tablocked_by_self(Block * block, char direct
     if (!block_is_tablocking) {return false;}//can now assume (below) that the adjacent block exists
     bool block_is_rotateable = block->get_simple_id()==3;
     bool block_is_not_fully_tabbed = block->get_tab_count()!=4;
+    bool block_is_currently_rotateable = !block->is_move_restricted();
     return block_is_rotateable
         && block_is_tablocking//for clarity
+        && block_is_currently_rotateable
         && block_is_not_fully_tabbed;
 }
 

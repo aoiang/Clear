@@ -31,6 +31,7 @@ BoardState * BoardGenerator::make_board(GameLogic logic) {
             //std::cout << poten_locs << "potential locations left!!\n";
             add_block_if_possible();
             poten_locs = potential_locations();
+            restriction_adding();
         }
         remove_pointless_tabs();
         poten_locs = potential_locations();
@@ -60,6 +61,22 @@ void BoardGenerator::add_block_if_possible() {
     int x, y;
     std::tie(x, y) = pick_location();
     add_block_if_possible(x, y);
+}
+
+void BoardGenerator::restriction_adding() {
+    for (int y=0; y<height; y++) {
+        for (int x=0; x<width; x++) {
+            if (board->block_exists(x, y)) {
+                Block * block = board->get_block(x, y);
+                if (!block->is_move_restricted() && pick_number_between(0,10)==0) {
+                    block->increase_move_restriction();
+                    if (potentially_removable_blocks()==0) {
+                        block->decrease_move_restriction();
+                    }
+                }
+            }
+        }
+    }
 }
 
 std::mt19937 BoardGenerator::get_random_num_generator() {
@@ -117,7 +134,7 @@ std::tuple<int, int> BoardGenerator::pick_location() {
         if (!board->block_exists(x, y) && potential_location(x, y)) {
             block = Block::import_block("1,0,0,ffff,0", x, y);
             board->add_block(block);
-            score = potential_locations()-potentially_removable_blocks();
+            score = potential_locations()-(potentially_removable_blocks()*3);
             if (score>=best_score) {
                 best_x = x;
                 best_y = y;

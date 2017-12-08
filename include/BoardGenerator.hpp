@@ -23,6 +23,7 @@ class BoardGenerator {
         int pick_number_between(int min, int max);
         int random_x();
         int random_y();
+        void restriction_adding();
         std::tuple<int, int> pick_location();
         bool potential_location(int x, int y);
         int potential_locations();
