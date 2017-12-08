@@ -25,19 +25,21 @@ BoardState * BoardGenerator::make_board(GameLogic logic) {
         type_ratio[i] = typeval;
     }
     int iterations = 100;
+    int small_iterations = 10;
     int poten_locs = potential_locations();
     while (poten_locs && iterations>0) {
-        while (poten_locs) {
+        while (poten_locs && small_iterations>0) {
+            small_iterations--;
             //std::cout << poten_locs << "potential locations left!!\n";
             add_block_if_possible();
+            remove_pointless_tabs();
             poten_locs = potential_locations();
-            //remove_extra();
-            //restriction_adding();
-            //remove_outer_layer();
         }
+        small_iterations = 10;
         iterations--;
         remove_extra();
         remove_pointless_tabs();
+        restriction_adding();
         poten_locs = potential_locations();
     }
     remove_outer_layer();
