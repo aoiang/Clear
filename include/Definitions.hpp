@@ -1,8 +1,8 @@
 #ifndef CLEAR_DEFINITIONS_HPP
 #define CLEAR_DEFINITIONS_HPP
 
-#define TITLEFONT_FILEPATH "../resources/PuzzleFont.ttf"
-#define REGULARFONT_FILEPATH "../resources/regularFont.ttf"
+#define TITLEFONT_FILEPATH "../resources/fonts/PuzzleFont.ttf"
+#define REGULARFONT_FILEPATH "../resources/fonts/regularFont.ttf"
 #define UP_TEXTURE "../resources/textures/dir_u.png"
 #define RIGHT_TEXTURE "../resources/textures/dir_r.png"
 #define DOWN_TEXTURE "../resources/textures/dir_d.png"
@@ -12,7 +12,7 @@
 #define ROTATING_2_TEXTURE "../resources/textures/rotate2.png"
 #define ROTATING_3_TEXTURE "../resources/textures/rotate3.png"
 #define TITLE_TEXTUREMAP "../resources/clear_spritesheet.png"
-#define MUSIC_FILEPATH "../resources/Elevator_music.wav"
+#define MUSIC_FILEPATH "../resources/audio/Elevator_music.wav"
 
 #define JOKES_FILE "../resources/work_jokes.txt"
 
