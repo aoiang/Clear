@@ -25,7 +25,6 @@ class GameView_Screen : public Screen_Abstract {
         sf::RectangleShape * path_shapes;
         sf::RectangleShape * tab_shapes;
         sf::Text * hintButton;
-        GameLogic * logic;
         float ** animation_ms;
         char ** animation_dir;
         int default_window_width = 600;
@@ -43,7 +42,6 @@ class GameView_Screen : public Screen_Abstract {
     public:
         int block_size = 50;
         int tab_size = block_size/5;
-        void set_GameLogic(GameLogic &logic);
         GameView_Screen();
         void init();
         bool isOpen();
@@ -69,7 +67,7 @@ class GameView_Screen : public Screen_Abstract {
         int PixelToBoard(int pixel_index, int board_axis_length, int screen_axis_length);
         int XPixelToBoardX(int x);
         int YPixelToBoardY(int y);
-        int run(sf::RenderWindow &window);
+        int run();
         void check_mouse_input();
         void check_keyboard_input();
 };

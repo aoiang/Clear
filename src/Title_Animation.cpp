@@ -3,8 +3,8 @@
 #include <iostream>
 
 /**Draws the Clear animation at the start*/
-int Title_Animation::draw_sprite(sf::RenderWindow &window) {
-    window.clear(sf::Color(40,140,240));
+int Title_Animation::draw_sprite() {
+    window->clear(sf::Color(40,140,240));
 
     sf::Clock clock;
     sf::Event event;
@@ -16,44 +16,41 @@ int Title_Animation::draw_sprite(sf::RenderWindow &window) {
 
     sf::Sprite sprite(titleSequence, rectSource);
     sprite.setOrigin(198,67);
-    sprite.setPosition(window.getSize().x/2,window.getSize().y/2);
+    sprite.setPosition(window->getSize().x/2,window->getSize().y/2);
 
     bool waited = false;
-    window.clear(sf::Color(40,140,240));
+    window->clear(sf::Color(40,140,240));
     rectSource.left = 0;
     rectSource.top = 0;
     sprite.setTextureRect(rectSource);
-    window.draw(sprite);
-    window.display();
+    window->draw(sprite);
+    window->display();
 
-    while(frame_count <= 18) {
-
-        while (window.pollEvent(event)) {
-            if(event.type == sf::Event::Closed) {return -1;}
-            if(event.type == sf::Event::KeyPressed) {return 1;}
+    while (frame_count <= 18) {
+        while (window->pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {return -1;}
+            else if (event.type == sf::Event::KeyPressed) {return 1;}
         }
 
-        if (!waited && clock.getElapsedTime().asSeconds() > 1) { waited = true; }
+        if (!waited && clock.getElapsedTime().asSeconds() > 1) {waited = true;}
         else if (waited && clock.getElapsedTime().asSeconds()>0.1f) {
             if (rectSource.left == 396) {
                 rectSource.left = 0;
                 rectSource.top += 134;
-            } else {
-                rectSource.left += 396;
-            }
+            } else {rectSource.left += 396;}
             sprite.setTextureRect(rectSource);
             clock.restart();
             frame_count++;
-            window.clear(sf::Color(40,140,240));
-            window.draw(sprite);
-            window.display();
+            window->clear(sf::Color(40,140,240));
+            window->draw(sprite);
+            window->display();
         }
     }
     return 1;
 }
 
 /**draws/fades in the tagline */
-int Title_Animation::draw_tagline(sf::RenderWindow &window) {
+int Title_Animation::draw_tagline() {
     int frame_count = 0;
     sf:: Event event;
     sf::Clock clock;
@@ -68,25 +65,25 @@ int Title_Animation::draw_tagline(sf::RenderWindow &window) {
     textbox = tagline.getGlobalBounds();
 
     tagline.setOrigin(textbox.width / 2.0f, textbox.height / 2.0f);
-    tagline.setPosition(window.getSize().x / 2, window.getSize().y / 2);
+    tagline.setPosition(window->getSize().x / 2, window->getSize().y / 2);
     tagline.setFillColor(sf::Color(255, 255, 255, 0));
 
     while (frame_count <= 255) {
-        while (window.pollEvent(event)) {
+        while (window->pollEvent(event)) {
             if(event.type == sf::Event::Closed) {return -1;}
             if(event.type == sf::Event::KeyPressed) {return 1;}
         }
         if(clock.getElapsedTime().asSeconds() > 0.01f) {
-            window.clear(sf::Color(40,140,240));
+            window->clear(sf::Color(40,140,240));
             tagline.setFillColor(sf::Color(255, 255, 255, frame_count));
             clock.restart();
             frame_count++;
-            window.draw(tagline);
-            window.display();
+            window->draw(tagline);
+            window->display();
         }
     }
     return 1;
 }
 
 /**runs the opening screen */
-int Title_Animation::run(sf::RenderWindow &window) {return draw_sprite(window);}
+int Title_Animation::run() {return draw_sprite();}

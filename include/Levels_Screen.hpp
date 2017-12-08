@@ -11,13 +11,10 @@
 class Levels_Screen : public GameView_Screen{
     private:
         sf::Text level[20];
-        sf::Text * title;
-        GameLogic * logic;
+        sf::Text title;
     public:
-        void draw(sf::RenderWindow&);
-        bool check_mousover(sf::Vector2f mousePos, int selected_level, sf::RenderWindow &window);
-        int run(sf::RenderWindow &window);
-        void set_GameLogic(GameLogic&);
+        void draw();
+        int run();
 };
 
 

@@ -21,11 +21,6 @@
 
 #define GAME_TITLE "Clear"
 #define TAG_LINE "You Know What to Do."
-#define MAINMENUITEM_0 "New Game"
-#define MAINMENUITEM_1 "Continue"
-#define MAINMENUITEM_2 "Levels"
-#define MAINMENUITEM_3 "Custom Mode"
-#define MAINMENUITEM_4 "Settings"
 #define HINT "Hint"
 
 #define ID_NORMAL 10
@@ -46,6 +41,7 @@
 #define SCREEN_GAMEVIEW 3
 #define SCREEN_LEVELSELECT 4
 #define SCREEN_INFINITE 5
+#define SCREEN_CUSTOM 6
 
 #define LEVELS 20
 #define LEVEL_TEST "../resources/levels/testlevel.txt"

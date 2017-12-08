@@ -9,19 +9,16 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-class MainMenu_Screen : public Screen_Abstract
-{
+class MainMenu_Screen : public Screen_Abstract {
     private:
-        sf::Text * title;
-        sf::Text * menuItems;
-        GameLogic * logic;
+        sf::Text title;
+        static const int menu_items_count = 5;
+        sf::Text menuItems[menu_items_count];
+        static std::string const options[];
     public:
-        void draw(sf::RenderWindow&);
-        bool check_mousover(sf::Vector2f, sf::Text, sf::RenderWindow&);
-        void set_item_position(sf::Text*, int, sf::RenderWindow&);
-        int getSelectedOption(sf::RenderWindow&);
-        int run(sf::RenderWindow &window);
-        void set_GameLogic(GameLogic&);
+        void draw();
+        void set_item_position(sf::Text *, int);
+        int run();
 };
 
 #endif //CLEAR_MAINMENU_SCREEN_HPP

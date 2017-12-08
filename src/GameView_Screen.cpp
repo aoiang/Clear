@@ -7,9 +7,6 @@ GameView_Screen::GameView_Screen() = default;
 /**Check if window is open*/
 bool GameView_Screen::isOpen() {return running;}
 
-/**Assigns a GameLogic to this view*/
-void GameView_Screen::set_GameLogic(GameLogic &logic) {this->logic = &logic;}
-
 /**Make block shapes based on their properties*/
 sf::RectangleShape GameView_Screen::make_block_shape(int block_id) {
     sf::RectangleShape block_shape(sf::Vector2f(block_size, block_size));
@@ -359,9 +356,9 @@ void GameView_Screen::check_keyboard_input() {
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {logic->try_move_selected(R_DIR);}
 }
 
-int GameView_Screen::run(sf::RenderWindow &window) {
+int GameView_Screen::run() {
     sf::Clock draw_clock;
-    this->App = &window;
+    this->App = window;
     int count = 0;
 
     BoardState * board;
@@ -377,7 +374,7 @@ int GameView_Screen::run(sf::RenderWindow &window) {
 
     sf:: Event Event;
     while(running) {
-        while (window.pollEvent(Event)) {
+        while (window->pollEvent(Event)) {
             if (Event.type == sf::Event::Closed) {return EXIT_GAME;}
             if (Event.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {return SCREEN_MAINMENU;}
         }
@@ -401,11 +398,9 @@ int GameView_Screen::run(sf::RenderWindow &window) {
                     return SCREEN_TRANSITION;
             }
         }
-
         check_mouse_input();
         check_keyboard_input();
         draw(draw_clock.restart().asMicroseconds());
     }
-
     return SCREEN_MAINMENU;
 }
