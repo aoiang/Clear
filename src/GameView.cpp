@@ -7,6 +7,7 @@
 
 /**runs the window: creates the window and all screens*/
 int GameView::run(GameLogic logic) {
+    logic.set_cur_level(1);
     sf::RenderWindow App(sf::VideoMode(default_window_height, default_window_width, 32), GAME_TITLE,  sf::Style::Close);
     Title_Animation screen_title;
     MainMenu_Screen screen_mainmenu;
