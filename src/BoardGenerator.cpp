@@ -24,18 +24,23 @@ BoardState * BoardGenerator::make_board(GameLogic logic) {
         if (i%2 < frequency) {typeval = (i/2)+1;}
         type_ratio[i] = typeval;
     }
-    
+    int iterations = 100;
     int poten_locs = potential_locations();
-    while (poten_locs) {
+    while (poten_locs && iterations>0) {
         while (poten_locs) {
             //std::cout << poten_locs << "potential locations left!!\n";
             add_block_if_possible();
             poten_locs = potential_locations();
-            restriction_adding();
+            //remove_extra();
+            //restriction_adding();
+            //remove_outer_layer();
         }
+        iterations--;
+        remove_extra();
         remove_pointless_tabs();
         poten_locs = potential_locations();
     }
+    remove_outer_layer();
     
     return board;
 }
@@ -68,7 +73,7 @@ void BoardGenerator::restriction_adding() {
         for (int x=0; x<width; x++) {
             if (board->block_exists(x, y)) {
                 Block * block = board->get_block(x, y);
-                if (!block->is_move_restricted() && pick_number_between(0,10)==0) {
+                if (!block->is_move_restricted() && pick_number_between(0,20)==0) {
                     block->increase_move_restriction();
                     if (potentially_removable_blocks()==0) {
                         block->decrease_move_restriction();
@@ -101,7 +106,16 @@ int BoardGenerator::pick_type() {
 std::string BoardGenerator::pick_config() {
     std::string config = "0";
     std::string type = std::to_string(pick_type());
-    static const char* const configs[number_of_configs] = {"1,0,0,ffff,0","1,0,0,ffft,0","1,0,0,fftf,0","1,0,0,fftt,0","1,0,0,ftff,0","1,0,0,ftft,0","1,0,0,fttf,0","1,0,0,fttt,0","1,0,0,tfff,0","1,0,0,tfft,0","1,0,0,tftf,0","1,0,0,tftt,0","1,0,0,ttff,0","1,0,0,ttft,0","1,0,0,tttf,0","1,0,0,tttt,0","2,0,0,ffff,0","2,0,0,ffft,0","2,0,0,fftf,0","2,0,0,fftt,0","2,0,0,ftff,0","2,0,0,fttt,0","2,0,0,fttf,0","2,0,0,fttt,0","2,0,0,tfff,0","2,0,0,tfft,0","2,0,0,tftf,0","2,0,0,tftt,0","2,0,0,ttff,0","2,0,0,ttft,0","2,0,0,tttf,0","2,0,0,tttt,0","2,1,0,ffff,0","2,1,0,ffft,0","2,1,0,fftf,0","2,1,0,fftt,0","2,1,0,ftff,0","2,1,0,ftft,0","2,1,0,fttf,0","2,1,0,fttt,0","2,1,0,tfff,0","2,1,0,tfft,0","2,1,0,tftf,0","2,1,0,tftt,0","2,1,0,ttff,0","2,1,0,ttft,0","2,1,0,tttf,0","2,1,0,tttt,0","2,2,0,ffff,0","2,2,0,ffft,0","2,2,0,fftf,0","2,2,0,fftt,0","2,2,0,ftff,0","2,2,0,ftft,0","2,2,0,fttf,0","2,2,0,fttt,0","2,2,0,tfff,0","2,2,0,tfft,0","2,2,0,tftf,0","2,2,0,tftt,0","2,2,0,ttff,0","2,2,0,ttft,0","2,2,0,tttf,0","2,2,0,tttt,0","2,3,0,ffff,0","2,3,0,ffft,0","2,3,0,fftf,0","2,3,0,fftt,0","2,3,0,ftff,0","2,3,0,ftft,0","2,3,0,fttf,0","2,3,0,fttt,0","2,3,0,tfff,0","2,3,0,tfft,0","2,3,0,tftf,0","2,3,0,tftt,0","2,3,0,ttff,0","2,3,0,ttft,0","2,3,0,tttf,0","2,3,0,tttt,0","3,0,0,tftf,0","3,1,0,tftf,0","3,0,0,ttff,0","3,1,0,ttff,0","3,2,0,ttff,0","3,3,0,ttff,0","3,0,0,ttft,0","3,1,0,ttft,0","3,2,0,ttft,0","3,3,0,ttft,0"};
+    static const char* const configs[number_of_configs] = {"1,0,0,ffff,0",
+    //"1,0,0,ffft,0","1,0,0,fftf,0","1,0,0,fftt,0","1,0,0,ftff,0","1,0,0,ftft,0","1,0,0,fttf,0",
+    "1,0,0,fttt,0",
+    //"1,0,0,tfff,0","1,0,0,tfft,0","1,0,0,tftf,0",
+    "1,0,0,tftt,0",
+    //"1,0,0,ttff,0",
+    "1,0,0,ttft,0","1,0,0,tttf,0","1,0,0,tttt,0",
+    "2,0,0,ffff,0","2,0,0,ffft,0","2,0,0,fftf,0","2,0,0,fftt,0","2,0,0,ftff,0","2,0,0,fttt,0","2,0,0,fttf,0","2,0,0,fttt,0","2,0,0,tfff,0","2,0,0,tfft,0","2,0,0,tftf,0","2,0,0,tftt,0","2,0,0,ttff,0","2,0,0,ttft,0","2,0,0,tttf,0","2,0,0,tttt,0","2,1,0,ffff,0","2,1,0,ffft,0","2,1,0,fftf,0","2,1,0,fftt,0","2,1,0,ftff,0","2,1,0,ftft,0","2,1,0,fttf,0","2,1,0,fttt,0","2,1,0,tfff,0","2,1,0,tfft,0","2,1,0,tftf,0","2,1,0,tftt,0","2,1,0,ttff,0","2,1,0,ttft,0","2,1,0,tttf,0","2,1,0,tttt,0","2,2,0,ffff,0","2,2,0,ffft,0","2,2,0,fftf,0","2,2,0,fftt,0","2,2,0,ftff,0","2,2,0,ftft,0","2,2,0,fttf,0","2,2,0,fttt,0","2,2,0,tfff,0","2,2,0,tfft,0","2,2,0,tftf,0","2,2,0,tftt,0","2,2,0,ttff,0","2,2,0,ttft,0","2,2,0,tttf,0","2,2,0,tttt,0","2,3,0,ffff,0","2,3,0,ffft,0","2,3,0,fftf,0","2,3,0,fftt,0","2,3,0,ftff,0","2,3,0,ftft,0","2,3,0,fttf,0","2,3,0,fttt,0","2,3,0,tfff,0","2,3,0,tfft,0","2,3,0,tftf,0","2,3,0,tftt,0","2,3,0,ttff,0","2,3,0,ttft,0","2,3,0,tttf,0","2,3,0,tttt,0",
+    //"3,0,0,tftf,0","3,1,0,tftf,0","3,0,0,ttff,0","3,1,0,ttff,0","3,2,0,ttff,0","3,3,0,ttff,0",
+    "3,0,0,ttft,0","3,1,0,ttft,0","3,2,0,ttft,0","3,3,0,ttft,0"};
     //"3,0,0,ffff,0","3,0,0,tttt,0",
     //"3,0,0,tfff,0","3,1,0,tfff,0","3,2,0,tfff,0","3,3,0,tfff,0",
     while (config.compare(0, 1, type) != 0) {
@@ -180,6 +194,35 @@ int BoardGenerator::potentially_removable_blocks() {
         }
     }
     return potentially_removable_block_count;
+}
+
+void BoardGenerator::remove_outer_layer() {
+    for (int y=0; y<height; y++) {
+        for (int x=0; x<width; x++) {
+            if (board->block_exists(x, y) && generator_logic.potentially_removable(x, y)) {
+                board->remove_block(x, y);
+            }
+        }
+    }
+}
+
+
+
+void BoardGenerator::remove_extra() {
+    int removable = potentially_removable_blocks();
+    for (int y=0; y<height; y++) {
+        for (int x=0; x<width; x++) {
+            if (board->block_exists(x, y) && generator_logic.potentially_removable(x, y)) {
+                Block * block = board->get_block(x, y);
+                board->remove_block(x, y);
+                removable--;
+                if (potentially_removable_blocks()>removable) {
+                    board->add_block(block);
+                    removable++;
+                }
+            }
+        }
+    }
 }
 
 

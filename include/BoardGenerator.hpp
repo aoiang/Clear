@@ -12,7 +12,7 @@ class BoardGenerator {
         BoardState * board;
         int width;
         int height;
-        static const int number_of_configs = 90;
+        static const int number_of_configs = 74;
         static int type_ratio[6];
         void add_block_if_possible(int x, int y);
         void add_block_if_possible();
@@ -29,6 +29,8 @@ class BoardGenerator {
         int potential_locations();
         int removable_blocks();
         int potentially_removable_blocks();
+        void remove_outer_layer();
+        void remove_extra();
         void remove_pointless_tabs();
     public:
         BoardGenerator();
