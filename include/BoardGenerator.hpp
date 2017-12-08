@@ -13,11 +13,13 @@ class BoardGenerator {
         int width;
         int height;
         static const int number_of_configs = 90;
+        static int type_ratio[6];
         void add_block_if_possible(int x, int y);
         void add_block_if_possible();
         std::mt19937 get_random_num_generator();
         std::mt19937 number_generator;
         std::string pick_config();
+        int pick_type();
         int pick_number_between(int min, int max);
         int random_x();
         int random_y();

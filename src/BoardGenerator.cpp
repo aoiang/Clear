@@ -1,10 +1,9 @@
 #include "BoardGenerator.hpp"
-#include "BoardState.hpp"
-#include <iostream>
-#include <random>
-#include <tuple>
 
-BoardGenerator::BoardGenerator() {number_generator = get_random_num_generator();}
+int BoardGenerator::type_ratio[6];
+BoardGenerator::BoardGenerator() {
+    number_generator = get_random_num_generator();
+}
 
 BoardState * BoardGenerator::make_board(int width, int height) {
     this->width = width;
@@ -13,6 +12,18 @@ BoardState * BoardGenerator::make_board(int width, int height) {
     state = new GameState();
     generator_logic.set_GameState(*state);
     generator_logic.set_BoardState(*board);
+    
+    for (int i=0; i<6; i++) {
+        int typeval = 0;
+        int frequency = 0;
+        switch (i) {
+            case 0: case 1: frequency = generator_logic.get_nums_of_nor(); break;
+            case 2: case 3: frequency = generator_logic.get_nums_of_rot(); break;
+            case 4: case 5: frequency = generator_logic.get_nums_of_dir(); break;
+        }
+        if (i%2 < frequency) {typeval = (i/2)+1;}
+        type_ratio[i] = typeval;
+    }
     
     int poten_locs = potential_locations();
     while (poten_locs) {
@@ -59,10 +70,22 @@ std::mt19937 BoardGenerator::get_random_num_generator() {
     return eng;
 }
 
+int BoardGenerator::pick_type() {
+    int type = 0;
+    while (type==0) {
+        type = type_ratio[pick_number_between(0, 5)];
+    }
+}
+
 std::string BoardGenerator::pick_config() {
+    std::string config = "0";
+    std::string type = std::to_string(pick_type());
     static const char* const configs[number_of_configs] = {"1,0,0,ffff,0","1,0,0,ffft,0","1,0,0,fftf,0","1,0,0,fftt,0","1,0,0,ftff,0","1,0,0,ftft,0","1,0,0,fttf,0","1,0,0,fttt,0","1,0,0,tfff,0","1,0,0,tfft,0","1,0,0,tftf,0","1,0,0,tftt,0","1,0,0,ttff,0","1,0,0,ttft,0","1,0,0,tttf,0","1,0,0,tttt,0","2,0,0,ffff,0","2,0,0,ffft,0","2,0,0,fftf,0","2,0,0,fftt,0","2,0,0,ftff,0","2,0,0,fttt,0","2,0,0,fttf,0","2,0,0,fttt,0","2,0,0,tfff,0","2,0,0,tfft,0","2,0,0,tftf,0","2,0,0,tftt,0","2,0,0,ttff,0","2,0,0,ttft,0","2,0,0,tttf,0","2,0,0,tttt,0","2,1,0,ffff,0","2,1,0,ffft,0","2,1,0,fftf,0","2,1,0,fftt,0","2,1,0,ftff,0","2,1,0,ftft,0","2,1,0,fttf,0","2,1,0,fttt,0","2,1,0,tfff,0","2,1,0,tfft,0","2,1,0,tftf,0","2,1,0,tftt,0","2,1,0,ttff,0","2,1,0,ttft,0","2,1,0,tttf,0","2,1,0,tttt,0","2,2,0,ffff,0","2,2,0,ffft,0","2,2,0,fftf,0","2,2,0,fftt,0","2,2,0,ftff,0","2,2,0,ftft,0","2,2,0,fttf,0","2,2,0,fttt,0","2,2,0,tfff,0","2,2,0,tfft,0","2,2,0,tftf,0","2,2,0,tftt,0","2,2,0,ttff,0","2,2,0,ttft,0","2,2,0,tttf,0","2,2,0,tttt,0","2,3,0,ffff,0","2,3,0,ffft,0","2,3,0,fftf,0","2,3,0,fftt,0","2,3,0,ftff,0","2,3,0,ftft,0","2,3,0,fttf,0","2,3,0,fttt,0","2,3,0,tfff,0","2,3,0,tfft,0","2,3,0,tftf,0","2,3,0,tftt,0","2,3,0,ttff,0","2,3,0,ttft,0","2,3,0,tttf,0","2,3,0,tttt,0","3,0,0,tftf,0","3,1,0,tftf,0","3,0,0,ttff,0","3,1,0,ttff,0","3,2,0,ttff,0","3,3,0,ttff,0","3,0,0,ttft,0","3,1,0,ttft,0","3,2,0,ttft,0","3,3,0,ttft,0"};
     //"3,0,0,ffff,0","3,0,0,tttt,0",
     //"3,0,0,tfff,0","3,1,0,tfff,0","3,2,0,tfff,0","3,3,0,tfff,0",
+    while (config.compare(0, 1, type) != 0) {
+        
+    }
     return configs[pick_number_between(0, number_of_configs-1)];
 }
 
