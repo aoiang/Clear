@@ -1,5 +1,6 @@
 #include "GameView_Screen.hpp"
 #include "BoardGenerator.hpp"
+#include <SFML/Audio.hpp>
 
 /**Create the game window*/
 GameView_Screen::GameView_Screen() = default;
@@ -362,6 +363,13 @@ void GameView_Screen::check_keyboard_input() {
 int GameView_Screen::run(sf::RenderWindow &window) {
     sf::Clock draw_clock;
     this->App = &window;
+    
+    sf::Music elevator_music; 
+    if (!elevator_music.openFromFile(MUSIC_FILEPATH))
+        return -1;
+    elevator_music.play();
+    elevator_music.setLoop(true);
+    elevator_music.setVolume(22);
 
     BoardState * board;
     if (logic->get_cur_level() == 0) {

@@ -3,6 +3,7 @@
 #include <iostream>
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 /**Draw menu items*/
 void MainMenu_Screen::draw(sf::RenderWindow &window) {
@@ -66,7 +67,12 @@ int MainMenu_Screen::run(sf::RenderWindow &window) {
 
     sf:: Event Event;
     bool running = true;
-
+    
+    sf::Music elevator_music; 
+    if (!elevator_music.openFromFile(MUSIC_FILEPATH))
+        return -1;
+    elevator_music.play();
+    elevator_music.setLoop(true);
 
     while(running) {
         while (window.pollEvent(Event)) {
