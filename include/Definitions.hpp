@@ -43,7 +43,6 @@
 #define SCREEN_GAMEVIEW 3
 #define SCREEN_LEVELSELECT 4
 #define SCREEN_INFINITE 5
-#define SCREEN_CUSTOM 6
 
 #define LEVELS 20
 #define LEVEL_TEST "../resources/levels/testlevel.txt"

@@ -12,7 +12,7 @@
 class MainMenu_Screen : public Screen_Abstract {
     private:
         sf::Text title;
-        static const int menu_items_count = 5;
+        static const int menu_items_count = 4;
         sf::Text menuItems[menu_items_count];
         static std::string const options[];
     public:
