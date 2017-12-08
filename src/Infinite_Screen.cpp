@@ -82,13 +82,14 @@ int Infinite_Screen::run() {
                 } else {
                     for (int i=0; i<10; i++) {
                         if (is_mouse_over_text(button[i])) {
+                            int type_remains = normal_frequency + rotating_frequency + directional_frequency;
                             switch (i) {
                                 case 0: if (normal_frequency<2) {normal_frequency++;} break;
-                                case 1: if (normal_frequency>0) {normal_frequency--;} break;
+                                case 1: if (type_remains>1 && normal_frequency>0) {normal_frequency--;} break;
                                 case 2: if (rotating_frequency<2) {rotating_frequency++;} break;
-                                case 3: if (rotating_frequency>0) {rotating_frequency--;} break;
+                                case 3: if (type_remains>1 && rotating_frequency>0) {rotating_frequency--;} break;
                                 case 4: if (directional_frequency<2) {directional_frequency++;} break;
-                                case 5: if (directional_frequency>0) {directional_frequency--;} break;
+                                case 5: if (type_remains>1 && directional_frequency>0) {directional_frequency--;} break;
                                 case 6: if (width<9) {width++;} break;
                                 case 7: if (width>1) {width--;} break;
                                 case 8: if (height<9) {height++;} break;
