@@ -1,3 +1,6 @@
-1
-1
-1,0,0,ffff,0
+8
+4
+1,0,0,ffff,1	3,1,0,tftf,2	3,0,0,tftf,1	1,0,0,ffff,8	1,0,0,ffff,0	1,0,0,fftf,5	1,0,0,ffff,0	1,0,0,ffff,16	
+	1,0,0,ftff,0	1,0,0,fftt,18	1,0,0,fftf,11	3,1,0,ttft,1	2,1,0,ttft,7	1,0,0,ffff,7	1,0,0,ffff,7	
+3,0,0,ttff,24		1,0,0,ffff,18	3,1,0,tftf,20	3,1,0,tftf,5		2,0,0,ffff,9	3,1,0,ttff,5	
+3,1,0,ttff,0	2,0,0,ffft,2	3,1,0,tftf,1	2,2,0,tfff,14	3,1,0,tftf,0	1,0,0,ftff,12	2,2,0,tfft,19	3,2,0,ttff,0	
