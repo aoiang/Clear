@@ -32,11 +32,6 @@ int MainMenu_Screen::run() {
         menuItems[i] = make_text(options[i], 50, 0, -1*(i*50));
     }
 
-    sf::Music elevator_music;
-    if (!elevator_music.openFromFile(MUSIC_FILEPATH)) {return -1;}
-    elevator_music.play();
-    elevator_music.setLoop(true);
-
     while (true) {
         while (window->pollEvent(Event)) {
             if (Event.type == sf::Event::Closed) {return EXIT_GAME;}

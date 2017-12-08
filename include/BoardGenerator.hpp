@@ -31,8 +31,8 @@ class BoardGenerator {
         void remove_pointless_tabs();
     public:
         BoardGenerator();
-        BoardState * make_board(int width, int height);
-        BoardState * make_board(int width, int height, std::string filepath);
+        BoardState * make_board(GameLogic logic);
+        BoardState * make_board(GameLogic logic, std::string filepath);
 };
 
 #endif //CLEAR_BOARD_GENERATOR_HPP

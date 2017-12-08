@@ -365,19 +365,11 @@ int GameView_Screen::run() {
     sf::Clock draw_clock;
     this->App = window;
 
-    sf::Music elevator_music;
-    if (!elevator_music.openFromFile(MUSIC_FILEPATH))
-        return -1;
-    elevator_music.play();
-    elevator_music.setLoop(true);
-    elevator_music.setVolume(22);
-
     BoardState * board;
     if (logic->get_cur_level() == 0) {
         BoardGenerator * generator = new BoardGenerator();
-        board = generator->make_board(logic->get_generated_board_x(), logic->get_generated_board_y());
-    }
-    else if (logic->get_cur_level()>20) {
+        board = generator->make_board(*logic);
+    } else if (logic->get_cur_level()>20) {
         board = new BoardState(levels[19]);
         logic->set_cur_level(20);
         return SCREEN_MAINMENU;
@@ -401,7 +393,7 @@ int GameView_Screen::run() {
                 time_since_completion = 0;
                 if (logic->get_cur_level() == 0){
                     BoardGenerator * generator = new BoardGenerator();
-                    board = generator->make_board(logic->get_generated_board_x(), logic->get_generated_board_y());
+                    board = generator->make_board(*logic);
                     logic->set_BoardState(*board);
                     init();
                 } else {

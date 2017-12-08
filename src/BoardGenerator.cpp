@@ -5,9 +5,9 @@ BoardGenerator::BoardGenerator() {
     number_generator = get_random_num_generator();
 }
 
-BoardState * BoardGenerator::make_board(int width, int height) {
-    this->width = width;
-    this->height = height;
+BoardState * BoardGenerator::make_board(GameLogic logic) {
+    this->width = logic.get_generated_board_x();
+    this->height = logic.get_generated_board_y();
     board = new BoardState(width, height);
     state = new GameState();
     generator_logic.set_GameState(*state);
@@ -17,9 +17,9 @@ BoardState * BoardGenerator::make_board(int width, int height) {
         int typeval = 0;
         int frequency = 0;
         switch (i) {
-            case 0: case 1: frequency = generator_logic.get_nums_of_nor(); break;
-            case 2: case 3: frequency = generator_logic.get_nums_of_rot(); break;
-            case 4: case 5: frequency = generator_logic.get_nums_of_dir(); break;
+            case 0: case 1: frequency = logic.get_nums_of_nor(); break;
+            case 2: case 3: frequency = logic.get_nums_of_dir(); break;
+            case 4: case 5: frequency = logic.get_nums_of_rot(); break;
         }
         if (i%2 < frequency) {typeval = (i/2)+1;}
         type_ratio[i] = typeval;
@@ -40,8 +40,8 @@ BoardState * BoardGenerator::make_board(int width, int height) {
     return board;
 }
 
-BoardState * BoardGenerator::make_board(int width, int height, std::string filepath) {
-    make_board(width, height);
+BoardState * BoardGenerator::make_board(GameLogic logic, std::string filepath) {
+    make_board(logic);
     board->export_board(filepath);
     return board;
 }
@@ -75,6 +75,11 @@ int BoardGenerator::pick_type() {
     while (type==0) {
         type = type_ratio[pick_number_between(0, 5)];
     }
+    for (int i=0; i<6; i++) {
+        //std::cerr << type_ratio[i];
+    }
+    //std::cerr << std::endl;
+    return type;
 }
 
 std::string BoardGenerator::pick_config() {
@@ -84,9 +89,9 @@ std::string BoardGenerator::pick_config() {
     //"3,0,0,ffff,0","3,0,0,tttt,0",
     //"3,0,0,tfff,0","3,1,0,tfff,0","3,2,0,tfff,0","3,3,0,tfff,0",
     while (config.compare(0, 1, type) != 0) {
-        
+        config = configs[pick_number_between(0, number_of_configs-1)];
     }
-    return configs[pick_number_between(0, number_of_configs-1)];
+    return config;
 }
 
 int BoardGenerator::pick_number_between(int min, int max) {
@@ -105,10 +110,11 @@ std::tuple<int, int> BoardGenerator::pick_location() {
     int best_score = -999;//can't be 0 to start.
     bool found_location = false;
     Block * block;
-    std::cout << "checking";
+    //std::cout << "checking\n";
     for (int i=0; i<(width*height); i++) {
         x = random_x();
         y = random_y();
+        //std::cerr << x << "," << y << std::endl;
         if (!board->block_exists(x, y) && potential_location(x, y)) {
             block = Block::import_block("1,0,0,ffff,0", x, y);
             board->add_block(block);
@@ -126,6 +132,7 @@ std::tuple<int, int> BoardGenerator::pick_location() {
 
 bool BoardGenerator::potential_location(int x, int y) {
     return !board->block_exists(x, y)
+        && board->is_valid_location(x, y)
         && generator_logic.potentially_removable(Block::import_block("1,0,0,ffff,0", x, y));
 }
 

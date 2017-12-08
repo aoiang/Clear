@@ -42,9 +42,9 @@ sf::Text Screen_Abstract::make_title(std::string text) {
     return make_text(text, 100, 0, 260);
 }
 
-/*
+
 void Screen_Abstract::play_sound(std::string filepath) {
     if(!sound_buffer.loadFromFile(filepath)) {}//TODO
     sound.setBuffer(sound_buffer);
-    sound.play();
-}*/
+    if (play_audio) {sound.play();}
+}

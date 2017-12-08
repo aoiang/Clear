@@ -30,6 +30,12 @@ int GameView::run(GameLogic logic) {
     
     int cur_screen = SCREEN_TITLE;
     
+    bool play_audio = true;
+    sf::Music elevator_music;
+    if (!elevator_music.openFromFile(MUSIC_FILEPATH)) {}//TODO
+    if (play_audio) {elevator_music.play();}
+    elevator_music.setVolume(22);
+    elevator_music.setLoop(true);
 
     while (cur_screen != EXIT_GAME) {cur_screen = screens[cur_screen]->run();}
 }
